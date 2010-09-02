@@ -23,7 +23,7 @@ protected:
 
 public:
     File();
-    ~File();
+    virtual ~File();
 
 
     virtual void create(string fileName) =0;
