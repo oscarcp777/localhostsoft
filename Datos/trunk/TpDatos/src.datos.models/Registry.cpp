@@ -15,3 +15,6 @@ Registry::Registry() {
 Registry::~Registry() {
 	// TODO Auto-generated destructor stub
 }
+Key* Registry::getKey(){
+	return this->key;
+}

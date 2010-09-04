@@ -9,11 +9,37 @@
 #define MAIL_H_
 
 #include "Registry.h"
+#include <string>
 
+using namespace std;
 class Mail: public Registry {
+
 public:
 	Mail();
 	virtual ~Mail();
+	string getDate();
+	string getFrom();
+	string getMessage();
+	string getSubject();
+	string getTo();
+	int getSize();
+	void setDate(string date);
+	void setFrom(string from);
+	void setMessage(string message);
+	void setSubject(string subject);
+	void setTo(string to);
+	void pack(Buffer* buffer);
+	void unPack(Buffer* buffer);
+	bool equals(Component* comp);
+
+private:
+	string from;
+	string to;
+	string subject;
+	string message;
+	string date;
 };
+
+
 
 #endif /* MAIL_H_ */

@@ -15,3 +15,16 @@ Key::Key() {
 Key::~Key() {
 	// TODO Auto-generated destructor stub
 }
+int Key::getValue(){
+	return this->value;
+}
+
+bool Key::equals(Component* comp){
+	Key* key= (Key*)comp;
+	if(this->value == key->getValue())
+		return true;
+
+	else
+		return false;
+
+}
