@@ -15,6 +15,7 @@
  */
 #define PATH_LOGGER "files/log"
 #define PATH_CONFIG "files/config"
+
 #define SIZE_SYSTEM_TIME 25
 #define MAX_FILE_SIZE 1048576
 /*
