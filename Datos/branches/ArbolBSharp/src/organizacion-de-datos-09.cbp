@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="organizacion-de-datos-09" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/organizacion-de-datos-09" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-w" />
+					<Add option="-Wall" />
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/organizacion-de-datos-09" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="CampoStream.cpp" />
+		<Unit filename="CampoStream.hpp" />
+		<Unit filename="EsquemaBloque.cpp" />
+		<Unit filename="EsquemaBloque.hpp" />
+		<Unit filename="EstrategiaAlmacenamiento.cpp" />
+		<Unit filename="EstrategiaAlmacenamiento.hpp" />
+		<Unit filename="EstrategiaAlmacenamientoBSharp.cpp" />
+		<Unit filename="EstrategiaAlmacenamientoBSharp.hpp" />
+		<Unit filename="EstrategiaAlmacenamientoBloques.cpp" />
+		<Unit filename="EstrategiaAlmacenamientoBloques.hpp" />
+		<Unit filename="EstrategiaAlmacenamientoBucketHash.cpp" />
+		<Unit filename="EstrategiaAlmacenamientoBucketHash.hpp" />
+		<Unit filename="EstrategiaAlmacenamientoDirectoryHash" />
+		<Unit filename="EstrategiaAlmacenamientoDirectoryHash.cpp" />
+		<Unit filename="EstrategiaAlmacenamientoDirectoryHash.hpp" />
+		<Unit filename="EstrategiaAlmacenamientoEspacioLibre.cpp" />
+		<Unit filename="EstrategiaAlmacenamientoEspacioLibre.hpp" />
+		<Unit filename="EstrategiaAlmacenamientoRegistros.cpp" />
+		<Unit filename="EstrategiaAlmacenamientoRegistros.hpp" />
+		<Unit filename="EstrategiaAlmacenamientoTexto.cpp" />
+		<Unit filename="EstrategiaAlmacenamientoTexto.hpp" />
+		<Unit filename="EstrategiaEspacioLibreBloque.cpp" />
+		<Unit filename="EstrategiaEspacioLibreBloque.hpp" />
+		<Unit filename="EstrategiaRecurso.cpp" />
+		<Unit filename="EstrategiaRecurso.hpp" />
+		<Unit filename="EstrategiaRecursoEscrituraDiferida.cpp" />
+		<Unit filename="EstrategiaRecursoEscrituraDiferida.hpp" />
+		<Unit filename="EstrategiaRecursoEscrituraDirecta.cpp" />
+		<Unit filename="EstrategiaRecursoEscrituraDirecta.hpp" />
+		<Unit filename="EstrategiaRecursoUnAlmacenamiento.cpp" />
+		<Unit filename="EstrategiaRecursoUnAlmacenamiento.hpp" />
+		<Unit filename="RecursoDeAlmacenamiento.cpp" />
+		<Unit filename="RecursoDeAlmacenamiento.hpp" />
+		<Unit filename="RegistroLongitudFija.cpp" />
+		<Unit filename="RegistroLongitudFija.hpp" />
+		<Unit filename="RegistroLongitudVariable.cpp" />
+		<Unit filename="RegistroLongitudVariable.hpp" />
+		<Unit filename="almacenamiento.cpp" />
+		<Unit filename="almacenamiento.hpp" />
+		<Unit filename="archivo.cpp" />
+		<Unit filename="archivo.hpp" />
+		<Unit filename="bloque.cpp" />
+		<Unit filename="bloque.hpp" />
+		<Unit filename="bloque_b_sharp.cpp" />
+		<Unit filename="bloque_b_sharp.hpp" />
+		<Unit filename="bloque_externo_b_sharp.cpp" />
+		<Unit filename="bloque_externo_b_sharp.hpp" />
+		<Unit filename="bloque_interno_b_sharp.cpp" />
+		<Unit filename="bloque_interno_b_sharp.hpp" />
+		<Unit filename="buffer.cpp" />
+		<Unit filename="buffer.hpp" />
+		<Unit filename="campo.cpp" />
+		<Unit filename="campo.hpp" />
+		<Unit filename="campo_booleano.cpp" />
+		<Unit filename="campo_booleano.hpp" />
+		<Unit filename="campo_cadena.cpp" />
+		<Unit filename="campo_cadena.hpp" />
+		<Unit filename="campo_doble.cpp" />
+		<Unit filename="campo_doble.hpp" />
+		<Unit filename="campo_entero.cpp" />
+		<Unit filename="campo_entero.hpp" />
+		<Unit filename="campo_flotante.cpp" />
+		<Unit filename="campo_flotante.hpp" />
+		<Unit filename="campo_largo.cpp" />
+		<Unit filename="campo_largo.hpp" />
+		<Unit filename="clave.cpp" />
+		<Unit filename="clave.hpp" />
+		<Unit filename="comparador_clave.cpp" />
+		<Unit filename="comparador_clave.hpp" />
+		<Unit filename="componente.cpp" />
+		<Unit filename="componente.hpp" />
+		<Unit filename="componentecompuesto.cpp" />
+		<Unit filename="componentecompuesto.hpp" />
+		<Unit filename="contador_referencias.cpp" />
+		<Unit filename="contador_referencias.hpp" />
+		<Unit filename="esquema.cpp" />
+		<Unit filename="esquema.hpp" />
+		<Unit filename="estrategia_indice.cpp" />
+		<Unit filename="estrategia_indice.hpp" />
+		<Unit filename="hash_bucket.cpp" />
+		<Unit filename="hash_bucket.hpp" />
+		<Unit filename="hash_directory.cpp" />
+		<Unit filename="hash_directory.hpp" />
+		<Unit filename="indice_b_sharp.cpp" />
+		<Unit filename="indice_b_sharp.hpp" />
+		<Unit filename="indice_hash.cpp" />
+		<Unit filename="indice_hash.hpp" />
+		<Unit filename="main.cpp" />
+		<Unit filename="puntero_intrusivo.hpp" />
+		<Unit filename="registro.cpp" />
+		<Unit filename="registro.hpp" />
+		<Unit filename="resultado_borrado_b_sharp.cpp" />
+		<Unit filename="resultado_borrado_b_sharp.hpp" />
+		<Unit filename="resultado_division_b_sharp.cpp" />
+		<Unit filename="resultado_division_b_sharp.hpp" />
+		<Unit filename="resultado_insercion_b_sharp.cpp" />
+		<Unit filename="resultado_insercion_b_sharp.hpp" />
+		<Unit filename="tipo_campo.hpp" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
