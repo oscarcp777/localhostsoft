@@ -38,7 +38,9 @@ void Key::pack(Buffer* buffer){
 		buffer->packField(this->value.c_str(),this->getSize());
 }
 void Key::unPack(Buffer* buffer){
-
+	int size;
+	buffer->unPackField(&size, sizeof(size));
+	buffer->unPackFieldString(this->value,size);
 }
 int  Key::print(){
      cout<<"Clave : "<<this->value<<endl;

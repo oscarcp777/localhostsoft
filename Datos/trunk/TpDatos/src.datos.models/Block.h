@@ -13,6 +13,7 @@
 #include "../src.datos.storage/Buffer.h"
 #include "Registry.h"
 #include "Key.h"
+#include "Mail.h"
 
 class Block: public Component {
 public:
@@ -24,6 +25,8 @@ public:
 	Registry* getReg(Key* key);
 	void pack();
 	void unPack();
+	void packMetadata();
+	int unPackMetadata();
     Buffer* getBuffer();
     int print();
     int getSize();

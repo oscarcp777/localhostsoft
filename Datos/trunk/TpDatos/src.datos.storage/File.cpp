@@ -23,8 +23,8 @@ void File::writeBlock(Block* block, int pos){
 	this->write(block->getBuffer()->getData(),block->getBuffer()->getMaxBytes(),pos);
 }
  void File::readBlock(Block* block, int pos){
-	 block->unPack();
 	 this->read(block->getBuffer()->getData(),block->getBuffer()->getMaxBytes(),pos);
+	 block->unPack();
    }
 void File::read(std::string& datos){
 

@@ -12,6 +12,6 @@
  *
  */
 #define NUM_FIELDS_MAILS 6
-#define BLOCK_SIZE 256
+#define BLOCK_SIZE 512
 
 #endif /* DEFINE_H_ */

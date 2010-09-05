@@ -54,6 +54,7 @@ Registry* Block::getReg(Key* key){
 void Block::pack(){
 	list<Registry*>::iterator iterRegistry;
 	Registry* reg;
+	this->packMetadata();
 	for (iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
 		reg=*iterRegistry;
 		reg->pack(this->buffer);
@@ -63,10 +64,29 @@ void Block::pack(){
 void Block::unPack(){
 	list<Registry*>::iterator iterRegistry;
 	Registry* reg;
+	int numberElements;
+	numberElements = this->unPackMetadata();
+	//TODO llamar a la fabrica con una constante para saber que clase instanciar
+
+	for(int i=0; i<numberElements; i++){
+		this->regList.push_back(new Mail());//TODO CAMBIAR no va new Mail()
+	}
 	for (iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
 		reg=*iterRegistry;
 		reg->unPack(this->buffer);
 	}
+}
+
+void Block::packMetadata(){
+	int numberElements = this->regList.size();
+	this->buffer->packField(&numberElements, sizeof(numberElements));
+	this->buffer->packField(&this->freeSize, sizeof(this->freeSize));
+}
+int Block::unPackMetadata(){
+	int numberElements;
+	this->buffer->unPackField(&numberElements,sizeof(numberElements));
+	this->buffer->unPackField(&this->freeSize,sizeof(this->freeSize));
+	return numberElements;
 }
 int Block::print(){
 	list<Registry*>::iterator iterRegistry;

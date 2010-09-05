@@ -19,8 +19,8 @@ public:
 	virtual bool equals(Registry* comp)=0;
 	Key* getKey();
 	void setKey(Key* key);
-	void pack(Buffer* buffer);
-	void unPack(Buffer* buffer);
+	virtual void pack(Buffer* buffer)=0;
+	virtual void unPack(Buffer* buffer)=0;
 protected:
 	Key* key;
 };

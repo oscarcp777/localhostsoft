@@ -18,12 +18,6 @@ Registry::~Registry() {
 Key* Registry::getKey(){
 	return this->key;
 }
-void Registry::pack(Buffer* buffer){
-
-}
-void Registry::unPack(Buffer* buffer){
-
-}
 void Registry::setKey(Key* key){
   this->key=key;
 }

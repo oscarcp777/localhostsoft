@@ -75,15 +75,17 @@ void TestStorage::testBlock(){
 	block->addReg(mail1);
 	block->addReg(mail2);
 	block->addReg(mail3);
-	file->create("files/storage/PruebaMail.dat");
+	file->create("PruebaMail.dat");
 	file->writeBlock(block,0);
 	file->close();
 
-	file->open("files/storage/PruebaMail.dat");
-	file->readBlock(block,0);
+	Block* block2 = new Block();
+	file->open("PruebaMail.dat");
+	file->readBlock(block2,0);
 	file->close();
 
-    block->print();
+    block2->print();
 	delete file;
 	delete block;
+	delete block2;
 }
