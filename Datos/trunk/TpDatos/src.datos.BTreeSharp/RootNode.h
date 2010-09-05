@@ -12,7 +12,7 @@
 
 class RootNode: public Node {
 public:
-	RootNode();
+	RootNode(int typeElement);
 	virtual ~RootNode();
 };
 

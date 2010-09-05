@@ -7,11 +7,17 @@
 
 #ifndef NODE_H_
 #define NODE_H_
+#include "../src.datos.models/Block.h"
 
-class Node {
+class Node: public Block {
 public:
-	Node();
+	Node(int typeElement);
 	virtual ~Node();
+    int getTypeElement();
+    void setTypeElement(int typeElement);
+
+protected:
+	int typeElement;
 };
 
 #endif /* NODE_H_ */

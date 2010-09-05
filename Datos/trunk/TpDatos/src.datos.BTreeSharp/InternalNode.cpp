@@ -7,8 +7,7 @@
 
 #include "InternalNode.h"
 
-InternalNode::InternalNode() {
-	// TODO Auto-generated constructor stub
+InternalNode::InternalNode(int type):Node(type){
 
 }
 

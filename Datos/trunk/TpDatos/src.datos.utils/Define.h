@@ -13,5 +13,10 @@
  */
 #define NUM_FIELDS_MAILS 6
 #define BLOCK_SIZE 512
+#define TYPE_REG_CLASIFICATION 0
+#define TYPE_REG_SELECTION 1
+#define TYPE_MAIL 2
+#define TYPE_KEY 3
+#define TYPE_DIRECTION 4
 
 #endif /* DEFINE_H_ */

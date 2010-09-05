@@ -7,11 +7,17 @@
 
 #include "Node.h"
 
-Node::Node() {
-	// TODO Auto-generated constructor stub
-
+Node::Node(int typeElement) {
+	this->typeElement = typeElement;
 }
 
 Node::~Node() {
 	// TODO Auto-generated destructor stub
 }
+int Node::getTypeElement(){
+      return typeElement;
+ }
+
+void Node::setTypeElement(int typeElement){
+      this->typeElement = typeElement;
+  }

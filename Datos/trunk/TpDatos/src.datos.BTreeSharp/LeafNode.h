@@ -12,7 +12,7 @@
 
 class LeafNode: public Node {
 public:
-	LeafNode();
+	LeafNode(int typeElement);
 	virtual ~LeafNode();
 };
 

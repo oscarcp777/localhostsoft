@@ -12,7 +12,7 @@
 
 class InternalNode: public Node {
 public:
-	InternalNode();
+	InternalNode(int typeElement);
 	virtual ~InternalNode();
 };
 

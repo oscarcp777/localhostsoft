@@ -7,7 +7,7 @@
 
 #include "LeafNode.h"
 
-LeafNode::LeafNode() {
+LeafNode::LeafNode(int type):Node(type){
 	// TODO Auto-generated constructor stub
 
 }

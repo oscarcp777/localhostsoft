@@ -7,7 +7,7 @@
 
 #include "RootNode.h"
 
-RootNode::RootNode() {
+RootNode::RootNode(int type):Node(type) {
 	// TODO Auto-generated constructor stub
 
 }
