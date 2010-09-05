@@ -6,15 +6,24 @@
  */
 
 #include "Registry.h"
-
+#include "Key.h"
 Registry::Registry() {
 	// TODO Auto-generated constructor stub
 
 }
 
 Registry::~Registry() {
-	// TODO Auto-generated destructor stub
+	delete this->key;
 }
 Key* Registry::getKey(){
 	return this->key;
+}
+void Registry::pack(Buffer* buffer){
+
+}
+void Registry::unPack(Buffer* buffer){
+
+}
+void Registry::setKey(Key* key){
+  this->key=key;
 }

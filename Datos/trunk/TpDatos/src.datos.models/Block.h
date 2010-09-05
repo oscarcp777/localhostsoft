@@ -22,8 +22,11 @@ public:
 	int getFreeSize();
 	void addReg(Registry* reg);
 	Registry* getReg(Key* key);
-	void pack(Buffer* buffer);
-	void unPack(Buffer* buffer);
+	void pack();
+	void unPack();
+    Buffer* getBuffer();
+    int print();
+    int getSize();
 
 private:
 	list<Registry*> regList;

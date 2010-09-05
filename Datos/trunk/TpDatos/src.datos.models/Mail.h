@@ -10,7 +10,6 @@
 
 #include "Registry.h"
 #include <string>
-
 using namespace std;
 class Mail: public Registry {
 
@@ -30,14 +29,15 @@ public:
 	void setTo(string to);
 	void pack(Buffer* buffer);
 	void unPack(Buffer* buffer);
-	bool equals(Component* comp);
-
+	bool equals(Registry* comp);
+	int print();
 private:
 	string from;
 	string to;
 	string subject;
 	string message;
 	string date;
+
 };
 
 

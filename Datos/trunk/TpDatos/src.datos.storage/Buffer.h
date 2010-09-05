@@ -42,6 +42,11 @@ public:
 
 	 */
 	int unPackField(void* field,int size);
+	/**
+	 *metodo para extraer un valor string del buffer
+	 */
+	int unPackFieldString(string& field, int size);
+
 	int print();
     int getMaxBytes() const
     {

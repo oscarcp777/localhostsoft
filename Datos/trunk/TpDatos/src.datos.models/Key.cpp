@@ -7,24 +7,40 @@
 
 #include "Key.h"
 
-Key::Key() {
-	// TODO Auto-generated constructor stub
-
+Key::Key(string value) {
+	this->value=value;
 }
-
+Key::Key() {
+}
 Key::~Key() {
 	// TODO Auto-generated destructor stub
 }
-int Key::getValue(){
+string Key::getValue(){
 	return this->value;
 }
-
-bool Key::equals(Component* comp){
+int Key::getSize(){
+	if(this->getValueInt()>=0)return sizeof(int);
+	else return this->value.length();
+}
+bool Key::equals(Registry* comp){
 	Key* key= (Key*)comp;
-	if(this->value == key->getValue())
-		return true;
+	return((this->value.compare(key->getValue())==0));
+}
+int Key::getValueInt(){
+	int i=-1;
+	istringstream myStream(this->value);
+	myStream>>i;
+	return i;
+}
+void Key::pack(Buffer* buffer){
+	    int size=this->getSize();
+		buffer->packField(&size, sizeof(size));
+		buffer->packField(this->value.c_str(),this->getSize());
+}
+void Key::unPack(Buffer* buffer){
 
-	else
-		return false;
-
+}
+int  Key::print(){
+     cout<<"Clave : "<<this->value<<endl;
+     return 1;
 }

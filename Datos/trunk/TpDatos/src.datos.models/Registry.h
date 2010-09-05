@@ -16,9 +16,12 @@ class Registry: public Component {
 public:
 	Registry();
 	virtual ~Registry();
-	virtual bool equals(Component* comp)=0;
+	virtual bool equals(Registry* comp)=0;
 	Key* getKey();
-private:
+	void setKey(Key* key);
+	void pack(Buffer* buffer);
+	void unPack(Buffer* buffer);
+protected:
 	Key* key;
 };
 

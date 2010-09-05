@@ -8,14 +8,16 @@
 #ifndef COMPONENT_H_
 #define COMPONENT_H_
 #include "../src.datos.storage/Buffer.h"
-
+#include "../src.datos.utils/Define.h"
+#include <iostream>
+#include <sstream>
 class Component {
 
 public:
 	Component();
 	virtual ~Component();
-	virtual void pack(Buffer* buffer)=0;
-	virtual void unPack(Buffer* buffer)=0;
+	virtual int getSize()=0;
+	virtual int print()=0;
 };
 
 #endif /* COMPONENT_H_ */

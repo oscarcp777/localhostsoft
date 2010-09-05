@@ -13,13 +13,18 @@
 
 class Key: public Registry {
 public:
+	Key(string value);
 	Key();
 	virtual ~Key();
-	bool equals(Component* comp);
-	int getValue();
-
+	bool equals(Registry* comp);
+	string getValue();
+	int getSize();
+	int getValueInt();
+	void pack(Buffer* buffer);
+	void unPack(Buffer* buffer);
+    int print();
 private:
-	int value;
+	string value;
 };
 
 #endif /* KEY_H_ */

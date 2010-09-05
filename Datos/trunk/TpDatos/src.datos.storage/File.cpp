@@ -18,6 +18,14 @@ File::~File() {
 void File::flush(){
     this->file.flush();
 }
+void File::writeBlock(Block* block, int pos){
+	block->pack();
+	this->write(block->getBuffer()->getData(),block->getBuffer()->getMaxBytes(),pos);
+}
+ void File::readBlock(Block* block, int pos){
+	 block->unPack();
+	 this->read(block->getBuffer()->getData(),block->getBuffer()->getMaxBytes(),pos);
+   }
 void File::read(std::string& datos){
 
 	/* verifica que el file esté abierto */

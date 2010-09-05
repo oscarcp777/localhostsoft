@@ -47,6 +47,17 @@ int Buffer::unPackField(void* field,int size){
 	memcpy(field,&buffer[start],size);
 	return size;
 }
+
+/*Obtiene un string en la siguiente posicio del stream.*/
+int Buffer::unPackFieldString(string& field, int size){
+	char* aux = new char[size+1];
+	  int pos=this->unPackField(aux,size);
+	aux[size] = '\0';
+	field = aux;
+	delete[] aux;
+
+	return pos;
+}
 int Buffer::print(){
     cout<<this->buffer<<endl;
     return 1;

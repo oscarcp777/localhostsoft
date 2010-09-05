@@ -8,12 +8,23 @@
 #include "Block.h"
 
 Block::Block() {
-	// TODO Auto-generated constructor stub
+	this->freeSize=BLOCK_SIZE;
+	this->buffer= new Buffer(BLOCK_SIZE);
 
 }
-
+int Block::getSize(){
+   return BLOCK_SIZE;
+}
+Buffer* Block::getBuffer(){
+  return this->buffer;
+}
 Block::~Block() {
-	// TODO Auto-generated destructor stub
+	list<Registry*>::iterator iterRegistry;
+		Registry* reg;
+		for (iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
+			reg=*iterRegistry;
+			delete reg;
+		}
 }
 int Block::getNumElements(){
 	return this->regList.size();
@@ -24,23 +35,45 @@ int Block::getFreeSize(){
 }
 
 void Block::addReg(Registry* reg){
-	this->regList.push_back(reg);
+		this->regList.push_back(reg);
+		this->freeSize-=reg->getSize();
+
 }
 
 Registry* Block::getReg(Key* key){
 	list<Registry*>::iterator iterRegistry;
+	Registry* reg;
+	for (iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
+		reg=*iterRegistry;
+		if(key->equals(reg->getKey())){
+			return reg;
+		}
+	}
+	return NULL;
+}
+void Block::pack(){
+	list<Registry*>::iterator iterRegistry;
+	Registry* reg;
+	for (iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
+		reg=*iterRegistry;
+		reg->pack(this->buffer);
+	}
+
+}
+void Block::unPack(){
+	list<Registry*>::iterator iterRegistry;
+	Registry* reg;
+	for (iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
+		reg=*iterRegistry;
+		reg->unPack(this->buffer);
+	}
+}
+int Block::print(){
+	list<Registry*>::iterator iterRegistry;
 		Registry* reg;
 		for (iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
 			reg=*iterRegistry;
-			if(key->equals(reg->getKey())){
-				return reg;
-			}
+			reg->print();
 		}
-		return NULL;
-}
-void Block::pack(Buffer* buffer){
-
-}
-void Block::unPack(Buffer* buffer){
-
+		return 1;
 }

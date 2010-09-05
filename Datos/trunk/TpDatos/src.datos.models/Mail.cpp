@@ -6,7 +6,7 @@
  */
 
 #include "Mail.h"
-
+#include "Key.h"
 using namespace std;
 Mail::Mail() {
 	// TODO Auto-generated constructor stub
@@ -67,9 +67,10 @@ void Mail::setTo(string to)
 	this->to = to;
 }
 int Mail::getSize(){
-	return from.length()+to.length()+subject.length()+message.length()+date.length();
+	return from.length()+to.length()+subject.length()+message.length()+date.length()
+		+NUM_FIELDS_MAILS*sizeof(int)+this->getKey()->getSize();
 }
-bool Mail::equals(Component* comp){
+bool Mail::equals(Registry* comp){
 	return false;
 }
 void Mail::pack(Buffer* buffer){
@@ -77,6 +78,8 @@ void Mail::pack(Buffer* buffer){
 	int totalSize = this->getSize();
 	int size;
 	buffer->packField(&(totalSize), sizeof(totalSize));
+	this->getKey()->pack(buffer);
+
 	size = from.length();
 	buffer->packField(&size, sizeof(size));
 	buffer->packField(from.c_str(),size);
@@ -100,22 +103,34 @@ void Mail::pack(Buffer* buffer){
 void Mail::unPack(Buffer* buffer){
 	int totalSize;
 	int size;
-	buffer->unPackField(&totalSize,sizeof(totalSize));
-	buffer->unPackField(&size,sizeof(size));
-	buffer->unPackField((char*)from.c_str(),sizeof(char)*size);
+    this->setKey(new Key());
+    buffer->unPackField(&totalSize,sizeof(totalSize));
+    this->getKey()->unPack(buffer);
 
 	buffer->unPackField(&size,sizeof(size));
-	buffer->unPackField((char*)to.c_str(),sizeof(char)*size);
+	buffer->unPackFieldString(from,size);
 
 	buffer->unPackField(&size,sizeof(size));
-	buffer->unPackField((char*)subject.c_str(),sizeof(char)*size);
+	buffer->unPackFieldString(to,size);
 
 	buffer->unPackField(&size,sizeof(size));
-	buffer->unPackField((char*)message.c_str(),sizeof(char)*size);
+	buffer->unPackFieldString(subject,size);
 
 	buffer->unPackField(&size,sizeof(size));
-	buffer->unPackField((char*)date.c_str(),sizeof(char)*size);
+	buffer->unPackFieldString(message,size);
+
+	buffer->unPackField(&size,sizeof(size));
+	buffer->unPackFieldString(date,size);
 
 
 
+}
+int Mail::print(){
+	this->getKey()->print();
+	cout << "from: "<<from<< endl;
+	cout << "to: "<<to<< endl;
+	cout << "subject: "<<subject<< endl;
+	cout << "message: "<<message<< endl;
+	cout << "date: "<<date<< endl;
+	return 1;
 }
