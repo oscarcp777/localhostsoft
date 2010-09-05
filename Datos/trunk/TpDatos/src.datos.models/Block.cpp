@@ -18,6 +18,9 @@ int Block::getSize(){
 Buffer* Block::getBuffer(){
   return this->buffer;
 }
+list<Registry*>::iterator Block::iterator(){
+	return this->regList.begin();
+}
 Block::~Block() {
 	list<Registry*>::iterator iterRegistry;
 		Registry* reg;

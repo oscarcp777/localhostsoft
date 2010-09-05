@@ -30,7 +30,7 @@ public:
     Buffer* getBuffer();
     int print();
     int getSize();
-
+    list<Registry*>::iterator iterator();
 private:
 	list<Registry*> regList;
 	int freeSize;
