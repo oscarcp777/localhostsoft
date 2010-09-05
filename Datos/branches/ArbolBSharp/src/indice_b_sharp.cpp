@@ -320,6 +320,7 @@ unsigned int IndiceBSharp::buscar_posicion_insercion_externa(const Registro::pun
 		Registro::puntero registroIterado = static_cast<Registro::puntero>(*primer_registro);
 		if (!this->comparadorClave->es_menor(this->clave, registroIterado, registro)) {
                 	menor = false;
+                	break;
         	}
     	}
 	return posicion_insercion;
@@ -335,6 +336,7 @@ unsigned int IndiceBSharp::buscar_posicion_insercion_interna(const Registro::pun
 			(this->comparadorClave->es_igual(this->clave, registroIterado, registro))) {
         	} else {
                 	menor_igual = false;
+                	break;
 	        }
     	}
 	return posicion_insercion;
@@ -411,9 +413,9 @@ Registro::puntero IndiceBSharp::buscar_bloque_interno(const BloqueInternoBSharp:
 void IndiceBSharp::imprimir_recursivo(const BloqueBSharp::puntero& bloqueActual, std::ostream& streamSalida, unsigned int nivel) throw() {
 	if (bloqueActual != NULL) {
 		streamSalida << std::string(nivel * 4, '-');
-		streamSalida << "NUMERO BLOQUE: " << bloqueActual->obtener_numero_bloque() << " ";
-		streamSalida << "NIVEL: " << bloqueActual->obtener_nivel() << " ";
-		streamSalida << "COMPONENTES BLOQUE: ";
+		streamSalida << "Block: " << bloqueActual->obtener_numero_bloque() << " ";
+		streamSalida << "NVL " << bloqueActual->obtener_nivel() << " ";
+		streamSalida << "REG: ";
 		Bloque::iterador_componentes_constante actualComponente = bloqueActual->primer_componente();
 		Bloque::iterador_componentes_constante finComponente = bloqueActual->ultimo_componente();
 		while (actualComponente != finComponente) {
@@ -422,23 +424,23 @@ void IndiceBSharp::imprimir_recursivo(const BloqueBSharp::puntero& bloqueActual,
 			++actualComponente;
 		}
 		if (bloqueActual->es_hoja()) {
-                        streamSalida << "--EN BLOQUE HOJA--";
+                        streamSalida << "-HOJA-";
                         const BloqueExternoBSharp::puntero& bloqueExterno = static_cast<BloqueExternoBSharp::puntero>(bloqueActual);
-                        streamSalida << "CON SIGUIENTE: " << bloqueExterno->obtener_bloque_siguiente() << " ";
+                        streamSalida << "next " << bloqueExterno->obtener_bloque_siguiente() << "";
 			streamSalida << std::endl;
 	                streamSalida << std::endl;
         	        streamSalida << std::endl;
                 } else {
-                        streamSalida << "--EN BLOQUE INTERNO--";
+                        streamSalida << "-BLOck int-";
                         const BloqueInternoBSharp::puntero& bloqueInterno = static_cast<BloqueInternoBSharp::puntero>(bloqueActual);
                         BloqueInternoBSharp::iterador_rama_constante actualRama = bloqueInterno->primer_rama();
                         BloqueInternoBSharp::iterador_rama_constante finRama = bloqueInterno->ultima_rama();
-			std::cout << "CON RAMAS(";
+			std::cout << "RAMAS(";
                         while (actualRama != finRama) {
                                 streamSalida << " " << *actualRama;
                                 ++actualRama;
                         }
-                        streamSalida << " ) ";
+                        streamSalida << ")";
 			streamSalida << std::endl;
                         streamSalida << std::endl;
                         streamSalida << std::endl;
@@ -459,31 +461,31 @@ void IndiceBSharp::imprimir_recursivo(const BloqueBSharp::puntero& bloqueActual,
 void IndiceBSharp::imprimir_registro(const Registro::puntero& registro, std::ostream& streamSalida) throw() {
 	Registro::iterador_campos_constante actualCampo = registro->primer_campo();
 	Registro::iterador_campos_constante finCampo = registro->ultimo_campo();
-	streamSalida << "( ";
+	streamSalida << "(";
 	while (actualCampo != finCampo) {
-		std::cout << actualCampo->first << ": ";
+		std::cout << actualCampo->first << ":";
 		Campo::puntero campo = actualCampo->second;
 		switch (campo->obtener_tipo_campo()) {
 			case TIPO_CAMPO_BOOLEANO:
-				streamSalida << (*(bool*) campo->obtener_valor()) << " ";
+				streamSalida << (*(bool*) campo->obtener_valor()) << "";
 				break;
 			case TIPO_CAMPO_CADENA:
-                                streamSalida << (*(std::string*) campo->obtener_valor()) << " ";
+                                streamSalida << (*(std::string*) campo->obtener_valor()) << "";
                                 break;
 			case TIPO_CAMPO_DOBLE:
-                                streamSalida << (*(double*) campo->obtener_valor()) << " ";
+                                streamSalida << (*(double*) campo->obtener_valor()) << "";
                                 break;
 			case TIPO_CAMPO_ENTERO:
-                                streamSalida << (*(int*) campo->obtener_valor()) << " ";
+                                streamSalida << (*(int*) campo->obtener_valor()) << "";
                                 break;
 			case TIPO_CAMPO_FLOTANTE:
-                                streamSalida << (*(float*) campo->obtener_valor()) << " ";
+                                streamSalida << (*(float*) campo->obtener_valor()) << "";
                                 break;
 			case TIPO_CAMPO_LARGO:
-                                streamSalida << (*(long*) campo->obtener_valor()) << " ";
+                                streamSalida << (*(long*) campo->obtener_valor()) << "";
                                 break;
 		}
 		++actualCampo;
 	}
-	streamSalida << " )";
+	streamSalida << ")";
 }
