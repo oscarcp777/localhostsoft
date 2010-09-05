@@ -1,4 +1,5 @@
 #include "campo_entero.hpp"
+#include<iostream>
 
 CampoEntero::CampoEntero(int valor) throw(): Campo(), valor(valor) {
 }
@@ -42,7 +43,6 @@ bool CampoEntero::operator < (const Campo& rhs) throw() {
 	}
 	int enteroLhs = (*(int*) this->obtener_valor());
 	int enteroRhs = (*(int*) rhs.obtener_valor());
-
 	return enteroLhs < enteroRhs;
 }
 
@@ -52,7 +52,6 @@ bool CampoEntero::operator > (const Campo& rhs) throw() {
 	}
 	int enteroLhs = (*(int*) this->obtener_valor());
 	int enteroRhs = (*(int*) rhs.obtener_valor());
-
 	return enteroLhs > enteroRhs;
 }
 
