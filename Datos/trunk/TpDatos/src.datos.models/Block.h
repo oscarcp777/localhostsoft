@@ -17,8 +17,8 @@
 
 class Block: public Component {
 public:
-	Block();
-	virtual ~Block();
+	Block(unsigned int maxLong, unsigned int numBlock, unsigned int level) throw();
+	~Block() throw();
 	int getNumElements();
 	int getFreeSize();
 	void addReg(Registry* reg);
@@ -31,10 +31,45 @@ public:
     int print();
     int getSize();
     list<Registry*>::iterator iterator();
+
+    /* Obtiene el numero de bloque en el arbol B sharp.
+     */
+    unsigned int getNumBlock() const throw();
+    /**
+     * Establece el numero de bloque en el arbol B sharp.
+     */
+    void setNumBlock(unsigned int numBlock) throw();
+    /**
+     * Obtiene el nivel del bloque en el arbol B sharp.
+     */
+    unsigned int getLevel() const throw();
+    /**
+     * Establece el nivel del bloque en el arbol B sharp.
+     */
+    void setLevel(unsigned int level) throw();
+    /**
+     * Devuelve si el bloque es hoja o no, si su nivel es 0.
+     */
+    virtual bool isLeaf() const throw();
+    /**
+     * Agrega un componente al bloque en el arbol b sharp.
+     */
+    virtual void addComponent(Component* component) throw();
+    /**
+     * Agrega un componente al bloque en el arbol B sharp en la posicion especificada.
+     */
+    virtual void addComponent(Component* component, int pos/*, ComponenteCompuesto::iterador_componentes posicion*/) throw();
+    /**
+     * Obtiene la longitud en bytes ocupada del bloque.
+     */
+    //virtual unsigned int obtener_longitud_ocupada() const throw();
+
 private:
 	list<Registry*> regList;
 	int freeSize;
 	Buffer* buffer;
+	unsigned int numBlock;
+	unsigned int level;
 };
 
 #endif /* BLOCK_H_ */

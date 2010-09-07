@@ -7,10 +7,18 @@
 
 #include "Block.h"
 
-Block::Block() {
+Block::Block(unsigned int maxLong, unsigned int numBlock, unsigned int level) throw(){
 	this->freeSize=BLOCK_SIZE;
 	this->buffer= new Buffer(BLOCK_SIZE);
 
+}
+Block::~Block() throw(){
+	list<Registry*>::iterator iterRegistry;
+		Registry* reg;
+		for (iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
+			reg=*iterRegistry;
+			delete reg;
+		}
 }
 int Block::getSize(){
    return BLOCK_SIZE;
@@ -20,14 +28,6 @@ Buffer* Block::getBuffer(){
 }
 list<Registry*>::iterator Block::iterator(){
 	return this->regList.begin();
-}
-Block::~Block() {
-	list<Registry*>::iterator iterRegistry;
-		Registry* reg;
-		for (iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
-			reg=*iterRegistry;
-			delete reg;
-		}
 }
 int Block::getNumElements(){
 	return this->regList.size();
@@ -100,3 +100,50 @@ int Block::print(){
 		}
 		return 1;
 }
+
+unsigned int Block::getNumBlock() const throw(){
+	return this->numBlock;
+}
+
+void Block::setNumBlock(unsigned int numBlock) throw(){
+	this->numBlock = numBlock;
+}
+
+unsigned int Block::getLevel() const throw(){
+	return this->level;
+}
+
+void Block::setLevel(unsigned int level) throw(){
+	this->level = level;
+}
+
+bool Block::isLeaf() const throw(){
+	return this->getLevel() == 0;
+}
+
+void Block::addComponent(Component* component) throw(){
+	//TODO MODIFICAR CODIFO TOPO
+	//	if (componente != NULL) {
+//			if (this->puede_agregar_componente(componente)) {
+//			            Bloque::agregar_componente(componente);
+//			}
+//		} else {
+//			std::cout << "No se pudo agregar en bloque BSharp... " << std::endl;
+//		}
+}
+
+void Block::addComponent(Component* component, int pos/*, ComponenteCompuesto::iterador_componentes posicion*/) throw(){
+	//TODO MODIFICAR CODIFO TOPO
+	//	if (componente != NULL) {
+//		if (this->puede_agregar_componente(componente)) {
+//			Bloque::agregar_componente(componente, posicion);
+//		}
+//	}
+}
+////TODO borrar este metodo??
+//unsigned int BloqueBSharp::obtener_longitud_ocupada() const throw() {
+//	unsigned int longitud_ocupada = Bloque::obtener_longitud_ocupada();
+//	longitud_ocupada += sizeof(unsigned int);
+//	longitud_ocupada += sizeof(unsigned int);
+//	return longitud_ocupada;
+//}

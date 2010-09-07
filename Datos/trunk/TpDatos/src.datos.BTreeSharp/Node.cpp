@@ -7,11 +7,11 @@
 
 #include "Node.h"
 
-Node::Node(int typeElement) {
+Node::Node(int typeElement,unsigned int maxLong, unsigned int numBlock, unsigned int level) throw():Block(maxLong,numBlock,level){
 	this->typeElement = typeElement;
 }
 
-Node::~Node() {
+Node::~Node() throw(){
 	// TODO Auto-generated destructor stub
 }
 int Node::getTypeElement(){

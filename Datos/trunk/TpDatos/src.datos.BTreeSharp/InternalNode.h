@@ -12,8 +12,12 @@
 
 class InternalNode: public Node {
 public:
-	InternalNode(int typeElement);
-	virtual ~InternalNode();
+	InternalNode(int typeElement,unsigned int maxLong, unsigned int numBlock, unsigned int level)throw();
+	virtual ~InternalNode()throw();
+	virtual bool isLeaf() const throw();
+	virtual void addComponent(Component* component) throw();
+	virtual void addComponent(Component* component,int pos/*, ComponenteCompuesto::iterador_componentes posicion*/) throw();
+
 };
 
 #endif /* INTERNALNODE_H_ */

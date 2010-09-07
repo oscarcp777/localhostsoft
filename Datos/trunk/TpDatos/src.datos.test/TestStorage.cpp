@@ -47,7 +47,7 @@ void TestStorage::testMails(){
 }
 void TestStorage::testBlock(){
 	BinaryFile* file = new BinaryFile();
-    Block* block = new Block();
+	Block* block = new Block(200,0,0);
 	Mail* mail1 = new Mail();
 	mail1->setKey(new Key("100"));
 	mail1->setDate("27/8/2009");
@@ -79,7 +79,7 @@ void TestStorage::testBlock(){
 	file->writeBlock(block,0);
 	file->close();
 
-	Block* block2 = new Block();
+	Block* block2 = new Block(200,0,0);
 	file->open("PruebaMail.dat");
 	file->readBlock(block2,0);
 	file->close();

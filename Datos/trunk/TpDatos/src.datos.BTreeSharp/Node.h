@@ -11,10 +11,13 @@
 
 class Node: public Block {
 public:
-	Node(int typeElement);
-	virtual ~Node();
+	Node(int typeElement,unsigned int maxLong, unsigned int numBlock, unsigned int level)throw();
+	virtual ~Node()throw();
     int getTypeElement();
     void setTypeElement(int typeElement);
+    virtual bool isLeaf() const throw() = 0;
+    virtual void addComponent(Component* component) throw() = 0;
+    virtual void addComponent(Component* component,int pos/*, ComponenteCompuesto::iterador_componentes posicion*/) throw() = 0;
 
 protected:
 	int typeElement;
