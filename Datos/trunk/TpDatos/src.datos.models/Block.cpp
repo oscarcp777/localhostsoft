@@ -140,10 +140,37 @@ void Block::addComponent(Component* component, int pos/*, ComponenteCompuesto::i
 //		}
 //	}
 }
-////TODO borrar este metodo??
-//unsigned int BloqueBSharp::obtener_longitud_ocupada() const throw() {
+unsigned int Block::getOcupedLong() const throw() {
 //	unsigned int longitud_ocupada = Bloque::obtener_longitud_ocupada();
 //	longitud_ocupada += sizeof(unsigned int);
 //	longitud_ocupada += sizeof(unsigned int);
 //	return longitud_ocupada;
-//}
+	return this->maxLong - this->freeSize;
+}
+
+unsigned int Block::getLongBytes() const throw(){
+	return maxLong;
+
+}
+
+unsigned int Block::getMaxLong() const throw(){
+	return maxLong;
+}
+
+void Block::setMaxLong(unsigned int maxLong) throw(){
+	this->maxLong = maxLong;
+}
+int Block::getLongBytes(){
+	return this->maxLong;
+}
+bool Block::posibleToAgregateComponent(Component* component) const throw(){
+	unsigned int ocupedLong = this->getOcupedLong();
+	if (component != NULL) {
+		if (ocupedLong + component->getLongBytes() <= this->getMaxLong()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	return true;
+}

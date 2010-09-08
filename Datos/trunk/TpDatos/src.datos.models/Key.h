@@ -23,6 +23,7 @@ public:
 	void pack(Buffer* buffer);
 	void unPack(Buffer* buffer);
     int print();
+    int getLongBytes();
 private:
 	string value;
 };

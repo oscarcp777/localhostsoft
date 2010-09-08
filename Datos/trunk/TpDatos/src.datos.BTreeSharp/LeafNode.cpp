@@ -25,3 +25,10 @@ void LeafNode::addComponent(Component* component) throw(){
 void LeafNode::addComponent(Component* component,int pos/*, ComponenteCompuesto::iterador_componentes posicion*/) throw(){
 
 }
+int LeafNode::getNextBlock() const throw(){
+	return this->nextNode;
+}
+
+void LeafNode::setNextBlock(int numBlock) throw(){
+	this->nextNode = numBlock;
+}

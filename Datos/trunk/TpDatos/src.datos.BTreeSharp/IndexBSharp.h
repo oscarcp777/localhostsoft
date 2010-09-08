@@ -18,6 +18,7 @@ class IndexBSharp {
 public:
 	IndexBSharp(const std::string& nameFile, int sizeBlock,int typeElement);
 	virtual ~IndexBSharp();
+	int getLongBytes();
 	/**
 	 * Agrega un registro en el indice b sharp.
 	 */

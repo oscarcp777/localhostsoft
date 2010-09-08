@@ -46,3 +46,7 @@ int  Key::print(){
      cout<<"Clave : "<<this->value<<endl;
      return 1;
 }
+int Key::getLongBytes(){
+	//TODO
+	return this->value.length();
+}

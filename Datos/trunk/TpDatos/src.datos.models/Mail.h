@@ -31,6 +31,7 @@ public:
 	void unPack(Buffer* buffer);
 	bool equals(Registry* comp);
 	int print();
+	int getLongBytes();
 private:
 	string from;
 	string to;

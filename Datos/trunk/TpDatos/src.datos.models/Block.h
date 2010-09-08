@@ -30,6 +30,7 @@ public:
     Buffer* getBuffer();
     int print();
     int getSize();
+    virtual int getLongBytes();
     list<Registry*>::iterator iterator();
 
     /* Obtiene el numero de bloque en el arbol B sharp.
@@ -61,15 +62,29 @@ public:
     virtual void addComponent(Component* component, int pos/*, ComponenteCompuesto::iterador_componentes posicion*/) throw();
     /**
      * Obtiene la longitud en bytes ocupada del bloque.
+     * */
+    virtual unsigned int getOcupedLong() const throw();
+    /**
+     * Obtiene la longitud maxima en bytes del bloque.
      */
-    //virtual unsigned int obtener_longitud_ocupada() const throw();
+    unsigned int getMaxLong() const throw();
+    /**
+     * Establece la longitud maxima en bytes del bloque.
+     */
+    void setMaxLong(unsigned int maxLong) throw();
+    /**
+     * Obtiene la longitud en bytes  del bloque.
+     */
+    virtual unsigned int getLongBytes() const throw();
 
+    virtual bool posibleToAgregateComponent(Component* component) const throw();
 private:
 	list<Registry*> regList;
 	int freeSize;
 	Buffer* buffer;
 	unsigned int numBlock;
 	unsigned int level;
+	unsigned int maxLong;
 };
 
 #endif /* BLOCK_H_ */

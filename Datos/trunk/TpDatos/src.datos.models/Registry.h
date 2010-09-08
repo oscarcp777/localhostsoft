@@ -21,6 +21,7 @@ public:
 	void setKey(Key* key);
 	virtual void pack(Buffer* buffer)=0;
 	virtual void unPack(Buffer* buffer)=0;
+	virtual int getLongBytes() = 0;
 protected:
 	Key* key;
 };

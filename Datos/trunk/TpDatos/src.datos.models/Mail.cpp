@@ -70,6 +70,9 @@ int Mail::getSize(){
 	return from.length()+to.length()+subject.length()+message.length()+date.length()
 		+NUM_FIELDS_MAILS*sizeof(int)+this->getKey()->getSize();
 }
+int Mail::getLongBytes(){
+	return getSize();
+}
 bool Mail::equals(Registry* comp){
 	return false;
 }
