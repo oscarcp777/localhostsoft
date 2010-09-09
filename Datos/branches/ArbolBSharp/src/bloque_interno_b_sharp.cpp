@@ -1,4 +1,5 @@
 #include "bloque_interno_b_sharp.hpp"
+#include <iostream>
 
 BloqueInternoBSharp::BloqueInternoBSharp(unsigned int longitud_maxima, unsigned int numero_bloque, unsigned int nivel) throw(): BloqueBSharp(longitud_maxima, numero_bloque, nivel) {
 }

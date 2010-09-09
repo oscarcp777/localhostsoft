@@ -104,8 +104,9 @@ bool IndiceBSharp::insertar_bloque_externo(BloqueExternoBSharp::puntero& bloqueE
 		this->insertar_bloque_externo_no_lleno(bloqueExterno, registro);
 	} else {
 		// LEO BLOQUE DE LA DIR DEL HERMANO
+		BloqueBSharp::puntero bloqueRamaHermana = this->estrategiaAlmacenamiento->leer_bloque(bloque_hermano, this->archivoIndice);
 		// BALANCEO
-
+		this->balanceoOverflow()
 
 		// Hubo sobreflujo
 		hubo_sobreflujo = true;
@@ -147,6 +148,8 @@ void IndiceBSharp::insertar_bloque_externo_lleno(BloqueExternoBSharp::puntero& b
 	// Inserta ordenado el registro
 	lista_registros.insert(lista_registros.begin() + posicion_insercion, registro);
 
+	//DONI-FAQ    BALANCEAR POR TAMAÑO NO BUSCAR ELEMENTO MEDIO DE LA LISTA
+	//SE LLENA EL BLOQUE DE LA DERECHA HASTA SUPERAR LOS 2/3, LUEGO SE CARGA EL
 	// Obtiene elemento medio...
 	BloqueExternoBSharp::iterador_componentes posicion_medio = lista_registros.begin() + (lista_registros.size() / 2);
 
@@ -189,9 +192,10 @@ bool IndiceBSharp::insertar_bloque_interno(BloqueInternoBSharp::puntero& bloqueI
 	bool hay_sobreflujo = false;
 	// Busco la rama por la cual insertar
 	int rama_insertar = this->buscar_rama(bloqueInterno, registroClave);
+	std::cout<<"Rama: "<< rama_insertar<<std::endl;
 	//OBTENER RAMA HERMANA PARA ENVIAR A LOS INSERTAR DE MAS ABAJO, ES LA RAMA DERECHA POR DEFECTO, SINO LA IZQ
-	//int rama_hermana = bloqueRamaInsertar->
-
+	int rama_hermana = this->buscar_rama_hermana(bloqueInterno, registroClave);
+	std::cout<<"Rama Hermana: "<< rama_hermana<<std::endl;
 
 	// Leo el bloque por el cual insertar
 	BloqueBSharp::puntero bloqueRamaInsertar = this->estrategiaAlmacenamiento->leer_bloque(rama_insertar, this->archivoIndice);
@@ -203,11 +207,11 @@ bool IndiceBSharp::insertar_bloque_interno(BloqueInternoBSharp::puntero& bloqueI
 			//MANDAR TAMBIEN POR PARAMETRO EL NUMERO DE BLOQUE QUE CONSEGUI
 			BloqueExternoBSharp::puntero bloqueExternoInsertar(bloqueRamaInsertar);
 			// Inserto en el bloque externo hijo
-			hay_sobreflujo_hijo = this->insertar_bloque_externo(bloqueExternoInsertar, registroClave, resultado, NULL);
+			hay_sobreflujo_hijo = this->insertar_bloque_externo(bloqueExternoInsertar, registroClave, resultado, rama_hermana);
 		} else {
 			BloqueInternoBSharp::puntero bloqueInternoInsertar(bloqueRamaInsertar);
 			// Inserto en el bloque interno hijo
-			hay_sobreflujo_hijo = this->insertar_bloque_interno(bloqueInternoInsertar, registroClave, resultado, NULL);
+			hay_sobreflujo_hijo = this->insertar_bloque_interno(bloqueInternoInsertar, registroClave, resultado, rama_hermana);
 		}
 
 		// Verifico si hubo sobrelujo al insertar en el bloque hijo
@@ -259,8 +263,8 @@ void IndiceBSharp::insertar_bloque_interno_lleno(BloqueInternoBSharp::puntero& b
 	// Creo nuevo bloque interno para dividir
 	BloqueInternoBSharp::puntero nuevoBloqueInterno = new BloqueInternoBSharp(this->longitud_bloque, numero_bloque_libre, bloqueInterno->obtener_nivel());
 
-        // Crea contenedor de componentes para insertar ordenado el registro...
-        BloqueInternoBSharp::contenedor_componentes lista_registros;
+    // Crea contenedor de componentes para insertar ordenado el registro...
+    BloqueInternoBSharp::contenedor_componentes lista_registros;
 	// Crea contenedor de ramas para insertar la rama nueva...
 	BloqueInternoBSharp::contenedor_ramas lista_ramas;
 
@@ -370,33 +374,36 @@ int IndiceBSharp::buscar_rama(const BloqueInternoBSharp::puntero& bloqueInterno,
 		++actualComponente;
 		++posicion_rama;
 	}
-
 	return bloqueInterno->obtener_rama(posicion_rama);
 }
 
-//int IndiceBSharp::buscar_rama_hermana(const BloqueInternoBSharp::puntero& bloqueInterno) throw() {
-//	BloqueInternoBSharp::iterador_componentes_constante actualComponente = bloqueInterno->primer_componente();
-//	BloqueInternoBSharp::iterador_componentes_constante finComponente = bloqueInterno->ultimo_componente();
-//	unsigned int rama_hermana = 0;
-//	unsigned int posicion_rama = 0;
-//
-//	while (actualComponente != finComponente) {
-//			if (this->comparadorClave->es_menor(this->clave, registro, Registro::puntero(*actualComponente))) {
-//				break;
-//			}
-//			++actualComponente;
-//			++posicion_rama;
-//	}
-//
-//	if (actualComponente != finComponente) {
-//		rama_hermana = posicion_rama - 1;
-//	}
-//	else{
-//		rama_hermana = posicion_rama + 1;
-//	}
-//
-//	return bloqueInterno->obtener_rama(rama_hermana);
-//}
+int IndiceBSharp::buscar_rama_hermana(const BloqueInternoBSharp::puntero& bloqueInterno, const Registro::puntero& registro) throw() {
+	BloqueInternoBSharp::iterador_componentes_constante actualComponente = bloqueInterno->primer_componente();
+	BloqueInternoBSharp::iterador_componentes_constante finComponente = bloqueInterno->ultimo_componente();
+	unsigned int rama_hermana = 0;
+	unsigned int posicion_rama = 0;
+
+	while (actualComponente != finComponente) {
+			if (this->comparadorClave->es_menor(this->clave, registro, Registro::puntero(*actualComponente))) {
+				break;
+			}
+			++actualComponente;
+			++posicion_rama;
+	}
+
+	if (actualComponente == finComponente) {
+		rama_hermana = posicion_rama - 1;
+	}
+	else{
+		rama_hermana = posicion_rama + 1;
+	}
+
+	return bloqueInterno->obtener_rama(rama_hermana);
+}
+
+bool IndiceBSharp::balancearBloques(const Registro::puntero& registro, BloqueExternoBSharp::puntero& bloqueIzquierdo, BloqueExternoBSharp::puntero& bloqueDerecho) throw(){
+
+}
 
 
 Registro::puntero IndiceBSharp::extraer_clave(const Registro::puntero& registro) throw() {

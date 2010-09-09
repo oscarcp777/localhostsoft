@@ -144,6 +144,14 @@ class IndiceBSharp: public EstrategiaIndice {
 		 */
 		int buscar_rama(const BloqueInternoBSharp::puntero& bloqueInterno, const Registro::puntero& registro) throw();
 		/**
+		 * Busca la rama hermana, por la cual se balancea (mergea o splitea) si no puede insertar
+		 */
+		int buscar_rama_hermana(const BloqueInternoBSharp::puntero& bloqueInterno, const Registro::puntero& registro) throw();
+		/**
+		 * Busca insertar el registro balanceando cargas entre el bloque en cuestion y su hermano (derecho o izquierdo)
+		 */
+		bool balancearBloques(const Registro::puntero& registro, BloqueExternoBSharp::puntero& bloqueIzquierdo, BloqueExternoBSharp::puntero& bloqueDerecho){
+		/**
 		 * Estrae la clave de un registro al momento de hacer un split de un bloque hoja.
 		 */
 		Registro::puntero extraer_clave(const Registro::puntero& registro) throw();
