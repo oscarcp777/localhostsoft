@@ -9,12 +9,26 @@
 #include <iostream>
 #include <sstream>
 #include "TestStorage.h"
+#include "TestMailBlockManager.h"
+
 using namespace std;
 
 int main() {
-	cout << "!!!malditos monos !!!" << endl; // prints !!!Hello World!!!
+/*
+	//TEST STORAGE
    TestStorage* teststorage = new TestStorage();
    teststorage->testBlock();
    delete teststorage;
-	return 0;
+
+*/
+
+//***********************************************
+   	//TEST MAIL BLOCK MANAGER
+      TestMailBlockManager* testMailManager = new TestMailBlockManager();
+      //testMailManager->testPackMail();
+      testMailManager->testUnpackMail();
+      delete testMailManager;
+//***********************************************
+
+   return 0;
 }
