@@ -16,7 +16,7 @@
 #include <list>
 class IndexBSharp {
 public:
-	IndexBSharp(const std::string& nameFile, int sizeBlock,int typeElement);
+	IndexBSharp(const std::string& nameFile,unsigned int sizeBlock,int typeElement);
 	virtual ~IndexBSharp();
 	int getLongBytes();
 	/**
@@ -30,12 +30,28 @@ public:
 	/**
 	 * Busca un registro en el indice b sharp.
 	 */
-	 void searchRegistry(Registry* registry) throw();
+	 Registry* searchRegistry(Registry* registry) throw();
 	/**
 	 * Imprime el arbol en el stream de salida pasado por parametro.
 	 */
 	void print(std::ostream& streamSalida) throw();
 private:
+	/**
+	 * lee de la posicion de  disco el numero de bloque pasado por parametro
+	 */
+	Node* readNode(unsigned int pos) throw() ;
+	/**
+	 *
+	 */
+	Node* readNodeBytes(Buffer* buffer) throw();
+	/**
+	 *Lee y desenpaqueta un nodo interno de disco
+	 */
+	Node* readInternalNodeBytes(Buffer* buffer) throw();
+	/**
+	 * Lee y desenpaqueta un nodo hoja de disco
+	 */
+	Node* readLeafNodeBytes(Buffer* buffer) throw();
 		/**
 		 * Crea el bloque raiz del indice b sharp.
 		 */
@@ -140,6 +156,10 @@ private:
 		 * Almacena la longitud de los bloques del indice b sharp.
 		 */
 		unsigned int sizeBlock;
+		/**
+		 * clase para cargar los bytes del bloque
+		 */
+		Buffer* buffer;
 		/**
 		 * Almacena el archivo del indice b sharp.
 		 */

@@ -11,6 +11,7 @@
 
 class Node: public Block {
 public:
+	Node();
 	Node(int typeElement,unsigned int maxLong, unsigned int numBlock, unsigned int level)throw();
 	virtual ~Node()throw();
     int getTypeElement();

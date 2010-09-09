@@ -71,17 +71,19 @@ void TestStorage::testBlock(){
 	mail3->setMessage("trabajode nada de nada");
 	mail3->setSubject("trabajo trabajo");
 	mail3->setTo("yogui");
-
+   Buffer* buffer= new Buffer(200);
 	block->addReg(mail1);
 	block->addReg(mail2);
 	block->addReg(mail3);
+	block->pack(buffer);
 	file->create("PruebaMail.dat");
-	file->writeBlock(block,0);
+	file->write(buffer->getData(),0);
 	file->close();
 
 	Block* block2 = new Block(200,0,0);
 	file->open("PruebaMail.dat");
-	file->readBlock(block2,0);
+	file->read(buffer->getData(),0);
+	block->unPack(buffer);
 	file->close();
 
     block2->print();

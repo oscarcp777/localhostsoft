@@ -12,6 +12,7 @@
 
 class LeafNode: public Node {
 public:
+	LeafNode();
 	LeafNode(int typeElement,unsigned int maxLong, unsigned int numBlock, unsigned int level)throw();
 	virtual ~LeafNode()throw();
 	virtual bool isLeaf() const throw();

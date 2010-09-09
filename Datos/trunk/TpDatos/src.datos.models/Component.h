@@ -19,6 +19,8 @@ public:
 	virtual int getSize()=0;
 	virtual int print()=0;
 	virtual int getLongBytes() = 0;
+	virtual void pack(Buffer* buffer)=0;
+	virtual void unPack(Buffer* buffer)=0;
 };
 
 #endif /* COMPONENT_H_ */

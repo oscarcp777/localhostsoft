@@ -16,6 +16,7 @@
 
 class InternalNode: public Node {
 public:
+	InternalNode();
 	InternalNode(int typeElement,unsigned int maxLong, unsigned int numBlock, unsigned int level)throw();
 	virtual ~InternalNode()throw();
 	virtual bool isLeaf() const throw();

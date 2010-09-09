@@ -11,7 +11,8 @@ LeafNode::LeafNode(int type,unsigned int maxLong, unsigned int numBlock, unsigne
 	// TODO Auto-generated constructor stub
 
 }
-
+LeafNode::LeafNode(){
+}
 LeafNode::~LeafNode()throw() {
 	// TODO Auto-generated destructor stub
 }

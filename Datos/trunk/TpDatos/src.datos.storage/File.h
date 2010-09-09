@@ -35,7 +35,7 @@ public:
       *  Si no puede escribir, arroja una excepción
       */
     void read(std::string & datos);
-    void read(char *buffer, int tamanio, int pos=-1);
+    bool read(char *buffer, int tamanio, int pos=-1);
     void readInteger(int* num, int pos=-1);
 
     /**

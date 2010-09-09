@@ -19,15 +19,15 @@ class Block: public Component {
 public:
 	Block(unsigned int maxLong, unsigned int numBlock, unsigned int level) throw();
 	~Block() throw();
+	Block();
 	int getNumElements();
 	int getFreeSize();
 	void addReg(Registry* reg);
 	Registry* getReg(Key* key);
-	void pack();
-	void unPack();
-	void packMetadata();
-	int unPackMetadata();
-    Buffer* getBuffer();
+	void pack(Buffer* buffer);
+	void unPack(Buffer* buffer);
+	void packMetadata(Buffer* buffer);
+	int unPackMetadata(Buffer* buffer);
     int print();
     int getSize();
     virtual int getLongBytes();
@@ -81,7 +81,6 @@ public:
 private:
 	list<Registry*> regList;
 	int freeSize;
-	Buffer* buffer;
 	unsigned int numBlock;
 	unsigned int level;
 	unsigned int maxLong;

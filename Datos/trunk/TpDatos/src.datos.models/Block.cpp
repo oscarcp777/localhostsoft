@@ -9,7 +9,8 @@
 
 Block::Block(unsigned int maxLong, unsigned int numBlock, unsigned int level) throw(){
 	this->freeSize=BLOCK_SIZE;
-	this->buffer= new Buffer(BLOCK_SIZE);
+}
+Block::Block(){
 
 }
 Block::~Block() throw(){
@@ -23,9 +24,7 @@ Block::~Block() throw(){
 int Block::getSize(){
    return BLOCK_SIZE;
 }
-Buffer* Block::getBuffer(){
-  return this->buffer;
-}
+
 list<Registry*>::iterator Block::iterator(){
 	return this->regList.begin();
 }
@@ -54,21 +53,21 @@ Registry* Block::getReg(Key* key){
 	}
 	return NULL;
 }
-void Block::pack(){
+void Block::pack(Buffer* buffer){
 	list<Registry*>::iterator iterRegistry;
 	Registry* reg;
-	this->packMetadata();
+	this->packMetadata(buffer);
 	for (iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
 		reg=*iterRegistry;
-		reg->pack(this->buffer);
+		reg->pack(buffer);
 	}
 
 }
-void Block::unPack(){
+void Block::unPack(Buffer* buffer){
 	list<Registry*>::iterator iterRegistry;
 	Registry* reg;
 	int numberElements;
-	numberElements = this->unPackMetadata();
+	numberElements = this->unPackMetadata(buffer);
 	//TODO llamar a la fabrica con una constante para saber que clase instanciar
 
 	for(int i=0; i<numberElements; i++){
@@ -76,19 +75,19 @@ void Block::unPack(){
 	}
 	for (iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
 		reg=*iterRegistry;
-		reg->unPack(this->buffer);
+		reg->unPack(buffer);
 	}
 }
 
-void Block::packMetadata(){
+void Block::packMetadata(Buffer* buffer){
 	int numberElements = this->regList.size();
-	this->buffer->packField(&numberElements, sizeof(numberElements));
-	this->buffer->packField(&this->freeSize, sizeof(this->freeSize));
+    buffer->packField(&numberElements, sizeof(numberElements));
+	buffer->packField(&this->freeSize, sizeof(this->freeSize));
 }
-int Block::unPackMetadata(){
+int Block::unPackMetadata(Buffer* buffer){
 	int numberElements;
-	this->buffer->unPackField(&numberElements,sizeof(numberElements));
-	this->buffer->unPackField(&this->freeSize,sizeof(this->freeSize));
+	buffer->unPackField(&numberElements,sizeof(numberElements));
+	buffer->unPackField(&this->freeSize,sizeof(this->freeSize));
 	return numberElements;
 }
 int Block::print(){

@@ -7,42 +7,108 @@
 
 #include "IndexBSharp.h"
 
-IndexBSharp::IndexBSharp(const std::string& nameFile, int sizeBlock,int typeElement){
-	// TODO Auto-generated constructor stub
-
+IndexBSharp::IndexBSharp(const std::string& nameFile,unsigned int sizeBlock,int typeElement){
+	this->sizeBlock=sizeBlock;
+	this->typeElement=typeElement;
+	this->binaryFile= new BinaryFile();
+	this->binaryFile->create(nameFile);
+	this->buffer= new Buffer(sizeBlock);
+	this->readBlockRoot();
 }
 
 IndexBSharp::~IndexBSharp() {
-	// TODO Auto-generated destructor stub
+	this->binaryFile->close();
+	delete this->binaryFile;
 }
 
 void IndexBSharp::addRegistry(Registry* registry) throw(){
+	ContainerInsertion* containerInsertion=NULL;
+	bool isOverflow = false;
+	if (this->rootNode->isLeaf()){
+		LeafNode* leafNode = static_cast<LeafNode*>(this->rootNode);
+		isOverflow = this->insertLeafNode(leafNode, registry, containerInsertion);
+	} else {
+		InternalNode* internalNode  = static_cast<InternalNode*>(this->rootNode);
+		isOverflow = this->insertInternalNode(internalNode, registry, containerInsertion);
+	}
+
+	if (isOverflow) {
+		this->splitRoot(containerInsertion);
+	}
 
 }
 
 void IndexBSharp::deleteRegistry(Registry* registry) throw(){
 
 }
-void IndexBSharp::searchRegistry(Registry* registry) throw(){
-
+Registry* IndexBSharp::searchRegistry(Registry* registry) throw(){
+	if (this->rootNode->isLeaf()){
+		LeafNode* leafNode = static_cast<LeafNode*>(this->rootNode);
+		return this->searchLeafNode(leafNode, registry);
+	} else {
+		InternalNode* internalNode  = static_cast<InternalNode*>(this->rootNode);
+		return this->searchInternalNode(internalNode, registry);
+	}
 }
 void IndexBSharp::print(std::ostream& streamSalida) throw(){
-
+	this->printRecursive(this->rootNode,streamSalida,0);
 }
 void IndexBSharp::createBlockRoot() throw(){
-
+	// Instancia un nuevo bloque raiz
+	this->rootNode = new LeafNode(this->typeElement,this->sizeBlock, 0,0);
+	// Ecscribe bloque raiz
+	this->writeBlockRoot();
 }
 void IndexBSharp::readBlockRoot() throw(){
-
+	this->rootNode= this->readNode(0);
+	if (this->rootNode== NULL) {
+		this->createBlockRoot();
+	}
 }
 void IndexBSharp::writeBlockRoot() throw(){
-
+//	bool exitoso = this->binaryFile->writeBlock(this->rootNode, 0);
+//	if (!exitoso) {
+//		this->estrategiaEspacioLibre->buscar_espacio_libre();
+//		this->estrategiaEspacioLibre->escribir_espacio_ocupado(0, this->bloqueRaiz->obtener_longitud_ocupada());
+//		this->estrategiaAlmacenamiento->agregar_bloque(this->bloqueRaiz, this->archivoIndice);
+//	}
+}
+Node* IndexBSharp::readNode(unsigned int pos) throw() {
+	this->buffer->clear();
+	if(this->binaryFile->read(buffer->getData(), pos)){
+		Node* node = readNodeBytes(buffer);
+		return node;
+	}else {
+		return NULL;
+	}
+}
+Node* IndexBSharp::readNodeBytes(Buffer* buffer) throw(){
+	unsigned int levelNode;
+	if (buffer->getData() != NULL) {
+		buffer->unPackField(&levelNode, sizeof(levelNode));
+		if (levelNode == 0) {
+			return readLeafNodeBytes(buffer);
+		} else {
+			return readInternalNodeBytes(buffer);
+		}
+	}
+	return NULL;
+}
+Node* IndexBSharp::readInternalNodeBytes(Buffer* buffer) throw(){
+	InternalNode* internalNode= new InternalNode();
+	internalNode->unPack(buffer);
+	return internalNode;
+}
+Node* IndexBSharp::readLeafNodeBytes(Buffer* buffer) throw(){
+	LeafNode* leafNode= new LeafNode();
+	leafNode->unPack(buffer);
+	return leafNode;
 }
 void IndexBSharp::splitRoot(ContainerInsertion* container) throw(){
 
 }
 bool IndexBSharp::insertLeafNode(LeafNode* leafNode,Registry* registry,ContainerInsertion* container) throw(){
- return true;
+	return true;
 }
 void IndexBSharp::insertLeafNodeNotFull(LeafNode* leafNode,Registry* registry) throw(){
 

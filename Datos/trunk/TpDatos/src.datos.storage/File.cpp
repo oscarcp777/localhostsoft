@@ -18,14 +18,6 @@ File::~File() {
 void File::flush(){
     this->file.flush();
 }
-void File::writeBlock(Block* block, int pos){
-	block->pack();
-	this->write(block->getBuffer()->getData(),block->getBuffer()->getMaxBytes(),pos);
-}
- void File::readBlock(Block* block, int pos){
-	 this->read(block->getBuffer()->getData(),block->getBuffer()->getMaxBytes(),pos);
-	 block->unPack();
-   }
 void File::read(std::string& datos){
 
 	/* verifica que el file esté abierto */
@@ -44,7 +36,7 @@ void File::read(std::string& datos){
 }
 
 
-void File::read(char* buffer, int tamanio, int pos){
+bool File::read(char* buffer, int tamanio, int pos){
 
 	if (this->file.is_open()) {
 		if(pos>=0)
@@ -55,6 +47,12 @@ void File::read(char* buffer, int tamanio, int pos){
 		/* arroja una excepción porque el file no está abierto */
 		throw string("File not open");
 	}
+	bool good = this->file.good();
+
+		if (!good) {
+			this->file.clear();
+		}
+		return good;
 
 }
 void File::readInteger(int* num, int pos){

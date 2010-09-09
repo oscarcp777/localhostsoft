@@ -11,7 +11,8 @@ using namespace std;
 InternalNode::InternalNode(int type,unsigned int maxLong, unsigned int numBlock, unsigned int level) throw():Node(type,maxLong,numBlock,level){
 
 }
-
+InternalNode::InternalNode() {
+}
 InternalNode::~InternalNode() throw(){
 	// TODO Auto-generated destructor stub
 }
