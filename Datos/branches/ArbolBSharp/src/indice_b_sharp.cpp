@@ -106,7 +106,8 @@ bool IndiceBSharp::insertar_bloque_externo(BloqueExternoBSharp::puntero& bloqueE
 		// LEO BLOQUE DE LA DIR DEL HERMANO
 		BloqueBSharp::puntero bloqueRamaHermana = this->estrategiaAlmacenamiento->leer_bloque(bloque_hermano, this->archivoIndice);
 		// BALANCEO
-		this->balanceoOverflow()
+		//this->balanceoOverflow()
+
 
 		// Hubo sobreflujo
 		hubo_sobreflujo = true;
@@ -402,7 +403,7 @@ int IndiceBSharp::buscar_rama_hermana(const BloqueInternoBSharp::puntero& bloque
 }
 
 bool IndiceBSharp::balancearBloques(const Registro::puntero& registro, BloqueExternoBSharp::puntero& bloqueIzquierdo, BloqueExternoBSharp::puntero& bloqueDerecho) throw(){
-
+return false;
 }
 
 

@@ -150,7 +150,7 @@ class IndiceBSharp: public EstrategiaIndice {
 		/**
 		 * Busca insertar el registro balanceando cargas entre el bloque en cuestion y su hermano (derecho o izquierdo)
 		 */
-		bool balancearBloques(const Registro::puntero& registro, BloqueExternoBSharp::puntero& bloqueIzquierdo, BloqueExternoBSharp::puntero& bloqueDerecho){
+		bool balancearBloques(const Registro::puntero& registro, BloqueExternoBSharp::puntero& bloqueIzquierdo, BloqueExternoBSharp::puntero& bloqueDerecho) throw();
 		/**
 		 * Estrae la clave de un registro al momento de hacer un split de un bloque hoja.
 		 */
