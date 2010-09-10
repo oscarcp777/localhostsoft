@@ -29,7 +29,7 @@ void TestMailBlockManager::testPackMail(){
 
 	mailUno->setDate("27/8/2009");
 	mailUno->setFrom("richy");
-	mailUno->setMessage("aprobamooooossss, vamos a aprobaaaaaaaaaaaar datooossss");
+	mailUno->setMessage("aprobamooooossss");
 	mailUno->setSubject("trabajo practico");
 	mailUno->setTo("yogui");
 
@@ -42,24 +42,24 @@ void TestMailBlockManager::testPackMail(){
 	mailTres->setDate("5/5/3485");
 	mailTres->setFrom("yo");
 	mailTres->setMessage("River Plate");
-	mailTres->setSubject("Campeon 2010, osky este año river la rompe, me vas a pagar todos los kilos de helado q me debes");
+	mailTres->setSubject("Campeon 2010, osky este año river la rompe");
 	mailTres->setTo("BUBU");
 
 	mail4->setDate("2/5/1985");
 	mail4->setFrom("oscar");
 	mail4->setMessage("san Lorenzo ");
-	mail4->setSubject("2 a 1, la comieron bosteros horribles, son lo mas pecho frio del universo");
+	mail4->setSubject("2 a 1, la comieron bosteros horribles");
 	mail4->setTo("palermo");
 
 	mail5->setDate("2/5/1985");
 	mail5->setFrom("santy");
-	mail5->setMessage("auto: 207 compact full");
+	mail5->setMessage("auto: 207 compact full full full full fullfullfull full full fullfullfull full fullfullfull fullfullfullfullfullfull");
 	mail5->setSubject("Campeon 2010");
 	mail5->setTo("BUBU");
 
 	mail6->setDate("2/5/1985");
 	mail6->setFrom("facu");
-	mail6->setMessage("casa quierooooooooooooooooooooooo ir a casaaaaaaaaaaaaaaaa");
+	mail6->setMessage("casa quiero ir");
 	mail6->setSubject("Campeon 2010");
 	mail6->setTo("BUBU");
 
@@ -82,8 +82,11 @@ void TestMailBlockManager::testPackMail(){
 	manager->packMail(mail4);
 	manager->packMail(mail5);
 	manager->packMail(mail6);
-	manager->packMail(mail7);
-	manager->packMail(mail8);
+	manager->packMail(mail5);
+	manager->packMail(mail6);
+	manager->packMail(mail6);
+	//manager->packMail(mail7);
+	//manager->packMail(mail8);
 
 	manager->close();
 
@@ -101,7 +104,7 @@ void TestMailBlockManager::testPackMail(){
 void TestMailBlockManager::testUnpackMail(){
 	MailBlockManager* manager = new MailBlockManager("mailsFile", BLOCK_SIZE);
 	std::vector<Mail*>::iterator it;
-	int idBloqueALeer = 0;
+	int idBloqueALeer = 1;
 	std::vector<Mail*> mailList = manager->loadMailsInBlock(idBloqueALeer);
 
 	for (it = mailList.begin(); it!=mailList.end(); it++){

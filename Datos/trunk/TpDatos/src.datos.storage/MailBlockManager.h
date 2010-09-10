@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <vector>
+#include <map>
 #include <algorithm>
 #include <string>
 #include "../src.datos.models/Mail.h"
@@ -27,6 +28,8 @@ public:
 	void close();
 	std::vector<Mail*> loadMailsInBlock(int block);
 	void loadMailListToBuffer();
+	void updateFreeSizeBlockMap(int block, int sizeFree);
+	void searchBlockWithSpaceAndInsert(Mail* mail);
 
 
 private:
@@ -40,6 +43,7 @@ private:
 	int freeSizeCurrentBlock;
 	std::vector<Mail*> mailList;
 	std::vector<int> freeSizeOfBlocks;
+	std::map<int, int> freeSizeBlocksMap;
 };
 
 #endif /* MAILBLOCKMANAGER_H_ */

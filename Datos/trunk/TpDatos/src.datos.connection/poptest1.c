@@ -16,7 +16,7 @@
 
 #include "libspopc.h"
 
-int main456(int argc,char** argv){
+int main(int argc,char** argv){
 
 	pop3sock_t mysock;
 	char myservername[64];

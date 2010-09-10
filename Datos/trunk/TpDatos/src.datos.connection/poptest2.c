@@ -22,7 +22,7 @@
 
 #include "libspopc.h"
 
-int main(int argc,char** argv){
+int main987(int argc,char** argv){
 
 	char myservername[64];
 	char username[64];

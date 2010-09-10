@@ -11,17 +11,18 @@ MailBlockManager::MailBlockManager(string fileName, unsigned int blockSize) {
 	this->blockSize = blockSize;
 	this->freeSizeCurrentBlock = blockSize;
 	this->buffer = new Buffer(blockSize);
-	//this->metadataBuffer = new Buffer(blockSize);
 	this->blocksFile = new BinaryFile();
 
 	if(this->blocksFile->isCreated(fileName)){
 		this->blocksFile->open(fileName);
-		//this->readMetadata();
+
 	}
 	else{
 		this->blocksFile->create(fileName);
 		this->numBlocks = 0;
-		//this->writeMetadata();//TODO
+		this->currentBlock = 0;
+		this->freeSizeBlocksMap.insert(pair<int,int>(this->currentBlock,this->freeSizeCurrentBlock));
+
 	}
 }
 
@@ -35,15 +36,43 @@ void MailBlockManager::packMail(Mail* mail){
 	if(this->freeSizeCurrentBlock >= mail->getSize()){
 		this->mailList.push_back(mail); //mail->pack(this->buffer);
 		this->freeSizeCurrentBlock -= mail->getSize();
+
 	}
 	else{ //si no entra, cargo en el buffer todos los mails de la lista, escribo en disco el buffer y "creo un nuevo bloque" para hacer el pack
 		this->loadMailListToBuffer();
-		this->blocksFile->write(this->buffer->getData(),this->blockSize,(this->numBlocks)*this->blockSize);
-		this->numBlocks++;
-		this->freeSizeCurrentBlock = this->blockSize; //actualizo el tamano libre (vacio)
-		this->mailList.push_back(mail); //agrego el nuevo mail a la lista
-		this->freeSizeCurrentBlock -= mail->getSize(); //actualizo espacio libre
+		this->blocksFile->write(this->buffer->getData(),this->blockSize,(this->currentBlock)*this->blockSize);
+		//actualizo el espacio libre del bloque actual en el mapa
+		updateFreeSizeBlockMap(this->currentBlock,this->freeSizeCurrentBlock);
+		//busco en que bloque entra el nuevo mail y si no entra en ninguno creo uno nuevo. Luego Inserto
+		searchBlockWithSpaceAndInsert(mail);
 	}
+}
+void MailBlockManager::updateFreeSizeBlockMap(int block, int sizeFree){
+	//borro del mapa el free space viejo del bloque actual y lo actualizo
+	this->freeSizeBlocksMap.erase(block);
+	this->freeSizeBlocksMap.insert(pair<int,int>(block,sizeFree));
+}
+void MailBlockManager::searchBlockWithSpaceAndInsert(Mail* mail){
+	map<int,int>::iterator it;
+	this->currentBlock = -1;
+	//itero el mapa y buscando si entra en el espacio libre de los bloques existentes
+	 for ( it=this->freeSizeBlocksMap.begin() ; it != this->freeSizeBlocksMap.end(); it++ ){
+	   if((*it).second >= mail->getSize()){
+		 this->currentBlock = (*it).first;
+		 this->freeSizeCurrentBlock = (*it).second - mail->getSize();
+		 //cuando encontre el bloque donde entra el mail, levanto todos los mails para despues poder agregar el nuevo
+		 this->loadMailsInBlock(this->currentBlock);
+		 break;
+	   }
+	 }
+
+	if( this->currentBlock == -1){ //si no hay espacio, incremento la cantidad de bloques y el num de bloque nuevo se lo asigno al bloque actual
+		this->numBlocks++;
+		this->currentBlock = this->numBlocks;
+		this->freeSizeCurrentBlock = this->blockSize - mail->getSize();
+	}
+	this->mailList.push_back(mail); //agrego el nuevo mail a la lista
+
 }
 void MailBlockManager::loadMailListToBuffer(){
 	//hace pack de todos los mails de la lista en el buffer y limpia la lista
@@ -62,25 +91,11 @@ void MailBlockManager::loadMailListToBuffer(){
 	this->mailList.clear();
 }
 void MailBlockManager::close(){
-	//antes de cerrar el archivo escribo el buffer por si hay cambios y despues escribo la metadata
+	//antes de cerrar el archivo escribo el buffer por si hay cambios
 	this->loadMailListToBuffer();
-	this->blocksFile->write(this->buffer->getData(),this->blockSize,(this->numBlocks)*this->blockSize);
-	//this->writeMetadata();
+	this->blocksFile->write(this->buffer->getData(),this->blockSize,(this->currentBlock)*this->blockSize);
 	this->blocksFile->close();
 }
-
-//void MailBlockManager::readMetadata(){
-//	this->blocksFile->read(this->metadataBuffer->getData(),this->blockSize,0);
-//	this->metadataBuffer->unPackField(&this->blockSize,sizeof(this->blockSize));
-//	this->metadataBuffer->unPackField(&this->numBlocks,sizeof(this->numBlocks));
-//
-//}
-//void MailBlockManager::writeMetadata(){
-//	this->metadataBuffer->clear();
-//	this->metadataBuffer->packField(&this->blockSize,sizeof(this->blockSize));
-//	this->metadataBuffer->packField(&this->numBlocks,sizeof(this->numBlocks));
-//	this->blocksFile->write(this->metadataBuffer->getData(),this->blockSize,0);
-//}
 
 std::vector<Mail*> MailBlockManager::loadMailsInBlock(int idBlock){
 	Buffer* loadBuffer = new Buffer(this->blockSize);
