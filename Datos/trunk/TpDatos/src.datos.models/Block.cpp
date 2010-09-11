@@ -25,8 +25,11 @@ int Block::getSize(){
    return BLOCK_SIZE;
 }
 
-list<Registry*>::iterator Block::iterator(){
+list<Registry*>::iterator Block::iteratorBegin(){
 	return this->regList.begin();
+}
+list<Registry*>::iterator Block::iteratorEnd(){
+	return this->regList.end();
 }
 int Block::getNumElements(){
 	return this->regList.size();

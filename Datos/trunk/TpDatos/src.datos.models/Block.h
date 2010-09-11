@@ -31,7 +31,8 @@ public:
     int print();
     int getSize();
     virtual int getLongBytes();
-    list<Registry*>::iterator iterator();
+    list<Registry*>::iterator iteratorBegin();
+    list<Registry*>::iterator iteratorEnd();
 
     /* Obtiene el numero de bloque en el arbol B sharp.
      */
