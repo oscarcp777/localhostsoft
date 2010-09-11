@@ -118,7 +118,7 @@ private:
 		 * @param primer_registro - Iterador al primer registro del bloque externo.
 		 * @return unsigned int - La posicion de insercion externa para el registro dado.
 		 */
-		unsigned int searchPositionInsertLeafNode(Registry* registry, list<Registry*>::iterator) throw();
+		unsigned int searchPositionInsertLeafNode(Registry* registry, list<Registry*>::iterator begin,list<Registry*>::iterator end) throw();
 		/**
 		 * Busca la posicion de insercion interna para el registro dado.
 		 * @param registry - El registro a insertar en el bloque interno.
@@ -158,6 +158,7 @@ private:
 		 *escribwe un bloque en disco
 		 */
 		void writeBlock(Node* node,int position=-1) throw();
+		void advancePointer(list<Registry*>::iterator& iterator,unsigned int countAdvance);
 		/**
 		 * Almacena la longitud de los bloques del indice b sharp.
 		 */
@@ -180,7 +181,10 @@ private:
 		 * Almacena el type del indice b sharp.
 		 */
 		int typeElement;
-
+		/** lista de registros temporales
+		 *
+		 */
+		list<Registry*> listRegistry;
 		/**
 		 * Almacena el bloque raiz del indice b sharp.
 		 */
