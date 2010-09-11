@@ -66,12 +66,9 @@ void IndexBSharp::readBlockRoot() throw(){
 	}
 }
 void IndexBSharp::writeBlockRoot() throw(){
-//	bool exitoso = this->binaryFile->writeBlock(this->rootNode, 0);
-//	if (!exitoso) {
-//		this->estrategiaEspacioLibre->buscar_espacio_libre();
-//		this->estrategiaEspacioLibre->escribir_espacio_ocupado(0, this->bloqueRaiz->obtener_longitud_ocupada());
-//		this->estrategiaAlmacenamiento->agregar_bloque(this->bloqueRaiz, this->archivoIndice);
-//	}
+	this->buffer->clear();
+	this->rootNode->pack(this->buffer);
+	this->binaryFile->write(this->buffer->getData(),this->buffer->getMaxBytes(),0);
 }
 Node* IndexBSharp::readNode(unsigned int pos) throw() {
 	this->buffer->clear();
@@ -105,7 +102,22 @@ Node* IndexBSharp::readLeafNodeBytes(Buffer* buffer) throw(){
 	return leafNode;
 }
 void IndexBSharp::splitRoot(ContainerInsertion* container) throw(){
-
+//	// Busca espacio libre para la nueva raiz
+//	unsigned int posicion_libre = this->estrategiaEspacioLibre->buscar_espacio_libre();
+//	// Establece el nuevo numero de bloque de la raiz
+//	this->bloqueRaiz->establecer_numero_bloque(posicion_libre);
+//	// Escribe el espacio ocupado de la raiz
+//	this->estrategiaEspacioLibre->escribir_espacio_ocupado(posicion_libre, this->bloqueRaiz->obtener_longitud_ocupada());
+//	// Escribe el bloque raiz en una nueva posicion
+//	this->estrategiaAlmacenamiento->agregar_bloque(this->bloqueRaiz, this->archivoIndice);
+//	// Crea una nueva raiz
+//	BloqueInternoBSharp::puntero nuevoRaiz = new BloqueInternoBSharp(this->longitud_bloque, 0, this->bloqueRaiz->obtener_nivel() + 1);
+//	nuevoRaiz->agregar_rama(posicion_libre);
+//	nuevoRaiz->agregar_rama(resultado.obtener_bloque_derecho());
+//	nuevoRaiz->agregar_componente(resultado.obtener_registro_clave_media());
+//	// Escribe el bloque raiz
+//	this->bloqueRaiz = nuevoRaiz;
+//	this->escribir_bloque_raiz();
 }
 bool IndexBSharp::insertLeafNode(LeafNode* leafNode,Registry* registry,ContainerInsertion* container) throw(){
 	return true;

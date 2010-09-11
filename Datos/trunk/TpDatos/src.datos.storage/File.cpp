@@ -96,6 +96,14 @@ void File::write(char* buffer, int tamanio, int pos){
 	}
 
 }
+unsigned int File::getCountBlockInFile(int sizeBlock) throw() {
+	this->file.seekp(0, std::ios_base::end);
+	unsigned int position = this->file.tellp();
+	unsigned int countBlock = position / sizeBlock;
+	return countBlock;
+}
+
+
 void File::writeInteger(int* num, int pos){
 
 	if (this->file.is_open()) {

@@ -48,8 +48,7 @@ public:
     int  write(std::string registro);
     void write(char *buffer, int tamanio, int pos=-1);
     void writeInteger(int* num, int pos=-1);
-    void writeBlock(Block* block, int pos=-1);
-    void readBlock(Block* block, int pos=-1);
+    unsigned int getCountBlockInFile(int sizeBlock) throw();
     void close();
     void flush();
     std::string toString();
