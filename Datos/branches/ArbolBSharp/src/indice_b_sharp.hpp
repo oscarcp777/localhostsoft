@@ -1,6 +1,10 @@
 #ifndef INDICE_B_SHARP_H
 #define INDICE_B_SHARP_H
 
+#define INSERCION_CORRECTA 0
+#define HAY_SOBREFLUJO 1
+#define HAY_BALANCEO 2
+
 #include<iostream>
 
 #include "puntero_intrusivo.hpp"
@@ -89,6 +93,10 @@ class IndiceBSharp: public EstrategiaIndice {
 		 */
 		void insertar_bloque_externo_no_lleno(BloqueExternoBSharp::puntero& bloqueExterno, const Registro::puntero& registro) throw();
 		/**
+		* Busca insertar el registro balanceando cargas entre el bloque en cuestion y su hermano (derecho o izquierdo)
+		*/
+		bool balancearBloquesExternos(const Registro::puntero& registro, BloqueExternoBSharp::puntero& bloqueActual, BloqueExternoBSharp::puntero& bloqueHermano, ResultadoInsercion& resultado) throw();
+		/**
 		 * Inserta un registro en un bloque externo lleno.
 		 * @param bloqueExterno - El bloque externo donde insertar el registro.
 		 * @param registro - El registro a insertar.
@@ -147,10 +155,6 @@ class IndiceBSharp: public EstrategiaIndice {
 		 * Busca la rama hermana, por la cual se balancea (mergea o splitea) si no puede insertar
 		 */
 		int buscar_rama_hermana(const BloqueInternoBSharp::puntero& bloqueInterno, const Registro::puntero& registro) throw();
-		/**
-		 * Busca insertar el registro balanceando cargas entre el bloque en cuestion y su hermano (derecho o izquierdo)
-		 */
-		bool balancearBloques(const Registro::puntero& registro, BloqueExternoBSharp::puntero& bloqueIzquierdo, BloqueExternoBSharp::puntero& bloqueDerecho) throw();
 		/**
 		 * Estrae la clave de un registro al momento de hacer un split de un bloque hoja.
 		 */
