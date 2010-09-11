@@ -33,6 +33,7 @@ public:
 	int print(std::ostream& outStream);
 	int getLongBytes();
 	Registry* clone();
+	int compareTo(Registry* registry);
 private:
 	string from;
 	string to;

@@ -164,14 +164,40 @@ void IndexBSharp::insertInternalNodeNotFull(InternalNode* internalNode,Registry*
 void IndexBSharp::insertInternalNodeFull(InternalNode* internalNode,Registry* registry,unsigned int rightBlock, unsigned int leftBlock,ContainerInsertion* container) throw(){
 
 }
-unsigned int IndexBSharp::searchPositionInsertLeafNode(Registry* registry, list<Registry*>::iterator) throw(){
+unsigned int IndexBSharp::searchPositionInsertLeafNode(Registry* registry, list<Registry*>::iterator IteratorBegin, list<Registry*>::iterator IteratorEnd) throw(){
 	return 1;
 }
-unsigned int IndexBSharp::searchPositionInsertInternalNode(Registry* registry, list<Registry*>::iterator) throw(){
-	return 1;
+unsigned int IndexBSharp::searchPositionInsertInternalNode(Registry* registry, list<Registry*>::iterator IteratorBegin, list<Registry*>::iterator IteratorEnd) throw(){
+	unsigned int insertPos = 0;
+		bool lessOrEquals = true;
+		list<Registry*>::iterator itReg;
+		for (itReg= IteratorBegin; itReg != IteratorEnd && lessOrEquals; ++itReg, ++insertPos) {
+	        	Registry* reg = *itReg;
+		        if (reg->getKey()->compareTo(registry) < 0 || reg->getKey()->compareTo(registry) == 0) {
+	        	}
+		        else {
+						lessOrEquals = false;
+	                	break;
+		        }
+	    	}
+		return insertPos;
 }
 int IndexBSharp::searchBranch(InternalNode* internalNode,Registry* registry) throw(){
-	return 1;
+
+	std::list<Registry*>::const_iterator actualComponent = internalNode->iteratorBegin();
+	std::list<Registry*>::const_iterator endComponent = internalNode->iteratorEnd();
+	unsigned int branchPos = 0;
+
+	while (actualComponent != endComponent) {
+		if (registry->getKey()->compareTo(*actualComponent) < 0) {
+			break;
+		}
+		++actualComponent;
+		++branchPos;
+	}
+
+	return internalNode->getBranch(branchPos);
+
 }
 Registry* IndexBSharp::extractKey(Registry* registry) throw(){
 	Registry* cloneRegistry = registry->clone();

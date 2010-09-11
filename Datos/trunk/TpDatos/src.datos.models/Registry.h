@@ -23,6 +23,7 @@ public:
 	virtual void unPack(Buffer* buffer)=0;
 	virtual int getLongBytes() = 0;
 	virtual Registry* clone() = 0;
+	virtual int compareTo(Registry* registry) = 0;
 protected:
 	Key* key;
 };

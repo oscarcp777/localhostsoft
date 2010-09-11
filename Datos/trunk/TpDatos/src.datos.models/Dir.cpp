@@ -38,3 +38,6 @@ int Dir::getSize(){
 Registry* Dir::clone(){
 	return new Dir();
 }
+int Dir::compareTo(Registry* registry){
+	return 0; //TODO implementar
+}

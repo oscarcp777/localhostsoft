@@ -26,6 +26,8 @@ public:
     int getLongBytes();
     Registry* clone();
     void setValue(string value);
+    int compareTo(Registry* registry);
+
 private:
 	string value;
 };

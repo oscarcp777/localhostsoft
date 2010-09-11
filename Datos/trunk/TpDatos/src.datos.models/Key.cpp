@@ -60,3 +60,6 @@ Registry* Key::clone(){
 	return cloneKey;
 }
 
+int Key::compareTo(Registry* registry){
+	return this->value.compare(registry->getKey()->getValue());
+}

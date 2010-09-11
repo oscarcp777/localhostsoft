@@ -118,14 +118,14 @@ private:
 		 * @param primer_registro - Iterador al primer registro del bloque externo.
 		 * @return unsigned int - La posicion de insercion externa para el registro dado.
 		 */
-		unsigned int searchPositionInsertLeafNode(Registry* registry, list<Registry*>::iterator begin,list<Registry*>::iterator end) throw();
+		unsigned int searchPositionInsertLeafNode(Registry* registry, list<Registry*>::iterator IteratorBegin, list<Registry*>::iterator IteratorEnd) throw();
 		/**
 		 * Busca la posicion de insercion interna para el registro dado.
 		 * @param registry - El registro a insertar en el bloque interno.
 		 * @param primer_registro - Iterador al primer registro del bloque interno.
 		 * @param unsigned int - La posicion de insercion interna para el registro dado.
 		 */
-		unsigned int searchPositionInsertInternalNode(Registry* registry, list<Registry*>::iterator) throw();
+		unsigned int searchPositionInsertInternalNode(Registry* registry, list<Registry*>::iterator IteratorBegin, list<Registry*>::iterator IteratorEnd) throw();
 		/**
 		 * Busca la rama por la cual insertar o buscar un registro.
 		 */

@@ -21,6 +21,7 @@ public:
 	int print(std::ostream& outStream);
 	int getSize();
 	Registry* clone();
+	int compareTo(Registry* registry);
 };
 
 #endif /* DIR_H_ */
