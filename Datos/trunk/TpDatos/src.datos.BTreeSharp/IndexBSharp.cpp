@@ -66,9 +66,12 @@ void IndexBSharp::readBlockRoot() throw(){
 	}
 }
 void IndexBSharp::writeBlockRoot() throw(){
+     this->writeBlock(this->rootNode,0);
+}
+void IndexBSharp::writeBlock(Node* node,int position) throw(){
 	this->buffer->clear();
-	this->rootNode->pack(this->buffer);
-	this->binaryFile->write(this->buffer->getData(),this->buffer->getMaxBytes(),0);
+	node->pack(this->buffer);
+	this->binaryFile->write(this->buffer->getData(),this->buffer->getMaxBytes(),position);
 }
 Node* IndexBSharp::readNode(unsigned int pos) throw() {
 	this->buffer->clear();
@@ -101,28 +104,52 @@ Node* IndexBSharp::readLeafNodeBytes(Buffer* buffer) throw(){
 	leafNode->unPack(buffer);
 	return leafNode;
 }
+
 void IndexBSharp::splitRoot(ContainerInsertion* container) throw(){
-//	// Busca espacio libre para la nueva raiz
-//	unsigned int posicion_libre = this->estrategiaEspacioLibre->buscar_espacio_libre();
-//	// Establece el nuevo numero de bloque de la raiz
-//	this->bloqueRaiz->establecer_numero_bloque(posicion_libre);
-//	// Escribe el espacio ocupado de la raiz
-//	this->estrategiaEspacioLibre->escribir_espacio_ocupado(posicion_libre, this->bloqueRaiz->obtener_longitud_ocupada());
-//	// Escribe el bloque raiz en una nueva posicion
-//	this->estrategiaAlmacenamiento->agregar_bloque(this->bloqueRaiz, this->archivoIndice);
-//	// Crea una nueva raiz
-//	BloqueInternoBSharp::puntero nuevoRaiz = new BloqueInternoBSharp(this->longitud_bloque, 0, this->bloqueRaiz->obtener_nivel() + 1);
-//	nuevoRaiz->agregar_rama(posicion_libre);
-//	nuevoRaiz->agregar_rama(resultado.obtener_bloque_derecho());
-//	nuevoRaiz->agregar_componente(resultado.obtener_registro_clave_media());
-//	// Escribe el bloque raiz
-//	this->bloqueRaiz = nuevoRaiz;
-//	this->escribir_bloque_raiz();
+	// Busca espacio libre para la nueva raiz
+	unsigned int positionFree = this->freeBlockController->searchSizeBusy();
+	// Establece el nuevo numero de bloque de la raiz
+	this->rootNode->setNumBlock(positionFree);
+	// Escribe el espacio ocupado de la raiz
+	this->freeBlockController->writeSizeBusy(positionFree, this->rootNode->getOcupedLong());
+	// Escribe el bloque raiz en una nueva posicion
+	this->writeBlock(this->rootNode);
+	// Crea una nueva raiz
+	InternalNode* newRoot = new InternalNode(this->sizeBlock,0, this->rootNode->getLevel() + 1);
+	newRoot->addBranch(positionFree);
+//	newRoot->addBranch(container->obtener_bloque_derecho);
+//	newRoot->addComponent(container.obtener_registro_clave_media());
+	// Escribe el bloque raiz
+	this->rootNode = newRoot;
+	this->writeBlockRoot();
 }
 bool IndexBSharp::insertLeafNode(LeafNode* leafNode,Registry* registry,ContainerInsertion* container) throw(){
-	return true;
+	// Consideramos que no hay sobreflujo
+	bool isOverflow = false;
+	// Verifica que el bloque externo puede agregar el registro
+	if (leafNode->posibleToAgregateComponent(registry)) {
+		// Agrega el registro en el bloque externo no lleno
+		this->insertLeafNodeNotFull(leafNode,registry);
+	} else {
+		// Hubo sobreflujo
+		isOverflow = true;
+		// Agrega el registro en el bloque externo lleno
+		this->insertLeafNodeFull(leafNode,registry);
+	}
+	// Devuelve si hubo sobreflujo o no
+	return isOverflow;
 }
 void IndexBSharp::insertLeafNodeNotFull(LeafNode* leafNode,Registry* registry) throw(){
+	// Busca posicion de insercion
+	unsigned int posicion_insercion = this->searchPositionInsertLeafNode(registry, this->rootNode->iterator());
+	// Obtiene iterador al elemento donde insertar.
+	BloqueExternoBSharp::iterador_componentes iterador_insercion = bloqueExterno->primer_componente() + posicion_insercion;
+	// Inserta el registro en el bloque externo
+	bloqueExterno->agregar_componente(registro, iterador_insercion);
+	// Actualiza espacio ocupado para el bloque
+	this->estrategiaEspacioLibre->escribir_espacio_ocupado(bloqueExterno->obtener_numero_bloque(), bloqueExterno->obtener_longitud_ocupada());
+	// Escribe bloque en disco
+	this->estrategiaAlmacenamiento->escribir_bloque(bloqueExterno->obtener_numero_bloque(), bloqueExterno, this->archivoIndice);
 
 }
 void IndexBSharp::insertLeafNodeFull(LeafNode* leafNode,Registry* registry,ContainerInsertion* container) throw(){

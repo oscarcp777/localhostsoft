@@ -12,6 +12,8 @@
 #include "LeafNode.h"
 #include "../src.datos.models/Registry.h"
 #include "../src.datos.storage/BinaryFile.h"
+#include "../src.datos.storage/FreeBlockController.h"
+
 #include <string>
 #include <list>
 class IndexBSharp {
@@ -153,6 +155,10 @@ private:
 		 */
 		void printRegistry(Registry* registry, std::ostream& streamSalida) throw();
 		/**
+		 *escribwe un bloque en disco
+		 */
+		void writeBlock(Node* node,int position=-1) throw();
+		/**
 		 * Almacena la longitud de los bloques del indice b sharp.
 		 */
 		unsigned int sizeBlock;
@@ -167,8 +173,8 @@ private:
 		/**
 		 * Almacena la estrategia de espacio libre b sharp.
 		 */
-	    //TODO ver que hacer con esta clase
-//		EstrategiaAlmacenamientoEspacioLibre::puntero estrategiaEspacioLibre;
+
+		FreeBlockController* freeBlockController;
 
 		/**
 		 * Almacena el type del indice b sharp.

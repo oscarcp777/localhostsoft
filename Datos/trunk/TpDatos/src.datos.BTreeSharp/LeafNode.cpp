@@ -7,7 +7,7 @@
 
 #include "LeafNode.h"
 
-LeafNode::LeafNode(int type,unsigned int maxLong, unsigned int numBlock, unsigned int level) throw():Node(type,maxLong,numBlock,level){
+LeafNode::LeafNode(int type,unsigned int maxLong, unsigned int numBlock, unsigned int level) throw():Node(maxLong,numBlock,level){
 	// TODO Auto-generated constructor stub
 
 }

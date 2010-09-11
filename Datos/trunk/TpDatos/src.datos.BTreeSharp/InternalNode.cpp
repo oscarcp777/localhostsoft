@@ -8,7 +8,7 @@
 #include "InternalNode.h"
 
 using namespace std;
-InternalNode::InternalNode(int type,unsigned int maxLong, unsigned int numBlock, unsigned int level) throw():Node(type,maxLong,numBlock,level){
+InternalNode::InternalNode(unsigned int maxLong, unsigned int numBlock, unsigned int level) throw():Node(maxLong,numBlock,level){
 
 }
 InternalNode::InternalNode() {
