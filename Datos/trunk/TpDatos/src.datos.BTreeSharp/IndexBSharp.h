@@ -158,7 +158,8 @@ private:
 		 *escribwe un bloque en disco
 		 */
 		void writeBlock(Node* node,int position=-1) throw();
-		void advancePointer(list<Registry*>::iterator& iterator,unsigned int countAdvance);
+		void advanceListPointer(list<Registry*>::iterator& iterator,unsigned int countAdvance);
+		void advanceVectorPointer(vector<int>::iterator& iterator,unsigned int countAdvance);
 		/**
 		 * Almacena la longitud de los bloques del indice b sharp.
 		 */
