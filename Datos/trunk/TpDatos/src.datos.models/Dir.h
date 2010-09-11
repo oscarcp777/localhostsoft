@@ -18,7 +18,7 @@ public:
 	void pack(Buffer* buffer);
 	void unPack(Buffer* buffer);
 	int getLongBytes();
-	int print();
+	int print(std::ostream& outStream);
 	int getSize();
 };
 

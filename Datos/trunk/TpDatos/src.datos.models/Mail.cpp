@@ -128,12 +128,12 @@ void Mail::unPack(Buffer* buffer){
 
 
 }
-int Mail::print(){
+int Mail::print(std::ostream& outStream){
 	//this->getKey()->print();
-	cout << "from: "<<from<< endl;
-	cout << "to: "<<to<< endl;
-	cout << "subject: "<<subject<< endl;
-	cout << "message: "<<message<< endl;
-	cout << "date: "<<date<< endl;
+	outStream << "from: "<<from<< endl;
+	outStream << "to: "<<to<< endl;
+	outStream << "subject: "<<subject<< endl;
+	outStream << "message: "<<message<< endl;
+	outStream << "date: "<<date<< endl;
 	return 1;
 }

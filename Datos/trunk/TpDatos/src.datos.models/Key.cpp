@@ -42,8 +42,8 @@ void Key::unPack(Buffer* buffer){
 	buffer->unPackField(&size, sizeof(size));
 	buffer->unPackFieldString(this->value,size);
 }
-int  Key::print(){
-     cout<<"Clave : "<<this->value<<endl;
+int  Key::print(std::ostream& outStream){
+	outStream<<"Clave : "<<this->value<<endl;
      return 1;
 }
 int Key::getLongBytes(){

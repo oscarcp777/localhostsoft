@@ -93,12 +93,12 @@ int Block::unPackMetadata(Buffer* buffer){
 	buffer->unPackField(&this->freeSize,sizeof(this->freeSize));
 	return numberElements;
 }
-int Block::print(){
+int Block::print(std::ostream& outStream){
 	list<Registry*>::iterator iterRegistry;
 		Registry* reg;
 		for (iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
 			reg=*iterRegistry;
-			reg->print();
+			reg->print(outStream);
 		}
 		return 1;
 }

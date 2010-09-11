@@ -30,7 +30,7 @@ public:
 	void pack(Buffer* buffer);
 	void unPack(Buffer* buffer);
 	bool equals(Registry* comp);
-	int print();
+	int print(std::ostream& outStream);
 	int getLongBytes();
 private:
 	string from;

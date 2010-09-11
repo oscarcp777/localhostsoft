@@ -28,7 +28,7 @@ public:
 	void unPack(Buffer* buffer);
 	void packMetadata(Buffer* buffer);
 	int unPackMetadata(Buffer* buffer);
-    int print();
+    int print(std::ostream& outStream);
     int getSize();
     virtual int getLongBytes();
     list<Registry*>::iterator iteratorBegin();

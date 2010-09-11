@@ -108,7 +108,7 @@ void TestMailBlockManager::testUnpackMail(){
 	std::vector<Mail*> mailList = manager->loadMailsInBlock(idBloqueALeer);
 
 	for (it = mailList.begin(); it!=mailList.end(); it++){
-		(*it)->print();
+		(*it)->print(std::cout);
 		cout<<endl;
 	}
 

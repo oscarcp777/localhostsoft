@@ -134,22 +134,22 @@ bool IndexBSharp::insertLeafNode(LeafNode* leafNode,Registry* registry,Container
 		// Hubo sobreflujo
 		isOverflow = true;
 		// Agrega el registro en el bloque externo lleno
-		this->insertLeafNodeFull(leafNode,registry);
+		this->insertLeafNodeFull(leafNode,registry,container);
 	}
 	// Devuelve si hubo sobreflujo o no
 	return isOverflow;
 }
 void IndexBSharp::insertLeafNodeNotFull(LeafNode* leafNode,Registry* registry) throw(){
 	// Busca posicion de insercion
-	unsigned int posicion_insercion = this->searchPositionInsertLeafNode(registry, this->rootNode->iterator());
+//	unsigned int posicion_insercion = this->searchPositionInsertLeafNode(registry, this->rootNode->iterator());
 	// Obtiene iterador al elemento donde insertar.
-	BloqueExternoBSharp::iterador_componentes iterador_insercion = bloqueExterno->primer_componente() + posicion_insercion;
+//	BloqueExternoBSharp::iterador_componentes iterador_insercion = bloqueExterno->primer_componente() + posicion_insercion;
 	// Inserta el registro en el bloque externo
-	bloqueExterno->agregar_componente(registro, iterador_insercion);
+//	bloqueExterno->agregar_componente(registro, iterador_insercion);
 	// Actualiza espacio ocupado para el bloque
-	this->estrategiaEspacioLibre->escribir_espacio_ocupado(bloqueExterno->obtener_numero_bloque(), bloqueExterno->obtener_longitud_ocupada());
+//	this->estrategiaEspacioLibre->escribir_espacio_ocupado(bloqueExterno->obtener_numero_bloque(), bloqueExterno->obtener_longitud_ocupada());
 	// Escribe bloque en disco
-	this->estrategiaAlmacenamiento->escribir_bloque(bloqueExterno->obtener_numero_bloque(), bloqueExterno, this->archivoIndice);
+//	this->estrategiaAlmacenamiento->escribir_bloque(bloqueExterno->obtener_numero_bloque(), bloqueExterno, this->archivoIndice);
 
 }
 void IndexBSharp::insertLeafNodeFull(LeafNode* leafNode,Registry* registry,ContainerInsertion* container) throw(){
@@ -182,9 +182,57 @@ Registry* IndexBSharp::searchLeafNode(LeafNode* leafNode,Registry* registry) thr
 Registry*  IndexBSharp::searchInternalNode(InternalNode* internalNode,Registry* registry) throw(){
 	return NULL;
 }
-void IndexBSharp::printRecursive(Node* currentNode, std::ostream& streamSalida, unsigned int level) throw(){
+void IndexBSharp::printRecursive(Node* currentNode, std::ostream& outStream, unsigned int level) throw(){
+
+
+	if (currentNode != NULL) {
+			outStream << std::string(level * 4, '-');
+			outStream << "NUMERO BLOQUE: " << currentNode->getNumBlock() << " ";
+			outStream << "NIVEL: " << currentNode->getLevel() << " ";
+			outStream << "COMPONENTES BLOQUE: ";
+			list<Registry*>::iterator actualComp  = currentNode->iteratorBegin();
+			list<Registry*>::iterator endComp = currentNode->iteratorEnd();
+			while (actualComp != endComp) {
+				Registry* reg =  *actualComp;
+				this->printRegistry(reg, outStream);
+				++actualComp;
+			}
+			if (currentNode->isLeaf()) {
+	                        outStream << "--EN BLOQUE HOJA--";
+	                        LeafNode* leafNode =  (LeafNode*)currentNode;
+	                        outStream << "CON SIGUIENTE: " << leafNode->getNextBlock()<< " ";
+	                        outStream << std::endl;
+		                outStream << std::endl;
+	        	        outStream << std::endl;
+	                } else {
+	                        outStream << "--EN BLOQUE INTERNO--";
+	                        InternalNode* internalNode = (InternalNode*)currentNode;
+	                        std::vector<int>::const_iterator actualBranch = internalNode->firstBranch();
+	                        std::vector<int>::const_iterator endBranch = internalNode->lastBranch();
+				std::cout << "CON RAMAS(";
+	                        while (actualBranch != endBranch) {
+	                                outStream << " " << *actualBranch;
+	                                ++actualBranch;
+	                        }
+	                        outStream << " ) ";
+				outStream << std::endl;
+	                        outStream << std::endl;
+	                        outStream << std::endl;
+
+	            actualBranch = internalNode->firstBranch();
+	            endBranch = internalNode->lastBranch();
+				while (actualBranch != endBranch) {
+					Node* childNode  = this->readNode(*actualBranch);
+					if (childNode != NULL) {
+						this->printRecursive(childNode, outStream, level + 1);
+					}
+					++actualBranch;
+				}
+	                }
+		}
+
 
 }
-void IndexBSharp::printRegistry(Registry* registry, std::ostream& streamSalida) throw(){
-
+void IndexBSharp::printRegistry(Registry* registry, std::ostream& outStream) throw(){
+	registry->print(outStream);
 }

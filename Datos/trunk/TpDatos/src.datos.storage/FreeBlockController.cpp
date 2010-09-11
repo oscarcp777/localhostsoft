@@ -27,10 +27,10 @@ unsigned int FreeBlockController::readSizeBusy(unsigned int position) throw() {
 }
 
 unsigned int FreeBlockController::searchSizeBusy() throw() {
-	unsigned int countBlock = this->binaryFile->getCountBlockInFile(sizeof(int));
-	unsigned int cont = 0;
+//	unsigned int countBlock = this->binaryFile->getCountBlockInFile(sizeof(int));
+//	unsigned int cont = 0;
 	unsigned int sizeBusy = 0;
-	bool find = false;
+//	bool find = false;
 //TODO ver manejode bloques libres
 //TODO
 //	while (cont < countBlock && !find) {

@@ -86,7 +86,7 @@ void TestStorage::testBlock(){
 	block->unPack(buffer);
 	file->close();
 
-    block2->print();
+    block2->print(std::cout);
 	delete file;
 	delete block;
 	delete block2;

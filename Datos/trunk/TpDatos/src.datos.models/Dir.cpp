@@ -28,7 +28,7 @@ int Dir::getLongBytes(){
 	return 0;
 }
 
-int  Dir::print(){
+int  Dir::print(std::ostream& outStream){
       return 1;
 }
 

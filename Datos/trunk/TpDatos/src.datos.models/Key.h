@@ -22,7 +22,7 @@ public:
 	int getValueInt();
 	void pack(Buffer* buffer);
 	void unPack(Buffer* buffer);
-    int print();
+    int print(std::ostream& outStream);
     int getLongBytes();
 private:
 	string value;
