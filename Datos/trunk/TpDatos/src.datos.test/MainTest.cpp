@@ -9,9 +9,15 @@
 #include <iostream>
 #include <iostream>
 #include <list>
+#include "TestBSharp.h"
 using namespace std;
 
-int main3243() {
+int main() {
+
+	TestBSharp* test= new TestBSharp();
+	test->testInsert();
+
+
 /*
 	//TEST STORAGE
    TestStorage* teststorage = new TestStorage();
@@ -30,4 +36,5 @@ int main3243() {
 
    return 0;
 }
+
 
