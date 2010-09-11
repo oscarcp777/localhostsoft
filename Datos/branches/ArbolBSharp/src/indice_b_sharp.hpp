@@ -84,7 +84,7 @@ class IndiceBSharp: public EstrategiaIndice {
 		 * @param hermano -  El numero de bloque hermano (derecho por defecto)
 		 * @return boolean - Retorna true si hubo division del bloque externo.
 		 */
-		bool insertar_bloque_externo(BloqueExternoBSharp::puntero& bloqueExterno, const Registro::puntero& registro,
+		int insertar_bloque_externo(BloqueExternoBSharp::puntero& bloqueExterno, const Registro::puntero& registro,
 			ResultadoInsercion& resultado, unsigned int bloque_hermano) throw();
 		/**
 		 * Inserta un registro en un bloque externo no lleno.
@@ -112,7 +112,7 @@ class IndiceBSharp: public EstrategiaIndice {
 		 * @param hermano -  El numero de bloque hermano (derecho por defecto)
 		 * @preturn boolean - Retorna true si hubo division del bloque interno.
 		 */
-		bool insertar_bloque_interno(BloqueInternoBSharp::puntero& bloqueInterno, const Registro::puntero& registroClave,
+		int insertar_bloque_interno(BloqueInternoBSharp::puntero& bloqueInterno, const Registro::puntero& registroClave,
 			ResultadoInsercion& resultado, unsigned int bloque_hermano) throw();
 		/**
 		 * Inserta un registro en un bloque interno no lleno.

@@ -19,17 +19,17 @@ IndiceBSharp::~IndiceBSharp() throw() {
 
 void IndiceBSharp::agregar_registro(Registro::puntero registro) throw() {
 	ResultadoInsercion resultadoInsercion;
-	bool hubo_sobreflujo = false;
+	int respuesta = INSERCION_CORRECTA;
 	if (this->bloqueRaiz->es_hoja()) {
 		BloqueExternoBSharp::puntero bloqueExterno = static_cast<BloqueExternoBSharp::puntero>(this->bloqueRaiz);
-		hubo_sobreflujo = this->insertar_bloque_externo(bloqueExterno, registro, resultadoInsercion, 0);
+		respuesta = this->insertar_bloque_externo(bloqueExterno, registro, resultadoInsercion, 0);
 	} else {
 		BloqueInternoBSharp::puntero bloqueInterno = static_cast<BloqueInternoBSharp::puntero>(this->bloqueRaiz);
 		//ACA EL HERMANO VA EN NULL PORQUE LA RAIZ NO TIENE HERMANOS
-		hubo_sobreflujo = this->insertar_bloque_interno(bloqueInterno, registro, resultadoInsercion, 0);
+		respuesta = this->insertar_bloque_interno(bloqueInterno, registro, resultadoInsercion, 0);
 	}
 
-	if (hubo_sobreflujo) {
+	if (respuesta == HAY_SOBREFLUJO) {
 		this->manejar_division_raiz(resultadoInsercion);
 	}
 }
@@ -193,10 +193,10 @@ bool IndiceBSharp::balancearBloquesExternos(const Registro::puntero& registro, B
 }
 
 
-bool IndiceBSharp::insertar_bloque_externo(BloqueExternoBSharp::puntero& bloqueExterno, const Registro::puntero& registro,
+int IndiceBSharp::insertar_bloque_externo(BloqueExternoBSharp::puntero& bloqueExterno, const Registro::puntero& registro,
 					ResultadoInsercion& resultado, unsigned int bloque_hermano) throw() {
 	// Consideramos que no hay sobreflujo
-	bool hubo_sobreflujo = false;
+	int respuesta = INSERCION_CORRECTA;
 
 	// Verifica que el bloque externo puede agregar el registro
 	if (bloqueExterno->puede_agregar_componente(registro)) {
@@ -207,16 +207,25 @@ bool IndiceBSharp::insertar_bloque_externo(BloqueExternoBSharp::puntero& bloqueE
 		if (bloque_hermano != 0){
 			BloqueExternoBSharp::puntero bloqueRamaHermana = this->estrategiaAlmacenamiento->leer_bloque(bloque_hermano, this->archivoIndice);
 			// BALANCEO
-			if (!this->balancearBloquesExternos(registro,bloqueExterno,bloqueRamaHermana,resultado)){
+			if (this->balancearBloquesExternos(registro,bloqueExterno,bloqueRamaHermana,resultado)){
+				// Hubo balanceo
+				respuesta = HAY_BALANCEO;
+			}else{
 				// Hubo sobreflujo
-				hubo_sobreflujo = true;
+				respuesta = HAY_SOBREFLUJO;
 				// Agrega el registro en el bloque externo lleno
 				this->insertar_bloque_externo_lleno(bloqueExterno, registro, resultado);
 			}
+		}else{
+				// Hubo sobreflujo
+				respuesta = HAY_SOBREFLUJO;
+				// Agrega el registro en el bloque externo lleno
+				this->insertar_bloque_externo_lleno(bloqueExterno, registro, resultado);
+
 		}
 	}
 	// Devuelve si hubo sobreflujo o no
-	return hubo_sobreflujo;
+	return respuesta;
 }
 
 void IndiceBSharp::insertar_bloque_externo_no_lleno(BloqueExternoBSharp::puntero& bloqueExterno, const Registro::puntero& registro) throw() {
@@ -288,10 +297,10 @@ void IndiceBSharp::insertar_bloque_externo_lleno(BloqueExternoBSharp::puntero& b
 	resultado.establecer_bloque_derecho(nuevoBloqueExterno->obtener_numero_bloque());
 }
 
-bool IndiceBSharp::insertar_bloque_interno(BloqueInternoBSharp::puntero& bloqueInterno, const Registro::puntero& registroClave,
+int IndiceBSharp::insertar_bloque_interno(BloqueInternoBSharp::puntero& bloqueInterno, const Registro::puntero& registroClave,
 						ResultadoInsercion& resultado, unsigned int bloque_hermano) throw() {
 	// Considero que no hay sobreflujo al insertar en el bloque interno
-	bool hay_sobreflujo = false;
+	int respuesta = INSERCION_CORRECTA;
 	// Busco la rama por la cual insertar
 	int rama_insertar = this->buscar_rama(bloqueInterno, registroClave);
 	std::cout<<"Rama: "<< rama_insertar<<std::endl;
@@ -304,34 +313,37 @@ bool IndiceBSharp::insertar_bloque_interno(BloqueInternoBSharp::puntero& bloqueI
 	// Si el bloque existe
 	if (bloqueRamaInsertar != NULL) {
 		// Considero que no hay sobreflujo al insertar en el bloque hijo
-		bool hay_sobreflujo_hijo = false;
+		int respuestaHijo = INSERCION_CORRECTA;
 		if (bloqueRamaInsertar->es_hoja()) {
 			//MANDAR TAMBIEN POR PARAMETRO EL NUMERO DE BLOQUE QUE CONSEGUI
 			BloqueExternoBSharp::puntero bloqueExternoInsertar(bloqueRamaInsertar);
 			// Inserto en el bloque externo hijo
-			hay_sobreflujo_hijo = this->insertar_bloque_externo(bloqueExternoInsertar, registroClave, resultado, rama_hermana);
+			respuestaHijo = this->insertar_bloque_externo(bloqueExternoInsertar, registroClave, resultado, rama_hermana);
 		} else {
 			BloqueInternoBSharp::puntero bloqueInternoInsertar(bloqueRamaInsertar);
 			// Inserto en el bloque interno hijo
-			hay_sobreflujo_hijo = this->insertar_bloque_interno(bloqueInternoInsertar, registroClave, resultado, rama_hermana);
+			respuestaHijo = this->insertar_bloque_interno(bloqueInternoInsertar, registroClave, resultado, rama_hermana);
 		}
 		//DONI-FAQ necesito actualizar el campo cuando hay balanceo en el hijo
-		if (true){
-			BloqueInternoBSharp::iterador_componentes_constante actualComponente = bloqueInterno->primer_componente();
-			BloqueInternoBSharp::iterador_componentes_constante finComponente = bloqueInterno->ultimo_componente();
-			unsigned int posicion_rama = 0;
-
-			while (actualComponente != finComponente) {
-				if (this->comparadorClave->es_menor(this->clave, registroClave, Registro::puntero(*actualComponente))) {
-					break;
-				}
-				++actualComponente;
-				++posicion_rama;
-			}
+		if (respuestaHijo == HAY_BALANCEO){
+//			BloqueInternoBSharp::iterador_componentes_constante actualComponente = bloqueInterno->primer_componente();
+//			BloqueInternoBSharp::iterador_componentes_constante finComponente = bloqueInterno->ultimo_componente();
+//			while (actualComponente != finComponente) {
+//				if (this->comparadorClave->es_menor(this->clave, registroClave, Registro::puntero(*actualComponente))) {
+//					break;
+//
+//				}
+//				++actualComponente;
+//			}
+//			// Agrego componente
+//			bloqueInterno->reemplazar_componente(Registro::puntero(*actualComponente), resultado.obtener_registro_clave_media());
+//
+//			// Escribo bloque
+//			this->estrategiaAlmacenamiento->escribir_bloque(bloqueInterno->obtener_numero_bloque(), bloqueInterno, this->archivoIndice);
 		}
 
 		// Verifico si hubo sobrelujo al insertar en el bloque hijo
-		if (hay_sobreflujo_hijo) {
+		if (respuestaHijo == HAY_SOBREFLUJO) {
 			// Verifico si puedo agregar en el bloque interno
 			if (bloqueInterno->puede_agregar_componente(resultado.obtener_registro_clave_media())) {
 				// Inserto en el bloque interno no lleno
@@ -342,7 +354,7 @@ bool IndiceBSharp::insertar_bloque_interno(BloqueInternoBSharp::puntero& bloqueI
 					resultado.obtener_bloque_derecho());
 			} else {
 				// Inserto en el bloque interno lleno
-				hay_sobreflujo = true;
+				respuesta = HAY_SOBREFLUJO;
 
 				//antes de esto intento balancear con el hermano que me tiene que venir por parametro
 
@@ -352,7 +364,7 @@ bool IndiceBSharp::insertar_bloque_interno(BloqueInternoBSharp::puntero& bloqueI
 			}
 		}
 	}
-	return hay_sobreflujo;
+	return respuesta;
 }
 
 void IndiceBSharp::insertar_bloque_interno_no_lleno(BloqueInternoBSharp::puntero& bloqueInterno, const Registro::puntero& registroClave, unsigned int bloque_izquierdo, unsigned int bloque_derecho) throw() {

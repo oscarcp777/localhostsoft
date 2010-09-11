@@ -52,7 +52,11 @@ class ComponenteCompuesto: public Componente {
 		 * Transfiere todos los componentes de la lista de componentes, a la lista de componentes pasada por parametro
 		 * vaciando el componente compuesto.
 		 */
-		virtual void transferir_componentes(ComponenteCompuesto::contenedor_componentes& contenedor_componentes) throw(); 
+		virtual void transferir_componentes(ComponenteCompuesto::contenedor_componentes& contenedor_componentes) throw();
+		/**
+		 * Reemplaza un componente por otro
+		 */
+		void reemplazar_componente(Componente::puntero componenteViejo, Componente::puntero componenteNuevo) throw();
 		/**
 		 * Verifica si contiene un componente en la lista de componentes.
 		 */

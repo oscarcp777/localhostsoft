@@ -22,6 +22,11 @@ void ComponenteCompuesto::transferir_componentes(ComponenteCompuesto::contenedor
 	this->listaComponentes.swap(contenedor_componentes);
 }
 
+void ComponenteCompuesto::reemplazar_componente(Componente::puntero componenteViejo, Componente::puntero componenteNuevo) throw() {
+	std::replace(this->primer_componente(), this->ultimo_componente(), componenteViejo, componenteNuevo);
+}
+
+
 bool ComponenteCompuesto::contiene_componente(Componente::puntero componente) throw() {
 	ComponenteCompuesto::iterador_componentes posicion;
 
