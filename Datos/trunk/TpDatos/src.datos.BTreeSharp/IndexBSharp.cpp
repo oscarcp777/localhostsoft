@@ -164,14 +164,24 @@ void IndexBSharp::insertInternalNodeNotFull(InternalNode* internalNode,Registry*
 void IndexBSharp::insertInternalNodeFull(InternalNode* internalNode,Registry* registry,unsigned int rightBlock, unsigned int leftBlock,ContainerInsertion* container) throw(){
 
 }
-unsigned int IndexBSharp::searchPositionInsertLeafNode(Registry* registry, list<Registry*>::iterator IteratorBegin, list<Registry*>::iterator IteratorEnd) throw(){
-	return 1;
+unsigned int IndexBSharp::searchPositionInsertLeafNode(Registry* registry, list<Registry*>::iterator iteratorBegin, list<Registry*>::iterator iteratorEnd) throw(){
+		unsigned int insertPos = 0;
+		bool less = true;
+		list<Registry*>::iterator itReg;
+		for (itReg= iteratorBegin; itReg != iteratorEnd && less; ++itReg, ++insertPos) {
+			Registry* reg = *itReg;
+			if (reg->getKey()->compareTo(registry) >= 0) {
+						less = false;
+	                	break;
+	        	}
+	    	}
+		return insertPos;
 }
-unsigned int IndexBSharp::searchPositionInsertInternalNode(Registry* registry, list<Registry*>::iterator IteratorBegin, list<Registry*>::iterator IteratorEnd) throw(){
+unsigned int IndexBSharp::searchPositionInsertInternalNode(Registry* registry, list<Registry*>::iterator iteratorBegin, list<Registry*>::iterator iteratorEnd) throw(){
 	unsigned int insertPos = 0;
 		bool lessOrEquals = true;
 		list<Registry*>::iterator itReg;
-		for (itReg= IteratorBegin; itReg != IteratorEnd && lessOrEquals; ++itReg, ++insertPos) {
+		for (itReg= iteratorBegin; itReg != iteratorEnd && lessOrEquals; ++itReg, ++insertPos) {
 	        	Registry* reg = *itReg;
 		        if (reg->getKey()->compareTo(registry) < 0 || reg->getKey()->compareTo(registry) == 0) {
 	        	}
