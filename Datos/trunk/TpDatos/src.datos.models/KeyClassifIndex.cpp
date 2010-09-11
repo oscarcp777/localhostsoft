@@ -15,3 +15,6 @@ KeyClassifIndex::KeyClassifIndex() {
 KeyClassifIndex::~KeyClassifIndex() {
 	// TODO Auto-generated destructor stub
 }
+Registry* KeyClassifIndex::clone(){
+	return NULL;
+}

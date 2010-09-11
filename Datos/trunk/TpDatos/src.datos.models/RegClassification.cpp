@@ -15,3 +15,6 @@ RegClassification::RegClassification() {
 RegClassification::~RegClassification() {
 	// TODO Auto-generated destructor stub
 }
+Registry* RegClassification::clone(){
+	return NULL;
+}

@@ -174,13 +174,46 @@ int IndexBSharp::searchBranch(InternalNode* internalNode,Registry* registry) thr
 	return 1;
 }
 Registry* IndexBSharp::extractKey(Registry* registry) throw(){
-	return NULL;
+	Registry* cloneRegistry = registry->clone();
+	return cloneRegistry;
 }
 Registry* IndexBSharp::searchLeafNode(LeafNode* leafNode,Registry* registry) throw(){
-	return NULL;
+	Registry* findRegistry;
+		bool find = false;
+
+		if (leafNode != NULL) {
+			std::list<Registry*>::const_iterator actualComponent = leafNode->iteratorBegin();
+			std::list<Registry*>::const_iterator endComponent = leafNode->iteratorEnd();
+
+			while (actualComponent != endComponent && !find) {
+				Registry* iterRegistry = *actualComponent;
+				if (iterRegistry->getKey()->equals(registry->getKey())) {
+					findRegistry = iterRegistry;
+					find = true;
+				}
+				++actualComponent;
+			}
+		}
+		return findRegistry;
 }
 Registry*  IndexBSharp::searchInternalNode(InternalNode* internalNode,Registry* registry) throw(){
-	return NULL;
+
+	Registry* findRegistry;
+	if (internalNode != NULL) {
+		int searchBranch = this->searchBranch(internalNode,registry);
+		Node* readNode = this->readNode(searchBranch);
+		if (readNode != NULL) {
+			if (readNode->isLeaf()) {
+				LeafNode* leafNodeRead = (LeafNode*)readNode;
+				findRegistry = this->searchLeafNode(leafNodeRead, registry);
+			} else {
+				InternalNode* internalNodeRead = (InternalNode*)readNode;
+				findRegistry = this->searchInternalNode(internalNodeRead, registry);
+			}
+		}
+	}
+	return findRegistry;
+
 }
 void IndexBSharp::printRecursive(Node* currentNode, std::ostream& outStream, unsigned int level) throw(){
 

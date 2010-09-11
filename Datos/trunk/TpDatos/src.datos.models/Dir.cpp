@@ -35,3 +35,6 @@ int  Dir::print(std::ostream& outStream){
 int Dir::getSize(){
 	return 1;
 }
+Registry* Dir::clone(){
+	return new Dir();
+}

@@ -22,6 +22,7 @@ public:
 	virtual void pack(Buffer* buffer)=0;
 	virtual void unPack(Buffer* buffer)=0;
 	virtual int getLongBytes() = 0;
+	virtual Registry* clone() = 0;
 protected:
 	Key* key;
 };

@@ -15,3 +15,6 @@ KeySelectIndex::KeySelectIndex() {
 KeySelectIndex::~KeySelectIndex() {
 	// TODO Auto-generated destructor stub
 }
+Registry* KeySelectIndex::clone(){
+	return NULL;
+}

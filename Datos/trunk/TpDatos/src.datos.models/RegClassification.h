@@ -14,6 +14,7 @@ class RegClassification: public Registry {
 public:
 	RegClassification();
 	virtual ~RegClassification();
+	Registry* clone();
 };
 
 #endif /* REGCLASSIFICATION_H_ */

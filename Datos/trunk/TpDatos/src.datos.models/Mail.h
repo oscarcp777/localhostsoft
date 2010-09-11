@@ -32,6 +32,7 @@ public:
 	bool equals(Registry* comp);
 	int print(std::ostream& outStream);
 	int getLongBytes();
+	Registry* clone();
 private:
 	string from;
 	string to;

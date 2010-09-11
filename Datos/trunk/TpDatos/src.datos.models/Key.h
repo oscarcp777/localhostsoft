@@ -24,6 +24,8 @@ public:
 	void unPack(Buffer* buffer);
     int print(std::ostream& outStream);
     int getLongBytes();
+    Registry* clone();
+    void setValue(string value);
 private:
 	string value;
 };

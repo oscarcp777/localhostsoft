@@ -50,3 +50,13 @@ int Key::getLongBytes(){
 	//TODO
 	return this->value.length();
 }
+void Key::setValue(string value){
+	this->value = value;
+}
+
+Registry* Key::clone(){
+	Key* cloneKey = new Key();
+	cloneKey->setValue(this->getValue());
+	return cloneKey;
+}
+

@@ -14,6 +14,7 @@ class KeyClassifIndex: public Registry {
 public:
 	KeyClassifIndex();
 	virtual ~KeyClassifIndex();
+	Registry* clone();
 };
 
 #endif /* KEYCLASSIFINDEX_H_ */

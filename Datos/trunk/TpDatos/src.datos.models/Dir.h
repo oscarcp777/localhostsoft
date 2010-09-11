@@ -20,6 +20,7 @@ public:
 	int getLongBytes();
 	int print(std::ostream& outStream);
 	int getSize();
+	Registry* clone();
 };
 
 #endif /* DIR_H_ */

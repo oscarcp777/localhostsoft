@@ -14,6 +14,7 @@ class KeySelectIndex: public Registry {
 public:
 	KeySelectIndex();
 	virtual ~KeySelectIndex();
+	Registry* clone();
 };
 
 #endif /* KEYSELECTINDEX_H_ */

@@ -137,3 +137,15 @@ int Mail::print(std::ostream& outStream){
 	outStream << "date: "<<date<< endl;
 	return 1;
 }
+Registry* Mail::clone(){
+	Mail* cloneMail = new Mail();
+	cloneMail->setDate(this->getDate());
+	cloneMail->setFrom(this->getFrom());
+	cloneMail->setMessage(this->getMessage());
+	cloneMail->setSubject(this->getSubject());
+	cloneMail->setTo(this->getTo());
+	Key* cloneKey = new Key();
+	cloneKey->setValue(this->getKey()->getValue());
+	cloneMail->setKey(cloneKey);
+	return cloneMail;
+}
