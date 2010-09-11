@@ -14,6 +14,12 @@ class Dir: public Registry {
 public:
 	Dir();
 	virtual ~Dir();
+	bool equals(Registry* comp);
+	void pack(Buffer* buffer);
+	void unPack(Buffer* buffer);
+	int getLongBytes();
+	int print();
+	int getSize();
 };
 
 #endif /* DIR_H_ */

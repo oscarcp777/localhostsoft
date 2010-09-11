@@ -15,3 +15,23 @@ Dir::Dir() {
 Dir::~Dir() {
 	// TODO Auto-generated destructor stub
 }
+bool Dir::equals(Registry* comp){
+	return false;
+}
+void Dir::pack(Buffer* buffer){
+
+}
+void Dir::unPack(Buffer* buffer){
+
+}
+int Dir::getLongBytes(){
+	return 0;
+}
+
+int  Dir::print(){
+      return 1;
+}
+
+int Dir::getSize(){
+	return 1;
+}
