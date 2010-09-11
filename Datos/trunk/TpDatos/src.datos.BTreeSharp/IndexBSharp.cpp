@@ -117,8 +117,8 @@ void IndexBSharp::splitRoot(ContainerInsertion* container) throw(){
 	// Crea una nueva raiz
 	InternalNode* newRoot = new InternalNode(this->sizeBlock,0, this->rootNode->getLevel() + 1);
 	newRoot->addBranch(positionFree);
-//	newRoot->addBranch(container->obtener_bloque_derecho);
-//	newRoot->addComponent(container.obtener_registro_clave_media());
+	newRoot->addBranch(container->getRightBlock());
+	newRoot->addComponent(container->getRegMidleKey());
 	// Escribe el bloque raiz
 	this->rootNode = newRoot;
 	this->writeBlockRoot();
@@ -141,28 +141,202 @@ bool IndexBSharp::insertLeafNode(LeafNode* leafNode,Registry* registry,Container
 }
 void IndexBSharp::insertLeafNodeNotFull(LeafNode* leafNode,Registry* registry) throw(){
 	// Busca posicion de insercion
-//	unsigned int posicion_insercion = this->searchPositionInsertLeafNode(registry, this->rootNode->iterator());
-	// Obtiene iterador al elemento donde insertar.
-//	BloqueExternoBSharp::iterador_componentes iterador_insercion = bloqueExterno->primer_componente() + posicion_insercion;
+	unsigned int positionInsertion = this->searchPositionInsertLeafNode(registry, leafNode->iteratorBegin(),leafNode->iteratorEnd());
+	// Obtiene iterador al elemento donde insertar y
 	// Inserta el registro en el bloque externo
-//	bloqueExterno->agregar_componente(registro, iterador_insercion);
+	leafNode->addComponent(registry, leafNode->iteratorBegin() , positionInsertion);
 	// Actualiza espacio ocupado para el bloque
-//	this->estrategiaEspacioLibre->escribir_espacio_ocupado(bloqueExterno->obtener_numero_bloque(), bloqueExterno->obtener_longitud_ocupada());
+	this->freeBlockController->writeSizeBusy(leafNode->getNumBlock(), leafNode->getOcupedLong());
 	// Escribe bloque en disco
-//	this->estrategiaAlmacenamiento->escribir_bloque(bloqueExterno->obtener_numero_bloque(), bloqueExterno, this->archivoIndice);
+	this->writeBlock(leafNode, leafNode->getNumBlock());
 
 }
+void IndexBSharp::advancePointer(list<Registry*>::iterator& iterator,unsigned int countAdvance){
+      for (unsigned int var = 0; var < countAdvance; var++) {
+    	  iterator++;
+	}
+}
+//todo hasta aca
 void IndexBSharp::insertLeafNodeFull(LeafNode* leafNode,Registry* registry,ContainerInsertion* container) throw(){
 
-}
-bool IndexBSharp::insertInternalNode(InternalNode* internalNode,Registry* registry,ContainerInsertion* container) throw(){
-	return true;
-}
-void IndexBSharp::insertInternalNodeNotFull(InternalNode* internalNode,Registry* registry,unsigned int rightBlock, unsigned int leftBlock) throw(){
+	// Busco numero de bloque libre
+		unsigned int numBlockFree = this->freeBlockController->searchSizeBusy();
+		// Creo nuevo bloque externo para dividir bloque..
+		LeafNode* newLeafNode = new LeafNode(this->typeElement,this->sizeBlock, numBlockFree,0);
 
+		// Crea contenedor de componentes para insertar ordenado el registro...
+		listRegistry.clear();
+		list<Registry*>::iterator iterator=listRegistry.begin();
+		// Transfiere todos los regsitros del bloque externo a la lista de registros para insertar ordenado el regitro...
+		leafNode->transferRegistry(listRegistry);
+
+		// Busca posicion de insercion para el registro...
+		unsigned int insertPosition = this->searchPositionInsertLeafNode(registry, listRegistry.begin(), listRegistry.end());
+		this->advancePointer(iterator,insertPosition);
+		// Inserta ordenado el registro
+		listRegistry.insert(listRegistry.begin() , registry);
+
+		// Obtiene elemento medio...
+		list<Registry*>::iterator iteratorPosMedium=listRegistry.begin();
+		 this->advancePointer(iterator,(listRegistry.size() / 2));
+
+		// Establece el elemento medio a subir en el resultado de insercion
+		 container->setRegMidleKey(this->extractKey(*iteratorPosMedium));
+
+		// Inserta elementos a la izquierda del medio en bloque a dividir
+		for (list<Registry*>::iterator current = listRegistry.begin(); current != iteratorPosMedium; ++current) {
+			leafNode->addComponent(*current);
+		}
+
+		// Inserta elementos a la derecha del medio en bloque nuevo
+		for (list<Registry*>::iterator current = iteratorPosMedium; current != listRegistry.end(); ++current) {
+			newLeafNode->addComponent(*current);
+		}
+
+		// Enlaza a los bloques
+		newLeafNode->setNextBlock(leafNode->getNextBlock());
+		leafNode->setNextBlock(newLeafNode->getNextBlock());
+
+		// Actualiza espacio ocupado para el bloque a dividir
+		this->freeBlockController->writeSizeBusy(leafNode->getNumBlock(), leafNode->getOcupedLong());
+		// Escribe bloque a dividir en disco
+
+
+		// Actualiza espacio ocupado para el bloque nuevo
+		this->freeBlockController->writeSizeBusy(newLeafNode->getNumBlock(), newLeafNode->getOcupedLong());
+		// Escribe bloque nuevo
+		this->writeBlock(newLeafNode, newLeafNode->getNumBlock());
+
+		// Establece numero de bloque izquierdo en resultado de insercion
+		container->setLeftBlock(leafNode->getNumBlock());
+		// Establece numero de bloque derecho en resultado de insercion
+		container->setRightBlock(newLeafNode->getNumBlock());
+}
+bool IndexBSharp::insertInternalNode(InternalNode* internalNode,Registry* registryKey,ContainerInsertion* container) throw(){
+	// Considero que no hay sobreflujo al insertar en el bloque interno
+	bool isOverflow = false;
+	// Busco la rama por la cual insertar
+	int branchInsert = this->searchBranch(internalNode, registryKey);
+	// Leo el bloque por el cual insertar
+	Node* nodeInsert= this->readNode(branchInsert);
+
+	// Si el bloque existe
+	if (nodeInsert != NULL) {
+		// Considero que no hay sobreflujo al insertar en el bloque hijo
+		bool isOverflowChild = false;
+		if (nodeInsert->isLeaf()) {
+			LeafNode* leafNodeInsert =static_cast<LeafNode*>(nodeInsert);
+			// Inserto en el bloque externo hijo
+			isOverflowChild = this->insertLeafNode(leafNodeInsert, registryKey, container);
+		} else {
+			InternalNode* internalNodeInsert =static_cast<InternalNode*>(nodeInsert);
+			// Inserto en el bloque interno hijo
+			isOverflowChild = this->insertInternalNode(internalNodeInsert, registryKey, container);
+		}
+
+		// Verifico si hubo sobrelujo al insertar en el bloque hijo
+		if (isOverflowChild) {
+			// Verifico si puedo agregar en el bloque interno
+			if (internalNode->posibleToAgregateComponent(container->getRegMidleKey())) {
+				// Inserto en el bloque interno no lleno
+				this->insertInternalNodeNotFull(internalNode, container->getRegMidleKey(),container->getRightBlock(),container->getLeftBlock());
+			} else {
+				// Inserto en el bloque interno lleno
+				isOverflow = true;
+				this->insertInternalNodeFull(internalNode, container->getRegMidleKey(),container->getRightBlock(),container->getLeftBlock(),container);
+			}
+		}
+	}
+	return isOverflow;
+}
+void IndexBSharp::insertInternalNodeNotFull(InternalNode* internalNode,Registry* registryKey,unsigned int rightBlock, unsigned int leftBlock) throw(){
+	unsigned int insertPosition = this->searchPositionInsertInternalNode(registryKey, internalNode->iteratorBegin(), internalNode->iteratorEnd());
+
+	// Agrego componente
+	internalNode->addComponent(registryKey,internalNode->iteratorBegin(),insertPosition);
+	// Agrego rama
+	vector<int>::iterator iterator=internalNode->firstBranch();
+	 for (unsigned int var = 0; var < insertPosition + 1; var++) {
+	    	  iterator++;
+		}
+	internalNode->addBranch(iterator,leftBlock);
+	// Actualizo espacio libre
+	this->freeBlockController->writeSizeBusy(internalNode->getNumBlock(), internalNode->getOcupedLong());
+	// Escribo bloque
+	this->writeBlock(internalNode, internalNode->getNumBlock());
 }
 void IndexBSharp::insertInternalNodeFull(InternalNode* internalNode,Registry* registry,unsigned int rightBlock, unsigned int leftBlock,ContainerInsertion* container) throw(){
+	// Busco numero de bloque libre
+	unsigned int numBlockFree = this->freeBlockController->searchSizeBusy();
+		// Creo nuevo bloque interno para dividir
+		InternalNode* internalNode = new InternalNode(this->sizeBlock, numBlockFree, internalNode->getLevel());
 
+	        // Crea contenedor de componentes para insertar ordenado el registro...
+	        BloqueInternoBSharp::contenedor_componentes lista_registros;
+		// Crea contenedor de ramas para insertar la rama nueva...
+		BloqueInternoBSharp::contenedor_ramas lista_ramas;
+
+	        // Transfiere todos los regsitros del bloque interno a la lista de registros para insertar ordenado el regitro...
+	        bloqueInterno->transferir_componentes(lista_registros);
+		// Transfiere todas las ramas del bloque interno a la lista de ramas para insertar la rama...
+		bloqueInterno->transferir_ramas(lista_ramas);
+
+	        // Busca posicion de insercion para el registro...
+	        unsigned int posicion_insercion = buscar_posicion_insercion_interna(registryKey, lista_registros.begin(), lista_registros.end());
+
+	        // Inserta ordenado el registro
+	        lista_registros.insert(lista_registros.begin() + posicion_insercion, registryKey);
+
+		// Inserta la rama
+		lista_ramas.insert(lista_ramas.begin() + posicion_insercion + 1, bloque_derecho);
+
+		// Obtiene rama media...
+		BloqueInternoBSharp::iterador_rama rama_media = lista_ramas.begin() + (lista_ramas.size() / 2) + 1;
+
+		BloqueInternoBSharp::iterador_rama actual = lista_ramas.begin();
+		BloqueInternoBSharp::iterador_rama fin = lista_ramas.end();
+
+		while (actual != rama_media) {
+			bloqueInterno->agregar_rama(*actual);
+			++actual;
+		}
+
+		actual = rama_media;
+		while (actual != fin) {
+			internalNode->agregar_rama(*actual);
+			++actual;
+		}
+
+	        // Obtiene elemento medio...
+	        BloqueInternoBSharp::iterador_componentes posicion_medio = lista_registros.begin() + (lista_registros.size() / 2);
+
+	        // Establece el elemento medio a subir en el resultado de insercion
+	        resultado.establecer_registro_clave_media(*posicion_medio);
+
+	        // Inserta elementos a la izquierda del medio en bloque a dividir
+	        for (BloqueInternoBSharp::iterador_componentes actual = lista_registros.begin(); actual != posicion_medio; ++actual) {
+	                bloqueInterno->agregar_componente(*actual);
+	        }
+
+	        // Inserta elementos a la derecha del medio en bloque nuevo
+	        for (BloqueExternoBSharp::iterador_componentes actual = posicion_medio + 1 ; actual != lista_registros.end(); ++actual) {
+	                internalNode->agregar_componente(*actual);
+	        }
+
+		// Actualiza espacio ocupado para el bloque a dividir
+	        this->estrategiaEspacioLibre->escribir_espacio_ocupado(bloqueInterno->obtener_numero_bloque(), bloqueInterno->obtener_longitud_ocupada());
+	        // Escribe bloque a dividir en disco
+	        this->estrategiaAlmacenamiento->escribir_bloque(bloqueInterno->obtener_numero_bloque(), bloqueInterno, this->archivoIndice);
+
+	        // Actualiza espacio ocupado para el bloque nuevo
+	        this->estrategiaEspacioLibre->escribir_espacio_ocupado(internalNode->obtener_numero_bloque(), internalNode->obtener_longitud_ocupada());
+	        // Escribe bloque nuevo
+	        this->estrategiaAlmacenamiento->escribir_bloque(internalNode->obtener_numero_bloque(), internalNode, this->archivoIndice);
+
+		// Establezco bloque izquierdo en resultado de insercion
+		resultado.establecer_bloque_izquierdo(bloqueInterno->obtener_numero_bloque());
+		// Establezco bloque derecho en resultado de insercion
+		resultado.establecer_bloque_derecho(internalNode->obtener_numero_bloque());
 }
 unsigned int IndexBSharp::searchPositionInsertLeafNode(Registry* registry, list<Registry*>::iterator iteratorBegin, list<Registry*>::iterator iteratorEnd) throw(){
 		unsigned int insertPos = 0;

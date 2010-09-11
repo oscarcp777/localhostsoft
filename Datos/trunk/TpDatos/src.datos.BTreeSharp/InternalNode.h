@@ -19,15 +19,15 @@ public:
 	InternalNode();
 	InternalNode(unsigned int maxLong, unsigned int numBlock, unsigned int level)throw();
 	virtual ~InternalNode()throw();
-	virtual bool isLeaf() const throw();
-	virtual void addComponent(Component* component) throw();
-	virtual void addComponent(Component* component,int pos/*, ComponenteCompuesto::iterador_componentes posicion*/) throw();
+	bool isLeaf() const throw();
+	void addComponent(Component* component) throw();
+	void addComponent(Component* component,list<Registry*>::iterator ,int pos) throw();
 
 	/**
 	 * Agrega una rama al bloque interno b sharp.
 	 */
 	void addBranch(int branch) throw();
-	void addBranch(std::vector<int>::iterator pos, int branch) throw();
+	void addBranch(std::vector<int>::iterator pos,unsigned int branch) throw();
 	/**
 	 * Remueve una rama del bloque interno b sharp.
 	 */

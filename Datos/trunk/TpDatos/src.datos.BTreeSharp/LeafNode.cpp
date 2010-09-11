@@ -23,7 +23,7 @@ bool LeafNode::isLeaf() const throw(){
 void LeafNode::addComponent(Component* component) throw(){
 
 }
-void LeafNode::addComponent(Component* component,int pos/*, ComponenteCompuesto::iterador_componentes posicion*/) throw(){
+void LeafNode::addComponent(Component* component,list<Registry*>::iterator ,int pos) throw(){
 
 }
 int LeafNode::getNextBlock() const throw(){

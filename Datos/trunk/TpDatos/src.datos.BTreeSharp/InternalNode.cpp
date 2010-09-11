@@ -23,13 +23,13 @@ bool InternalNode::isLeaf() const throw(){
 void InternalNode::addComponent(Component* component) throw(){
 
 }
-void InternalNode::addComponent(Component* component,int pos/*, ComponenteCompuesto::iterador_componentes posicion*/) throw(){
+void InternalNode::addComponent(Component* component,list<Registry*>::iterator ,int pos) throw(){
 
 }
 void InternalNode::addBranch(int branch) throw(){
 	this->branchList.push_back(branch);
 }
-void InternalNode::addBranch(std::vector<int>::iterator pos, int branch) throw(){
+void InternalNode::addBranch(std::vector<int>::iterator pos,unsigned int branch) throw(){
 	this->branchList.insert(pos, branch);
 }
 

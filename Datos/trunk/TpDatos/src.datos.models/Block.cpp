@@ -44,7 +44,10 @@ void Block::addReg(Registry* reg){
 		this->freeSize-=reg->getSize();
 
 }
-
+void Block::transferRegistry(list<Registry*> &listElement) throw() {
+	listElement.clear();
+	this->regList.swap(listElement);
+}
 Registry* Block::getReg(Key* key){
 	list<Registry*>::iterator iterRegistry;
 	Registry* reg;

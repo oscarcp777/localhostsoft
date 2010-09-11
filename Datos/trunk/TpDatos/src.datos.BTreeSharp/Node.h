@@ -18,7 +18,7 @@ public:
     void setTypeElement(int typeElement);
     virtual bool isLeaf() const throw() = 0;
     virtual void addComponent(Component* component) throw() = 0;
-    virtual void addComponent(Component* component,int pos/*, ComponenteCompuesto::iterador_componentes posicion*/) throw() = 0;
+    virtual void addComponent(Component* component,list<Registry*>::iterator ,int pos) throw() = 0;
 
 protected:
 	int typeElement;

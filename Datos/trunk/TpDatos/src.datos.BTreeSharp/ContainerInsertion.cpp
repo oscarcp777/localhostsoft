@@ -15,7 +15,7 @@ ContainerInsertion::ContainerInsertion() {
 ContainerInsertion::~ContainerInsertion() {
 	// TODO Auto-generated destructor stub
 }
-const Registry* ContainerInsertion::getRegMidleKey() const throw() {
+Registry* ContainerInsertion::getRegMidleKey()throw() {
 	return this->midleRegKey;
 }
 

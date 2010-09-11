@@ -31,6 +31,7 @@ public:
     int print(std::ostream& outStream);
     int getSize();
     virtual int getLongBytes();
+    void transferRegistry(list<Registry*> &listElement) throw();
     list<Registry*>::iterator iteratorBegin();
     list<Registry*>::iterator iteratorEnd();
 

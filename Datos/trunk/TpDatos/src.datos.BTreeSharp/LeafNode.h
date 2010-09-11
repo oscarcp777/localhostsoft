@@ -17,7 +17,7 @@ public:
 	virtual ~LeafNode()throw();
 	virtual bool isLeaf() const throw();
 	virtual void addComponent(Component* component) throw();
-	virtual void addComponent(Component* component,int pos/*, ComponenteCompuesto::iterador_componentes posicion*/) throw();
+	void addComponent(Component* component,list<Registry*>::iterator ,int pos) throw();
 
 	/**
 	 * Obtiene el id del bloque externo siguiente del arbol b sharp.

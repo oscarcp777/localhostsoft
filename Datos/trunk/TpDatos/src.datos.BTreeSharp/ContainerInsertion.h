@@ -21,7 +21,7 @@ public:
 	/**
 	 * Obtiene el registro con la clave de dato media luego de una division de bloques.
 	 */
-	const Registry* getRegMidleKey() const throw();
+	 Registry* getRegMidleKey() throw();
 	/**
 	 * Establece el numero de bloque izquierdo luego de una division de bloques.
 	  */
