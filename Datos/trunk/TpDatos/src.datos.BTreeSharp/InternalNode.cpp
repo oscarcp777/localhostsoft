@@ -82,3 +82,11 @@ int InternalNode::unPackMetadata(Buffer* buffer){
 
 	return numElements;
 }
+void InternalNode::pack(Buffer* buffer){
+	this->packMetadata(buffer);
+	this->packListRegistry(buffer);
+}
+void InternalNode::unPack(Buffer* buffer){
+	int numElements = this->unPackMetadata(buffer);
+	this->unPackListRegistry(buffer,numElements,this->typeElement);
+}
