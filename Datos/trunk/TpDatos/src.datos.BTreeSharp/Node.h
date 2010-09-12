@@ -14,13 +14,15 @@ public:
 	Node();
 	Node(unsigned int maxLong, unsigned int numBlock, unsigned int level)throw();
 	virtual ~Node()throw();
-    int getTypeElement();
-    void setTypeElement(int typeElement);
-    virtual bool isLeaf() const throw() = 0;
-    virtual void addComponent(Component* component) throw() = 0;
-    virtual void addComponent(Component* component,list<Registry*>::iterator ,int pos) throw() = 0;
-    virtual void pack(Buffer* buffer);
-    	virtual void unPack(Buffer* buffer);
+	int getTypeElement();
+	void setTypeElement(int typeElement);
+	virtual bool isLeaf() const throw() = 0;
+	virtual void addComponent(Component* component) throw() = 0;
+	virtual void addComponent(Component* component,list<Registry*>::iterator ,int pos) throw() = 0;
+	virtual void pack(Buffer* buffer);
+	virtual void unPack(Buffer* buffer);
+	virtual void packMetadata(Buffer* buffer);
+	virtual int unPackMetadata(Buffer* buffer);
 
 protected:
 	int typeElement;

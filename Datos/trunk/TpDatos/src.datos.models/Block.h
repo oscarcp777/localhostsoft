@@ -26,8 +26,8 @@ public:
 	Registry* getReg(Key* key);
 	virtual void pack(Buffer* buffer);
 	virtual void unPack(Buffer* buffer);
-	void packMetadata(Buffer* buffer);
-	int unPackMetadata(Buffer* buffer);
+	virtual void packMetadata(Buffer* buffer);
+	virtual int unPackMetadata(Buffer* buffer);
 	void packListRegistry(Buffer* buffer);
 	void unPackListRegistry(Buffer* buffer,int numberElements,int typeElement);
 	int print(std::ostream& outStream);

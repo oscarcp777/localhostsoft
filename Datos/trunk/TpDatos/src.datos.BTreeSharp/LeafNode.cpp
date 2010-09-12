@@ -33,3 +33,9 @@ int LeafNode::getNextBlock() const throw(){
 void LeafNode::setNextBlock(int numBlock) throw(){
 	this->nextNode = numBlock;
 }
+void LeafNode::pack(Buffer* buffer){
+
+}
+void LeafNode::unPack(Buffer* buffer){
+
+}
