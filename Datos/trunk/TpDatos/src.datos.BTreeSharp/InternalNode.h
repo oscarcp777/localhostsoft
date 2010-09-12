@@ -26,6 +26,8 @@ public:
 	void unPack(Buffer* buffer);
 	void packMetadata(Buffer* buffer);
 	int unPackMetadata(Buffer* buffer);
+	void packListBranch(Buffer* buffer);
+	void unPackListBranch(Buffer* buffer, int numBranchs);
 	/**
 	 * Agrega una rama al bloque interno b sharp.
 	 */

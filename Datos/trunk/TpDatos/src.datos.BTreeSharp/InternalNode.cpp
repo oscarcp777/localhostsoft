@@ -74,12 +74,47 @@ std::vector<int>::iterator InternalNode::lastBranch() throw(){
 std::vector<int>::const_iterator  InternalNode::lastBranch() const throw(){
 	return this->branchList.end();
 }
+void InternalNode::unPackListBranch(Buffer* buffer, int numBranchs){
+	vector<int>::iterator iterRegistry;
+	int branch;
+	for(int i=0; i<numBranchs; i++){
+			buffer->unPackField(&branch,sizeof(branch));
+			this->branchList.push_back(branch);
+		}
+}
+void InternalNode::packListBranch(Buffer* buffer){
+	vector<int>::iterator iterRegistry;
+	int branch;
+	for (iterRegistry=this->branchList.begin(); iterRegistry!=this->branchList.end(); iterRegistry++){
+		branch=*iterRegistry;
+		buffer->packField(&branch,sizeof(branch));
+	}
+}
 void InternalNode::packMetadata(Buffer* buffer){
+   int level = this->getLevel();
+   buffer->packField(&level,sizeof(level));
+   int numBlock = this->getNumBlock();
+   buffer->packField(&numBlock,sizeof(numBlock));
+   int numBranchs = this->branchList.size();
+   buffer->packField(&numBranchs,sizeof(numBranchs));
+   this->packListBranch(buffer);
+   int numElements = this->getNumElements();
+   buffer->packField(&numElements,sizeof(numElements));
+
 
 }
 int InternalNode::unPackMetadata(Buffer* buffer){
-	int numElements= 0;
-
+	int level;
+	int numBlock;
+	int numBranchs;
+	int numElements;
+	buffer->unPackField(&level, sizeof(level));
+	buffer->unPackField(&numBlock, sizeof(numBlock));
+	buffer->unPackField(&numBranchs, sizeof(numBranchs));
+	this->unPackListBranch(buffer,numBranchs);
+	buffer->unPackField(&numElements, sizeof(numElements));
+	this->setLevel(level);
+	this->setNumBlock(numBlock);
 	return numElements;
 }
 void InternalNode::pack(Buffer* buffer){
