@@ -113,7 +113,7 @@ class IndiceBSharp: public EstrategiaIndice {
 		 * @preturn boolean - Retorna true si hubo division del bloque interno.
 		 */
 		int insertar_bloque_interno(BloqueInternoBSharp::puntero& bloqueInterno, const Registro::puntero& registroClave,
-			ResultadoInsercion& resultado, unsigned int bloque_hermano) throw();
+			ResultadoInsercion& resultado, unsigned int bloque_hermano, Registro::puntero& registroPadre) throw();
 		/**
 		 * Inserta un registro en un bloque interno no lleno.
 		 * @param bloqueInterno - El bloque interno donde insertar el registro.
@@ -122,13 +122,17 @@ class IndiceBSharp: public EstrategiaIndice {
 		void insertar_bloque_interno_no_lleno(BloqueInternoBSharp::puntero& bloqueInterno, const Registro::puntero& registro,
 			unsigned int bloque_izquierdo, unsigned int bloque_derecho) throw();
 		/**
+		 * Busca insertar el registroClave balanceando cargas entre el bloque en cuestion y su hermano (derecho o izquierdo)
+		 */
+		bool balancearBloquesInternos(BloqueInternoBSharp::puntero& bloqueInterno, BloqueInternoBSharp::puntero& bloqueHermano, ResultadoInsercion& resultado, Registro::puntero& registroPadre) throw();
+		/**
 		 * Inserta un registro en un bloque interno lleno.
 		 * @param bloqueInterno - El bloque interno donde insertar el registro.
 		 * @param registroClave - El registro con la clave a insertar.
 		 * @param resultado - El resultado de insercion del registro en el bloque interno.
 		 */
 		void insertar_bloque_interno_lleno(BloqueInternoBSharp::puntero& bloqueInterno, const Registro::puntero& registro,
-			unsigned int bloque_izquierdo, unsigned int bloque_derecho, ResultadoInsercion& resultado) throw();
+				unsigned int bloque_izquierdo, unsigned int bloque_derecho, ResultadoInsercion& resultado) throw();
 		/**
 		 * Busca la posicion de insercion externa para el registro dado.
 		 * @param registro - El registro a insertar en el bloque externo.

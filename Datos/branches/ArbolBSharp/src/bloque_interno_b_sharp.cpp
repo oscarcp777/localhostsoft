@@ -24,6 +24,10 @@ void BloqueInternoBSharp::transferir_ramas(BloqueInternoBSharp::contenedor_ramas
 	this->listaRamas.swap(contenedor_ramas);
 }
 
+void BloqueInternoBSharp::vaciar_ramas() throw() {
+	this->listaRamas.clear();
+}
+
 bool BloqueInternoBSharp::contiene_rama(int rama) throw() {
 	BloqueInternoBSharp::iterador_rama posicion;
 

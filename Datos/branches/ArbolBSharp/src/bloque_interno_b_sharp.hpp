@@ -50,6 +50,10 @@ class BloqueInternoBSharp: public BloqueBSharp {
 		 */
 		void transferir_ramas(BloqueInternoBSharp::contenedor_ramas& contenedor_ramas) throw();
 		/**
+		 * Elimina todas las ramas del indice b sharp del contenedor de ramas.
+		 */
+		void vaciar_ramas() throw();
+		/**
 		 * Verifica si contiene una rama dentro del bloque interno b sharp.
 		 */
 		bool contiene_rama(int rama) throw();
