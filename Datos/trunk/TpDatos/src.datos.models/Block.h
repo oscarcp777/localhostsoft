@@ -24,11 +24,13 @@ public:
 	int getFreeSize();
 	void addReg(Registry* reg);
 	Registry* getReg(Key* key);
-	void pack(Buffer* buffer);
-	void unPack(Buffer* buffer);
+	virtual void pack(Buffer* buffer);
+	virtual void unPack(Buffer* buffer);
 	void packMetadata(Buffer* buffer);
 	int unPackMetadata(Buffer* buffer);
-    int print(std::ostream& outStream);
+	void packListRegistry(Buffer* buffer);
+	void unPackListRegistry(Buffer* buffer,int numberElements,int typeElement);
+	int print(std::ostream& outStream);
     int getSize();
     virtual int getLongBytes();
     void transferRegistry(list<Registry*> &listElement) throw();
@@ -79,7 +81,7 @@ public:
      */
     virtual unsigned int getLongBytes() const throw();
 
-    virtual bool posibleToAgregateComponent(Component* component) const throw();
+    virtual bool posibleToAgregateComponent(Registry* registry) const throw();
 private:
 	list<Registry*> regList;
 	int freeSize;

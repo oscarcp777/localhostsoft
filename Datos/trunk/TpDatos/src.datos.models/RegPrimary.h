@@ -9,6 +9,7 @@
 #define REGPRIMARY_H_
 #include "Registry.h"
 #include <list>
+
 class RegPrimary : public Registry {
 public:
 	RegPrimary();
@@ -23,6 +24,7 @@ public:
 	int print(std::ostream& outStream);
     int getNumberBlock() ;
     void setNumberBlock(int numberBlock);
+
 
 private:
 	int numberBlock;

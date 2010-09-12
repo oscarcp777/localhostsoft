@@ -19,10 +19,22 @@ TestBSharp::~TestBSharp() {
 	// TODO Auto-generated destructor stub
 }
 void TestBSharp::testInsert(){
-     IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTree.dat",128,TYPE_REG_PRIMARY);
+     IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTree.dat",BLOCK_SIZE,TYPE_REG_PRIMARY);
      RegPrimary* regPrimary = new RegPrimary();
      KeyIndexPrimary* key= new KeyIndexPrimary(1);
      regPrimary->setKey(key);
      regPrimary->setNumberBlock(0);
      indexBSharp->addRegistry(regPrimary);
+     delete indexBSharp;
+
+}
+void TestBSharp::testsearch(){
+     IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTree.dat",BLOCK_SIZE,TYPE_REG_PRIMARY);
+     RegPrimary* regPrimary = new RegPrimary();
+     KeyIndexPrimary* key= new KeyIndexPrimary(1);
+     regPrimary->setKey(key);
+     indexBSharp->searchRegistry(regPrimary);
+     indexBSharp->print(std::cout);
+     delete indexBSharp;
+
 }

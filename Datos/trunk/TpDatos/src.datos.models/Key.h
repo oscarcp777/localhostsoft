@@ -18,12 +18,12 @@ public:
 	virtual ~Key();
 	bool equals(Registry* comp);
 	string getValue();
-	int getSize();
+	virtual int getSize();
 	int getValueInt();
-	void pack(Buffer* buffer);
-	void unPack(Buffer* buffer);
-    int print(std::ostream& outStream);
-    int getLongBytes();
+	virtual void pack(Buffer* buffer);
+	virtual void unPack(Buffer* buffer);
+	virtual int print(std::ostream& outStream);
+    virtual int getLongBytes();
     Registry* clone();
     void setValue(string value);
     int compareTo(Registry* registry);

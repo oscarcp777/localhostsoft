@@ -81,7 +81,7 @@ void Mail::pack(Buffer* buffer){
 	int totalSize = this->getSize();
 	int size;
 	buffer->packField(&(totalSize), sizeof(totalSize));
-//	this->getKey()->pack(buffer);
+	this->getKey()->pack(buffer);
 
 	size = from.length();
 	buffer->packField(&size, sizeof(size));
@@ -106,9 +106,9 @@ void Mail::pack(Buffer* buffer){
 void Mail::unPack(Buffer* buffer){
 	int totalSize;
 	int size;
-   // this->setKey(new Key());
+	this->setKey(new Key());
     buffer->unPackField(&totalSize,sizeof(totalSize));
-    //this->getKey()->unPack(buffer);
+    this->getKey()->unPack(buffer);
 
 	buffer->unPackField(&size,sizeof(size));
 	buffer->unPackFieldString(from,size);

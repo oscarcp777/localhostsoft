@@ -6,9 +6,13 @@
  */
 
 #include "Block.h"
+#include "FactoryOfRegistry.h"
 
 Block::Block(unsigned int maxLong, unsigned int numBlock, unsigned int level) throw(){
 	this->freeSize=BLOCK_SIZE;
+	this->maxLong=maxLong;
+	this->numBlock=numBlock;
+	this->level= level;
 }
 Block::Block(){
 
@@ -60,9 +64,13 @@ Registry* Block::getReg(Key* key){
 	return NULL;
 }
 void Block::pack(Buffer* buffer){
+	this->packMetadata(buffer);
+    this->packListRegistry(buffer);
+
+}
+void Block::packListRegistry(Buffer* buffer){
 	list<Registry*>::iterator iterRegistry;
 	Registry* reg;
-	this->packMetadata(buffer);
 	for (iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
 		reg=*iterRegistry;
 		reg->pack(buffer);
@@ -70,21 +78,23 @@ void Block::pack(Buffer* buffer){
 
 }
 void Block::unPack(Buffer* buffer){
+	int numberElements = this->unPackMetadata(buffer);
+   this->unPackListRegistry(buffer,numberElements,TYPE_REG_PRIMARY);
+
+}
+void Block::unPackListRegistry(Buffer* buffer,int numberElements,int typeElement){
 	list<Registry*>::iterator iterRegistry;
 	Registry* reg;
-	int numberElements;
-	numberElements = this->unPackMetadata(buffer);
 	//TODO llamar a la fabrica con una constante para saber que clase instanciar
-
+	FactoryOfRegistry* factory = new FactoryOfRegistry();
 	for(int i=0; i<numberElements; i++){
-		this->regList.push_back(new Mail());//TODO CAMBIAR no va new Mail()
+		this->regList.push_back(factory->createRegistry(typeElement));
 	}
 	for (iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
 		reg=*iterRegistry;
 		reg->unPack(buffer);
 	}
 }
-
 void Block::packMetadata(Buffer* buffer){
 	int numberElements = this->regList.size();
     buffer->packField(&numberElements, sizeof(numberElements));
@@ -168,10 +178,10 @@ void Block::setMaxLong(unsigned int maxLong) throw(){
 int Block::getLongBytes(){
 	return this->maxLong;
 }
-bool Block::posibleToAgregateComponent(Component* component) const throw(){
+bool Block::posibleToAgregateComponent(Registry* registry) const throw(){
 	unsigned int ocupedLong = this->getOcupedLong();
-	if (component != NULL) {
-		if (ocupedLong + component->getLongBytes() <= this->getMaxLong()) {
+	if (registry != NULL) {
+		if (ocupedLong + registry->getLongBytes() <= this->getMaxLong()) {
 			return true;
 		} else {
 			return false;

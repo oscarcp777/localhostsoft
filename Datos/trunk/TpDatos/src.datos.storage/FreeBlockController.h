@@ -50,7 +50,6 @@ public:
 			 */
 			 BinaryFile* binaryFile;
 
-private:
 
 };
 

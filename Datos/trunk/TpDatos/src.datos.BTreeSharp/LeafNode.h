@@ -2,7 +2,7 @@
  * LeafNode.h
  *
  *  Created on: 04/09/2010
- *      Author: Facundo
+ *      Author: Facurndo
  */
 
 #ifndef LEAFNODE_H_
@@ -18,7 +18,8 @@ public:
 	virtual bool isLeaf() const throw();
 	virtual void addComponent(Component* component) throw();
 	void addComponent(Component* component,list<Registry*>::iterator ,int pos) throw();
-
+	void pack(Buffer* buffer);
+	void unPack(Buffer* buffer);
 	/**
 	 * Obtiene el id del bloque externo siguiente del arbol b sharp.
 	 */

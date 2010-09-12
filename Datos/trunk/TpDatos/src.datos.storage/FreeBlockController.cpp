@@ -9,15 +9,23 @@
 
 
 FreeBlockController::~FreeBlockController()throw(){
+	this->binaryFile->close();
+	delete this->binaryFile;
 }
 FreeBlockController::FreeBlockController(const std::string& nameFile) throw() {
 	this->binaryFile = new BinaryFile();
-	this->binaryFile->create(nameFile);
+	if(!this->binaryFile->isCreated(nameFile))
+		this->binaryFile->create(nameFile);
+	else
+		this->binaryFile->open(nameFile);
 }
 
 
 void FreeBlockController::writeSizeBusy(unsigned int position, unsigned int sizeBusy) throw() {
-	this->binaryFile->write((char*) &sizeBusy, position);
+	Buffer* buffer = new Buffer(sizeof(int));
+	buffer->packField(&sizeBusy,sizeof(sizeBusy));
+	this->binaryFile->write(buffer->getData(),sizeof(int),position*sizeof(int));
+	delete buffer;
 }
 
 unsigned int FreeBlockController::readSizeBusy(unsigned int position) throw() {

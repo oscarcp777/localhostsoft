@@ -11,13 +11,18 @@ IndexBSharp::IndexBSharp(const std::string& nameFile,unsigned int sizeBlock,int 
 	this->sizeBlock=sizeBlock;
 	this->typeElement=typeElement;
 	this->binaryFile= new BinaryFile();
-	this->binaryFile->create(nameFile);
+	if(!this->binaryFile->isCreated(nameFile))
+		this->binaryFile->create(nameFile);
+	else
+		this->binaryFile->open(nameFile);
 	this->buffer= new Buffer(sizeBlock);
+	this->freeBlockController = new FreeBlockController(nameFile+"free");
 	this->readBlockRoot();
 }
 
 IndexBSharp::~IndexBSharp() {
 	this->binaryFile->close();
+	delete this->freeBlockController;
 	delete this->binaryFile;
 }
 
@@ -68,14 +73,14 @@ void IndexBSharp::readBlockRoot() throw(){
 void IndexBSharp::writeBlockRoot() throw(){
      this->writeBlock(this->rootNode,0);
 }
-void IndexBSharp::writeBlock(Node* node,int position) throw(){
+void IndexBSharp::writeBlock(Node* node,int numBlock) throw(){
 	this->buffer->clear();
 	node->pack(this->buffer);
-	this->binaryFile->write(this->buffer->getData(),this->buffer->getMaxBytes(),position);
+	this->binaryFile->write(this->buffer->getData(),this->buffer->getMaxBytes(),numBlock*this->sizeBlock);
 }
-Node* IndexBSharp::readNode(unsigned int pos) throw() {
+Node* IndexBSharp::readNode(unsigned int numBlock) throw() {
 	this->buffer->clear();
-	if(this->binaryFile->read(buffer->getData(), pos)){
+	if(this->binaryFile->read(buffer->getData(),this->sizeBlock,this->sizeBlock*numBlock)){
 		Node* node = readNodeBytes(buffer);
 		return node;
 	}else {

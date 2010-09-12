@@ -13,6 +13,12 @@ class KeyIndexPrimary :public Key{
 public:
 	KeyIndexPrimary(int value);
 	virtual ~KeyIndexPrimary();
+	void pack(Buffer* buffer);
+	void unPack(Buffer* buffer);
+	int getSize();
+	int getLongBytes();
+	int print(std::ostream& outStream);
+
 private:
 	int value;
 };

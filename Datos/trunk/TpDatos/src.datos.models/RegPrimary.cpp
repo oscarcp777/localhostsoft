@@ -6,6 +6,8 @@
  */
 
 #include "RegPrimary.h"
+#include "Key.h"
+#include "KeyIndexPrimary.h"
 
 RegPrimary::RegPrimary() {
 	// TODO Auto-generated constructor stub
@@ -22,22 +24,26 @@ bool RegPrimary::equals(Registry* comp){
  return true;
 }
 void RegPrimary::pack(Buffer* buffer){
-
+	this->getKey()->pack(buffer);
+	buffer->packField(&this->numberBlock,sizeof(this->numberBlock));
 }
 void RegPrimary::unPack(Buffer* buffer){
-
+	this->setKey(new KeyIndexPrimary(0));
+	this->getKey()->unPack(buffer);
+	buffer->unPackField(&this->numberBlock,sizeof(this->numberBlock));
 }
 int RegPrimary::compareTo(Registry* registry){
   return 1;
 }
 int RegPrimary::getSize(){
-    return 1;
+    return NUM_FIELDS_REG_PRIMARY*sizeof(int);
 }
 int RegPrimary::print(std::ostream& outStream){
- return 1;
+	outStream<<"numero Bloque: "<<this->numberBlock<<"   clave: "<<this->getKey()->print(outStream)<<endl;
+	return 1;
 }
  int RegPrimary::getLongBytes(){
- return 1;
+	 return getSize();
 }
  int RegPrimary::getNumberBlock(){
      return numberBlock;

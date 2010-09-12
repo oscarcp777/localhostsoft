@@ -19,6 +19,8 @@ public:
     virtual bool isLeaf() const throw() = 0;
     virtual void addComponent(Component* component) throw() = 0;
     virtual void addComponent(Component* component,list<Registry*>::iterator ,int pos) throw() = 0;
+    virtual void pack(Buffer* buffer);
+    	virtual void unPack(Buffer* buffer);
 
 protected:
 	int typeElement;

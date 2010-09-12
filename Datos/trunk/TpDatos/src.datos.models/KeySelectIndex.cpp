@@ -18,3 +18,4 @@ KeySelectIndex::~KeySelectIndex() {
 Registry* KeySelectIndex::clone(){
 	return NULL;
 }
+
