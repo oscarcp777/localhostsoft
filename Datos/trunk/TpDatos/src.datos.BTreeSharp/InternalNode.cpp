@@ -74,4 +74,11 @@ std::vector<int>::iterator InternalNode::lastBranch() throw(){
 std::vector<int>::const_iterator  InternalNode::lastBranch() const throw(){
 	return this->branchList.end();
 }
+void InternalNode::packMetadata(Buffer* buffer){
 
+}
+int InternalNode::unPackMetadata(Buffer* buffer){
+	int numElements= 0;
+
+	return numElements;
+}

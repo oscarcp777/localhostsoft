@@ -20,6 +20,9 @@ public:
 	void addComponent(Component* component,list<Registry*>::iterator ,int pos) throw();
 	void pack(Buffer* buffer);
 	void unPack(Buffer* buffer);
+	void packMetadata(Buffer* buffer);
+	int unPackMetadata(Buffer* buffer);
+
 	/**
 	 * Obtiene el id del bloque externo siguiente del arbol b sharp.
 	 */

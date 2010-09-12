@@ -22,7 +22,8 @@ public:
 	bool isLeaf() const throw();
 	void addComponent(Component* component) throw();
 	void addComponent(Component* component,list<Registry*>::iterator ,int pos) throw();
-
+	void packMetadata(Buffer* buffer);
+	int unPackMetadata(Buffer* buffer);
 	/**
 	 * Agrega una rama al bloque interno b sharp.
 	 */
