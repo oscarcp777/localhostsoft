@@ -270,7 +270,6 @@ void probarIndiceBSharp() {
 		std::cin >> nombre;
 		std::cout << "Ingrese edad: ";
 		std::cin >> edad;
-
 		RegistroLongitudVariable::puntero registro = new RegistroLongitudVariable(clavePrimaria);
 		registro->agregar_campo("id", new CampoEntero(id));
 		registro->agregar_campo("nombre", new CampoCadena(nombre));

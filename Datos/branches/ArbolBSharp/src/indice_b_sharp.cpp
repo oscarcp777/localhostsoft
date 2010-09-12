@@ -99,13 +99,17 @@ bool IndiceBSharp::balancearBloquesExternos(const Registro::puntero& registro, B
 		//SE BALANCEA POR TAMAÑO
 		//SE LLENA EL BLOQUE DE LA IZQUIERDA LO MAS POSIBLE, LUEGO SE INTENTA LLENAR EL DE LA DERECHA
 
+		if (bloqueHermano == NULL)
+			return false;
+
+
 		// Crea contenedor de componentes para insertar ordenado el registro...
 		BloqueExternoBSharp::contenedor_componentes lista_registros;
 
-		//Registro mayor del bloque actual
+		//Registro menor del bloque actual
 		Registro::puntero registroActual = static_cast<Registro::puntero>(*(bloqueActual->primer_componente()));
 
-		//Registro mayor bloque hermano
+		//Registro menor bloque hermano
 		Registro::puntero registroHermano = static_cast<Registro::puntero>(*(bloqueHermano->primer_componente()));
 
 
@@ -138,8 +142,7 @@ bool IndiceBSharp::balancearBloquesExternos(const Registro::puntero& registro, B
 				lista_registros.push_back(*componenteListaBloque);
 				componenteListaBloque++;
 		}
-		registrosBloqueIzquierdo.clear();
-		registrosBloqueDerecho.clear();
+
 
 		// Busca posicion de insercion para el registro...
 		unsigned int posicion_insercion = buscar_posicion_insercion_externa(registro, lista_registros.begin(), lista_registros.end());
@@ -147,8 +150,8 @@ bool IndiceBSharp::balancearBloquesExternos(const Registro::puntero& registro, B
 		// Inserta ordenado el registro
 		lista_registros.insert(lista_registros.begin() + posicion_insercion, registro);
 
-
-		//		std::cout<<"LISTA ENTERA: "<< std::endl;
+//SACAR
+//		std::cout<<"LISTA ENTERA: "<< std::endl;
 //		BloqueExternoBSharp::iterador_componentes actual3 = lista_registros.begin();
 //		while (actual3 != lista_registros.end()){
 //			Registro::puntero registroAux = static_cast<Registro::puntero>(*actual3);
@@ -162,27 +165,45 @@ bool IndiceBSharp::balancearBloquesExternos(const Registro::puntero& registro, B
 		BloqueExternoBSharp::iterador_componentes componenteListaFinal = lista_registros.begin();
 		while (bloqueIzquierdo->puede_agregar_componente(*componenteListaFinal)){
 			bloqueIzquierdo->agregar_componente(*componenteListaFinal);
-//			Registro::puntero registroAux = static_cast<Registro::puntero>(*componenteListaFinal);
-//			imprimir_registro(registroAux,std::cout);
 			componenteListaFinal++;
 		}
+
 		// Establece el elemento medio a subir en el resultado de insercion
 		resultado.establecer_registro_clave_media(this->extraer_clave(*componenteListaFinal));
-		while (bloqueDerecho->puede_agregar_componente(*componenteListaFinal) && (componenteListaFinal != lista_registros.end())){
-			bloqueDerecho->agregar_componente(*componenteListaFinal);
-//			Registro::puntero registroAux = static_cast<Registro::puntero>(*componenteListaFinal);
-//			imprimir_registro(registroAux,std::cout);
+		while (componenteListaFinal != lista_registros.end()){
+			if (bloqueDerecho->puede_agregar_componente(*componenteListaFinal))
+				bloqueDerecho->agregar_componente(*componenteListaFinal);
+			else
+				break;
 			componenteListaFinal++;
 		}
 
 		if (componenteListaFinal != lista_registros.end()){
 			std::cout<<"No se puede hacer balanceo"<<std::endl;
+			bloqueIzquierdo->vaciar_componentes();
+			componenteListaBloque = registrosBloqueIzquierdo.begin();
+			while (componenteListaBloque != registrosBloqueIzquierdo.end()){
+				bloqueIzquierdo->agregar_componente(*componenteListaBloque);
+				componenteListaBloque++;
+			}
+			bloqueDerecho->vaciar_componentes();
+			componenteListaBloque = registrosBloqueDerecho.begin();
+			while (componenteListaBloque != registrosBloqueDerecho.end()){
+				bloqueDerecho->agregar_componente(*componenteListaBloque);
+				componenteListaBloque++;
+			}
+			registrosBloqueIzquierdo.clear();
+			registrosBloqueDerecho.clear();
 			return false;
 		}
 		else{
 			std::cout<<"Si se puede hacer balanceo"<<std::endl;
+			// Actualiza espacio ocupado para el bloque izquierdo
+			this->estrategiaEspacioLibre->escribir_espacio_ocupado(bloqueIzquierdo->obtener_numero_bloque(), bloqueIzquierdo->obtener_longitud_ocupada());
 			// Escribe bloque izquierdo
 			this->estrategiaAlmacenamiento->escribir_bloque(bloqueIzquierdo->obtener_numero_bloque(), bloqueIzquierdo, this->archivoIndice);
+			// Actualiza espacio ocupado para el bloque derecho
+			this->estrategiaEspacioLibre->escribir_espacio_ocupado(bloqueDerecho->obtener_numero_bloque(), bloqueDerecho->obtener_longitud_ocupada());
 			// Escribe bloque derecho
 			this->estrategiaAlmacenamiento->escribir_bloque(bloqueDerecho->obtener_numero_bloque(), bloqueDerecho, this->archivoIndice);
 
@@ -204,27 +225,23 @@ int IndiceBSharp::insertar_bloque_externo(BloqueExternoBSharp::puntero& bloqueEx
 		this->insertar_bloque_externo_no_lleno(bloqueExterno, registro);
 	} else {
 		// LEO BLOQUE DE LA DIR DEL HERMANO
-		if (bloque_hermano != 0){
-			BloqueExternoBSharp::puntero bloqueRamaHermana = this->estrategiaAlmacenamiento->leer_bloque(bloque_hermano, this->archivoIndice);
-			// BALANCEO
-			if (this->balancearBloquesExternos(registro,bloqueExterno,bloqueRamaHermana,resultado)){
-				// Hubo balanceo
-				respuesta = HAY_BALANCEO;
-			}else{
-				// Hubo sobreflujo
-				respuesta = HAY_SOBREFLUJO;
-				// Agrega el registro en el bloque externo lleno
-				this->insertar_bloque_externo_lleno(bloqueExterno, registro, resultado);
-			}
-		}else{
-				// Hubo sobreflujo
-				respuesta = HAY_SOBREFLUJO;
-				// Agrega el registro en el bloque externo lleno
-				this->insertar_bloque_externo_lleno(bloqueExterno, registro, resultado);
+		BloqueExternoBSharp::puntero bloqueRamaHermana;
+		if (bloque_hermano != 0)
+			bloqueRamaHermana = this->estrategiaAlmacenamiento->leer_bloque(bloque_hermano, this->archivoIndice);
+		else
+			bloqueRamaHermana = NULL;
 
+		// BALANCEO
+		if (this->balancearBloquesExternos(registro,bloqueExterno,bloqueRamaHermana,resultado)){
+			// Hubo balanceo
+			respuesta = HAY_BALANCEO;
+		}else{
+			// Hubo sobreflujo
+			respuesta = HAY_SOBREFLUJO;
+			// Agrega el registro en el bloque externo lleno
+			this->insertar_bloque_externo_lleno(bloqueExterno, registro, resultado);
 		}
 	}
-	// Devuelve si hubo sobreflujo o no
 	return respuesta;
 }
 
@@ -324,22 +341,40 @@ int IndiceBSharp::insertar_bloque_interno(BloqueInternoBSharp::puntero& bloqueIn
 			// Inserto en el bloque interno hijo
 			respuestaHijo = this->insertar_bloque_interno(bloqueInternoInsertar, registroClave, resultado, rama_hermana);
 		}
-		//DONI-FAQ necesito actualizar el campo cuando hay balanceo en el hijo
+		//Se actualiza la clave cuando hay balanceo en el hijo
 		if (respuestaHijo == HAY_BALANCEO){
-//			BloqueInternoBSharp::iterador_componentes_constante actualComponente = bloqueInterno->primer_componente();
-//			BloqueInternoBSharp::iterador_componentes_constante finComponente = bloqueInterno->ultimo_componente();
+			BloqueInternoBSharp::iterador_componentes_constante actualComponente = bloqueInterno->primer_componente();
+			BloqueInternoBSharp::iterador_componentes_constante finComponente = bloqueInterno->ultimo_componente();
+			--finComponente;
+			while (actualComponente != finComponente) {
+				if (this->comparadorClave->es_menor(this->clave, registroClave, Registro::puntero(*actualComponente))) {
+					break;
+				}
+				actualComponente++;
+			}
+			// Agrego componente
+			Registro::puntero registroAReemplazar = (Registro::puntero) *actualComponente;
+			std::cout << "Registro a reemplazar: ";
+			this->imprimir_registro(registroAReemplazar, std::cout);
+			std::cout<< std::endl;
+			std::cout << "Registro a subir: ";
+			this->imprimir_registro(resultado.obtener_registro_clave_media(), std::cout);
+			std::cout<< std::endl;
+			bloqueInterno->reemplazar_componente(registroAReemplazar, resultado.obtener_registro_clave_media());
+
+//SACAR
+//			//Imprimir componentes bloque
+//			std::cout << "NUMERO BLOQUE: " << bloqueInterno->obtener_numero_bloque() << " ";
+//			std::cout << "NIVEL: " << bloqueInterno->obtener_nivel() << " ";
+//			std::cout << "COMPONENTES BLOQUE: ";
+//			actualComponente = bloqueInterno->primer_componente();
 //			while (actualComponente != finComponente) {
-//				if (this->comparadorClave->es_menor(this->clave, registroClave, Registro::puntero(*actualComponente))) {
-//					break;
-//
-//				}
+//				Registro::puntero registro = (Registro::puntero) *actualComponente;
+//				this->imprimir_registro(registro, std::cout);
 //				++actualComponente;
 //			}
-//			// Agrego componente
-//			bloqueInterno->reemplazar_componente(Registro::puntero(*actualComponente), resultado.obtener_registro_clave_media());
-//
-//			// Escribo bloque
-//			this->estrategiaAlmacenamiento->escribir_bloque(bloqueInterno->obtener_numero_bloque(), bloqueInterno, this->archivoIndice);
+			// Escribo bloque
+			this->estrategiaAlmacenamiento->escribir_bloque(bloqueInterno->obtener_numero_bloque(), bloqueInterno, this->archivoIndice);
 		}
 
 		// Verifico si hubo sobrelujo al insertar en el bloque hijo

@@ -26,6 +26,10 @@ void ComponenteCompuesto::reemplazar_componente(Componente::puntero componenteVi
 	std::replace(this->primer_componente(), this->ultimo_componente(), componenteViejo, componenteNuevo);
 }
 
+void ComponenteCompuesto::vaciar_componentes() throw() {
+	this->listaComponentes.clear();
+}
+
 
 bool ComponenteCompuesto::contiene_componente(Componente::puntero componente) throw() {
 	ComponenteCompuesto::iterador_componentes posicion;

@@ -58,6 +58,10 @@ class ComponenteCompuesto: public Componente {
 		 */
 		void reemplazar_componente(Componente::puntero componenteViejo, Componente::puntero componenteNuevo) throw();
 		/**
+		 * Vacia la lista de componentes del bloque
+		 */
+		void vaciar_componentes() throw();
+		/**
 		 * Verifica si contiene un componente en la lista de componentes.
 		 */
 		virtual bool contiene_componente(Componente::puntero componente) throw();
