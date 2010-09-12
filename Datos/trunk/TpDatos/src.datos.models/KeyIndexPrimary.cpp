@@ -28,6 +28,14 @@ int KeyIndexPrimary::getLongBytes(){
 	return this->getSize();
 }
 int  KeyIndexPrimary::print(std::ostream& outStream){
-	outStream<<"Clave : "<<this->value <<endl;
+	outStream<<"Clave : KeyIndexPrimary "<<this->value <<endl;
      return 1;
+}
+int  KeyIndexPrimary::getValue(){
+	return this->value;
+}
+bool KeyIndexPrimary::equals(Registry* comp){
+	KeyIndexPrimary* key = (KeyIndexPrimary*) comp;
+
+	return this->value == key->getValue();
 }

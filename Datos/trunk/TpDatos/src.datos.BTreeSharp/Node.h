@@ -8,6 +8,7 @@
 #ifndef NODE_H_
 #define NODE_H_
 #include "../src.datos.models/Block.h"
+#include "../src.datos.utils/Define.h"
 
 class Node: public Block {
 public:
@@ -17,8 +18,6 @@ public:
 	int getTypeElement();
 	void setTypeElement(int typeElement);
 	virtual bool isLeaf() const throw() = 0;
-	virtual void addComponent(Component* component) throw() = 0;
-	virtual void addComponent(Component* component,list<Registry*>::iterator ,int pos) throw() = 0;
 	virtual void pack(Buffer* buffer) = 0;
 	virtual void unPack(Buffer* buffer) = 0;
 	virtual void packMetadata(Buffer* buffer)= 0;

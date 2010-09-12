@@ -18,6 +18,8 @@ public:
 	int getSize();
 	int getLongBytes();
 	int print(std::ostream& outStream);
+	bool equals(Registry* comp);
+	int getValue();
 
 private:
 	int value;

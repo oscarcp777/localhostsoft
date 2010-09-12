@@ -16,8 +16,9 @@ int main() {
 
 	TestBSharp* test= new TestBSharp();
 	test->testInsert();
-	//test->testsearch();
 
+//	test->testsearch();
+	delete test;
 /*
 	//TEST STORAGE
    TestStorage* teststorage = new TestStorage();

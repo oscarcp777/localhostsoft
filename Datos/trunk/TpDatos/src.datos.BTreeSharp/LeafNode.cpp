@@ -9,9 +9,12 @@
 
 LeafNode::LeafNode(int type,unsigned int maxLong, unsigned int numBlock, unsigned int level) throw():Node(maxLong,numBlock,level){
 	this->typeElement=type;
+	this->setSizeFree(this->getFreeSize()- sizeof(int)*4);
 
 }
-LeafNode::LeafNode(){
+LeafNode::LeafNode(int typeElement){
+	this->typeElement=typeElement;
+	this->setSizeFree(this->getFreeSize() - sizeof(int)*4);
 }
 LeafNode::~LeafNode()throw() {
 	// TODO Auto-generated destructor stub
@@ -19,12 +22,6 @@ LeafNode::~LeafNode()throw() {
 
 bool LeafNode::isLeaf() const throw(){
 	return true;
-}
-void LeafNode::addComponent(Component* component) throw(){
-
-}
-void LeafNode::addComponent(Component* component,list<Registry*>::iterator ,int pos) throw(){
-
 }
 int LeafNode::getNextBlock() const throw(){
 	return this->nextNode;

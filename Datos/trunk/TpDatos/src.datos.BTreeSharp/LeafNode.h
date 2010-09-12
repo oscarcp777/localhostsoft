@@ -12,12 +12,10 @@
 
 class LeafNode: public Node {
 public:
-	LeafNode();
+	LeafNode(int typeElement);
 	LeafNode(int typeElement,unsigned int maxLong, unsigned int numBlock, unsigned int level)throw();
 	virtual ~LeafNode()throw();
 	virtual bool isLeaf() const throw();
-	virtual void addComponent(Component* component) throw();
-	void addComponent(Component* component,list<Registry*>::iterator ,int pos) throw();
 	void pack(Buffer* buffer);
 	void unPack(Buffer* buffer);
 	void packMetadata(Buffer* buffer);

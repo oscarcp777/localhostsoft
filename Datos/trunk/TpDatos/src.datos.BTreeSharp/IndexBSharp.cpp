@@ -91,6 +91,7 @@ Node* IndexBSharp::readNodeBytes(Buffer* buffer) throw(){
 	unsigned int levelNode;
 	if (buffer->getData() != NULL) {
 		buffer->unPackField(&levelNode, sizeof(levelNode));
+		buffer->init();
 		if (levelNode == 0) {
 			return readLeafNodeBytes(buffer);
 		} else {
@@ -105,7 +106,7 @@ Node* IndexBSharp::readInternalNodeBytes(Buffer* buffer) throw(){
 	return internalNode;
 }
 Node* IndexBSharp::readLeafNodeBytes(Buffer* buffer) throw(){
-	LeafNode* leafNode= new LeafNode();
+	LeafNode* leafNode= new LeafNode(this->typeElement);
 	leafNode->unPack(buffer);
 	return leafNode;
 }

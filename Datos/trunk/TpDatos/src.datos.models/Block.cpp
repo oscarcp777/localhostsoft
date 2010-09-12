@@ -35,6 +35,9 @@ list<Registry*>::iterator Block::iteratorBegin(){
 list<Registry*>::iterator Block::iteratorEnd(){
 	return this->regList.end();
 }
+void Block::setSizeFree(int size){
+	this->freeSize = size;
+}
 int Block::getNumElements(){
 	return this->regList.size();
 }
@@ -136,24 +139,27 @@ bool Block::isLeaf() const throw(){
 	return this->getLevel() == 0;
 }
 
-void Block::addComponent(Component* component) throw(){
-	//TODO MODIFICAR CODIFO TOPO
-	//	if (componente != NULL) {
-//			if (this->puede_agregar_componente(componente)) {
-//			            Bloque::agregar_componente(componente);
-//			}
-//		} else {
-//			std::cout << "No se pudo agregar en bloque BSharp... " << std::endl;
-//		}
+void Block::addComponent(Registry* registry) throw(){
+	if (registry != NULL) {
+		if (this->posibleToAgregateComponent(registry))
+			this->addReg(registry);
+	}else {
+		std::cout << "No se pudo agregar en bloque BSharp... " << std::endl;
+	}
 }
 
-void Block::addComponent(Component* component, int pos/*, ComponenteCompuesto::iterador_componentes posicion*/) throw(){
-	//TODO MODIFICAR CODIFO TOPO
-	//	if (componente != NULL) {
-//		if (this->puede_agregar_componente(componente)) {
-//			Bloque::agregar_componente(componente, posicion);
-//		}
-//	}
+void Block::addComponent(Registry* registry,list<Registry*>::iterator it,int pos) throw() {
+
+		if (registry != NULL) {
+		if (this->posibleToAgregateComponent(registry)) {
+			 for (int var = 0; var < pos; var++) {
+				 it++;
+			}
+			this->freeSize-= registry->getSize();
+			this->regList.insert(it,registry);
+
+		}
+	}
 }
 unsigned int Block::getOcupedLong() const throw() {
 //	unsigned int longitud_ocupada = Bloque::obtener_longitud_ocupada();

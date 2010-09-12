@@ -9,7 +9,8 @@
 
 using namespace std;
 InternalNode::InternalNode(unsigned int maxLong, unsigned int numBlock, unsigned int level) throw():Node(maxLong,numBlock,level){
-
+	this->typeElement= TYPE_KEY;
+	this->setSizeFree(this->getFreeSize()- sizeof(int)*4);//TODO y las ramas???
 }
 InternalNode::InternalNode() {
 }
@@ -20,12 +21,7 @@ InternalNode::~InternalNode() throw(){
 bool InternalNode::isLeaf() const throw(){
 	return false;
 }
-void InternalNode::addComponent(Component* component) throw(){
 
-}
-void InternalNode::addComponent(Component* component,list<Registry*>::iterator ,int pos) throw(){
-
-}
 void InternalNode::addBranch(int branch) throw(){
 	this->branchList.push_back(branch);
 }

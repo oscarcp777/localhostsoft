@@ -20,8 +20,6 @@ public:
 	InternalNode(unsigned int maxLong, unsigned int numBlock, unsigned int level)throw();
 	virtual ~InternalNode()throw();
 	bool isLeaf() const throw();
-	void addComponent(Component* component) throw();
-	void addComponent(Component* component,list<Registry*>::iterator ,int pos) throw();
 	void pack(Buffer* buffer);
 	void unPack(Buffer* buffer);
 	void packMetadata(Buffer* buffer);

@@ -22,6 +22,7 @@ public:
 	Block();
 	int getNumElements();
 	int getFreeSize();
+	void setSizeFree(int size);
 	void addReg(Registry* reg);
 	Registry* getReg(Key* key);
 	virtual void pack(Buffer* buffer);
@@ -59,11 +60,12 @@ public:
     /**
      * Agrega un componente al bloque en el arbol b sharp.
      */
-    virtual void addComponent(Component* component) throw();
-    /**
-     * Agrega un componente al bloque en el arbol B sharp en la posicion especificada.
-     */
-    virtual void addComponent(Component* component, int pos/*, ComponenteCompuesto::iterador_componentes posicion*/) throw();
+	 void addComponent(Registry* registry) throw() ;
+	  /**
+	     * Agrega un componente al bloque en el arbol B sharp en la posicion especificada.
+	     */
+	 void addComponent(Registry* registry,list<Registry*>::iterator it,int pos) throw() ;
+
     /**
      * Obtiene la longitud en bytes ocupada del bloque.
      * */

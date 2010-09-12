@@ -16,10 +16,9 @@ public:
 	Key(string value);
 	Key();
 	virtual ~Key();
-	bool equals(Registry* comp);
+	virtual bool equals(Registry* comp);
 	string getValue();
 	virtual int getSize();
-	int getValueInt();
 	virtual void pack(Buffer* buffer);
 	virtual void unPack(Buffer* buffer);
 	virtual int print(std::ostream& outStream);

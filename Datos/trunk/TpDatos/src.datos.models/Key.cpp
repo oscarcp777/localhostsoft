@@ -19,18 +19,11 @@ string Key::getValue(){
 	return this->value;
 }
 int Key::getSize(){
-	if(this->getValueInt()>=0)return sizeof(int);
-	else return this->value.length();
+		return this->value.length();
 }
 bool Key::equals(Registry* comp){
 	Key* key= (Key*)comp;
 	return((this->value.compare(key->getValue())==0));
-}
-int Key::getValueInt(){
-	int i=-1;
-	istringstream myStream(this->value);
-	myStream>>i;
-	return i;
 }
 void Key::pack(Buffer* buffer){
 	    int size=this->getSize();
@@ -43,7 +36,7 @@ void Key::unPack(Buffer* buffer){
 	buffer->unPackFieldString(this->value,size);
 }
 int  Key::print(std::ostream& outStream){
-	outStream<<"Clave : "<<this->value<<endl;
+	outStream<<"Clave padre: "<<this->value<<endl;
      return 1;
 }
 int Key::getLongBytes(){
