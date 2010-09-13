@@ -18,7 +18,10 @@ RegPrimary::~RegPrimary() {
 	// TODO Auto-generated destructor stub
 }
 Registry* RegPrimary::clone(){
-	return NULL;
+	RegPrimary* regPrimary = new RegPrimary();
+	regPrimary->setKey((KeyIndexPrimary*)this->getKey()->clone());
+	regPrimary->setNumberBlock(this->numberBlock);
+	return regPrimary;
 }
 bool RegPrimary::equals(Registry* comp){
  return true;
@@ -39,7 +42,10 @@ int RegPrimary::getSize(){
     return NUM_FIELDS_REG_PRIMARY*sizeof(int);
 }
 int RegPrimary::print(std::ostream& outStream){
-	outStream<<"numero Bloque: "<<this->numberBlock<<"   clave: "<<this->getKey()->print(outStream)<<endl;
+	this->getKey()->print(outStream);
+	outStream<<"numero Bloque: ";
+	outStream<<this->numberBlock;
+	outStream<<endl;
 	return 1;
 }
  int RegPrimary::getLongBytes(){

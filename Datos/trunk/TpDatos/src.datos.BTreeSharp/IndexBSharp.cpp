@@ -27,7 +27,7 @@ IndexBSharp::~IndexBSharp() {
 }
 
 void IndexBSharp::addRegistry(Registry* registry) throw(){
-	ContainerInsertion* containerInsertion=NULL;
+	ContainerInsertion* containerInsertion=new ContainerInsertion();
 	bool isOverflow = false;
 	if (this->rootNode->isLeaf()){
 		LeafNode* leafNode = static_cast<LeafNode*>(this->rootNode);
@@ -40,7 +40,7 @@ void IndexBSharp::addRegistry(Registry* registry) throw(){
 	if (isOverflow) {
 		this->splitRoot(containerInsertion);
 	}
-
+   delete containerInsertion;
 }
 
 void IndexBSharp::deleteRegistry(Registry* registry) throw(){
@@ -369,7 +369,7 @@ unsigned int IndexBSharp::searchPositionInsertLeafNode(Registry* registry, list<
 		list<Registry*>::iterator itReg;
 		for (itReg= iteratorBegin; itReg != iteratorEnd && less; ++itReg, ++insertPos) {
 			Registry* reg = *itReg;
-			if (reg->getKey()->compareTo(registry) >= 0) {
+			if (reg->getKey()->compareTo(registry->getKey()) >= 0) {
 						less = false;
 	                	break;
 	        	}
@@ -382,7 +382,7 @@ unsigned int IndexBSharp::searchPositionInsertInternalNode(Registry* registry, l
 		list<Registry*>::iterator itReg;
 		for (itReg= iteratorBegin; itReg != iteratorEnd && lessOrEquals; ++itReg, ++insertPos) {
 	        	Registry* reg = *itReg;
-		        if (reg->getKey()->compareTo(registry) < 0 || reg->getKey()->compareTo(registry) == 0) {
+		        if (reg->getKey()->compareTo(registry->getKey()) < 0 || reg->getKey()->compareTo(registry->getKey()) == 0) {
 	        	}
 		        else {
 						lessOrEquals = false;
@@ -398,7 +398,8 @@ int IndexBSharp::searchBranch(InternalNode* internalNode,Registry* registry) thr
 	unsigned int branchPos = 0;
 
 	while (actualComponent != endComponent) {
-		if (registry->getKey()->compareTo(*actualComponent) < 0) {
+		Registry* actual=*actualComponent;
+		if (registry->getKey()->compareTo(actual->getKey()) < 0) {
 			break;
 		}
 		++actualComponent;
@@ -457,7 +458,7 @@ void IndexBSharp::printRecursive(Node* currentNode, std::ostream& outStream, uns
 			outStream << std::string(level * 4, '-');
 			outStream << "NUMERO BLOQUE: " << currentNode->getNumBlock() << " ";
 			outStream << "NIVEL: " << currentNode->getLevel() << " ";
-			outStream << "COMPONENTES BLOQUE: ";
+			outStream << "COMPONENTES BLOQUE: "<<endl;
 			list<Registry*>::iterator actualComp  = currentNode->iteratorBegin();
 			list<Registry*>::iterator endComp = currentNode->iteratorEnd();
 			while (actualComp != endComp) {

@@ -36,7 +36,7 @@ void Key::unPack(Buffer* buffer){
 	buffer->unPackFieldString(this->value,size);
 }
 int  Key::print(std::ostream& outStream){
-	outStream<<"Clave padre: "<<this->value<<endl;
+	outStream<<"Clave : "<<this->value;
      return 1;
 }
 int Key::getLongBytes(){
@@ -54,5 +54,6 @@ Registry* Key::clone(){
 }
 
 int Key::compareTo(Registry* registry){
-	return this->value.compare(registry->getKey()->getValue());
+	Key* key=(Key*)registry;
+	return this->value.compare(key->getValue());
 }

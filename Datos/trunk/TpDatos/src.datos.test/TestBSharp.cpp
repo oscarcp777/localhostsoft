@@ -21,16 +21,17 @@ TestBSharp::~TestBSharp() {
 void TestBSharp::testInsert(){
      IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTree.dat",BLOCK_SIZE,TYPE_REG_PRIMARY);
 
-     for (int var = 0; var < 100; ++var) {
+     for (int var = 0; var < 15; ++var) {
     	 if(var == 13)
     		 cout<<"14 insert";
-    	 else{
+
     		 RegPrimary* regPrimary = new RegPrimary();
     	     KeyIndexPrimary* key= new KeyIndexPrimary(var+100);
     	     regPrimary->setKey(key);
     	     regPrimary->setNumberBlock(var+4);
     	     indexBSharp->addRegistry(regPrimary);
-    	 }
+    	     indexBSharp->print(std::cout);
+
 	}
 
      indexBSharp->print(std::cout);

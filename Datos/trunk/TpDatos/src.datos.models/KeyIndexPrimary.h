@@ -20,6 +20,8 @@ public:
 	int print(std::ostream& outStream);
 	bool equals(Registry* comp);
 	int getValue();
+	int compareTo(Registry* registry);
+	Registry* clone();
 
 private:
 	int value;

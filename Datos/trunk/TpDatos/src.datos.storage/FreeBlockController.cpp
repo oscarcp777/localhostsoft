@@ -22,37 +22,36 @@ FreeBlockController::FreeBlockController(const std::string& nameFile) throw() {
 
 
 void FreeBlockController::writeSizeBusy(unsigned int position, unsigned int sizeBusy) throw() {
-	Buffer* buffer = new Buffer(sizeof(int));
-	buffer->packField(&sizeBusy,sizeof(sizeBusy));
-	this->binaryFile->write(buffer->getData(),sizeof(int),position*sizeof(int));
-	delete buffer;
+	this->binaryFile->write((char*)&sizeBusy,sizeof(unsigned int),position*sizeof(unsigned int));
 }
 
 unsigned int FreeBlockController::readSizeBusy(unsigned int position) throw() {
 	unsigned int sizeBusy;
-	this->binaryFile->read((char*) &sizeBusy, position);
+	this->binaryFile->read((char*) &sizeBusy, position*sizeof(unsigned int));
 	return sizeBusy;
 }
-
+bool FreeBlockController::isSpaceFree(unsigned int sizeBusy) throw() {
+//	unsigned int longitud_maxima_ocupada = ((float) this->longitud_maxima * this->porcentaje_ocupado);
+	return sizeBusy == 0;
+}
 unsigned int FreeBlockController::searchSizeBusy() throw() {
-//	unsigned int countBlock = this->binaryFile->getCountBlockInFile(sizeof(int));
-//	unsigned int cont = 0;
-	unsigned int sizeBusy = 1;
-//	bool find = false;
-//TODO ver manejode bloques libres
-//TODO
-//	while (cont < countBlock && !find) {
-//		this->binaryFile->read((char*) &sizeBusy, cont);
-//		if (this->es_espacio_libre(sizeBusy)) {
-//			find = true;
-//		} else {
-//			++cont;
-//		}
-//	}
-//
-//	if (!find) {
-//		sizeBusy = 0;
-//		this->binaryFile->agregar((char *) &sizeBusy);
-//	}
+	unsigned int countBlock = this->binaryFile->getCountBlockInFile(sizeof(unsigned int));
+	unsigned int cont = 0;
+	unsigned int sizeBusy = 0;
+	bool find = false;
+
+	while (cont < countBlock && !find) {
+		this->binaryFile->read((char*) &sizeBusy, cont*sizeof(unsigned int));
+		if (this->isSpaceFree(sizeBusy)) {
+			find = true;
+		} else {
+			++cont;
+		}
+	}
+
+	if (!find) {
+		sizeBusy = 0;
+		this->binaryFile->write((char *) &sizeBusy,sizeof(sizeBusy));
+	}
 	return sizeBusy;
 }
