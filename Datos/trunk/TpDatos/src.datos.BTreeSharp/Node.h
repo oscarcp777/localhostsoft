@@ -22,6 +22,7 @@ public:
 	virtual void unPack(Buffer* buffer) = 0;
 	virtual void packMetadata(Buffer* buffer)= 0;
 	virtual int unPackMetadata(Buffer* buffer)= 0;
+	virtual bool posibleToAgregateComponent(Registry* registry) throw()=0;
 
 protected:
 	int typeElement;

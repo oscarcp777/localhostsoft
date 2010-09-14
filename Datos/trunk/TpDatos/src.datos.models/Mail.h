@@ -21,7 +21,7 @@ public:
 	string getMessage();
 	string getSubject();
 	string getTo();
-	int getSize();
+	unsigned int getSize();
 	void setDate(string date);
 	void setFrom(string from);
 	void setMessage(string message);

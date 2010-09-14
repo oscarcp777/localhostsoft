@@ -10,18 +10,35 @@
 using namespace std;
 InternalNode::InternalNode(unsigned int maxLong, unsigned int numBlock, unsigned int level) throw():Node(maxLong,numBlock,level){
 	this->typeElement= TYPE_KEY;
-	this->setSizeFree(this->getFreeSize()- sizeof(int)*4);//TODO y las ramas???
+	unsigned int sizeBusy=sizeof(int)*4+this->branchList.size()*4;
+	this->setSizeFree(maxLong- sizeBusy);
+	//TODO y las ramas???
 }
-InternalNode::InternalNode() {
+InternalNode::InternalNode(unsigned int maxLong) {
+	this->typeElement= TYPE_KEY;
+	unsigned int sizeBusy=sizeof(int)*4+this->branchList.size();
+	this->setSizeFree(maxLong- sizeBusy);
+	this->setMaxLong(maxLong);
 }
 InternalNode::~InternalNode() throw(){
 	// TODO Auto-generated destructor stub
 }
-
+unsigned int InternalNode::getOcupedLong() throw(){
+	unsigned int sizeBusy=Block::getSizeRegistry();
+	sizeBusy += sizeof(unsigned int)*4;
+	sizeBusy += this->branchList.size()*4;
+	cout<<"InternalNode sizeBusy :"<<sizeBusy<<endl;
+	return sizeBusy;
+}
 bool InternalNode::isLeaf() const throw(){
 	return false;
 }
 
+bool InternalNode::posibleToAgregateComponent(Registry* registry) throw(){
+
+	return (this->getOcupedLong() + registry->getLongBytes() <= this->getMaxLong());
+
+}
 void InternalNode::addBranch(int branch) throw(){
 	this->branchList.push_back(branch);
 }
@@ -42,9 +59,9 @@ void InternalNode::transferBranchs(std::vector<int>& branchList) throw(){
 bool InternalNode::containsBranch(int branch) throw(){
 	std::vector<int>::iterator pos;
 
-		pos = std::find(this->firstBranch(), this->lastBranch(), branch);
+	pos = std::find(this->firstBranch(), this->lastBranch(), branch);
 
-		return pos != this->lastBranch();
+	return pos != this->lastBranch();
 }
 
 int InternalNode::getBranch(unsigned int index) const throw(){
@@ -74,9 +91,9 @@ void InternalNode::unPackListBranch(Buffer* buffer, int numBranchs){
 	vector<int>::iterator iterRegistry;
 	int branch;
 	for(int i=0; i<numBranchs; i++){
-			buffer->unPackField(&branch,sizeof(branch));
-			this->branchList.push_back(branch);
-		}
+		buffer->unPackField(&branch,sizeof(branch));
+		this->branchList.push_back(branch);
+	}
 }
 void InternalNode::packListBranch(Buffer* buffer){
 	vector<int>::iterator iterRegistry;
@@ -87,15 +104,15 @@ void InternalNode::packListBranch(Buffer* buffer){
 	}
 }
 void InternalNode::packMetadata(Buffer* buffer){
-   int level = this->getLevel();
-   buffer->packField(&level,sizeof(level));
-   int numBlock = this->getNumBlock();
-   buffer->packField(&numBlock,sizeof(numBlock));
-   int numBranchs = this->branchList.size();
-   buffer->packField(&numBranchs,sizeof(numBranchs));
-   this->packListBranch(buffer);
-   int numElements = this->getNumElements();
-   buffer->packField(&numElements,sizeof(numElements));
+	int level = this->getLevel();
+	buffer->packField(&level,sizeof(level));
+	int numBlock = this->getNumBlock();
+	buffer->packField(&numBlock,sizeof(numBlock));
+	int numBranchs = this->branchList.size();
+	buffer->packField(&numBranchs,sizeof(numBranchs));
+	this->packListBranch(buffer);
+	int numElements = this->getNumElements();
+	buffer->packField(&numElements,sizeof(numElements));
 
 
 }

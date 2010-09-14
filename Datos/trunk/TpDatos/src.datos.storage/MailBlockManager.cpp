@@ -53,7 +53,7 @@ void MailBlockManager::updateFreeSizeBlockMap(int block, int sizeFree){
 	this->freeSizeBlocksMap.insert(pair<int,int>(block,sizeFree));
 }
 void MailBlockManager::searchBlockWithSpaceAndInsert(Mail* mail){
-	map<int,int>::iterator it;
+	map<unsigned int,unsigned  int>::iterator it;
 	this->currentBlock = -1;
 	//itero el mapa y buscando si entra en el espacio libre de los bloques existentes
 	 for ( it=this->freeSizeBlocksMap.begin() ; it != this->freeSizeBlocksMap.end(); it++ ){

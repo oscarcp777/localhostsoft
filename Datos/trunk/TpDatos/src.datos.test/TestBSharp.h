@@ -7,6 +7,8 @@
 
 #ifndef TESTBSHARP_H_
 #define TESTBSHARP_H_
+#include <iostream>
+using namespace std;
 class TestBSharp {
 public:
 	TestBSharp();

@@ -23,7 +23,7 @@ void KeyIndexPrimary::pack(Buffer* buffer){
 void KeyIndexPrimary::unPack(Buffer* buffer){
 	buffer->unPackField(&this->value,sizeof(this->value));
 }
-int KeyIndexPrimary::getSize(){
+unsigned int KeyIndexPrimary::getSize(){
 	return sizeof(this->value);
 }
 int KeyIndexPrimary::getLongBytes(){
@@ -32,7 +32,7 @@ int KeyIndexPrimary::getLongBytes(){
 int  KeyIndexPrimary::print(std::ostream& outStream){
 	outStream<<"Clave : ";
 	outStream<<this->value;
-	outStream<<" | ";
+	outStream<<" ";
      return 1;
 }
 int  KeyIndexPrimary::getValue(){
@@ -40,7 +40,6 @@ int  KeyIndexPrimary::getValue(){
 }
 bool KeyIndexPrimary::equals(Registry* comp){
 	KeyIndexPrimary* key = (KeyIndexPrimary*) comp;
-
 	return this->value == key->getValue();
 }
 int KeyIndexPrimary::compareTo(Registry* registry){

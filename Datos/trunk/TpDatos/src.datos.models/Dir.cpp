@@ -32,7 +32,7 @@ int  Dir::print(std::ostream& outStream){
       return 1;
 }
 
-int Dir::getSize(){
+unsigned int Dir::getSize(){
 	return 1;
 }
 Registry* Dir::clone(){

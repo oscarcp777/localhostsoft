@@ -19,7 +19,7 @@ public:
 	void unPack(Buffer* buffer);
 	int getLongBytes();
 	int print(std::ostream& outStream);
-	int getSize();
+	unsigned int getSize();
 	Registry* clone();
 	int compareTo(Registry* registry);
 };

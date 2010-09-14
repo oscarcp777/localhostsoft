@@ -66,7 +66,7 @@ void Mail::setTo(string to)
 {
 	this->to = to;
 }
-int Mail::getSize(){
+unsigned int Mail::getSize(){
 	return from.length()+to.length()+subject.length()+message.length()+date.length()
 		+NUM_FIELDS_MAILS*sizeof(int)/*+this->getKey()->getSize()*/;
 }

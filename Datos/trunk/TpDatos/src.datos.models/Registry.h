@@ -24,8 +24,11 @@ public:
 	virtual int getLongBytes() = 0;
 	virtual Registry* clone() = 0;
 	virtual int compareTo(Registry* registry) = 0;
+    bool isInternal();
+    void setInternal(bool internal);
 protected:
 	Key* key;
+	bool internal;
 };
 
 #endif /* REGISTRY_H_ */

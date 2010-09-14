@@ -7,7 +7,6 @@
 //============================================================================
 
 #include <iostream>
-#include <iostream>
 #include <list>
 #include "TestBSharp.h"
 using namespace std;

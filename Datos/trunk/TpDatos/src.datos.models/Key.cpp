@@ -18,7 +18,7 @@ Key::~Key() {
 string Key::getValue(){
 	return this->value;
 }
-int Key::getSize(){
+unsigned int Key::getSize(){
 		return this->value.length();
 }
 bool Key::equals(Registry* comp){

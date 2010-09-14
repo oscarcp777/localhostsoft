@@ -40,10 +40,10 @@ private:
 	Mail* currentMail;
 	Buffer* buffer;
 	//Buffer* metadataBuffer;
-	int freeSizeCurrentBlock;
+	unsigned int freeSizeCurrentBlock;
 	std::vector<Mail*> mailList;
 	std::vector<int> freeSizeOfBlocks;
-	std::map<int, int> freeSizeBlocksMap;
+	std::map<unsigned  int,unsigned  int> freeSizeBlocksMap;
 };
 
 #endif /* MAILBLOCKMANAGER_H_ */

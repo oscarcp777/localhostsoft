@@ -16,7 +16,7 @@ public:
 	virtual ~KeyIndexPrimary();
 	void pack(Buffer* buffer);
 	void unPack(Buffer* buffer);
-	int getSize();
+	unsigned int getSize();
 	int getLongBytes();
 	int print(std::ostream& outStream);
 	bool equals(Registry* comp);

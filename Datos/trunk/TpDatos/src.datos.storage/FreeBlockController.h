@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <string>
 #include <iostream>
+#include <map>
 #include <vector>
 #include "BinaryFile.h"
 
@@ -32,10 +33,6 @@ public:
 	 */
 	void writeSizeBusy(unsigned int position, unsigned int sizeBusy) throw();
 	/**
-	 * Lee la cantidad de espacio ocupado / libre para un numero de elemento dentro de un almacenamiento dado.
-	 */
-	unsigned int readSizeBusy(unsigned int position) throw();
-	/**
 	 * Busca el numero de elemento dentro de un almacenamiento dado con espacio libre.
 	 */
 	unsigned int searchSizeBusy() throw();
@@ -53,6 +50,7 @@ private:
 	 * Almacena el archivo de espacios ocupados / libres.
 	 */
 	BinaryFile* binaryFile;
+	map<unsigned int,unsigned int> mapSizeBusy;
 
 
 };

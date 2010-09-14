@@ -9,11 +9,13 @@
 #define BLOCK_H_
 
 #include <list>
+#include <iostream>
 #include "Component.h"
 #include "../src.datos.storage/Buffer.h"
 #include "Registry.h"
 #include "Key.h"
 #include "Mail.h"
+using namespace std;
 
 class Block: public Component {
 public:
@@ -32,8 +34,8 @@ public:
 	void packListRegistry(Buffer* buffer);
 	void unPackListRegistry(Buffer* buffer,int numberElements,int typeElement);
 	int print(std::ostream& outStream);
-    int getSize();
-    virtual int getLongBytes();
+	unsigned int getSize();
+    unsigned int getSizeRegistry();
     void transferRegistry(list<Registry*> &listElement) throw();
     list<Registry*>::iterator iteratorBegin();
     list<Registry*>::iterator iteratorEnd();
@@ -69,7 +71,7 @@ public:
     /**
      * Obtiene la longitud en bytes ocupada del bloque.
      * */
-    virtual unsigned int getOcupedLong() const throw();
+    virtual unsigned int getOcupedLong() throw();
     /**
      * Obtiene la longitud maxima en bytes del bloque.
      */
@@ -81,9 +83,9 @@ public:
     /**
      * Obtiene la longitud en bytes  del bloque.
      */
-    virtual unsigned int getLongBytes() const throw();
+    virtual unsigned int getLongBytes() throw();
 
-    virtual bool posibleToAgregateComponent(Registry* registry) const throw();
+    virtual bool posibleToAgregateComponent(Registry* registry) throw();
 private:
 	list<Registry*> regList;
 	unsigned int freeSize;

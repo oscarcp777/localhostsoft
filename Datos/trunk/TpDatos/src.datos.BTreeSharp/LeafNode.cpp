@@ -9,24 +9,35 @@
 
 LeafNode::LeafNode(int type,unsigned int maxLong, unsigned int numBlock, unsigned int level) throw():Node(maxLong,numBlock,level){
 	this->typeElement=type;
-	this->setSizeFree(this->getFreeSize()- sizeof(int)*4);
+	this->setSizeFree(maxLong- sizeof(int)*4);
+    this->nextNode=-1;
 
 }
-LeafNode::LeafNode(int typeElement){
+LeafNode::LeafNode(int typeElement,unsigned int maxLong){
 	this->typeElement=typeElement;
-	this->setSizeFree(this->getFreeSize() - sizeof(int)*4);
+	this->setMaxLong(maxLong);
+	this->setSizeFree(maxLong - sizeof(int)*4);
 }
 LeafNode::~LeafNode()throw() {
 	// TODO Auto-generated destructor stub
 }
-
+unsigned int LeafNode::getOcupedLong() throw(){
+	unsigned int sizeBusy=Block::getSizeRegistry();
+	sizeBusy += sizeof(unsigned int)*4;
+	cout<<"LeafNode sizeBusy :"<<sizeBusy<<endl;
+	return sizeBusy;
+}
 bool LeafNode::isLeaf() const throw(){
 	return true;
 }
 int LeafNode::getNextBlock() const throw(){
 	return this->nextNode;
 }
+bool LeafNode::posibleToAgregateComponent(Registry* registry) throw(){
 
+	return (this->getOcupedLong() + registry->getLongBytes() <= this->getMaxLong());
+
+}
 void LeafNode::setNextBlock(int numBlock) throw(){
 	this->nextNode = numBlock;
 }

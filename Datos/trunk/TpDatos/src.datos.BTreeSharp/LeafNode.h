@@ -12,7 +12,7 @@
 
 class LeafNode: public Node {
 public:
-	LeafNode(int typeElement);
+	LeafNode(int typeElement,unsigned int maxLong);
 	LeafNode(int typeElement,unsigned int maxLong, unsigned int numBlock, unsigned int level)throw();
 	virtual ~LeafNode()throw();
 	virtual bool isLeaf() const throw();
@@ -32,8 +32,9 @@ public:
 	/**
 	 * Obtiene la longitud ocupada en bytes del bloque.
 	 */
-//TODO MODIFICAR METODO (nombre)
-//	virtual unsigned int obtener_longitud_ocupada() const throw();
+
+	 unsigned int getOcupedLong() throw();
+	 bool posibleToAgregateComponent(Registry* registry)throw();
 
 private:
 	int nextNode;

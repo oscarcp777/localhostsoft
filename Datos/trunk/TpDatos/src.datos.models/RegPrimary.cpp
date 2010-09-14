@@ -10,7 +10,7 @@
 #include "KeyIndexPrimary.h"
 
 RegPrimary::RegPrimary() {
-	// TODO Auto-generated constructor stub
+	this->setInternal(false);
 
 }
 
@@ -19,32 +19,46 @@ RegPrimary::~RegPrimary() {
 }
 Registry* RegPrimary::clone(){
 	RegPrimary* regPrimary = new RegPrimary();
+	regPrimary->setInternal(true);
 	regPrimary->setKey((KeyIndexPrimary*)this->getKey()->clone());
-	regPrimary->setNumberBlock(this->numberBlock);
 	return regPrimary;
 }
-bool RegPrimary::equals(Registry* comp){
- return true;
+bool RegPrimary::equals(Registry* registry){
+	KeyIndexPrimary* key=(KeyIndexPrimary*)registry->getKey();
+ return this->getKey()->equals(key);
 }
 void RegPrimary::pack(Buffer* buffer){
 	this->getKey()->pack(buffer);
+	if(!this->isInternal())
 	buffer->packField(&this->numberBlock,sizeof(this->numberBlock));
 }
 void RegPrimary::unPack(Buffer* buffer){
 	this->setKey(new KeyIndexPrimary(0));
 	this->getKey()->unPack(buffer);
+	if(!this->isInternal())
 	buffer->unPackField(&this->numberBlock,sizeof(this->numberBlock));
 }
 int RegPrimary::compareTo(Registry* registry){
-  return 1;
+	KeyIndexPrimary* key=(KeyIndexPrimary*)registry->getKey();
+  return this->getKey()->compareTo(key);
 }
-int RegPrimary::getSize(){
-    return NUM_FIELDS_REG_PRIMARY*sizeof(int);
+unsigned int RegPrimary::getSize(){
+	int sizeBusyAll=0;
+	if(!this->isInternal())
+		sizeBusyAll=NUM_FIELDS_REG_PRIMARY*sizeof(int);
+	else{
+		KeyIndexPrimary* key=(KeyIndexPrimary*)this->getKey();
+		sizeBusyAll=key->getSize();
+	}
+
+    return sizeBusyAll;
 }
 int RegPrimary::print(std::ostream& outStream){
 	this->getKey()->print(outStream);
-	outStream<<"numero Bloque: ";
-	outStream<<this->numberBlock;
+	if(!this->isInternal()){
+	outStream<<" | ";
+	outStream<<"numero Bloque: ";outStream<<this->numberBlock;
+	}
 	outStream<<endl;
 	return 1;
 }

@@ -21,7 +21,7 @@ public:
 	void unPack(Buffer* buffer);
 	int getLongBytes() ;
 	int compareTo(Registry* registry);
-	int getSize();
+	unsigned int getSize();
 	int print(std::ostream& outStream);
     int getNumberBlock() ;
     void setNumberBlock(int numberBlock);

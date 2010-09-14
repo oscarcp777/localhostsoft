@@ -19,14 +19,24 @@ Block::Block(){
 }
 Block::~Block() throw(){
 	list<Registry*>::iterator iterRegistry;
-		Registry* reg;
-		for (iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
-			reg=*iterRegistry;
-			delete reg;
-		}
+	Registry* reg;
+	for (iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
+		reg=*iterRegistry;
+		delete reg;
+	}
 }
-int Block::getSize(){
-   return BLOCK_SIZE;
+unsigned int Block::getSize(){
+	return BLOCK_SIZE;
+}
+unsigned int Block::getSizeRegistry(){
+	unsigned int sizeBusy=0;
+	list<Registry*>::iterator iterRegistry;
+	Registry* reg;
+	for (iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
+		reg=*iterRegistry;
+		sizeBusy+=reg->getSize();
+	}
+	return sizeBusy;
 }
 
 list<Registry*>::iterator Block::iteratorBegin(){
@@ -39,7 +49,8 @@ void Block::setSizeFree(int size){
 	this->freeSize = size;
 }
 int Block::getNumElements(){
-	return this->regList.size();
+	int size=this->regList.size();
+	return size;
 }
 
 int Block::getFreeSize(){
@@ -47,8 +58,8 @@ int Block::getFreeSize(){
 }
 
 void Block::addReg(Registry* reg){
-		this->regList.push_back(reg);
-		this->freeSize-=reg->getSize();
+	this->regList.push_back(reg);
+	this->freeSize-=reg->getSize();
 
 }
 void Block::transferRegistry(list<Registry*> &listElement) throw() {
@@ -68,7 +79,7 @@ Registry* Block::getReg(Key* key){
 }
 void Block::pack(Buffer* buffer){
 	this->packMetadata(buffer);
-    this->packListRegistry(buffer);
+	this->packListRegistry(buffer);
 
 }
 void Block::packListRegistry(Buffer* buffer){
@@ -82,7 +93,7 @@ void Block::packListRegistry(Buffer* buffer){
 }
 void Block::unPack(Buffer* buffer){
 	int numberElements = this->unPackMetadata(buffer);
-   this->unPackListRegistry(buffer,numberElements,TYPE_REG_PRIMARY);
+	this->unPackListRegistry(buffer,numberElements,TYPE_REG_PRIMARY);
 
 }
 void Block::unPackListRegistry(Buffer* buffer,int numberElements,int typeElement){
@@ -100,7 +111,7 @@ void Block::unPackListRegistry(Buffer* buffer,int numberElements,int typeElement
 }
 void Block::packMetadata(Buffer* buffer){
 	int numberElements = this->regList.size();
-    buffer->packField(&numberElements, sizeof(numberElements));
+	buffer->packField(&numberElements, sizeof(numberElements));
 	buffer->packField(&this->freeSize, sizeof(this->freeSize));
 }
 int Block::unPackMetadata(Buffer* buffer){
@@ -111,12 +122,12 @@ int Block::unPackMetadata(Buffer* buffer){
 }
 int Block::print(std::ostream& outStream){
 	list<Registry*>::iterator iterRegistry;
-		Registry* reg;
-		for (iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
-			reg=*iterRegistry;
-			reg->print(outStream);
-		}
-		return 1;
+	Registry* reg;
+	for (iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
+		reg=*iterRegistry;
+		reg->print(outStream);
+	}
+	return 1;
 }
 
 unsigned int Block::getNumBlock() const throw(){
@@ -140,36 +151,31 @@ bool Block::isLeaf() const throw(){
 }
 
 void Block::addComponent(Registry* registry) throw(){
-	if (registry != NULL) {
-		if (this->posibleToAgregateComponent(registry))
-			this->addReg(registry);
-	}else {
-		std::cout << "No se pudo agregar en bloque BSharp... " << std::endl;
+
+	if (this->posibleToAgregateComponent(registry)){
+		this->addReg(registry);
+		cout << "getOcupedLong :"<<this->getOcupedLong()<<endl;
 	}
 }
 
 void Block::addComponent(Registry* registry,list<Registry*>::iterator it,int pos) throw() {
-
-		if (registry != NULL) {
-		if (this->posibleToAgregateComponent(registry)) {
-			 for (int var = 0; var < pos; var++) {
-				 it++;
-			}
-			this->freeSize-= registry->getSize();
-			this->regList.insert(it,registry);
-
+	if (this->posibleToAgregateComponent(registry)) {
+		for (int var = 0; var < pos; var++) {
+			it++;
 		}
+		this->freeSize-= registry->getSize();
+		this->regList.insert(it,registry);
+		cout << "getOcupedLong :"<<this->getOcupedLong()<<endl;
 	}
 }
-unsigned int Block::getOcupedLong() const throw() {
-//	unsigned int longitud_ocupada = Bloque::obtener_longitud_ocupada();
-//	longitud_ocupada += sizeof(unsigned int);
-//	longitud_ocupada += sizeof(unsigned int);
-//	return longitud_ocupada;
-	return this->maxLong - this->freeSize;
+unsigned int Block::getOcupedLong() throw() {
+	unsigned int sizeBusy=Block::getSizeRegistry();
+	sizeBusy += sizeof(unsigned int);
+	cout<<"Block sizeBusy :"<<sizeBusy<<endl;
+	return sizeBusy;
 }
 
-unsigned int Block::getLongBytes() const throw(){
+unsigned int Block::getLongBytes() throw(){
 	return maxLong;
 
 }
@@ -181,17 +187,9 @@ unsigned int Block::getMaxLong() const throw(){
 void Block::setMaxLong(unsigned int maxLong) throw(){
 	this->maxLong = maxLong;
 }
-int Block::getLongBytes(){
-	return this->maxLong;
-}
-bool Block::posibleToAgregateComponent(Registry* registry) const throw(){
-	unsigned int ocupedLong = this->getOcupedLong();
-	if (registry != NULL) {
-		if (ocupedLong + registry->getLongBytes() <= this->getMaxLong()) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	return true;
+
+bool Block::posibleToAgregateComponent(Registry* registry) throw(){
+
+	return (this->getOcupedLong() + registry->getLongBytes() <= this->getMaxLong());
+
 }

@@ -16,9 +16,9 @@
 
 class InternalNode: public Node {
 public:
-	InternalNode();
+	InternalNode(unsigned int maxLong);
 	InternalNode(unsigned int maxLong, unsigned int numBlock, unsigned int level)throw();
-	virtual ~InternalNode()throw();
+	virtual ~InternalNode() throw();
 	bool isLeaf() const throw();
 	void pack(Buffer* buffer);
 	void unPack(Buffer* buffer);
@@ -74,7 +74,8 @@ public:
 	/**
 	 * Obtiene la longitud ocupada del bloque.
 	 */
-//TODO	virtual unsigned int obtener_longitud_ocupada() const throw();
+	 unsigned int getOcupedLong() throw();
+	 bool posibleToAgregateComponent(Registry* registry) throw();
 
 private:
 	std::vector<int> branchList;
