@@ -27,7 +27,6 @@ unsigned int InternalNode::getOcupedLong() throw(){
 	unsigned int sizeBusy=Block::getSizeRegistry();
 	sizeBusy += sizeof(unsigned int)*4;
 	sizeBusy += this->branchList.size()*4;
-	cout<<"InternalNode sizeBusy :"<<sizeBusy<<endl;
 	return sizeBusy;
 }
 bool InternalNode::isLeaf() const throw(){

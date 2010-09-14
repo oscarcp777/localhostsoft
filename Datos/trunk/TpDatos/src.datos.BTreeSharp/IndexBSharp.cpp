@@ -158,7 +158,7 @@ void IndexBSharp::insertLeafNodeNotFull(LeafNode* leafNode,Registry* registry) t
 
 }
 void IndexBSharp::advanceListPointer(list<Registry*>::iterator& iterator,unsigned int countAdvance){
-      for (unsigned int var = 0; var < countAdvance; var++) {
+      for (unsigned int var = 0; var <= countAdvance; var++) {
     	  iterator++;
 	}
 }
@@ -184,25 +184,24 @@ void IndexBSharp::insertLeafNodeFull(LeafNode* leafNode,Registry* registry,Conta
 		unsigned int insertPosition = this->searchPositionInsertLeafNode(registry, listRegistry.begin(), listRegistry.end());
 		 this->advanceListPointer(iterator,insertPosition);
 		// Inserta ordenado el registro
-		listRegistry.insert(iterator , registry);
+		 listRegistry.insert(iterator , registry);
 		// Obtiene elemento medio...
 		list<Registry*>::iterator iteratorPosMedium=listRegistry.begin();
 		 this->advanceListPointer(iteratorPosMedium,(listRegistry.size() / 2));
 
 		// Establece el elemento medio a subir en el resultado de insercion
 		 container->setRegMidleKey(this->extractKey(*iteratorPosMedium));
-		 leafNode->setSizeFree(this->sizeBlock- sizeof(int)*4);
-		 cout << "getOcupedLong antes:"<<leafNode->getOcupedLong()<<endl;
 		// Inserta elementos a la izquierda del medio en bloque a dividir
 		for (list<Registry*>::iterator current = listRegistry.begin(); current != iteratorPosMedium; ++current) {
-			leafNode->addComponent(*current);
-			 cout << "getOcupedLong :"<<leafNode->getOcupedLong()<<endl;
+			Registry* registry=*current;
+//			registry->print(cout);
+			leafNode->addComponent(registry);
 		}
-		 cout << "getOcupedLong 2 antes:"<<newLeafNode->getOcupedLong()<<endl;
 		// Inserta elementos a la derecha del medio en bloque nuevo
 		for (list<Registry*>::iterator current = iteratorPosMedium; current != listRegistry.end(); ++current) {
-			newLeafNode->addComponent(*current);
-			 cout << "getOcupedLong 2:"<<newLeafNode->getOcupedLong()<<endl;
+			Registry* registry=*current;
+//			registry->print(cout);
+			newLeafNode->addComponent(registry);
 		}
 
 		// Enlaza a los bloques
@@ -271,7 +270,7 @@ void IndexBSharp::insertInternalNodeNotFull(InternalNode* internalNode,Registry*
 	 for (unsigned int var = 0; var < insertPosition + 1; var++) {
 	    	  iterator++;
 		}
-	internalNode->addBranch(iterator,leftBlock);
+	internalNode->addBranch(iterator,rightBlock);
 	// Actualizo espacio libre
 	this->freeBlockController->writeSizeBusy(internalNode->getNumBlock(), internalNode->getOcupedLong());
 	// Escribo bloque
@@ -366,12 +365,10 @@ void IndexBSharp::insertInternalNodeFull(InternalNode* internalNode,Registry* re
 }
 unsigned int IndexBSharp::searchPositionInsertLeafNode(Registry* registry, list<Registry*>::iterator iteratorBegin, list<Registry*>::iterator iteratorEnd) throw(){
 		unsigned int insertPos = 0;
-		bool less = true;
 		list<Registry*>::iterator itReg;
-		for (itReg= iteratorBegin; itReg != iteratorEnd && less; ++itReg, ++insertPos) {
+		for (itReg= iteratorBegin; itReg != iteratorEnd ; ++itReg, ++insertPos) {
 			Registry* reg = *itReg;
-			if (reg->compareTo(registry) >= 0) {
-						less = false;
+			if (registry->compareTo(reg) < 0) {
 	                	break;
 	        	}
 	    	}
@@ -387,7 +384,7 @@ unsigned int IndexBSharp::searchPositionInsertInternalNode(Registry* registry, l
 	        	}
 		        else {
 						lessOrEquals = false;
-	                	break;
+//	                	break;
 		        }
 	    	}
 		return insertPos;

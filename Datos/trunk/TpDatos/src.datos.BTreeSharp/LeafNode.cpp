@@ -24,7 +24,6 @@ LeafNode::~LeafNode()throw() {
 unsigned int LeafNode::getOcupedLong() throw(){
 	unsigned int sizeBusy=Block::getSizeRegistry();
 	sizeBusy += sizeof(unsigned int)*4;
-	cout<<"LeafNode sizeBusy :"<<sizeBusy<<endl;
 	return sizeBusy;
 }
 bool LeafNode::isLeaf() const throw(){
