@@ -86,7 +86,7 @@ public:
     virtual bool posibleToAgregateComponent(Registry* registry) const throw();
 private:
 	list<Registry*> regList;
-	int freeSize;
+	unsigned int freeSize;
 	unsigned int numBlock;
 	unsigned int level;
 	unsigned int maxLong;

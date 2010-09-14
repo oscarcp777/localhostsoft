@@ -180,20 +180,25 @@ void IndexBSharp::insertLeafNodeFull(LeafNode* leafNode,Registry* registry,Conta
 		list<Registry*>::iterator iterator=listRegistry.begin();
 		// Transfiere todos los regsitros del bloque externo a la lista de registros para insertar ordenado el regitro...
 		leafNode->transferRegistry(listRegistry);
-
+		// Inserta elementos a la izquierda del medio en bloque a dividir
+		cout<<"cant reg"<<listRegistry.size()<<endl;
+				for (list<Registry*>::iterator current = listRegistry.begin(); current != listRegistry.end(); ++current) {
+					Registry* reg=*current;
+					reg->print(std::cout);
+				}
 		// Busca posicion de insercion para el registro...
 		unsigned int insertPosition = this->searchPositionInsertLeafNode(registry, listRegistry.begin(), listRegistry.end());
-		this->advanceListPointer(iterator,insertPosition);
+		 this->advanceListPointer(iterator,insertPosition);
 		// Inserta ordenado el registro
-		listRegistry.insert(listRegistry.begin() , registry);
-
+		listRegistry.insert(iterator , registry);
+		cout<<"cant reg 2 :"<<listRegistry.size()<<endl;
 		// Obtiene elemento medio...
 		list<Registry*>::iterator iteratorPosMedium=listRegistry.begin();
-		 this->advanceListPointer(iterator,(listRegistry.size() / 2));
+		 this->advanceListPointer(iteratorPosMedium,(listRegistry.size() / 2));
 
 		// Establece el elemento medio a subir en el resultado de insercion
 		 container->setRegMidleKey(this->extractKey(*iteratorPosMedium));
-
+		 leafNode->setSizeFree(this->sizeBlock- sizeof(int)*4);
 		// Inserta elementos a la izquierda del medio en bloque a dividir
 		for (list<Registry*>::iterator current = listRegistry.begin(); current != iteratorPosMedium; ++current) {
 			leafNode->addComponent(*current);
@@ -206,7 +211,7 @@ void IndexBSharp::insertLeafNodeFull(LeafNode* leafNode,Registry* registry,Conta
 
 		// Enlaza a los bloques
 		newLeafNode->setNextBlock(leafNode->getNextBlock());
-		leafNode->setNextBlock(newLeafNode->getNextBlock());
+		leafNode->setNextBlock(newLeafNode->getNumBlock());
 
 		// Actualiza espacio ocupado para el bloque a dividir
 		this->freeBlockController->writeSizeBusy(leafNode->getNumBlock(), leafNode->getOcupedLong());
@@ -410,8 +415,7 @@ int IndexBSharp::searchBranch(InternalNode* internalNode,Registry* registry) thr
 
 }
 Registry* IndexBSharp::extractKey(Registry* registry) throw(){
-	Registry* cloneRegistry = registry->clone();
-	return cloneRegistry;
+	return registry->getKey()->clone();
 }
 Registry* IndexBSharp::searchLeafNode(LeafNode* leafNode,Registry* registry) throw(){
 	Registry* findRegistry;

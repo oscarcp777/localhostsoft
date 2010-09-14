@@ -9,6 +9,7 @@
 #include "Mail.h"
 #include "RegPrimary.h"
 #include "Dir.h"
+#include "KeyIndexPrimary.h"
 #include "../src.datos.utils/Define.h"
 
 FactoryOfRegistry::FactoryOfRegistry() {
@@ -24,11 +25,13 @@ Registry* FactoryOfRegistry::createRegistry(int type){
 	switch(type){
 
 	case TYPE_REG_PRIMARY: return new RegPrimary();
-					break;
+	break;
 	case TYPE_MAIL: return new Mail();
-					break;
+	break;
 	case TYPE_DIRECTION: return new Dir();
-
+	break;
+	case TYPE_KEY: return new KeyIndexPrimary();
+	break;
 	default: return NULL;
 	}
 }

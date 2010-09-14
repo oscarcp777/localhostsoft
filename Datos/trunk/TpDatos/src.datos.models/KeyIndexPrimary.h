@@ -12,6 +12,7 @@
 class KeyIndexPrimary :public Key{
 public:
 	KeyIndexPrimary(int value);
+	KeyIndexPrimary();
 	virtual ~KeyIndexPrimary();
 	void pack(Buffer* buffer);
 	void unPack(Buffer* buffer);

@@ -11,6 +11,8 @@ KeyIndexPrimary::KeyIndexPrimary(int value) {
 this->value=value;
 
 }
+KeyIndexPrimary::KeyIndexPrimary() {
+}
 
 KeyIndexPrimary::~KeyIndexPrimary() {
 	// TODO Auto-generated destructor stub
