@@ -22,14 +22,6 @@ public:
 	int unPackMetadata(Buffer* buffer);
 
 	/**
-	 * Obtiene el id del bloque externo siguiente del arbol b sharp.
-	 */
-	int getNextBlock() const throw();
-	/**
-	 * Establece el id del bloque externo siguiente del arbol b sharp.
-	 */
-	void setNextBlock(int numero_bloque) throw();
-	/**
 	 * Obtiene la longitud ocupada en bytes del bloque.
 	 */
 
@@ -37,7 +29,7 @@ public:
 	 bool posibleToAgregateComponent(Registry* registry)throw();
 
 private:
-	int nextNode;
+
 
 };
 
