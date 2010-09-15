@@ -22,3 +22,9 @@ int Node::getTypeElement(){
 void Node::setTypeElement(int typeElement){
       this->typeElement = typeElement;
   }
+void Node::setNextBlock(int numBlock) throw(){
+	this->nextNode = numBlock;
+}
+int Node::getNextBlock() const throw(){
+	return this->nextNode;
+}

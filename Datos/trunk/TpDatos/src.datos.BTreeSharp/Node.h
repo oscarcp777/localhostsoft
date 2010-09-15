@@ -23,9 +23,17 @@ public:
 	virtual void packMetadata(Buffer* buffer)= 0;
 	virtual int unPackMetadata(Buffer* buffer)= 0;
 	virtual bool posibleToAgregateComponent(Registry* registry) throw()=0;
-
+	/**
+	 * Obtiene el id del bloque externo siguiente del arbol b sharp.
+	 */
+	int getNextBlock() const throw();
+	/**
+	 * Establece el id del bloque externo siguiente del arbol b sharp.
+	 */
+	void setNextBlock(int numero_bloque) throw();
 protected:
 	int typeElement;
+	int nextNode;
 };
 
 #endif /* NODE_H_ */
