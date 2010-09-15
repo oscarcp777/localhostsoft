@@ -13,7 +13,9 @@ RegPrimary::RegPrimary() {
 	this->setInternal(false);
 
 }
-
+RegPrimary::RegPrimary(bool internal) {
+	this->setInternal(internal);
+}
 RegPrimary::~RegPrimary() {
 	// TODO Auto-generated destructor stub
 }

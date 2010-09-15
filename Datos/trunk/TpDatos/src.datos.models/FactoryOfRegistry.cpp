@@ -30,7 +30,7 @@ Registry* FactoryOfRegistry::createRegistry(int type){
 	break;
 	case TYPE_DIRECTION: return new Dir();
 	break;
-	case TYPE_KEY: return new KeyIndexPrimary();
+	case TYPE_KEY: return new RegPrimary(true);
 	break;
 	default: return NULL;
 	}

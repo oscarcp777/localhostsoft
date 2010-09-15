@@ -13,7 +13,7 @@
 class RegPrimary : public Registry {
 public:
 	RegPrimary();
-
+	RegPrimary(bool internal);
 	virtual ~RegPrimary();
 	Registry* clone();
 	bool equals(Registry* comp);
