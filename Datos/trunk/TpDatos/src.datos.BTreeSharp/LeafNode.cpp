@@ -29,17 +29,13 @@ unsigned int LeafNode::getOcupedLong() throw(){
 bool LeafNode::isLeaf() const throw(){
 	return true;
 }
-int LeafNode::getNextBlock() const throw(){
-	return this->nextNode;
-}
+
 bool LeafNode::posibleToAgregateComponent(Registry* registry) throw(){
 
 	return (this->getOcupedLong() + registry->getLongBytes() <= this->getMaxLong());
 
 }
-void LeafNode::setNextBlock(int numBlock) throw(){
-	this->nextNode = numBlock;
-}
+
 void LeafNode::pack(Buffer* buffer){
 	this->packMetadata(buffer);
 	this->packListRegistry(buffer);

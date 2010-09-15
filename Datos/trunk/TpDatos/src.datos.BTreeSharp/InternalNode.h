@@ -13,6 +13,7 @@
 #include <vector>
 #include <algorithm>
 
+using namespace std;
 
 class InternalNode: public Node {
 public:
@@ -30,7 +31,7 @@ public:
 	 * Agrega una rama al bloque interno b sharp.
 	 */
 	void addBranch(int branch) throw();
-	void addBranch(std::vector<int>::iterator pos,unsigned int branch) throw();
+	void addBranch(std::list<int>::iterator pos,unsigned int branch, unsigned int position) throw();
 	/**
 	 * Remueve una rama del bloque interno b sharp.
 	 */
@@ -38,7 +39,7 @@ public:
 	/**
 	 * Transfiere todas las ramas del indice b sharp al contenedor de ramas.
 	 */
-	void transferBranchs(std::vector<int>& branchList) throw();
+	void transferBranchs(std::list<int>& branchList) throw();
 	/**
 	 * Verifica si contiene una rama dentro del bloque interno b sharp.
 	 */
@@ -54,19 +55,19 @@ public:
 	/**
 	 * Obtiene un iterador a la primer rama del bloque interno b sharp.
 	 */
-	std::vector<int>::iterator firstBranch() throw();
+	std::list<int>::iterator firstBranch() throw();
 	/**
 	 * Obtiene un iterador a la primer rama del bloque interno b sharp.
 	 */
-	std::vector<int>::const_iterator  firstBranch() const throw();
+	std::list<int>::const_iterator  firstBranch() const throw();
 	/**
 	 * Obtiene un iterador a la ultima rama del bloque interno b sharp.
 	 */
-	std::vector<int>::iterator lastBranch() throw();
+	std::list<int>::iterator lastBranch() throw();
 	/**
 	 * Obtiene un iterador a la ultima rama del bloque interno b sharp.
 	 */
-	std::vector<int>::const_iterator  lastBranch() const throw();
+	std::list<int>::const_iterator  lastBranch() const throw();
 	/**
 	 * Decide si puede agregar un componente.
 	 */
@@ -78,7 +79,7 @@ public:
 	 bool posibleToAgregateComponent(Registry* registry) throw();
 
 private:
-	std::vector<int> branchList;
+	list<int> branchList;
 
 };
 
