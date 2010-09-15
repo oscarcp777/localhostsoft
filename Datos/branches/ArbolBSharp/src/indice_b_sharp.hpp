@@ -93,6 +93,16 @@ class IndiceBSharp: public EstrategiaIndice {
 		 */
 		void insertar_bloque_externo_no_lleno(BloqueExternoBSharp::puntero& bloqueExterno, const Registro::puntero& registro) throw();
 		/**
+		* Une la lista de registros de los bloques izquierdo y derecho, y la devuelve en lista_registros
+		*/
+		void juntarListasComponentes(Bloque::contenedor_componentes& lista_registros,
+				Bloque::contenedor_componentes& registrosBloqueIzquierdo,Bloque::contenedor_componentes& registrosBloqueDerecho) throw();
+		/**
+		 * Une la lista de ramas de los bloques izquierdo y derecho, y la devuelve en lista_registros
+		 */
+		void juntarListaRamas(BloqueInternoBSharp::contenedor_ramas& lista_ramas,
+				BloqueInternoBSharp::contenedor_ramas& ramasBloqueIzquierdo,BloqueInternoBSharp::contenedor_ramas& ramasBloqueDerecho)throw();
+		/**
 		* Busca insertar el registro balanceando cargas entre el bloque en cuestion y su hermano (derecho o izquierdo)
 		*/
 		bool balancearBloquesExternos(const Registro::puntero& registro, BloqueExternoBSharp::puntero& bloqueActual, BloqueExternoBSharp::puntero& bloqueHermano, ResultadoInsercion& resultado) throw();
@@ -104,6 +114,15 @@ class IndiceBSharp: public EstrategiaIndice {
 		 */
 		void insertar_bloque_externo_lleno(BloqueExternoBSharp::puntero& bloqueExterno, const Registro::puntero& registro,
 			ResultadoInsercion& resultado) throw();
+		/**
+		 * Inserta un registro en un bloque externo lleno.
+		 * @param bloqueExterno - El bloque externo donde insertar el registro.
+		 * @param bloqueHermano - El bloque hermano del bloque actual.
+		 * @param registro - El registro a insertar.
+		 * @param resultado - El resultado de insercion del registro en el bloque externo.
+		 */
+		void insertar_bloque_externo_lleno2(BloqueExternoBSharp::puntero& bloqueExterno,BloqueExternoBSharp::puntero& bloqueHermano, const Registro::puntero& registro,
+						ResultadoInsercion& resultado) throw();
 		/**
 		 * Inserta un registro en un bloque interno.
 		 * @param bloqueInterno - El bloque interno donde insertar el registro.

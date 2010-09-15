@@ -263,6 +263,7 @@ void probarIndiceBSharp() {
 		std::string nombre;
 		int id;
 		int edad;
+		indice->imprimir(std::cout);
 		std::cout << "----INGRESE REGISTRO----" << std::endl;
 		std::cout << "Ingrese id (Clave primaria): ";
 		std::cin >> id;
@@ -337,7 +338,7 @@ void prueba_hash_almacenamiento( void )
     EstrategiaAlmacenamientoRegistros* est = new EstrategiaAlmacenamientoRegistros();
 
     printf ( "Primero escriba el nombre del archivo donde desea se guarden estos registros:\n" );
-    scanf( "%s\0", nombre_archivo );
+    scanf( "%s\n", nombre_archivo );
     //printf ( "Escoja el tamanio de bloque (DEBE SER MAYOR A 100 bytes) :\n" );
     //scanf( opcion );
 
