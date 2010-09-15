@@ -21,7 +21,7 @@ TestBSharp::~TestBSharp() {
 void TestBSharp::testInsert(){
      IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTree.dat",BLOCK_SIZE,TYPE_REG_PRIMARY);
 
-     for (int var = 0; var < 5; ++var) {
+     for (int var = 0; var < 50; ++var) {
     	 if(47==var)
     		 cout<<"";
     		 RegPrimary* regPrimary = new RegPrimary();
@@ -31,7 +31,7 @@ void TestBSharp::testInsert(){
     	     cout<<"###########################################################"<<endl;
     	     cout<<" Inserto el : ";
     	     regPrimary->print(cout);
-    	     indexBSharp->addRegistry(regPrimary);
+             indexBSharp->addRegistry(regPrimary);
     	     cout<<endl;
     	     indexBSharp->print(std::cout);
 

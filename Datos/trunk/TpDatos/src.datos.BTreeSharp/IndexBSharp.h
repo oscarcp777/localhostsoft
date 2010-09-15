@@ -104,14 +104,14 @@ private:
 		 * @param internalNode - El bloque interno donde insertar el registro.
 		 * @param registry - El registro con la clave a insertar.
 		 */
-		void insertInternalNodeNotFull(InternalNode* internalNode,Registry* registry,unsigned int rightBlock, unsigned int leftBlock) throw();
+		void insertInternalNodeNotFull(InternalNode* internalNode,Registry* registry,unsigned int rightBlock) throw();
 		/**
 		 * Inserta un registro en un bloque interno lleno.
 		 * @param internalNode - El bloque interno donde insertar el registro.
 		 * @param registry - El registro con la clave a insertar.
 		 * @param resultado - El resultado de insercion del registro en el bloque interno.
 		 */
-		void insertInternalNodeFull(InternalNode* internalNode,Registry* registry,unsigned int rightBlock, unsigned int leftBlock,ContainerInsertion* container) throw();
+		void insertInternalNodeFull(InternalNode* internalNode,Registry* registry,unsigned int rightBlock,ContainerInsertion* container) throw();
 		/**
 		 * Busca la posicion de insercion hoja para el registro dado.
 		 * @param registry - El registro a insertar en el bloque externo.

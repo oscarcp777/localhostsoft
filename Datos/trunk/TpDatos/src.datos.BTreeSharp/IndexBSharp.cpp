@@ -6,7 +6,9 @@
  */
 
 #include "IndexBSharp.h"
-
+bool comparatorRegistry( Registry* reg1, Registry* reg2) {
+	return (reg1->compareTo(reg2)==-1);
+}
 IndexBSharp::IndexBSharp(const std::string& nameFile,unsigned int sizeBlock,int typeElement){
 	this->sizeBlock=sizeBlock;
 	this->typeElement=typeElement;
@@ -74,6 +76,8 @@ void IndexBSharp::writeBlockRoot() throw(){
      this->writeBlock(this->rootNode,0);
 }
 void IndexBSharp::writeBlock(Node* node,int numBlock) throw(){
+	if(node->getNumBlock()==9)
+		cout<<"";
 	this->buffer->clear();
 	node->pack(this->buffer);
 	this->binaryFile->write(this->buffer->getData(),this->buffer->getMaxBytes(),numBlock*this->sizeBlock);
@@ -146,11 +150,10 @@ bool IndexBSharp::insertLeafNode(LeafNode* leafNode,Registry* registry,Container
 	return isOverflow;
 }
 void IndexBSharp::insertLeafNodeNotFull(LeafNode* leafNode,Registry* registry) throw(){
-	// Busca posicion de insercion
-	unsigned int positionInsertion = this->searchPositionInsertLeafNode(registry, leafNode->iteratorBegin(),leafNode->iteratorEnd());
-	// Obtiene iterador al elemento donde insertar y
+
 	// Inserta el registro en el bloque externo
-	leafNode->addComponent(registry, leafNode->iteratorBegin() , positionInsertion);
+	leafNode->addReg(registry);
+	leafNode->sortListRegistry();
 	// Actualiza espacio ocupado para el bloque
 	this->freeBlockController->writeSizeBusy(leafNode->getNumBlock(), leafNode->getOcupedLong());
 	// Escribe bloque en disco
@@ -158,7 +161,7 @@ void IndexBSharp::insertLeafNodeNotFull(LeafNode* leafNode,Registry* registry) t
 
 }
 void IndexBSharp::advanceListPointer(list<Registry*>::iterator& iterator,unsigned int countAdvance){
-      for (unsigned int var = 0; var <= countAdvance; var++) {
+      for (unsigned int var = 0; var < countAdvance; var++) {
     	  iterator++;
 	}
 }
@@ -180,11 +183,9 @@ void IndexBSharp::insertLeafNodeFull(LeafNode* leafNode,Registry* registry,Conta
 	list<Registry*>::iterator iterator=listRegistry.begin();
 	// Transfiere todos los regsitros del bloque externo a la lista de registros para insertar ordenado el regitro...
 	leafNode->transferRegistry(listRegistry);
-	// Busca posicion de insercion para el registro...
-	unsigned int insertPosition = this->searchPositionInsertLeafNode(registry, listRegistry.begin(), listRegistry.end());
-	this->advanceListPointer(iterator,insertPosition);
-	// Inserta ordenado el registro
-	listRegistry.insert(iterator , registry);
+	listRegistry.push_back(registry);
+	listRegistry.sort(comparatorRegistry);
+
 	// Obtiene elemento medio...
 	list<Registry*>::iterator iteratorPosMedium=listRegistry.begin();
 	this->advanceListPointer(iteratorPosMedium,(listRegistry.size() / 2));
@@ -194,13 +195,11 @@ void IndexBSharp::insertLeafNodeFull(LeafNode* leafNode,Registry* registry,Conta
 	// Inserta elementos a la izquierda del medio en bloque a dividir
 	for (list<Registry*>::iterator current = listRegistry.begin(); current != iteratorPosMedium; ++current) {
 		Registry* registry=*current;
-		//			registry->print(cout);
 		leafNode->addComponent(registry);
 	}
 	// Inserta elementos a la derecha del medio en bloque nuevo
 	for (list<Registry*>::iterator current = iteratorPosMedium; current != listRegistry.end(); ++current) {
 		Registry* registry=*current;
-		//			registry->print(cout);
 		newLeafNode->addComponent(registry);
 	}
 
@@ -218,8 +217,7 @@ void IndexBSharp::insertLeafNodeFull(LeafNode* leafNode,Registry* registry,Conta
 	// Escribe bloque nuevo
 	this->writeBlock(newLeafNode, newLeafNode->getNumBlock());
 
-	// Establece numero de bloque izquierdo en resultado de insercion
-	container->setLeftBlock(leafNode->getNumBlock());
+
 	// Establece numero de bloque derecho en resultado de insercion
 	container->setRightBlock(newLeafNode->getNumBlock());
 }
@@ -250,21 +248,21 @@ bool IndexBSharp::insertInternalNode(InternalNode* internalNode,Registry* regist
 			// Verifico si puedo agregar en el bloque interno
 			if (internalNode->posibleToAgregateComponent(container->getRegMidleKey())) {
 				// Inserto en el bloque interno no lleno
-				this->insertInternalNodeNotFull(internalNode, container->getRegMidleKey(),container->getRightBlock(),container->getLeftBlock());
+				this->insertInternalNodeNotFull(internalNode, container->getRegMidleKey(),container->getRightBlock());
 			} else {
 				// Inserto en el bloque interno lleno
 				isOverflow = true;
-				this->insertInternalNodeFull(internalNode, container->getRegMidleKey(),container->getRightBlock(),container->getLeftBlock(),container);
+				this->insertInternalNodeFull(internalNode, container->getRegMidleKey(),container->getRightBlock(),container);
 			}
 		}
 	}
 	return isOverflow;
 }
-void IndexBSharp::insertInternalNodeNotFull(InternalNode* internalNode,Registry* registryKey,unsigned int rightBlock, unsigned int leftBlock) throw(){
+void IndexBSharp::insertInternalNodeNotFull(InternalNode* internalNode,Registry* registryKey,unsigned int rightBlock) throw(){
 	unsigned int insertPosition = this->searchPositionInsertInternalNode(registryKey, internalNode->iteratorBegin(), internalNode->iteratorEnd());
 
-	// Agrego componente
-	internalNode->addComponent(registryKey,internalNode->iteratorBegin(),insertPosition);
+	   internalNode->addReg(registryKey);
+		internalNode->sortListRegistry();
 	// Agrego rama
 	vector<int>::iterator iterator=internalNode->firstBranch();
 	 for (unsigned int var = 0; var < insertPosition + 1; var++) {
@@ -276,7 +274,7 @@ void IndexBSharp::insertInternalNodeNotFull(InternalNode* internalNode,Registry*
 	// Escribo bloque
 	this->writeBlock(internalNode, internalNode->getNumBlock());
 }
-void IndexBSharp::insertInternalNodeFull(InternalNode* internalNode,Registry* registry,unsigned int rightBlock, unsigned int leftBlock,ContainerInsertion* container) throw(){
+void IndexBSharp::insertInternalNodeFull(InternalNode* internalNode,Registry* registry,unsigned int rightBlock,ContainerInsertion* container) throw(){
 	// Busco numero de bloque libre
 	unsigned int numBlockFree = this->freeBlockController->searchSizeBusy();
 	// Creo nuevo bloque interno para dividir
@@ -291,15 +289,11 @@ void IndexBSharp::insertInternalNodeFull(InternalNode* internalNode,Registry* re
 	internalNode->transferRegistry(listRegistry);
 	// Transfiere todas las ramas del bloque interno a la lista de ramas para insertar la rama...
 	internalNode->transferBranchs(branchList);
-
 	// Busca posicion de insercion para el registro...
 	unsigned int insertPos = searchPositionInsertInternalNode(registry, listRegistry.begin(), listRegistry.end());
 
-	//adelanto el puntero
-	list<Registry*>::iterator itListReg = listRegistry.begin();
-	this->advanceListPointer(itListReg,insertPos-1);
-	// Inserta ordenado el registro
-	listRegistry.insert(itListReg, registry);
+	listRegistry.push_back(registry);
+	listRegistry.sort(comparatorRegistry);
 
 	//adelanto el puntero
 	std::vector<int>::iterator itListBranchs = branchList.begin();
@@ -318,14 +312,12 @@ void IndexBSharp::insertInternalNodeFull(InternalNode* internalNode,Registry* re
 
 	for (std::list<Registry*>::iterator actual = listRegistry.begin(); actual != iteratorPosMedium; ++actual) {
 		Registry* reg=*actual;
-		reg->print(cout);
 		internalNode->addReg(reg);
 	}
 
 	// Inserta elementos a la derecha del medio en bloque nuevo
+	iteratorPosMedium++;
 	for (std::list<Registry*>::iterator actual = iteratorPosMedium; actual != listRegistry.end(); ++actual) {
-		Registry* reg=*actual;
-		reg->print(cout);
 		newInternalNode->addReg(*actual);
 	}
 
@@ -336,7 +328,6 @@ void IndexBSharp::insertInternalNodeFull(InternalNode* internalNode,Registry* re
 	std::vector<int>::iterator actual = branchList.begin();
 	unsigned int counter = 0;
 	while (counter < counterLeftBranches && actual != branchList.end()) {
-		cout<<"rama a insertar "<<*actual<<endl;
 		internalNode->addBranch(*actual);
 		++actual;
 	        ++counter;
@@ -344,7 +335,6 @@ void IndexBSharp::insertInternalNodeFull(InternalNode* internalNode,Registry* re
 
 	counter = 0;
 	while (counter < counterRightBranches && actual != branchList.end()) {
-		cout<<"rama a insertar 2 "<<*actual<<endl;
 		newInternalNode->addBranch(*actual);
 		++actual;
 	        ++counter;
@@ -370,10 +360,9 @@ void IndexBSharp::insertInternalNodeFull(InternalNode* internalNode,Registry* re
 }
 unsigned int IndexBSharp::searchPositionInsertLeafNode(Registry* registry, list<Registry*>::iterator iteratorBegin, list<Registry*>::iterator iteratorEnd) throw(){
 	unsigned int insertPos = 0;
-	list<Registry*>::iterator itReg;
-	for (itReg= iteratorBegin; itReg != iteratorEnd ; ++itReg, ++insertPos) {
-		Registry* reg = *itReg;
-		if (registry->compareTo(reg) < 0) {
+	for (list<Registry*>::iterator actual= iteratorBegin; actual != iteratorEnd ; ++actual, ++insertPos) {
+		Registry* reg = *actual;
+		if (!(reg->compareTo(registry) < 0)) {
 			break;
 		}
 	}
@@ -381,11 +370,12 @@ unsigned int IndexBSharp::searchPositionInsertLeafNode(Registry* registry, list<
 }
 unsigned int IndexBSharp::searchPositionInsertInternalNode(Registry* registry, list<Registry*>::iterator iteratorBegin, list<Registry*>::iterator iteratorEnd) throw(){
 	unsigned int insertPos = 0;
-	list<Registry*>::iterator itReg;
-	for (itReg= iteratorBegin; itReg != iteratorEnd ; ++itReg, ++insertPos) {
-		Registry* reg = *itReg;
-		if (registry->compareTo(reg) < 0) {
-					break;
+	for (list<Registry*>::iterator actual= iteratorBegin; actual != iteratorEnd ; ++actual, ++insertPos) {
+		Registry* reg = *actual;
+		if ((reg->compareTo(registry) < 0)||(reg->compareTo(registry)==0)) {
+
+		}else {
+			break;
 		}
 	}
 	return insertPos;
@@ -398,14 +388,11 @@ int IndexBSharp::searchBranch(InternalNode* internalNode,Registry* registry) thr
 	while (actualComponent != endComponent) {
 		Registry* actual=*actualComponent;
 		if (registry->compareTo(actual) < 0) {
-			 cout<<" es menor ";
-			actual->print(cout);
 			break;
 		}
 		++actualComponent;
 		++branchPos;
 	}
-    cout<<" branchPos "<<branchPos<<endl;
 	return internalNode->getBranch(branchPos);
 
 }
@@ -422,7 +409,7 @@ Registry* IndexBSharp::searchLeafNode(LeafNode* leafNode,Registry* registry) thr
 
 		while (actualComponent != endComponent && !find) {
 			Registry* iterRegistry = *actualComponent;
-			if (iterRegistry->getKey()->equals(registry->getKey())) {
+			if (iterRegistry->compareTo(registry)==0) {
 				findRegistry = iterRegistry;
 				find = true;
 			}

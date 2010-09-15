@@ -7,7 +7,9 @@
 
 #include "Block.h"
 #include "FactoryOfRegistry.h"
-
+bool comparator( Registry* reg1, Registry* reg2) {
+	return (reg1->compareTo(reg2)==-1);
+}
 Block::Block(unsigned int maxLong, unsigned int numBlock, unsigned int level) throw(){
 	this->freeSize=BLOCK_SIZE;
 	this->maxLong=maxLong;
@@ -16,6 +18,9 @@ Block::Block(unsigned int maxLong, unsigned int numBlock, unsigned int level) th
 }
 Block::Block(){
 
+}
+void Block::sortListRegistry(){
+     this->regList.sort(comparator);
 }
 Block::~Block() throw(){
 	list<Registry*>::iterator iterRegistry;

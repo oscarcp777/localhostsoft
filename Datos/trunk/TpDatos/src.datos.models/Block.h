@@ -84,7 +84,10 @@ public:
      * Obtiene la longitud en bytes  del bloque.
      */
     virtual unsigned int getLongBytes() throw();
-
+    /**
+     *ordena la lista de registros
+     */
+    void sortListRegistry();
     virtual bool posibleToAgregateComponent(Registry* registry) throw();
 private:
 	list<Registry*> regList;
