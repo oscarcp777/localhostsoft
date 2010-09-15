@@ -187,6 +187,10 @@ private:
 		 */
 		list<Registry*> listRegistry;
 		/**
+		 * lista de ramas temporal
+		 */
+		std::vector<int> branchList;
+		/**
 		 * Almacena el bloque raiz del indice b sharp.
 		 */
 		Node*  rootNode;

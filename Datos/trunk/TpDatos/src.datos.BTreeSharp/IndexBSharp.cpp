@@ -171,57 +171,57 @@ void IndexBSharp::advanceVectorPointer(vector<int>::iterator& iterator,unsigned 
 void IndexBSharp::insertLeafNodeFull(LeafNode* leafNode,Registry* registry,ContainerInsertion* container) throw(){
 
 	// Busco numero de bloque libre
-		unsigned int numBlockFree = this->freeBlockController->searchSizeBusy();
-		// Creo nuevo bloque externo para dividir bloque..
-		LeafNode* newLeafNode = new LeafNode(this->typeElement,this->sizeBlock, numBlockFree,0);
+	unsigned int numBlockFree = this->freeBlockController->searchSizeBusy();
+	// Creo nuevo bloque externo para dividir bloque..
+	LeafNode* newLeafNode = new LeafNode(this->typeElement,this->sizeBlock, numBlockFree,0);
 
-		// Crea contenedor de componentes para insertar ordenado el registro...
-		listRegistry.clear();
-		list<Registry*>::iterator iterator=listRegistry.begin();
-		// Transfiere todos los regsitros del bloque externo a la lista de registros para insertar ordenado el regitro...
-		leafNode->transferRegistry(listRegistry);
-		// Busca posicion de insercion para el registro...
-		unsigned int insertPosition = this->searchPositionInsertLeafNode(registry, listRegistry.begin(), listRegistry.end());
-		 this->advanceListPointer(iterator,insertPosition);
-		// Inserta ordenado el registro
-		 listRegistry.insert(iterator , registry);
-		// Obtiene elemento medio...
-		list<Registry*>::iterator iteratorPosMedium=listRegistry.begin();
-		 this->advanceListPointer(iteratorPosMedium,(listRegistry.size() / 2));
+	// Crea contenedor de componentes para insertar ordenado el registro...
+	listRegistry.clear();
+	list<Registry*>::iterator iterator=listRegistry.begin();
+	// Transfiere todos los regsitros del bloque externo a la lista de registros para insertar ordenado el regitro...
+	leafNode->transferRegistry(listRegistry);
+	// Busca posicion de insercion para el registro...
+	unsigned int insertPosition = this->searchPositionInsertLeafNode(registry, listRegistry.begin(), listRegistry.end());
+	this->advanceListPointer(iterator,insertPosition);
+	// Inserta ordenado el registro
+	listRegistry.insert(iterator , registry);
+	// Obtiene elemento medio...
+	list<Registry*>::iterator iteratorPosMedium=listRegistry.begin();
+	this->advanceListPointer(iteratorPosMedium,(listRegistry.size() / 2));
 
-		// Establece el elemento medio a subir en el resultado de insercion
-		 container->setRegMidleKey(this->extractKey(*iteratorPosMedium));
-		// Inserta elementos a la izquierda del medio en bloque a dividir
-		for (list<Registry*>::iterator current = listRegistry.begin(); current != iteratorPosMedium; ++current) {
-			Registry* registry=*current;
-//			registry->print(cout);
-			leafNode->addComponent(registry);
-		}
-		// Inserta elementos a la derecha del medio en bloque nuevo
-		for (list<Registry*>::iterator current = iteratorPosMedium; current != listRegistry.end(); ++current) {
-			Registry* registry=*current;
-//			registry->print(cout);
-			newLeafNode->addComponent(registry);
-		}
+	// Establece el elemento medio a subir en el resultado de insercion
+	container->setRegMidleKey(this->extractKey(*iteratorPosMedium));
+	// Inserta elementos a la izquierda del medio en bloque a dividir
+	for (list<Registry*>::iterator current = listRegistry.begin(); current != iteratorPosMedium; ++current) {
+		Registry* registry=*current;
+		//			registry->print(cout);
+		leafNode->addComponent(registry);
+	}
+	// Inserta elementos a la derecha del medio en bloque nuevo
+	for (list<Registry*>::iterator current = iteratorPosMedium; current != listRegistry.end(); ++current) {
+		Registry* registry=*current;
+		//			registry->print(cout);
+		newLeafNode->addComponent(registry);
+	}
 
-		// Enlaza a los bloques
-		newLeafNode->setNextBlock(leafNode->getNextBlock());
-		leafNode->setNextBlock(newLeafNode->getNumBlock());
+	// Enlaza a los bloques
+	newLeafNode->setNextBlock(leafNode->getNextBlock());
+	leafNode->setNextBlock(newLeafNode->getNumBlock());
 
-		// Actualiza espacio ocupado para el bloque a dividir
-		this->freeBlockController->writeSizeBusy(leafNode->getNumBlock(), leafNode->getOcupedLong());
-		// Escribe bloque a dividir en disco
-		this->writeBlock(leafNode, leafNode->getNumBlock());
+	// Actualiza espacio ocupado para el bloque a dividir
+	this->freeBlockController->writeSizeBusy(leafNode->getNumBlock(), leafNode->getOcupedLong());
+	// Escribe bloque a dividir en disco
+	this->writeBlock(leafNode, leafNode->getNumBlock());
 
-		// Actualiza espacio ocupado para el bloque nuevo
-		this->freeBlockController->writeSizeBusy(newLeafNode->getNumBlock(), newLeafNode->getOcupedLong());
-		// Escribe bloque nuevo
-		this->writeBlock(newLeafNode, newLeafNode->getNumBlock());
+	// Actualiza espacio ocupado para el bloque nuevo
+	this->freeBlockController->writeSizeBusy(newLeafNode->getNumBlock(), newLeafNode->getOcupedLong());
+	// Escribe bloque nuevo
+	this->writeBlock(newLeafNode, newLeafNode->getNumBlock());
 
-		// Establece numero de bloque izquierdo en resultado de insercion
-		container->setLeftBlock(leafNode->getNumBlock());
-		// Establece numero de bloque derecho en resultado de insercion
-		container->setRightBlock(newLeafNode->getNumBlock());
+	// Establece numero de bloque izquierdo en resultado de insercion
+	container->setLeftBlock(leafNode->getNumBlock());
+	// Establece numero de bloque derecho en resultado de insercion
+	container->setRightBlock(newLeafNode->getNumBlock());
 }
 bool IndexBSharp::insertInternalNode(InternalNode* internalNode,Registry* registryKey,ContainerInsertion* container) throw(){
 	// Considero que no hay sobreflujo al insertar en el bloque interno
@@ -279,115 +279,116 @@ void IndexBSharp::insertInternalNodeNotFull(InternalNode* internalNode,Registry*
 void IndexBSharp::insertInternalNodeFull(InternalNode* internalNode,Registry* registry,unsigned int rightBlock, unsigned int leftBlock,ContainerInsertion* container) throw(){
 	// Busco numero de bloque libre
 	unsigned int numBlockFree = this->freeBlockController->searchSizeBusy();
-		// Creo nuevo bloque interno para dividir
-		InternalNode* newInternalNode = new InternalNode(this->sizeBlock, numBlockFree, internalNode->getLevel());
+	// Creo nuevo bloque interno para dividir
+	InternalNode* newInternalNode = new InternalNode(this->sizeBlock, numBlockFree, internalNode->getLevel());
 
-	        // Crea contenedor de registros para insertar ordenado el registro...
-		std::list<Registry*> registryList;
-		// Crea contenedor de ramas para insertar la rama nueva...
-		std::vector<int> branchList;
+	// Crea contenedor de registros para insertar ordenado el registro...
+	listRegistry.clear();
+	// Crea contenedor de ramas para insertar la rama nueva...
+	branchList.clear();
 
-	        // Transfiere todos los regsitros del bloque interno a la lista de registros para insertar ordenado el regitro...
-		internalNode->transferRegistry(registryList);
-		// Transfiere todas las ramas del bloque interno a la lista de ramas para insertar la rama...
-		internalNode->transferBranchs(branchList);
+	// Transfiere todos los regsitros del bloque interno a la lista de registros para insertar ordenado el regitro...
+	internalNode->transferRegistry(listRegistry);
+	// Transfiere todas las ramas del bloque interno a la lista de ramas para insertar la rama...
+	internalNode->transferBranchs(branchList);
 
-	        // Busca posicion de insercion para el registro...
-	        unsigned int insertPos = searchPositionInsertInternalNode(registry, registryList.begin(), registryList.end());
+	// Busca posicion de insercion para el registro...
+	unsigned int insertPos = searchPositionInsertInternalNode(registry, listRegistry.begin(), listRegistry.end());
 
-	        //adelanto el puntero
-	        list<Registry*>::iterator itListReg = registryList.begin();
-	        this->advanceListPointer(itListReg,insertPos);
-	        // Inserta ordenado el registro
-	        registryList.insert(itListReg, registry);
+	//adelanto el puntero
+	list<Registry*>::iterator itListReg = listRegistry.begin();
+	this->advanceListPointer(itListReg,insertPos-1);
+	// Inserta ordenado el registro
+	listRegistry.insert(itListReg, registry);
 
-	     //adelanto el puntero
-	        std::vector<int>::iterator itListBranchs = branchList.begin();
-	     this->advanceVectorPointer(itListBranchs ,insertPos + 1);
-		// Inserta la rama
-	     branchList.insert(itListBranchs, rightBlock);
+	//adelanto el puntero
+	std::vector<int>::iterator itListBranchs = branchList.begin();
+	this->advanceVectorPointer(itListBranchs ,insertPos + 1);
+	// Inserta la rama
+	branchList.insert(itListBranchs, rightBlock);
+
+	// Obtiene elemento medio...
+	list<Registry*>::iterator iteratorPosMedium=listRegistry.begin();
+	this->advanceListPointer(iteratorPosMedium,(listRegistry.size() / 2));
+
+	// Establece el elemento medio a subir en el resultado de insercion
+	container->setRegMidleKey(*iteratorPosMedium);
+
+	// Inserta elementos a la izquierda del medio en bloque a dividir
+
+	for (std::list<Registry*>::iterator actual = listRegistry.begin(); actual != iteratorPosMedium; ++actual) {
+		Registry* reg=*actual;
+		reg->print(cout);
+		internalNode->addReg(reg);
+	}
+
+	// Inserta elementos a la derecha del medio en bloque nuevo
+	for (std::list<Registry*>::iterator actual = iteratorPosMedium; actual != listRegistry.end(); ++actual) {
+		Registry* reg=*actual;
+		reg->print(cout);
+		newInternalNode->addReg(*actual);
+	}
 
 
-		// Obtiene rama media...
-	     itListBranchs = branchList.begin();
-	     this->advanceVectorPointer(itListBranchs ,(branchList.size()/2)+1);
-	     std::vector<int>::iterator midleBranch = itListBranchs;
-	     std::vector<int>::iterator actual = branchList.begin();
-	     std::vector<int>::iterator end = branchList.end();
+	unsigned int counterLeftBranches = (internalNode->getNumElements() + 1);
+	unsigned int counterRightBranches = branchList.size() - counterLeftBranches;
 
-		while (actual != midleBranch) {
-			internalNode->addBranch(*actual);
-			++actual;
-		}
+	std::vector<int>::iterator actual = branchList.begin();
+	unsigned int counter = 0;
+	while (counter < counterLeftBranches && actual != branchList.end()) {
+		cout<<"rama a insertar "<<*actual<<endl;
+		internalNode->addBranch(*actual);
+		++actual;
+	        ++counter;
+	}
 
-		actual = midleBranch;
-		while (actual != end) {
-			internalNode->addBranch(*actual);
-			++actual;
-		}
+	counter = 0;
+	while (counter < counterRightBranches && actual != branchList.end()) {
+		cout<<"rama a insertar 2 "<<*actual<<endl;
+		newInternalNode->addBranch(*actual);
+		++actual;
+	        ++counter;
+	}
 
-	        // Obtiene elemento medio...
-		itListReg = registryList.begin();
-		this->advanceListPointer(itListReg,registryList.size()/2);
-		std::list<Registry*>::iterator halfPos = itListReg;
+	newInternalNode->setNextBlock(internalNode->getNextBlock());
+	internalNode->setNextBlock(newInternalNode->getNumBlock());
+	// Actualiza espacio ocupado para el bloque a dividir
+	this->freeBlockController->writeSizeBusy(internalNode->getNumBlock(), internalNode->getOcupedLong());
+	// Escribe bloque a dividir en disco
+	this->writeBlock(internalNode, internalNode->getNumBlock());
 
-	        // Establece el elemento medio a subir en el resultado de insercion
-		container->setRegMidleKey(*halfPos);
+	// Actualiza espacio ocupado para el bloque nuevo
+	this->freeBlockController->writeSizeBusy(newInternalNode->getNumBlock(), newInternalNode->getOcupedLong());
 
-	        // Inserta elementos a la izquierda del medio en bloque a dividir
+	// Escribe bloque nuevo
+	this->writeBlock(newInternalNode, newInternalNode->getNumBlock());
 
-		for (std::list<Registry*>::iterator actual = registryList.begin(); actual != halfPos; ++actual) {
-	                internalNode->addReg(*actual);
-	        }
 
-		// Inserta elementos a la derecha del medio en bloque nuevo
-		halfPos++;
-		for (std::list<Registry*>::iterator actual = halfPos; actual != registryList.end(); ++actual) {
-			internalNode->addReg(*actual);
-		}
-
-		// Actualiza espacio ocupado para el bloque a dividir
-		this->freeBlockController->writeSizeBusy(internalNode->getNumBlock(), internalNode->getOcupedLong());
-		// Escribe bloque a dividir en disco
-		this->writeBlock(internalNode, internalNode->getNumBlock());
-
-		// Actualiza espacio ocupado para el bloque nuevo
-		this->freeBlockController->writeSizeBusy(newInternalNode->getNumBlock(), newInternalNode->getOcupedLong());
-
-		// Escribe bloque nuevo
-		this->writeBlock(newInternalNode, newInternalNode->getNumBlock());
-
-		// Establezco bloque izquierdo en resultado de insercion
-		container->setLeftBlock(internalNode->getNumBlock());
-		// Establezco bloque derecho en resultado de insercion
-		container->setRightBlock(newInternalNode->getNumBlock());
+	// Establezco bloque derecho en resultado de insercion
+	container->setRightBlock(newInternalNode->getNumBlock());
 
 }
 unsigned int IndexBSharp::searchPositionInsertLeafNode(Registry* registry, list<Registry*>::iterator iteratorBegin, list<Registry*>::iterator iteratorEnd) throw(){
-		unsigned int insertPos = 0;
-		list<Registry*>::iterator itReg;
-		for (itReg= iteratorBegin; itReg != iteratorEnd ; ++itReg, ++insertPos) {
-			Registry* reg = *itReg;
-			if (registry->compareTo(reg) < 0) {
-	                	break;
-	        	}
-	    	}
-		return insertPos;
+	unsigned int insertPos = 0;
+	list<Registry*>::iterator itReg;
+	for (itReg= iteratorBegin; itReg != iteratorEnd ; ++itReg, ++insertPos) {
+		Registry* reg = *itReg;
+		if (registry->compareTo(reg) < 0) {
+			break;
+		}
+	}
+	return insertPos;
 }
 unsigned int IndexBSharp::searchPositionInsertInternalNode(Registry* registry, list<Registry*>::iterator iteratorBegin, list<Registry*>::iterator iteratorEnd) throw(){
 	unsigned int insertPos = 0;
-		bool lessOrEquals = true;
-		list<Registry*>::iterator itReg;
-		for (itReg= iteratorBegin; itReg != iteratorEnd && lessOrEquals; ++itReg, ++insertPos) {
-	        	Registry* reg = *itReg;
-		        if (reg->compareTo(registry) < 0 || reg->compareTo(registry) == 0) {
-	        	}
-		        else {
-						lessOrEquals = false;
-//	                	break;
-		        }
-	    	}
-		return insertPos;
+	list<Registry*>::iterator itReg;
+	for (itReg= iteratorBegin; itReg != iteratorEnd ; ++itReg, ++insertPos) {
+		Registry* reg = *itReg;
+		if (registry->compareTo(reg) < 0) {
+					break;
+		}
+	}
+	return insertPos;
 }
 int IndexBSharp::searchBranch(InternalNode* internalNode,Registry* registry) throw(){
 
@@ -397,12 +398,14 @@ int IndexBSharp::searchBranch(InternalNode* internalNode,Registry* registry) thr
 	while (actualComponent != endComponent) {
 		Registry* actual=*actualComponent;
 		if (registry->compareTo(actual) < 0) {
+			 cout<<" es menor ";
+			actual->print(cout);
 			break;
 		}
 		++actualComponent;
 		++branchPos;
 	}
-
+    cout<<" branchPos "<<branchPos<<endl;
 	return internalNode->getBranch(branchPos);
 
 }
@@ -411,22 +414,22 @@ Registry* IndexBSharp::extractKey(Registry* registry) throw(){
 }
 Registry* IndexBSharp::searchLeafNode(LeafNode* leafNode,Registry* registry) throw(){
 	Registry* findRegistry;
-		bool find = false;
+	bool find = false;
 
-		if (leafNode != NULL) {
-			std::list<Registry*>::const_iterator actualComponent = leafNode->iteratorBegin();
-			std::list<Registry*>::const_iterator endComponent = leafNode->iteratorEnd();
+	if (leafNode != NULL) {
+		std::list<Registry*>::const_iterator actualComponent = leafNode->iteratorBegin();
+		std::list<Registry*>::const_iterator endComponent = leafNode->iteratorEnd();
 
-			while (actualComponent != endComponent && !find) {
-				Registry* iterRegistry = *actualComponent;
-				if (iterRegistry->getKey()->equals(registry->getKey())) {
-					findRegistry = iterRegistry;
-					find = true;
-				}
-				++actualComponent;
+		while (actualComponent != endComponent && !find) {
+			Registry* iterRegistry = *actualComponent;
+			if (iterRegistry->getKey()->equals(registry->getKey())) {
+				findRegistry = iterRegistry;
+				find = true;
 			}
+			++actualComponent;
 		}
-		return findRegistry;
+	}
+	return findRegistry;
 }
 Registry*  IndexBSharp::searchInternalNode(InternalNode* internalNode,Registry* registry) throw(){
 
@@ -451,50 +454,50 @@ void IndexBSharp::printRecursive(Node* currentNode, std::ostream& outStream, uns
 
 
 	if (currentNode != NULL) {
-			outStream << std::string(level * 4, '-');
-			outStream << "NUMERO BLOQUE: " << currentNode->getNumBlock() << " ";
-			outStream << "NIVEL: " << currentNode->getLevel() << " ";
-			outStream << "COMPONENTES BLOQUE: "<<endl;
-			list<Registry*>::iterator actualComp  = currentNode->iteratorBegin();
-			list<Registry*>::iterator endComp = currentNode->iteratorEnd();
-			while (actualComp != endComp) {
-				Registry* reg =  *actualComp;
-				this->printRegistry(reg, outStream);
-				++actualComp;
-			}
-			if (currentNode->isLeaf()) {
-	                        outStream << "--EN BLOQUE HOJA--";
-	                        LeafNode* leafNode =  (LeafNode*)currentNode;
-	                        outStream << "CON SIGUIENTE: " << leafNode->getNextBlock()<< " ";
-	                        outStream << std::endl;
-		                outStream << std::endl;
-	        	        outStream << std::endl;
-	                } else {
-	                        outStream << "--EN BLOQUE INTERNO--";
-	                        InternalNode* internalNode = (InternalNode*)currentNode;
-	                        std::vector<int>::const_iterator actualBranch = internalNode->firstBranch();
-	                        std::vector<int>::const_iterator endBranch = internalNode->lastBranch();
-				std::cout << "CON RAMAS(";
-	                        while (actualBranch != endBranch) {
-	                                outStream << " " << *actualBranch;
-	                                ++actualBranch;
-	                        }
-	                        outStream << " ) ";
-				outStream << std::endl;
-	                        outStream << std::endl;
-	                        outStream << std::endl;
-
-	            actualBranch = internalNode->firstBranch();
-	            endBranch = internalNode->lastBranch();
-				while (actualBranch != endBranch) {
-					Node* childNode  = this->readNode(*actualBranch);
-					if (childNode != NULL) {
-						this->printRecursive(childNode, outStream, level + 1);
-					}
-					++actualBranch;
-				}
-	                }
+		outStream << std::string(level * 4, '-');
+		outStream << "NUMERO BLOQUE: " << currentNode->getNumBlock() << " ";
+		outStream << "NIVEL: " << currentNode->getLevel() << " ";
+		outStream << "COMPONENTES BLOQUE: "<<endl;
+		list<Registry*>::iterator actualComp  = currentNode->iteratorBegin();
+		list<Registry*>::iterator endComp = currentNode->iteratorEnd();
+		while (actualComp != endComp) {
+			Registry* reg =  *actualComp;
+			this->printRegistry(reg, outStream);
+			++actualComp;
 		}
+		if (currentNode->isLeaf()) {
+			outStream << "--EN BLOQUE HOJA--";
+			LeafNode* leafNode =  (LeafNode*)currentNode;
+			outStream << "CON SIGUIENTE: " << leafNode->getNextBlock()<< " ";
+			outStream << std::endl;
+			outStream << std::endl;
+			outStream << std::endl;
+		} else {
+			outStream << "--EN BLOQUE INTERNO--";
+			InternalNode* internalNode = (InternalNode*)currentNode;
+			std::vector<int>::const_iterator actualBranch = internalNode->firstBranch();
+			std::vector<int>::const_iterator endBranch = internalNode->lastBranch();
+			std::cout << "CON RAMAS(";
+			while (actualBranch != endBranch) {
+				outStream << " " << *actualBranch;
+				++actualBranch;
+			}
+			outStream << " ) ";
+			outStream << std::endl;
+			outStream << std::endl;
+			outStream << std::endl;
+
+			actualBranch = internalNode->firstBranch();
+			endBranch = internalNode->lastBranch();
+			while (actualBranch != endBranch) {
+				Node* childNode  = this->readNode(*actualBranch);
+				if (childNode != NULL) {
+					this->printRecursive(childNode, outStream, level + 1);
+				}
+				++actualBranch;
+			}
+		}
+	}
 
 
 }

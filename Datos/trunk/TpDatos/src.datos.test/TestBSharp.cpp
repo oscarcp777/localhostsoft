@@ -21,7 +21,9 @@ TestBSharp::~TestBSharp() {
 void TestBSharp::testInsert(){
      IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTree.dat",BLOCK_SIZE,TYPE_REG_PRIMARY);
 
-     for (int var = 0; var < 50; ++var) {
+     for (int var = 0; var < 5; ++var) {
+    	 if(47==var)
+    		 cout<<"";
     		 RegPrimary* regPrimary = new RegPrimary();
     	     KeyIndexPrimary* key= new KeyIndexPrimary(var+1);
     	     regPrimary->setKey(key);
