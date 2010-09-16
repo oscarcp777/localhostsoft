@@ -41,9 +41,17 @@ class EstrategiaAlmacenamientoBSharp: public ContadorReferencias {
 		 */
 		bool escribir_bloque(unsigned int numero_bloque, BloqueBSharp::puntero bloque, Archivo::puntero archivo) throw();
 		/**
+		 * Escribe el bloque raiz en el archivo con el numero de bloque dado...
+		 */
+		bool escribir_bloque_raiz(unsigned int numero_bloque, BloqueBSharp::puntero bloqueRaiz, Archivo::puntero archivo) throw();
+		/**
 		 * Lee un bloque en el archivo con el numero de bloque dado...
 		 */
 		BloqueBSharp::puntero leer_bloque(unsigned int numero_bloque, Archivo::puntero archivo) throw();
+		/**
+		 * Lee el bloque raiz (bloque doble)
+		 */
+		BloqueBSharp::puntero leer_bloque_raiz(unsigned int numero_bloque, Archivo::puntero archivo) throw();
 		/**
 		 * Agrega un bloque en el archivo...
 		 */

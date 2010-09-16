@@ -18,11 +18,37 @@ bool EstrategiaAlmacenamientoBSharp::escribir_bloque(unsigned int numero_bloque,
 	return exitoso;
 }
 
+bool EstrategiaAlmacenamientoBSharp::escribir_bloque_raiz(unsigned int numero_bloque, BloqueBSharp::puntero bloqueRaiz, Archivo::puntero archivo) throw() {
+	bool exitoso = false;
+	if (bloqueRaiz != NULL && archivo != NULL) {
+		char* bytes = escribir_bloque_en_bytes(bloqueRaiz);
+		exitoso = archivo->escribir(bytes, numero_bloque, 2*archivo->obtener_longitud_en_bytes());
+		delete[] bytes;
+	}
+	return exitoso;
+}
+
 BloqueBSharp::puntero EstrategiaAlmacenamientoBSharp::leer_bloque(unsigned int numero_bloque, Archivo::puntero archivo) throw() {
 	if (archivo != NULL) {
 		char* bytes = new char[archivo->obtener_longitud_en_bytes()];
 		if (archivo->leer(bytes, numero_bloque)) {
 			BloqueBSharp::puntero bloque = leer_bloque_desde_bytes(bytes, archivo->obtener_longitud_en_bytes());
+			delete[] bytes;
+			return bloque;
+		} else {
+			delete[] bytes;
+			return NULL;
+		}
+	}
+	return NULL;
+}
+
+
+BloqueBSharp::puntero EstrategiaAlmacenamientoBSharp::leer_bloque_raiz(unsigned int numero_bloque, Archivo::puntero archivo) throw() {
+	if (archivo != NULL) {
+		char* bytes = new char[2*archivo->obtener_longitud_en_bytes()];
+		if (archivo->leer(bytes, numero_bloque,2*archivo->obtener_longitud_en_bytes())) {
+			BloqueBSharp::puntero bloque = leer_bloque_desde_bytes(bytes, 2*archivo->obtener_longitud_en_bytes());
 			delete[] bytes;
 			return bloque;
 		} else {
