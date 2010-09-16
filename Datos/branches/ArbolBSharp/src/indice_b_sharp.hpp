@@ -73,9 +73,13 @@ class IndiceBSharp: public EstrategiaIndice {
 		 */
 		void escribir_bloque_raiz() throw();
 		/**
-		 * Maneja el sobreflujo al dividirse el nodo raiz del indice b sharp.
+		 * Maneja el sobreflujo al dividirse el nodo raiz del indice b sharp cuando es hoja.
 		 */
-		void manejar_division_raiz(ResultadoInsercion& resultado) throw();
+		void manejarDivisionRaizHoja(ResultadoInsercion& resultado, const Registro::puntero& registro) throw();
+		/**
+		 * Maneja el sobreflujo al dividirse el nodo raiz del indice b sharp cuando es interno.
+		 */
+		void manejarDivisionRaizInterna(ResultadoInsercion& resultado) throw();
 		/**
 		 * Inserta un registro en un bloque externo.
 		 * @param bloqueExterno - El bloque externo donde insertar el registro.
@@ -139,7 +143,7 @@ class IndiceBSharp: public EstrategiaIndice {
 		 * @param registroClave - El registro con la clave a insertar.
 		 */
 		void insertar_bloque_interno_no_lleno(BloqueInternoBSharp::puntero& bloqueInterno, const Registro::puntero& registro,
-			unsigned int bloque_izquierdo, unsigned int bloque_derecho) throw();
+			unsigned int bloque_derecho) throw();
 		/**
 		 * Busca insertar el registroClave balanceando cargas entre el bloque en cuestion y su hermano (derecho o izquierdo)
 		 */
@@ -153,14 +157,14 @@ class IndiceBSharp: public EstrategiaIndice {
 		void insertar_bloque_interno_lleno(BloqueInternoBSharp::puntero& bloqueInterno, const Registro::puntero& registro,
 				unsigned int bloque_izquierdo, unsigned int bloque_derecho, ResultadoInsercion& resultado) throw();
 		/**
-				 * Inserta un registro en un bloque interno lleno.
-				 * @param bloqueInterno - El bloque interno donde insertar el registro.
-				 * @param bloqueHermano - El bloque interno hermano del bloque actual.
-				 * @param registroClave - El registro con la clave a insertar.
-				 * @param resultado - El resultado de insercion del registro en el bloque interno.
-				 */
-				bool insertar_bloque_interno_lleno2(BloqueInternoBSharp::puntero& bloqueInterno, BloqueInternoBSharp::puntero& bloqueHermano, const Registro::puntero& registro,
-						 ResultadoInsercion& resultado,Registro::puntero& registroPadre) throw();
+		 * Inserta un registro en un bloque interno lleno.
+		 * @param bloqueInterno - El bloque interno donde insertar el registro.
+		 * @param bloqueHermano - El bloque interno hermano del bloque actual.
+		 * @param registroClave - El registro con la clave a insertar.
+		 * @param resultado - El resultado de insercion del registro en el bloque interno.
+		 */
+		bool insertar_bloque_interno_lleno2(BloqueInternoBSharp::puntero& bloqueInterno, BloqueInternoBSharp::puntero& bloqueHermano, const Registro::puntero& registro,
+				ResultadoInsercion& resultado,Registro::puntero& registroPadre) throw();
 		/**
 		 * Busca la posicion de insercion externa para el registro dado.
 		 * @param registro - El registro a insertar en el bloque externo.

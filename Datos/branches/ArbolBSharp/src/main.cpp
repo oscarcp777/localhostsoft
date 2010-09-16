@@ -280,12 +280,13 @@ void probarIndiceBSharp() {
 	esquema->agregar_campo("edad", TIPO_CAMPO_ENTERO);
 	clavePrimaria->agregar_campo("id");
 
-	IndiceBSharp::puntero indice = new IndiceBSharp("personas", 100, esquema, clavePrimaria, comparadorClave);
+	IndiceBSharp::puntero indice = new IndiceBSharp("personas", 50, esquema, clavePrimaria, comparadorClave);
 
 	for (int counter = 0; counter < 5; ++counter) {
 		std::string nombre;
 		int id;
 		int edad;
+		indice->imprimir(std::cout);
 		std::cout << "----INGRESE REGISTRO----" << std::endl;
 		std::cout << "Ingrese id (Clave primaria): ";
 		std::cin >> id;
@@ -1379,8 +1380,8 @@ void probarRecursoDeAlmacenamiento( void )
 int main(int argc, char** argv)
 {
 	/**pruebas indice b#**/
-    probarIndiceBSharpImprimir();
-//    probarIndiceBSharp();
+//    probarIndiceBSharpImprimir();
+    probarIndiceBSharp();
 
     /**pruebas hash**/
 	//probarHash();
