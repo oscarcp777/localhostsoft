@@ -1,0 +1,4592 @@
+# depslib dependency file v1.0
+1259525754 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/CampoStream.cpp
+	"CampoStream.hpp"
+	<string.h>
+
+1257706942 /home/connie/Documentos/Facultad/Datos/svn/trunk/CampoStream.hpp
+	<sstream>
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"tipo_campo.hpp"
+
+1259454778 /home/connie/Documentos/Facultad/Datos/svn/trunk/tipo_campo.hpp
+
+1257697881 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/EstrategiaAlmacenamiento.cpp
+	"EstrategiaAlmacenamiento.hpp"
+
+1257708233 /home/connie/Documentos/Facultad/Datos/svn/trunk/EstrategiaAlmacenamiento.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"componente.hpp"
+	"string.h"
+	"almacenamiento.hpp"
+	"CampoStream.hpp"
+	"RegistroLongitudVariable.hpp"
+	"RegistroLongitudFija.hpp"
+	"campo.hpp"
+	"campo_entero.hpp"
+	"campo_booleano.hpp"
+	"campo_doble.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	"campo_cadena.hpp"
+
+1257455988 /home/connie/Documentos/Facultad/Datos/svn/trunk/componente.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1259455530 /home/connie/Documentos/Facultad/Datos/svn/trunk/almacenamiento.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"esquema.hpp"
+	"clave.hpp"
+	"EsquemaBloque.hpp"
+	"tipo_almacenamiento.hpp"
+
+1257455911 /home/connie/Documentos/Facultad/Datos/svn/trunk/esquema.hpp
+	<map>
+	<string>
+	<algorithm>
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"tipo_campo.hpp"
+
+1257708370 /home/connie/Documentos/Facultad/Datos/svn/trunk/RegistroLongitudVariable.hpp
+	"puntero_intrusivo.hpp"
+	"registro.hpp"
+	"campo.hpp"
+
+1257557287 /home/connie/Documentos/Facultad/Datos/svn/trunk/registro.hpp
+	<list>
+	<map>
+	<algorithm>
+	"puntero_intrusivo.hpp"
+	"componente.hpp"
+	"clave.hpp"
+	"campo.hpp"
+
+1257455988 /home/connie/Documentos/Facultad/Datos/svn/trunk/clave.hpp
+	<list>
+	<string>
+	<algorithm>
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1257455988 /home/connie/Documentos/Facultad/Datos/svn/trunk/campo.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"tipo_campo.hpp"
+
+1257708334 /home/connie/Documentos/Facultad/Datos/svn/trunk/RegistroLongitudFija.hpp
+	"puntero_intrusivo.hpp"
+	"registro.hpp"
+
+1257455988 /home/connie/Documentos/Facultad/Datos/svn/trunk/campo_entero.hpp
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1257455988 /home/connie/Documentos/Facultad/Datos/svn/trunk/campo_booleano.hpp
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1257455988 /home/connie/Documentos/Facultad/Datos/svn/trunk/campo_doble.hpp
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1257455911 /home/connie/Documentos/Facultad/Datos/svn/trunk/campo_flotante.hpp
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1257455988 /home/connie/Documentos/Facultad/Datos/svn/trunk/campo_largo.hpp
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1257455988 /home/connie/Documentos/Facultad/Datos/svn/trunk/campo_cadena.hpp
+	<string>
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1260127996 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/EstrategiaAlmacenamientoBloques.cpp
+	"EstrategiaAlmacenamientoBloques.hpp"
+	"archivo.hpp"
+	<iostream>
+
+1260127996 /home/connie/Documentos/Facultad/Datos/svn/trunk/EstrategiaAlmacenamientoBloques.hpp
+	"EstrategiaAlmacenamiento.hpp"
+	"bloque.hpp"
+	"clave.hpp"
+	"comparador_clave.hpp"
+	<list>
+
+1260043210 /home/connie/Documentos/Facultad/Datos/svn/trunk/bloque.hpp
+	"puntero_intrusivo.hpp"
+	"componentecompuesto.hpp"
+	"registro.hpp"
+	<list>
+
+1257729412 /home/connie/Documentos/Facultad/Datos/svn/trunk/componentecompuesto.hpp
+	<vector>
+	<algorithm>
+	"puntero_intrusivo.hpp"
+	"componente.hpp"
+
+1259879050 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/EstrategiaAlmacenamientoBucketHash.cpp
+	"EstrategiaAlmacenamientoBucketHash.hpp"
+	"CampoStream.hpp"
+	<string.h>
+
+1257455988 /home/connie/Documentos/Facultad/Datos/svn/trunk/EstrategiaAlmacenamientoBucketHash.hpp
+	"almacenamiento.hpp"
+	"hash_bucket.hpp"
+
+1259879050 /home/connie/Documentos/Facultad/Datos/svn/trunk/hash_bucket.hpp
+	"CampoStream.hpp"
+	"clave.hpp"
+
+1257455988 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/EstrategiaAlmacenamientoDirectoryHash.cpp
+	"EstrategiaAlmacenamientoDirectoryHash.hpp"
+	"CampoStream.hpp"
+	<string.h>
+
+1257455988 /home/connie/Documentos/Facultad/Datos/svn/trunk/EstrategiaAlmacenamientoDirectoryHash.hpp
+	"almacenamiento.hpp"
+	<stdlib.h>
+	<stdio.h>
+
+1259455781 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/EstrategiaAlmacenamientoEspacioLibre.cpp
+	"EstrategiaAlmacenamientoEspacioLibre.hpp"
+
+1257455988 /home/connie/Documentos/Facultad/Datos/svn/trunk/EstrategiaAlmacenamientoEspacioLibre.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"archivo.hpp"
+
+1259455600 /home/connie/Documentos/Facultad/Datos/svn/trunk/archivo.hpp
+	<string>
+	<fstream>
+	"puntero_intrusivo.hpp"
+	"clave.hpp"
+	"esquema.hpp"
+	"almacenamiento.hpp"
+
+1259467393 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/EstrategiaAlmacenamientoRegistros.cpp
+	"EstrategiaAlmacenamientoRegistros.hpp"
+	"archivo.hpp"
+	<iostream>
+
+1257707980 /home/connie/Documentos/Facultad/Datos/svn/trunk/EstrategiaAlmacenamientoRegistros.hpp
+	"EstrategiaAlmacenamiento.hpp"
+	"registro.hpp"
+	"almacenamiento.hpp"
+	<string.h>
+
+1259879050 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/EstrategiaAlmacenamientoTexto.cpp
+	"EstrategiaAlmacenamientoTexto.hpp"
+	<iostream>
+
+1257708233 /home/connie/Documentos/Facultad/Datos/svn/trunk/EstrategiaAlmacenamientoTexto.hpp
+	"EstrategiaAlmacenamiento.hpp"
+	"bloque.hpp"
+	"registro.hpp"
+	<string>
+	"campo_cadena.hpp"
+
+1257020024 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/EstrategiaEspacioLibreBloque.cpp
+	"EstrategiaEspacioLibreBloque.hpp"
+
+1257455988 /home/connie/Documentos/Facultad/Datos/svn/trunk/EstrategiaEspacioLibreBloque.hpp
+	"puntero_intrusivo.hpp"
+	"EstrategiaAlmacenamientoEspacioLibre.hpp"
+
+1257546854 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/EstrategiaRecurso.cpp
+	"EstrategiaRecurso.hpp"
+
+1257710203 /home/connie/Documentos/Facultad/Datos/svn/trunk/EstrategiaRecurso.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"registro.hpp"
+	"EstrategiaAlmacenamiento.hpp"
+	"almacenamiento.hpp"
+
+1260135723 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/EstrategiaRecursoEscrituraDiferida.cpp
+	"archivo.hpp"
+	"EstrategiaRecursoEscrituraDiferida.hpp"
+	"EstrategiaAlmacenamientoBloques.hpp"
+
+1260127996 /home/connie/Documentos/Facultad/Datos/svn/trunk/EstrategiaRecursoEscrituraDiferida.hpp
+	"EstrategiaAlmacenamientoCompuestoComprimido.hpp"
+	"EstrategiaRecurso.hpp"
+
+1260127996 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/EstrategiaRecursoEscrituraDirecta.cpp
+	"archivo.hpp"
+	"EstrategiaAlmacenamientoBloques.hpp"
+	"EstrategiaAlmacenamientoCompuestoComprimido.hpp"
+	"EstrategiaRecursoEscrituraDirecta.hpp"
+
+1257710203 /home/connie/Documentos/Facultad/Datos/svn/trunk/EstrategiaRecursoEscrituraDirecta.hpp
+	"EstrategiaRecurso.hpp"
+
+1259792956 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/EstrategiaRecursoUnAlmacenamiento.cpp
+	"archivo.hpp"
+	"EstrategiaAlmacenamientoBloques.hpp"
+	"EstrategiaRecursoUnAlmacenamiento.hpp"
+
+1257710203 /home/connie/Documentos/Facultad/Datos/svn/trunk/EstrategiaRecursoUnAlmacenamiento.hpp
+	"EstrategiaRecurso.hpp"
+
+1259455546 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/almacenamiento.cpp
+	"almacenamiento.hpp"
+
+1260133599 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/archivo.cpp
+	"archivo.hpp"
+	<string.h>
+
+1260043210 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/bloque.cpp
+	"bloque.hpp"
+
+1260043210 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/bloque_b_sharp.cpp
+	"bloque_b_sharp.hpp"
+	<iostream>
+
+1260043210 /home/connie/Documentos/Facultad/Datos/svn/trunk/bloque_b_sharp.hpp
+	"puntero_intrusivo.hpp"
+	"bloque.hpp"
+
+1257650354 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/bloque_externo_b_sharp.cpp
+	"bloque_externo_b_sharp.hpp"
+
+1257650354 /home/connie/Documentos/Facultad/Datos/svn/trunk/bloque_externo_b_sharp.hpp
+	"puntero_intrusivo.hpp"
+	"bloque_b_sharp.hpp"
+
+1260043210 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/bloque_interno_b_sharp.cpp
+	"bloque_interno_b_sharp.hpp"
+
+1260043210 /home/connie/Documentos/Facultad/Datos/svn/trunk/bloque_interno_b_sharp.hpp
+	"puntero_intrusivo.hpp"
+	"bloque_b_sharp.hpp"
+
+1259455827 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/buffer.cpp
+	"buffer.hpp"
+
+1259455675 /home/connie/Documentos/Facultad/Datos/svn/trunk/buffer.hpp
+	<map>
+	<cstring>
+	"puntero_intrusivo.hpp"
+	"almacenamiento.hpp"
+	<string.h>
+	"EsquemaBloque.hpp"
+
+1256700252 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/campo.cpp
+	"campo.hpp"
+
+1256700252 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/campo_booleano.cpp
+	"campo_booleano.hpp"
+
+1256700252 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/campo_cadena.cpp
+	"campo_cadena.hpp"
+
+1256700252 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/campo_doble.cpp
+	"campo_doble.hpp"
+
+1259624345 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/campo_entero.cpp
+	"campo_entero.hpp"
+
+1256700252 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/campo_flotante.cpp
+	"campo_flotante.hpp"
+
+1256700252 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/campo_largo.cpp
+	"campo_largo.hpp"
+
+1256700252 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/clave.cpp
+	"clave.hpp"
+
+1255325789 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/comparador_clave.cpp
+	"comparador_clave.hpp"
+
+1257708572 /home/connie/Documentos/Facultad/Datos/svn/trunk/comparador_clave.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"clave.hpp"
+	"registro.hpp"
+
+1257455988 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/componente.cpp
+	"componente.hpp"
+
+1257729412 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/componentecompuesto.cpp
+	"componentecompuesto.hpp"
+
+1256700252 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/esquema.cpp
+	"esquema.hpp"
+
+1259205438 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/estrategia_indice.cpp
+	"estrategia_indice.hpp"
+
+1259205438 /home/connie/Documentos/Facultad/Datos/svn/trunk/estrategia_indice.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"esquema.hpp"
+	"registro.hpp"
+
+1257116268 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/hash_bucket.cpp
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"hash_bucket.hpp"
+	"CampoStream.hpp"
+
+1260043210 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/indice_b_sharp.cpp
+	"indice_b_sharp.hpp"
+	<typeinfo>
+
+1260043210 /home/connie/Documentos/Facultad/Datos/svn/trunk/indice_b_sharp.hpp
+	<iostream>
+	"puntero_intrusivo.hpp"
+	"estrategia_indice.hpp"
+	"archivo.hpp"
+	"EstrategiaAlmacenamientoBSharp.hpp"
+	"EstrategiaEspacioLibreBloque.hpp"
+	"esquema.hpp"
+	"clave.hpp"
+	"comparador_clave.hpp"
+	"registro.hpp"
+	"bloque_interno_b_sharp.hpp"
+	"bloque_externo_b_sharp.hpp"
+	"resultado_insercion.hpp"
+	"resultado_balanceo.hpp"
+
+1260133195 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/main.cpp
+	<stdio.h>
+	<cstring>
+	<sstream>
+	<iostream>
+	"campo.hpp"
+	"campo_entero.hpp"
+	"campo_booleano.hpp"
+	"campo_doble.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	"campo_cadena.hpp"
+	"esquema.hpp"
+	"clave.hpp"
+	"archivo.hpp"
+	"buffer.hpp"
+	"registro.hpp"
+	"RegistroLongitudFija.hpp"
+	"EstrategiaEspacioLibreBloque.hpp"
+	"EstrategiaAlmacenamientoRegistros.hpp"
+	"EstrategiaAlmacenamientoBSharp.hpp"
+	"EstrategiaAlmacenamientoTexto.hpp"
+	"estrategia_indice.hpp"
+	"indice_b_sharp.hpp"
+	"indice_hash.hpp"
+	"estrategia_indice.hpp"
+	"EsquemaBloque.hpp"
+	"EstrategiaAlmacenamientoBloques.hpp"
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	<cstdlib>
+	<ctime>
+	"indice_secuencial.hpp"
+	"RecursoDeAlmacenamiento.hpp"
+	"EstrategiaRecurso.hpp"
+	"EstrategiaRecursoEscrituraDirecta.hpp"
+	"EstrategiaRecursoEscrituraDiferida.hpp"
+	"EstrategiaRecursoUnAlmacenamiento.hpp"
+	"EstrategiaAlmacenamientoCompuestoComprimido.hpp"
+	"CompresorAritmetico.hpp"
+	"BloqueCompresor.hpp"
+	"EstrategiaAlmacenamientoCompuestoComprimido.hpp"
+
+1257455988 /home/connie/Documentos/Facultad/Datos/svn/trunk/EstrategiaAlmacenamientoBSharp.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"archivo.hpp"
+	"bloque_interno_b_sharp.hpp"
+	"bloque_externo_b_sharp.hpp"
+	"esquema.hpp"
+	"RegistroLongitudVariable.hpp"
+	"registro.hpp"
+	"campo_booleano.hpp"
+	"campo_cadena.hpp"
+	"campo_doble.hpp"
+	"campo_entero.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	<string>
+	<cstring>
+
+1260043210 /home/connie/Documentos/Facultad/Datos/svn/trunk/indice_hash.hpp
+	"archivo.hpp"
+	"estrategia_indice.hpp"
+	"comparador_clave.hpp"
+	"bloque.hpp"
+	"hash_directory.hpp"
+	"hash_bucket.hpp"
+
+1257455911 /home/connie/Documentos/Facultad/Datos/svn/trunk/hash_directory.hpp
+	"almacenamiento.hpp"
+	"hash_bucket.hpp"
+	"EstrategiaAlmacenamientoDirectoryHash.hpp"
+	"EstrategiaAlmacenamientoBucketHash.hpp"
+
+1259549525 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/EstrategiaAlmacenamientoBSharp.cpp
+	"EstrategiaAlmacenamientoBSharp.hpp"
+
+1257455911 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/RegistroLongitudFija.cpp
+	"RegistroLongitudFija.hpp"
+
+1256954312 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/RegistroLongitudVariable.cpp
+	"RegistroLongitudVariable.hpp"
+
+1257455988 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/hash_directory.cpp
+	<math.h>
+	"hash_directory.hpp"
+
+1259455995 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/indice_hash.cpp
+	"indice_hash.hpp"
+	<math.h>
+	<string>
+	<cstring>
+	<iostream>
+	<sstream>
+	<stdlib.h>
+	<stdio.h>
+	"campo.hpp"
+	"campo_entero.hpp"
+	"campo_booleano.hpp"
+	"campo_doble.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	"campo_cadena.hpp"
+	"buffer.hpp"
+	"almacenamiento.hpp"
+	"RegistroLongitudVariable.hpp"
+	"CampoStream.hpp"
+
+1257557287 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/registro.cpp
+	"registro.hpp"
+
+1259866758 ne
+
+1257393024 57
+	"EsquemaBloque.hpp"
+	<iostream>
+
+1257520240 source:/home/maria/Documentos/workspace/EstrategiaRecurso.cpp
+	"EstrategiaRecurso.hpp"
+
+1257704623 /home/maria/Documentos/workspace/EstrategiaRecurso.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"registro.hpp"
+	"EstrategiaAlmacenamiento.hpp"
+	"almacenamiento.hpp"
+
+1257704816 source:/home/maria/Documentos/workspace/EstrategiaRecursoEscrituraDiferida.cpp
+	"EstrategiaRecursoEscrituraDiferida.hpp"
+
+1257704673 /home/maria/Documentos/workspace/EstrategiaRecursoEscrituraDiferida.hpp
+	"EstrategiaRecurso.hpp"
+
+1257709457 source:/home/maria/Documentos/workspace/EstrategiaRecursoEscrituraDirecta.cpp
+	"EstrategiaRecursoEscrituraDirecta.hpp"
+
+1257704737 /home/maria/Documentos/workspace/EstrategiaRecursoEscrituraDirecta.hpp
+	"EstrategiaRecurso.hpp"
+
+1257704754 source:/home/maria/Documentos/workspace/EstrategiaRecursoUnAlmacenamiento.cpp
+	"EstrategiaRecursoUnAlmacenamiento.hpp"
+
+1257704785 /home/maria/Documentos/workspace/EstrategiaRecursoUnAlmacenamiento.hpp
+	"EstrategiaRecurso.hpp"
+
+1257665807 source:/home/maria/Documentos/workspace/main.cpp
+	<stdio.h>
+	<cstring>
+	<sstream>
+	<iostream>
+	"campo.hpp"
+	"campo_entero.hpp"
+	"campo_booleano.hpp"
+	"campo_doble.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	"campo_cadena.hpp"
+	"esquema.hpp"
+	"clave.hpp"
+	"archivo.hpp"
+	"buffer.hpp"
+	"registro.hpp"
+	"RegistroLongitudFija.hpp"
+	"EstrategiaEspacioLibreBloque.hpp"
+	"EstrategiaAlmacenamientoRegistros.hpp"
+	"EstrategiaAlmacenamientoBSharp.hpp"
+	"EstrategiaAlmacenamientoTexto.hpp"
+	"estrategia_indice.hpp"
+	"indice_b_sharp.hpp"
+	"indice_hash.hpp"
+	"estrategia_indice.hpp"
+	"EsquemaBloque.hpp"
+	"EstrategiaAlmacenamientoBloques.hpp"
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	<cstdlib>
+	<ctime>
+	"RecursoDeAlmacenamiento.hpp"
+	"EstrategiaRecurso.hpp"
+	"EstrategiaRecursoEscrituraDirecta.hpp"
+	"EstrategiaRecursoEscrituraDiferida.hpp"
+	"EstrategiaRecursoUnAlmacenamiento.hpp"
+
+1257405716 source:/home/maria/Documentos/workspace/EstrategiaAlmacenamientoBucketHash.cpp
+	"EstrategiaAlmacenamientoBucketHash.hpp"
+	"CampoStream.hpp"
+	<string.h>
+
+1257405716 /home/maria/Documentos/workspace/EstrategiaAlmacenamientoBucketHash.hpp
+	"almacenamiento.hpp"
+	"hash_bucket.hpp"
+
+1257405716 source:/home/maria/Documentos/workspace/EstrategiaAlmacenamientoDirectoryHash.cpp
+	"EstrategiaAlmacenamientoDirectoryHash.hpp"
+	"CampoStream.hpp"
+	<string.h>
+
+1257405716 /home/maria/Documentos/workspace/EstrategiaAlmacenamientoDirectoryHash.hpp
+	"almacenamiento.hpp"
+	<stdlib.h>
+	<stdio.h>
+
+1257405716 /home/maria/Documentos/workspace/EstrategiaEspacioLibreBloque.hpp
+	"puntero_intrusivo.hpp"
+	"EstrategiaAlmacenamientoEspacioLibre.hpp"
+
+1257405716 /home/maria/Documentos/workspace/EstrategiaAlmacenamientoEspacioLibre.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"archivo.hpp"
+
+1257405716 source:/home/maria/Documentos/workspace/EstrategiaAlmacenamientoEspacioLibre.cpp
+	"EstrategiaAlmacenamientoEspacioLibre.hpp"
+
+1257095311 source:/home/maria/Documentos/workspace/EstrategiaEspacioLibreBloque.cpp
+	"EstrategiaEspacioLibreBloque.hpp"
+
+1257642775 source:/home/pablo/workspace/organizacion-de-datos/trunk/CampoStream.cpp
+	"CampoStream.hpp"
+	<string.h>
+
+1257712494 /home/pablo/workspace/organizacion-de-datos/trunk/CampoStream.hpp
+	<sstream>
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"tipo_campo.hpp"
+
+1257642775 /home/pablo/workspace/organizacion-de-datos/trunk/tipo_campo.hpp
+
+1257691446 source:/home/pablo/workspace/organizacion-de-datos/trunk/EstrategiaAlmacenamiento.cpp
+	"EstrategiaAlmacenamiento.hpp"
+
+1257712494 /home/pablo/workspace/organizacion-de-datos/trunk/EstrategiaAlmacenamiento.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"componente.hpp"
+	"string.h"
+	"almacenamiento.hpp"
+	"CampoStream.hpp"
+	"RegistroLongitudVariable.hpp"
+	"RegistroLongitudFija.hpp"
+	"campo.hpp"
+	"campo_entero.hpp"
+	"campo_booleano.hpp"
+	"campo_doble.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	"campo_cadena.hpp"
+
+1257642775 /home/pablo/workspace/organizacion-de-datos/trunk/componente.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1257712494 /home/pablo/workspace/organizacion-de-datos/trunk/almacenamiento.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"esquema.hpp"
+	"clave.hpp"
+	"EsquemaBloque.hpp"
+
+1257642775 /home/pablo/workspace/organizacion-de-datos/trunk/esquema.hpp
+	<map>
+	<string>
+	<algorithm>
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"tipo_campo.hpp"
+
+1257712494 /home/pablo/workspace/organizacion-de-datos/trunk/RegistroLongitudVariable.hpp
+	"puntero_intrusivo.hpp"
+	"registro.hpp"
+	"campo.hpp"
+
+1257642775 /home/pablo/workspace/organizacion-de-datos/trunk/registro.hpp
+	<list>
+	<map>
+	<algorithm>
+	"puntero_intrusivo.hpp"
+	"componente.hpp"
+	"clave.hpp"
+	"campo.hpp"
+
+1257642775 /home/pablo/workspace/organizacion-de-datos/trunk/clave.hpp
+	<list>
+	<string>
+	<algorithm>
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1257642775 /home/pablo/workspace/organizacion-de-datos/trunk/campo.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"tipo_campo.hpp"
+
+1257712494 /home/pablo/workspace/organizacion-de-datos/trunk/RegistroLongitudFija.hpp
+	"puntero_intrusivo.hpp"
+	"registro.hpp"
+
+1257642775 /home/pablo/workspace/organizacion-de-datos/trunk/campo_entero.hpp
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1257642775 /home/pablo/workspace/organizacion-de-datos/trunk/campo_booleano.hpp
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1257642775 /home/pablo/workspace/organizacion-de-datos/trunk/campo_doble.hpp
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1257642775 /home/pablo/workspace/organizacion-de-datos/trunk/campo_flotante.hpp
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1257642775 /home/pablo/workspace/organizacion-de-datos/trunk/campo_largo.hpp
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1257642775 /home/pablo/workspace/organizacion-de-datos/trunk/campo_cadena.hpp
+	<string>
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1257657652 source:/home/pablo/workspace/organizacion-de-datos/trunk/EstrategiaAlmacenamientoBSharp.cpp
+	"EstrategiaAlmacenamientoBSharp.hpp"
+	<iostream>
+
+1257642775 /home/pablo/workspace/organizacion-de-datos/trunk/EstrategiaAlmacenamientoBSharp.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"archivo.hpp"
+	"bloque_interno_b_sharp.hpp"
+	"bloque_externo_b_sharp.hpp"
+	"esquema.hpp"
+	"RegistroLongitudVariable.hpp"
+	"registro.hpp"
+	"campo_booleano.hpp"
+	"campo_cadena.hpp"
+	"campo_doble.hpp"
+	"campo_entero.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	<string>
+	<cstring>
+
+1257712494 /home/pablo/workspace/organizacion-de-datos/trunk/archivo.hpp
+	<string>
+	<fstream>
+	"puntero_intrusivo.hpp"
+	"clave.hpp"
+	"esquema.hpp"
+	"almacenamiento.hpp"
+
+1257663503 /home/pablo/workspace/organizacion-de-datos/trunk/bloque_interno_b_sharp.hpp
+	"puntero_intrusivo.hpp"
+	"bloque_b_sharp.hpp"
+
+1257663133 /home/pablo/workspace/organizacion-de-datos/trunk/bloque_b_sharp.hpp
+	"puntero_intrusivo.hpp"
+	"bloque.hpp"
+
+1257662895 /home/pablo/workspace/organizacion-de-datos/trunk/bloque.hpp
+	"puntero_intrusivo.hpp"
+	"componentecompuesto.hpp"
+	"registro.hpp"
+	<list>
+
+1257705880 /home/pablo/workspace/organizacion-de-datos/trunk/componentecompuesto.hpp
+	<vector>
+	<algorithm>
+	"puntero_intrusivo.hpp"
+	"componente.hpp"
+
+1257643448 /home/pablo/workspace/organizacion-de-datos/trunk/bloque_externo_b_sharp.hpp
+	"puntero_intrusivo.hpp"
+	"bloque_b_sharp.hpp"
+
+1257712494 source:/home/pablo/workspace/organizacion-de-datos/trunk/EstrategiaAlmacenamientoBloques.cpp
+	"EstrategiaAlmacenamientoBloques.hpp"
+	<iostream>
+
+1257712494 /home/pablo/workspace/organizacion-de-datos/trunk/EstrategiaAlmacenamientoBloques.hpp
+	"EstrategiaAlmacenamiento.hpp"
+	"bloque.hpp"
+	"clave.hpp"
+	"comparador_clave.hpp"
+	<list>
+
+1257642775 source:/home/pablo/workspace/organizacion-de-datos/trunk/EstrategiaAlmacenamientoBucketHash.cpp
+	"EstrategiaAlmacenamientoBucketHash.hpp"
+	"CampoStream.hpp"
+	<string.h>
+
+1257642775 /home/pablo/workspace/organizacion-de-datos/trunk/EstrategiaAlmacenamientoBucketHash.hpp
+	"almacenamiento.hpp"
+	"hash_bucket.hpp"
+
+1257642775 /home/pablo/workspace/organizacion-de-datos/trunk/hash_bucket.hpp
+	"CampoStream.hpp"
+	"clave.hpp"
+
+1257642775 source:/home/pablo/workspace/organizacion-de-datos/trunk/EstrategiaAlmacenamientoDirectoryHash.cpp
+	"EstrategiaAlmacenamientoDirectoryHash.hpp"
+	"CampoStream.hpp"
+	<string.h>
+
+1257642775 /home/pablo/workspace/organizacion-de-datos/trunk/EstrategiaAlmacenamientoDirectoryHash.hpp
+	"almacenamiento.hpp"
+	<stdlib.h>
+	<stdio.h>
+
+1257642775 source:/home/pablo/workspace/organizacion-de-datos/trunk/EstrategiaAlmacenamientoEspacioLibre.cpp
+	"EstrategiaAlmacenamientoEspacioLibre.hpp"
+
+1257642775 /home/pablo/workspace/organizacion-de-datos/trunk/EstrategiaAlmacenamientoEspacioLibre.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"archivo.hpp"
+
+1257650272 source:/home/pablo/workspace/organizacion-de-datos/trunk/EstrategiaAlmacenamientoRegistros.cpp
+	"EstrategiaAlmacenamientoRegistros.hpp"
+	<iostream>
+
+1257712494 /home/pablo/workspace/organizacion-de-datos/trunk/EstrategiaAlmacenamientoRegistros.hpp
+	"EstrategiaAlmacenamiento.hpp"
+	"registro.hpp"
+	"almacenamiento.hpp"
+	<string.h>
+
+1257650272 source:/home/pablo/workspace/organizacion-de-datos/trunk/EstrategiaAlmacenamientoTexto.cpp
+	"EstrategiaAlmacenamientoTexto.hpp"
+	<iostream>
+
+1257712494 /home/pablo/workspace/organizacion-de-datos/trunk/EstrategiaAlmacenamientoTexto.hpp
+	"EstrategiaAlmacenamiento.hpp"
+	"bloque.hpp"
+	"registro.hpp"
+	<string>
+	"campo_cadena.hpp"
+
+1257642775 source:/home/pablo/workspace/organizacion-de-datos/trunk/EstrategiaEspacioLibreBloque.cpp
+	"EstrategiaEspacioLibreBloque.hpp"
+
+1257642775 /home/pablo/workspace/organizacion-de-datos/trunk/EstrategiaEspacioLibreBloque.hpp
+	"puntero_intrusivo.hpp"
+	"EstrategiaAlmacenamientoEspacioLibre.hpp"
+
+1257642775 source:/home/pablo/workspace/organizacion-de-datos/trunk/EstrategiaRecurso.cpp
+	"EstrategiaRecurso.hpp"
+
+1257712494 /home/pablo/workspace/organizacion-de-datos/trunk/EstrategiaRecurso.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"registro.hpp"
+	"EstrategiaAlmacenamiento.hpp"
+	"almacenamiento.hpp"
+
+1257712494 source:/home/pablo/workspace/organizacion-de-datos/trunk/EstrategiaRecursoEscrituraDiferida.cpp
+	"EstrategiaRecursoEscrituraDiferida.hpp"
+
+1257712494 /home/pablo/workspace/organizacion-de-datos/trunk/EstrategiaRecursoEscrituraDiferida.hpp
+	"EstrategiaRecurso.hpp"
+
+1257712494 source:/home/pablo/workspace/organizacion-de-datos/trunk/EstrategiaRecursoEscrituraDirecta.cpp
+	"EstrategiaRecursoEscrituraDirecta.hpp"
+
+1257712494 /home/pablo/workspace/organizacion-de-datos/trunk/EstrategiaRecursoEscrituraDirecta.hpp
+	"EstrategiaRecurso.hpp"
+
+1257712494 source:/home/pablo/workspace/organizacion-de-datos/trunk/EstrategiaRecursoUnAlmacenamiento.cpp
+	"EstrategiaRecursoUnAlmacenamiento.hpp"
+
+1257712494 /home/pablo/workspace/organizacion-de-datos/trunk/EstrategiaRecursoUnAlmacenamiento.hpp
+	"EstrategiaRecurso.hpp"
+
+1257642775 source:/home/pablo/workspace/organizacion-de-datos/trunk/RegistroLongitudFija.cpp
+	"RegistroLongitudFija.hpp"
+
+1257642775 source:/home/pablo/workspace/organizacion-de-datos/trunk/RegistroLongitudVariable.cpp
+	"RegistroLongitudVariable.hpp"
+
+1257642775 source:/home/pablo/workspace/organizacion-de-datos/trunk/almacenamiento.cpp
+	"almacenamiento.hpp"
+
+1257642775 source:/home/pablo/workspace/organizacion-de-datos/trunk/archivo.cpp
+	"archivo.hpp"
+	<string.h>
+
+1257663548 source:/home/pablo/workspace/organizacion-de-datos/trunk/bloque.cpp
+	"bloque.hpp"
+
+1257663669 source:/home/pablo/workspace/organizacion-de-datos/trunk/bloque_b_sharp.cpp
+	"bloque_b_sharp.hpp"
+	<iostream>
+
+1257643440 source:/home/pablo/workspace/organizacion-de-datos/trunk/bloque_externo_b_sharp.cpp
+	"bloque_externo_b_sharp.hpp"
+
+1257663708 source:/home/pablo/workspace/organizacion-de-datos/trunk/bloque_interno_b_sharp.cpp
+	"bloque_interno_b_sharp.hpp"
+
+1257650272 source:/home/pablo/workspace/organizacion-de-datos/trunk/buffer.cpp
+	"buffer.hpp"
+
+1257712494 /home/pablo/workspace/organizacion-de-datos/trunk/buffer.hpp
+	<map>
+	<cstring>
+	"puntero_intrusivo.hpp"
+	"almacenamiento.hpp"
+	<string.h>
+	"EsquemaBloque.hpp"
+
+1257642775 source:/home/pablo/workspace/organizacion-de-datos/trunk/campo.cpp
+	"campo.hpp"
+
+1257642775 source:/home/pablo/workspace/organizacion-de-datos/trunk/campo_booleano.cpp
+	"campo_booleano.hpp"
+
+1257642775 source:/home/pablo/workspace/organizacion-de-datos/trunk/campo_cadena.cpp
+	"campo_cadena.hpp"
+
+1257642775 source:/home/pablo/workspace/organizacion-de-datos/trunk/campo_doble.cpp
+	"campo_doble.hpp"
+
+1257642775 source:/home/pablo/workspace/organizacion-de-datos/trunk/campo_entero.cpp
+	"campo_entero.hpp"
+
+1257642775 source:/home/pablo/workspace/organizacion-de-datos/trunk/campo_flotante.cpp
+	"campo_flotante.hpp"
+
+1257642775 source:/home/pablo/workspace/organizacion-de-datos/trunk/campo_largo.cpp
+	"campo_largo.hpp"
+
+1257642775 source:/home/pablo/workspace/organizacion-de-datos/trunk/clave.cpp
+	"clave.hpp"
+
+1257642775 source:/home/pablo/workspace/organizacion-de-datos/trunk/comparador_clave.cpp
+	"comparador_clave.hpp"
+
+1257712494 /home/pablo/workspace/organizacion-de-datos/trunk/comparador_clave.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"clave.hpp"
+	"registro.hpp"
+
+1257642775 source:/home/pablo/workspace/organizacion-de-datos/trunk/componente.cpp
+	"componente.hpp"
+
+1257705953 source:/home/pablo/workspace/organizacion-de-datos/trunk/componentecompuesto.cpp
+	"componentecompuesto.hpp"
+
+1257642775 source:/home/pablo/workspace/organizacion-de-datos/trunk/esquema.cpp
+	"esquema.hpp"
+
+1257642775 source:/home/pablo/workspace/organizacion-de-datos/trunk/estrategia_indice.cpp
+	"estrategia_indice.hpp"
+
+1257642775 /home/pablo/workspace/organizacion-de-datos/trunk/estrategia_indice.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"esquema.hpp"
+	"registro.hpp"
+
+1257642775 source:/home/pablo/workspace/organizacion-de-datos/trunk/hash_bucket.cpp
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"hash_bucket.hpp"
+	"CampoStream.hpp"
+
+1257642775 source:/home/pablo/workspace/organizacion-de-datos/trunk/hash_directory.cpp
+	<math.h>
+	"hash_directory.hpp"
+
+1257642775 /home/pablo/workspace/organizacion-de-datos/trunk/hash_directory.hpp
+	"almacenamiento.hpp"
+	"hash_bucket.hpp"
+	"EstrategiaAlmacenamientoDirectoryHash.hpp"
+	"EstrategiaAlmacenamientoBucketHash.hpp"
+
+1257642775 source:/home/pablo/workspace/organizacion-de-datos/trunk/indice_hash.cpp
+	"indice_hash.hpp"
+	<math.h>
+	<string>
+	<cstring>
+	<iostream>
+	<sstream>
+	<stdlib.h>
+	<stdio.h>
+	"campo.hpp"
+	"campo_entero.hpp"
+	"campo_booleano.hpp"
+	"campo_doble.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	"campo_cadena.hpp"
+	"buffer.hpp"
+	"almacenamiento.hpp"
+	"RegistroLongitudVariable.hpp"
+	"CampoStream.hpp"
+
+1257642775 /home/pablo/workspace/organizacion-de-datos/trunk/indice_hash.hpp
+	"archivo.hpp"
+	"estrategia_indice.hpp"
+	"comparador_clave.hpp"
+	"bloque.hpp"
+	"hash_directory.hpp"
+	"hash_bucket.hpp"
+
+1257712885 source:/home/pablo/workspace/organizacion-de-datos/trunk/main.cpp
+	<stdio.h>
+	<cstring>
+	<sstream>
+	<iostream>
+	"campo.hpp"
+	"campo_entero.hpp"
+	"campo_booleano.hpp"
+	"campo_doble.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	"campo_cadena.hpp"
+	"esquema.hpp"
+	"clave.hpp"
+	"archivo.hpp"
+	"buffer.hpp"
+	"registro.hpp"
+	"RegistroLongitudFija.hpp"
+	"EstrategiaEspacioLibreBloque.hpp"
+	"EstrategiaAlmacenamientoRegistros.hpp"
+	"EstrategiaAlmacenamientoBSharp.hpp"
+	"EstrategiaAlmacenamientoTexto.hpp"
+	"estrategia_indice.hpp"
+	"indice_b_sharp.hpp"
+	"indice_hash.hpp"
+	"estrategia_indice.hpp"
+	"EsquemaBloque.hpp"
+	"EstrategiaAlmacenamientoBloques.hpp"
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	<cstdlib>
+	<ctime>
+	"RecursoDeAlmacenamiento.hpp"
+	"EstrategiaRecurso.hpp"
+	"EstrategiaRecursoEscrituraDirecta.hpp"
+	"EstrategiaRecursoEscrituraDiferida.hpp"
+	"EstrategiaRecursoUnAlmacenamiento.hpp"
+
+1257707151 /home/pablo/workspace/organizacion-de-datos/trunk/indice_b_sharp.hpp
+	<iostream>
+	"puntero_intrusivo.hpp"
+	"estrategia_indice.hpp"
+	"archivo.hpp"
+	"EstrategiaAlmacenamientoBSharp.hpp"
+	"EstrategiaEspacioLibreBloque.hpp"
+	"esquema.hpp"
+	"clave.hpp"
+	"comparador_clave.hpp"
+	"registro.hpp"
+	"bloque_interno_b_sharp.hpp"
+	"bloque_externo_b_sharp.hpp"
+	"resultado_insercion.hpp"
+	"resultado_balanceo.hpp"
+
+1257402179 /home/pablo/workspace/organizacion-de-datos/trunk/resultado_insercion_b_sharp.hpp
+	"componente.hpp"
+
+1257393024 /home/pablo/workspace/organizacion-de-datos/trunk/resultado_borrado_b_sharp.hpp
+
+1257642775 source:/home/pablo/workspace/organizacion-de-datos/trunk/registro.cpp
+	"registro.hpp"
+
+1257393024 source:/home/pablo/workspace/organizacion-de-datos/trunk/resultado_borrado_b_sharp.cpp
+	"resultado_borrado_b_sharp.hpp"
+
+1257393024 source:/home/pablo/workspace/organizacion-de-datos/trunk/resultado_insercion_b_sharp.cpp
+	"resultado_insercion_b_sharp.hpp"
+
+1257708355 source:/home/pablo/workspace/organizacion-de-datos/trunk/indice_b_sharp.cpp
+	"indice_b_sharp.hpp"
+	<typeinfo>
+
+1257000709 7
+
+1257455988 /home/connie/Documentos/Facultad/Datos/svn/trunk/resultado_insercion_b_sharp.hpp
+	"componente.hpp"
+
+1257007874 /home/connie/Documentos/Facultad/Datos/svn/trunk/resultado_borrado_b_sharp.hpp
+
+1257007874 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/resultado_borrado_b_sharp.cpp
+	"resultado_borrado_b_sharp.hpp"
+
+1257116268 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/resultado_insercion_b_sharp.cpp
+	"resultado_insercion_b_sharp.hpp"
+
+1257467464 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/EsquemaBloque.cpp
+	"EsquemaBloque.hpp"
+	<iostream>
+
+1257708724 /home/connie/Documentos/Facultad/Datos/svn/trunk/EsquemaBloque.hpp
+	<map>
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1257405716 source:/home/maria/Documentos/workspace/CampoStream.cpp
+	"CampoStream.hpp"
+	<string.h>
+
+1257709908 /home/maria/Documentos/workspace/CampoStream.hpp
+	<sstream>
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"tipo_campo.hpp"
+
+1257095311 /home/maria/Documentos/workspace/tipo_campo.hpp
+
+1257707150 source:/home/maria/Documentos/workspace/EstrategiaAlmacenamiento.cpp
+	"EstrategiaAlmacenamiento.hpp"
+
+1257709908 /home/maria/Documentos/workspace/EstrategiaAlmacenamiento.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"componente.hpp"
+	"string.h"
+	"almacenamiento.hpp"
+	"CampoStream.hpp"
+	"RegistroLongitudVariable.hpp"
+	"RegistroLongitudFija.hpp"
+	"campo.hpp"
+	"campo_entero.hpp"
+	"campo_booleano.hpp"
+	"campo_doble.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	"campo_cadena.hpp"
+
+1257405716 /home/maria/Documentos/workspace/componente.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1257709908 /home/maria/Documentos/workspace/almacenamiento.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"esquema.hpp"
+	"clave.hpp"
+	"EsquemaBloque.hpp"
+
+1257405716 /home/maria/Documentos/workspace/esquema.hpp
+	<map>
+	<string>
+	<algorithm>
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"tipo_campo.hpp"
+
+1257405716 /home/maria/Documentos/workspace/clave.hpp
+	<list>
+	<string>
+	<algorithm>
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1257709908 /home/maria/Documentos/workspace/RegistroLongitudVariable.hpp
+	"puntero_intrusivo.hpp"
+	"registro.hpp"
+	"campo.hpp"
+
+1257609462 /home/maria/Documentos/workspace/registro.hpp
+	<list>
+	<map>
+	<algorithm>
+	"puntero_intrusivo.hpp"
+	"componente.hpp"
+	"clave.hpp"
+	"campo.hpp"
+
+1257405716 /home/maria/Documentos/workspace/campo.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"tipo_campo.hpp"
+
+1257709908 /home/maria/Documentos/workspace/RegistroLongitudFija.hpp
+	"puntero_intrusivo.hpp"
+	"registro.hpp"
+
+1257405716 /home/maria/Documentos/workspace/campo_entero.hpp
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1257405716 /home/maria/Documentos/workspace/campo_booleano.hpp
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1257405716 /home/maria/Documentos/workspace/campo_doble.hpp
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1257405716 /home/maria/Documentos/workspace/campo_flotante.hpp
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1257405716 /home/maria/Documentos/workspace/campo_largo.hpp
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1257405716 /home/maria/Documentos/workspace/campo_cadena.hpp
+	<string>
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1257658139 source:/home/maria/Documentos/workspace/EstrategiaAlmacenamientoBSharp.cpp
+	"EstrategiaAlmacenamientoBSharp.hpp"
+	<iostream>
+
+1257405716 /home/maria/Documentos/workspace/EstrategiaAlmacenamientoBSharp.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"archivo.hpp"
+	"bloque_interno_b_sharp.hpp"
+	"bloque_externo_b_sharp.hpp"
+	"esquema.hpp"
+	"RegistroLongitudVariable.hpp"
+	"registro.hpp"
+	"campo_booleano.hpp"
+	"campo_cadena.hpp"
+	"campo_doble.hpp"
+	"campo_entero.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	<string>
+	<cstring>
+
+1257709908 /home/maria/Documentos/workspace/archivo.hpp
+	<string>
+	<fstream>
+	"puntero_intrusivo.hpp"
+	"clave.hpp"
+	"esquema.hpp"
+	"almacenamiento.hpp"
+
+1257701438 /home/maria/Documentos/workspace/bloque_interno_b_sharp.hpp
+	"puntero_intrusivo.hpp"
+	"bloque_b_sharp.hpp"
+
+1257701438 /home/maria/Documentos/workspace/bloque_b_sharp.hpp
+	"puntero_intrusivo.hpp"
+	"bloque.hpp"
+
+1257701438 /home/maria/Documentos/workspace/bloque.hpp
+	"puntero_intrusivo.hpp"
+	"componentecompuesto.hpp"
+	"registro.hpp"
+	<list>
+
+1257709908 /home/maria/Documentos/workspace/componentecompuesto.hpp
+	<vector>
+	<algorithm>
+	"puntero_intrusivo.hpp"
+	"componente.hpp"
+
+1257652914 /home/maria/Documentos/workspace/bloque_externo_b_sharp.hpp
+	"puntero_intrusivo.hpp"
+	"bloque_b_sharp.hpp"
+
+1257709908 source:/home/maria/Documentos/workspace/EstrategiaAlmacenamientoBloques.cpp
+	"EstrategiaAlmacenamientoBloques.hpp"
+	<iostream>
+
+1257709908 /home/maria/Documentos/workspace/EstrategiaAlmacenamientoBloques.hpp
+	"EstrategiaAlmacenamiento.hpp"
+	"bloque.hpp"
+	"clave.hpp"
+	"comparador_clave.hpp"
+	<list>
+
+1257124367 /home/maria/Documentos/workspace/hash_bucket.hpp
+	"CampoStream.hpp"
+	"clave.hpp"
+
+1257656375 source:/home/maria/Documentos/workspace/EstrategiaAlmacenamientoRegistros.cpp
+	"EstrategiaAlmacenamientoRegistros.hpp"
+	<iostream>
+
+1257709908 /home/maria/Documentos/workspace/EstrategiaAlmacenamientoRegistros.hpp
+	"EstrategiaAlmacenamiento.hpp"
+	"registro.hpp"
+	"almacenamiento.hpp"
+	<string.h>
+
+1257652914 source:/home/maria/Documentos/workspace/EstrategiaAlmacenamientoTexto.cpp
+	"EstrategiaAlmacenamientoTexto.hpp"
+	<iostream>
+
+1257709908 /home/maria/Documentos/workspace/EstrategiaAlmacenamientoTexto.hpp
+	"EstrategiaAlmacenamiento.hpp"
+	"bloque.hpp"
+	"registro.hpp"
+	<string>
+	"campo_cadena.hpp"
+
+1257405716 source:/home/maria/Documentos/workspace/RegistroLongitudFija.cpp
+	"RegistroLongitudFija.hpp"
+
+1257095311 source:/home/maria/Documentos/workspace/RegistroLongitudVariable.cpp
+	"RegistroLongitudVariable.hpp"
+
+1257632295 source:/home/maria/Documentos/workspace/almacenamiento.cpp
+	"almacenamiento.hpp"
+
+1257632295 source:/home/maria/Documentos/workspace/archivo.cpp
+	"archivo.hpp"
+	<string.h>
+
+1257701438 source:/home/maria/Documentos/workspace/bloque.cpp
+	"bloque.hpp"
+
+1257701438 source:/home/maria/Documentos/workspace/bloque_b_sharp.cpp
+	"bloque_b_sharp.hpp"
+	<iostream>
+
+1257652914 source:/home/maria/Documentos/workspace/bloque_externo_b_sharp.cpp
+	"bloque_externo_b_sharp.hpp"
+
+1257701438 source:/home/maria/Documentos/workspace/bloque_interno_b_sharp.cpp
+	"bloque_interno_b_sharp.hpp"
+
+1257661556 source:/home/maria/Documentos/workspace/buffer.cpp
+	"buffer.hpp"
+
+1257709908 /home/maria/Documentos/workspace/buffer.hpp
+	<map>
+	<cstring>
+	"puntero_intrusivo.hpp"
+	"almacenamiento.hpp"
+	<string.h>
+	"EsquemaBloque.hpp"
+
+1257095311 source:/home/maria/Documentos/workspace/campo.cpp
+	"campo.hpp"
+
+1257095311 source:/home/maria/Documentos/workspace/campo_booleano.cpp
+	"campo_booleano.hpp"
+
+1257095311 source:/home/maria/Documentos/workspace/campo_cadena.cpp
+	"campo_cadena.hpp"
+
+1257095311 source:/home/maria/Documentos/workspace/campo_doble.cpp
+	"campo_doble.hpp"
+
+1257095311 source:/home/maria/Documentos/workspace/campo_entero.cpp
+	"campo_entero.hpp"
+
+1257095311 source:/home/maria/Documentos/workspace/campo_flotante.cpp
+	"campo_flotante.hpp"
+
+1257095311 source:/home/maria/Documentos/workspace/campo_largo.cpp
+	"campo_largo.hpp"
+
+1257095311 source:/home/maria/Documentos/workspace/clave.cpp
+	"clave.hpp"
+
+1257095311 source:/home/maria/Documentos/workspace/comparador_clave.cpp
+	"comparador_clave.hpp"
+
+1257709908 /home/maria/Documentos/workspace/comparador_clave.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"clave.hpp"
+	"registro.hpp"
+
+1257405716 source:/home/maria/Documentos/workspace/componente.cpp
+	"componente.hpp"
+
+1257709908 source:/home/maria/Documentos/workspace/componentecompuesto.cpp
+	"componentecompuesto.hpp"
+
+1257095311 source:/home/maria/Documentos/workspace/esquema.cpp
+	"esquema.hpp"
+
+1257470966 source:/home/maria/Documentos/workspace/estrategia_indice.cpp
+	"estrategia_indice.hpp"
+
+1257405716 /home/maria/Documentos/workspace/estrategia_indice.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"esquema.hpp"
+	"registro.hpp"
+
+1257113832 source:/home/maria/Documentos/workspace/hash_bucket.cpp
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"hash_bucket.hpp"
+	"CampoStream.hpp"
+
+1257405716 source:/home/maria/Documentos/workspace/hash_directory.cpp
+	<math.h>
+	"hash_directory.hpp"
+
+1257405716 /home/maria/Documentos/workspace/hash_directory.hpp
+	"almacenamiento.hpp"
+	"hash_bucket.hpp"
+	"EstrategiaAlmacenamientoDirectoryHash.hpp"
+	"EstrategiaAlmacenamientoBucketHash.hpp"
+
+1257709545 source:/home/maria/Documentos/workspace/indice_b_sharp.cpp
+	"indice_b_sharp.hpp"
+	<typeinfo>
+
+1257709908 /home/maria/Documentos/workspace/indice_b_sharp.hpp
+	<iostream>
+	"puntero_intrusivo.hpp"
+	"estrategia_indice.hpp"
+	"archivo.hpp"
+	"EstrategiaAlmacenamientoBSharp.hpp"
+	"EstrategiaEspacioLibreBloque.hpp"
+	"esquema.hpp"
+	"clave.hpp"
+	"comparador_clave.hpp"
+	"registro.hpp"
+	"bloque_interno_b_sharp.hpp"
+	"bloque_externo_b_sharp.hpp"
+	"resultado_insercion.hpp"
+	"resultado_balanceo.hpp"
+
+1257405716 /home/maria/Documentos/workspace/resultado_insercion_b_sharp.hpp
+	"componente.hpp"
+
+1257095311 /home/maria/Documentos/workspace/resultado_borrado_b_sharp.hpp
+
+1257636704 source:/home/maria/Documentos/workspace/indice_hash.cpp
+	"indice_hash.hpp"
+	<math.h>
+	<string>
+	<cstring>
+	<iostream>
+	<sstream>
+	<stdlib.h>
+	<stdio.h>
+	"campo.hpp"
+	"campo_entero.hpp"
+	"campo_booleano.hpp"
+	"campo_doble.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	"campo_cadena.hpp"
+	"buffer.hpp"
+	"almacenamiento.hpp"
+	"RegistroLongitudVariable.hpp"
+	"CampoStream.hpp"
+
+1257517608 /home/maria/Documentos/workspace/indice_hash.hpp
+	"archivo.hpp"
+	"estrategia_indice.hpp"
+	"comparador_clave.hpp"
+	"bloque.hpp"
+	"hash_directory.hpp"
+	"hash_bucket.hpp"
+
+1257609462 source:/home/maria/Documentos/workspace/registro.cpp
+	"registro.hpp"
+
+1257095311 source:/home/maria/Documentos/workspace/resultado_borrado_b_sharp.cpp
+	"resultado_borrado_b_sharp.hpp"
+
+1257118227 source:/home/maria/Documentos/workspace/resultado_insercion_b_sharp.cpp
+	"resultado_insercion_b_sharp.hpp"
+
+1257118768 /home/maria/Documentos/workspace/resultado_division_b_sharp.hpp
+	"componente.hpp"
+
+1257095311 source:/home/maria/Documentos/workspace/FabricaDeRecursosDeAlmacenamiento.cpp
+	"FabricaDeRecursosDeAlmacenamiento.hpp"
+
+1257118227 /home/maria/Documentos/workspace/FabricaDeRecursosDeAlmacenamiento.hpp
+	"EstrategiaAlmacenamiento.hpp"
+	"almacenamiento.hpp"
+	"componentecompuesto.hpp"
+	"componente.hpp"
+
+1257704565 source:/home/maria/Documentos/workspace/RecursoDeAlmacenamiento.cpp
+	"RecursoDeAlmacenamiento.hpp"
+
+1257704517 /home/maria/Documentos/workspace/RecursoDeAlmacenamiento.hpp
+	<stdio.h>
+	<cstring>
+	<sstream>
+	<iostream>
+	"campo.hpp"
+	"campo_entero.hpp"
+	"campo_booleano.hpp"
+	"campo_doble.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	"campo_cadena.hpp"
+	"esquema.hpp"
+	"clave.hpp"
+	"archivo.hpp"
+	"buffer.hpp"
+	"registro.hpp"
+	"RegistroLongitudFija.hpp"
+	"EstrategiaEspacioLibreBloque.hpp"
+	"EstrategiaAlmacenamiento.hpp"
+	"estrategia_indice.hpp"
+	"indice_b_sharp.hpp"
+	"indice_hash.hpp"
+	"estrategia_indice.hpp"
+	"EsquemaBloque.hpp"
+	"EstrategiaAlmacenamientoBloques.hpp"
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"EstrategiaRecurso.hpp"
+
+1257118768 source:/home/maria/Documentos/workspace/resultado_division_b_sharp.cpp
+	"resultado_division_b_sharp.hpp"
+
+1257118768 _division_b_sharp.hpp"
+
+1257393024 /home/pablo/workspace/organizacion-de-datos/trunk/resultado_division_b_sharp.hpp
+
+1257279718 41
+	"componente.hpp"
+
+1257393024 source:/home/pablo/workspace/organizacion-de-datos/trunk/resultado_division_b_sharp.cpp
+	"resultado_division_b_sharp.hpp"
+
+1257111440 18
+
+1257116268 /home/connie/Documentos/Facultad/Datos/svn/trunk/resultado_division_b_sharp.hpp
+	"componente.hpp"
+
+1257116268 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/resultado_division_b_sharp.cpp
+	"resultado_division_b_sharp.hpp"
+
+1257116268 22
+
+1257709908 /home/maria/Documentos/workspace/EsquemaBloque.hpp
+	<map>
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1257405716 source:/home/maria/Documentos/workspace/EsquemaBloque.cpp
+
+1257642775 source:/home/pablo/workspace/organizacion-de-datos/trunk/EsquemaBloque.cpp
+	"EsquemaBloque.hpp"
+	<iostream>
+
+1257557278 81
+	"EsquemaBloque.hpp"
+	<iostream>
+	<map>
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1257121468 
+
+1257712494 /home/pablo/workspace/organizacion-de-datos/trunk/EsquemaBloque.hpp
+	<map>
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1257609462 /home/maria/Documentos/workspace/puntero_intrusivo.hpp
+	<typeinfo>
+	<cstddef>
+
+1257405716 /home/maria/Documentos/workspace/contador_referencias.hpp
+
+1257405716 source:/home/maria/Documentos/workspace/contador_referencias.cpp
+	"contador_referencias.hpp"
+
+1257405716 referencias.hpp"
+
+1257393715 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/contador_referencias.cpp
+	"contador_referencias.hpp"
+
+1257393715 /home/connie/Documentos/Facultad/Datos/svn/trunk/contador_referencias.hpp
+
+1257557287 /home/connie/Documentos/Facultad/Datos/svn/trunk/puntero_intrusivo.hpp
+	<typeinfo>
+	<cstddef>
+
+1257642775 /home/pablo/workspace/organizacion-de-datos/trunk/contador_referencias.hpp
+
+1257642775 /home/pablo/workspace/organizacion-de-datos/trunk/puntero_intrusivo.hpp
+	<typeinfo>
+	<cstddef>
+
+1257642775 source:/home/pablo/workspace/organizacion-de-datos/trunk/contador_referencias.cpp
+	"contador_referencias.hpp"
+
+1257393024 56
+
+1257609462 /home/maria/Documentos/workspace/resultado_insercion.hpp
+	"registro.hpp"
+
+1257609462 source:/home/maria/Documentos/workspace/resultado_insercion.cpp
+	"resultado_insercion.hpp"
+
+1260672742 _insercion.hpp"
+
+1259879050 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/RecursoDeAlmacenamiento.cpp
+	"RecursoDeAlmacenamiento.hpp"
+
+1259463520 /home/connie/Documentos/Facultad/Datos/svn/trunk/RecursoDeAlmacenamiento.hpp
+	<stdio.h>
+	<cstring>
+	<sstream>
+	<iostream>
+	"campo.hpp"
+	"campo_entero.hpp"
+	"campo_booleano.hpp"
+	"campo_doble.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	"campo_cadena.hpp"
+	"esquema.hpp"
+	"clave.hpp"
+	"archivo.hpp"
+	"buffer.hpp"
+	"registro.hpp"
+	"RegistroLongitudFija.hpp"
+	"EstrategiaEspacioLibreBloque.hpp"
+	"EstrategiaAlmacenamiento.hpp"
+	"estrategia_indice.hpp"
+	"indice_b_sharp.hpp"
+	"indice_hash.hpp"
+	"estrategia_indice.hpp"
+	"EsquemaBloque.hpp"
+	"EstrategiaAlmacenamientoBloques.hpp"
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"indice_secuencial.hpp"
+	"EstrategiaRecurso.hpp"
+
+1257623878 /home/connie/Documentos/Facultad/Datos/svn/trunk/resultado_insercion.hpp
+	"registro.hpp"
+
+1257623878 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/resultado_insercion.cpp
+	"resultado_insercion.hpp"
+
+1257712494 source:/home/pablo/workspace/organizacion-de-datos/trunk/RecursoDeAlmacenamiento.cpp
+	"RecursoDeAlmacenamiento.hpp"
+
+1257712494 /home/pablo/workspace/organizacion-de-datos/trunk/RecursoDeAlmacenamiento.hpp
+	<stdio.h>
+	<cstring>
+	<sstream>
+	<iostream>
+	"campo.hpp"
+	"campo_entero.hpp"
+	"campo_booleano.hpp"
+	"campo_doble.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	"campo_cadena.hpp"
+	"esquema.hpp"
+	"clave.hpp"
+	"archivo.hpp"
+	"buffer.hpp"
+	"registro.hpp"
+	"RegistroLongitudFija.hpp"
+	"EstrategiaEspacioLibreBloque.hpp"
+	"EstrategiaAlmacenamiento.hpp"
+	"estrategia_indice.hpp"
+	"indice_b_sharp.hpp"
+	"indice_hash.hpp"
+	"estrategia_indice.hpp"
+	"EsquemaBloque.hpp"
+	"EstrategiaAlmacenamientoBloques.hpp"
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"EstrategiaRecurso.hpp"
+
+1257671755 /home/pablo/workspace/organizacion-de-datos/trunk/resultado_insercion.hpp
+	"registro.hpp"
+
+1257642775 source:/home/pablo/workspace/organizacion-de-datos/trunk/resultado_insercion.cpp
+	"resultado_insercion.hpp"
+
+1257557278 80
+
+1257557278 82
+
+1257708839 /home/connie/Documentos/Facultad/Datos/svn/trunk/resultado_balanceo.hpp
+	"registro.hpp"
+
+1257708839 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/resultado_balanceo.cpp
+	"resultado_balanceo.hpp"
+
+1257697881 _balanceo.hpp"
+
+1257705703 /home/pablo/workspace/organizacion-de-datos/trunk/resultado_balanceo.hpp
+	"registro.hpp"
+
+1257705673 source:/home/pablo/workspace/organizacion-de-datos/trunk/resultado_balanceo.cpp
+	"resultado_balanceo.hpp"
+
+1257705673 03
+
+1256596941 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/FabricaDeRecursosDeAlmacenamiento.cpp
+	"FabricaDeRecursosDeAlmacenamiento.hpp"
+
+1257116268 /home/connie/Documentos/Facultad/Datos/svn/trunk/FabricaDeRecursosDeAlmacenamiento.hpp
+	"EstrategiaAlmacenamiento.hpp"
+	"almacenamiento.hpp"
+	"componentecompuesto.hpp"
+	"componente.hpp"
+
+1257116268 e.hpp"
+
+1257709908 /home/maria/Documentos/workspace/resultado_balanceo.hpp
+	"registro.hpp"
+
+1257709908 source:/home/maria/Documentos/workspace/resultado_balanceo.cpp
+	"resultado_balanceo.hpp"
+
+1257709908 07
+
+1257642775 source:/home/pablo/workspace/organizacion-de-datos/trunk/FabricaDeRecursosDeAlmacenamiento.cpp
+	"FabricaDeRecursosDeAlmacenamiento.hpp"
+
+1257642775 /home/pablo/workspace/organizacion-de-datos/trunk/FabricaDeRecursosDeAlmacenamiento.hpp
+	"EstrategiaAlmacenamiento.hpp"
+	"almacenamiento.hpp"
+	"componentecompuesto.hpp"
+	"componente.hpp"
+
+1260135728 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/indice_secuencial.cpp
+	"indice_secuencial.hpp"
+
+1260127996 /home/connie/Documentos/Facultad/Datos/svn/trunk/indice_secuencial.hpp
+	"comparador_clave.hpp"
+	"almacenamiento.hpp"
+	"registro.hpp"
+	"archivo.hpp"
+	"buffer.hpp"
+	"RegistroLongitudVariable.hpp"
+	"RegistroLongitudFija.hpp"
+	"CampoStream.hpp"
+	"campo.hpp"
+	"campo_entero.hpp"
+	"campo_booleano.hpp"
+	"campo_doble.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	"campo_cadena.hpp"
+	"EstrategiaAlmacenamientoTexto.hpp"
+	"EstrategiaAlmacenamientoRegistros.hpp"
+	"EstrategiaAlmacenamientoBloques.hpp"
+	"EstrategiaAlmacenamientoCompuestoComprimido.hpp"
+
+1258774724 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/ArithmeticCoderC.cpp
+	"ArithmeticCoderC.h"
+	"Tools.h"
+
+1006892742 /home/connie/Documentos/Facultad/Datos/svn/trunk/ArithmeticCoderC.h
+	<fstream>
+
+1005857422 /home/connie/Documentos/Facultad/Datos/svn/trunk/Tools.h
+
+1259529936 source:/home/maria/Documentos/tp1/trunk/CampoStream.cpp
+	"CampoStream.hpp"
+	<string.h>
+
+1257712494 /home/maria/Documentos/tp1/trunk/CampoStream.hpp
+	<sstream>
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"tipo_campo.hpp"
+
+1257642775 /home/maria/Documentos/tp1/trunk/contador_referencias.hpp
+
+1257642775 /home/maria/Documentos/tp1/trunk/puntero_intrusivo.hpp
+	<typeinfo>
+	<cstddef>
+
+1259515210 /home/maria/Documentos/tp1/trunk/tipo_campo.hpp
+
+1257642775 source:/home/maria/Documentos/tp1/trunk/EsquemaBloque.cpp
+	"EsquemaBloque.hpp"
+	<iostream>
+
+1257712494 /home/maria/Documentos/tp1/trunk/EsquemaBloque.hpp
+	<map>
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1257691446 source:/home/maria/Documentos/tp1/trunk/EstrategiaAlmacenamiento.cpp
+	"EstrategiaAlmacenamiento.hpp"
+
+1257712494 /home/maria/Documentos/tp1/trunk/EstrategiaAlmacenamiento.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"componente.hpp"
+	"string.h"
+	"almacenamiento.hpp"
+	"CampoStream.hpp"
+	"RegistroLongitudVariable.hpp"
+	"RegistroLongitudFija.hpp"
+	"campo.hpp"
+	"campo_entero.hpp"
+	"campo_booleano.hpp"
+	"campo_doble.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	"campo_cadena.hpp"
+
+1257642775 /home/maria/Documentos/tp1/trunk/componente.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1259519226 /home/maria/Documentos/tp1/trunk/almacenamiento.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"esquema.hpp"
+	"clave.hpp"
+	"EsquemaBloque.hpp"
+	"tipo_almacenamiento.hpp"
+
+1257642775 /home/maria/Documentos/tp1/trunk/esquema.hpp
+	<map>
+	<string>
+	<algorithm>
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"tipo_campo.hpp"
+
+1257642775 /home/maria/Documentos/tp1/trunk/clave.hpp
+	<list>
+	<string>
+	<algorithm>
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1257712494 /home/maria/Documentos/tp1/trunk/RegistroLongitudVariable.hpp
+	"puntero_intrusivo.hpp"
+	"registro.hpp"
+	"campo.hpp"
+
+1257642775 /home/maria/Documentos/tp1/trunk/registro.hpp
+	<list>
+	<map>
+	<algorithm>
+	"puntero_intrusivo.hpp"
+	"componente.hpp"
+	"clave.hpp"
+	"campo.hpp"
+
+1257642775 /home/maria/Documentos/tp1/trunk/campo.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"tipo_campo.hpp"
+
+1257712494 /home/maria/Documentos/tp1/trunk/RegistroLongitudFija.hpp
+	"puntero_intrusivo.hpp"
+	"registro.hpp"
+
+1257642775 /home/maria/Documentos/tp1/trunk/campo_entero.hpp
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1257642775 /home/maria/Documentos/tp1/trunk/campo_booleano.hpp
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1257642775 /home/maria/Documentos/tp1/trunk/campo_doble.hpp
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1257642775 /home/maria/Documentos/tp1/trunk/campo_flotante.hpp
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1257642775 /home/maria/Documentos/tp1/trunk/campo_largo.hpp
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1257642775 /home/maria/Documentos/tp1/trunk/campo_cadena.hpp
+	<string>
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1260108987 source:/home/maria/Documentos/tp1/trunk/EstrategiaAlmacenamientoBloques.cpp
+	"EstrategiaAlmacenamientoBloques.hpp"
+	"archivo.hpp"
+	<iostream>
+
+1260108976 /home/maria/Documentos/tp1/trunk/EstrategiaAlmacenamientoBloques.hpp
+	"EstrategiaAlmacenamiento.hpp"
+	"bloque.hpp"
+	"clave.hpp"
+	"comparador_clave.hpp"
+	<list>
+
+1260046614 /home/maria/Documentos/tp1/trunk/bloque.hpp
+	"puntero_intrusivo.hpp"
+	"componentecompuesto.hpp"
+	"registro.hpp"
+	<list>
+
+1257722992 /home/maria/Documentos/tp1/trunk/componentecompuesto.hpp
+	<vector>
+	<algorithm>
+	"puntero_intrusivo.hpp"
+	"componente.hpp"
+
+1257712494 /home/maria/Documentos/tp1/trunk/comparador_clave.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"clave.hpp"
+	"registro.hpp"
+
+1259800567 source:/home/maria/Documentos/tp1/trunk/EstrategiaAlmacenamientoBucketHash.cpp
+	"EstrategiaAlmacenamientoBucketHash.hpp"
+	"CampoStream.hpp"
+	<string.h>
+
+1257642775 /home/maria/Documentos/tp1/trunk/EstrategiaAlmacenamientoBucketHash.hpp
+	"almacenamiento.hpp"
+	"hash_bucket.hpp"
+
+1259800503 /home/maria/Documentos/tp1/trunk/hash_bucket.hpp
+	"CampoStream.hpp"
+	"clave.hpp"
+
+1257642775 source:/home/maria/Documentos/tp1/trunk/EstrategiaAlmacenamientoDirectoryHash.cpp
+	"EstrategiaAlmacenamientoDirectoryHash.hpp"
+	"CampoStream.hpp"
+	<string.h>
+
+1257642775 /home/maria/Documentos/tp1/trunk/EstrategiaAlmacenamientoDirectoryHash.hpp
+	"almacenamiento.hpp"
+	<stdlib.h>
+	<stdio.h>
+
+1259515210 source:/home/maria/Documentos/tp1/trunk/EstrategiaAlmacenamientoEspacioLibre.cpp
+	"EstrategiaAlmacenamientoEspacioLibre.hpp"
+
+1257642775 /home/maria/Documentos/tp1/trunk/EstrategiaAlmacenamientoEspacioLibre.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"archivo.hpp"
+
+1259515210 /home/maria/Documentos/tp1/trunk/archivo.hpp
+	<string>
+	<fstream>
+	"puntero_intrusivo.hpp"
+	"clave.hpp"
+	"esquema.hpp"
+	"almacenamiento.hpp"
+
+1260088348 source:/home/maria/Documentos/tp1/trunk/EstrategiaAlmacenamientoRegistros.cpp
+	"EstrategiaAlmacenamientoRegistros.hpp"
+	"archivo.hpp"
+	<iostream>
+
+1257712494 /home/maria/Documentos/tp1/trunk/EstrategiaAlmacenamientoRegistros.hpp
+	"EstrategiaAlmacenamiento.hpp"
+	"registro.hpp"
+	"almacenamiento.hpp"
+	<string.h>
+
+1259819541 source:/home/maria/Documentos/tp1/trunk/EstrategiaAlmacenamientoTexto.cpp
+	"EstrategiaAlmacenamientoTexto.hpp"
+	<iostream>
+
+1257712494 /home/maria/Documentos/tp1/trunk/EstrategiaAlmacenamientoTexto.hpp
+	"EstrategiaAlmacenamiento.hpp"
+	"bloque.hpp"
+	"registro.hpp"
+	<string>
+	"campo_cadena.hpp"
+
+1257642775 source:/home/maria/Documentos/tp1/trunk/EstrategiaEspacioLibreBloque.cpp
+	"EstrategiaEspacioLibreBloque.hpp"
+
+1257642775 /home/maria/Documentos/tp1/trunk/EstrategiaEspacioLibreBloque.hpp
+	"puntero_intrusivo.hpp"
+	"EstrategiaAlmacenamientoEspacioLibre.hpp"
+
+1257642775 source:/home/maria/Documentos/tp1/trunk/EstrategiaRecurso.cpp
+	"EstrategiaRecurso.hpp"
+
+1260365520 /home/maria/Documentos/tp1/trunk/EstrategiaRecurso.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"registro.hpp"
+	"EstrategiaAlmacenamiento.hpp"
+	"almacenamiento.hpp"
+	"indice_secuencial.hpp"
+
+1260366722 source:/home/maria/Documentos/tp1/trunk/EstrategiaRecursoEscrituraDirecta.cpp
+	"archivo.hpp"
+	"EstrategiaAlmacenamientoBloques.hpp"
+	"EstrategiaAlmacenamientoCompuestoComprimido.hpp"
+	"EstrategiaRecursoEscrituraDirecta.hpp"
+	"indice_secuencial.hpp"
+
+1260365464 /home/maria/Documentos/tp1/trunk/EstrategiaRecursoEscrituraDirecta.hpp
+	"EstrategiaRecurso.hpp"
+
+1260365355 source:/home/maria/Documentos/tp1/trunk/EstrategiaRecursoUnAlmacenamiento.cpp
+	"archivo.hpp"
+	"EstrategiaAlmacenamientoBloques.hpp"
+	"EstrategiaRecursoUnAlmacenamiento.hpp"
+
+1260365365 /home/maria/Documentos/tp1/trunk/EstrategiaRecursoUnAlmacenamiento.hpp
+	"EstrategiaRecurso.hpp"
+
+1257642775 source:/home/maria/Documentos/tp1/trunk/FabricaDeRecursosDeAlmacenamiento.cpp
+	"FabricaDeRecursosDeAlmacenamiento.hpp"
+
+1257642775 /home/maria/Documentos/tp1/trunk/FabricaDeRecursosDeAlmacenamiento.hpp
+	"EstrategiaAlmacenamiento.hpp"
+	"almacenamiento.hpp"
+	"componentecompuesto.hpp"
+	"componente.hpp"
+
+1257642775 source:/home/maria/Documentos/tp1/trunk/RegistroLongitudFija.cpp
+	"RegistroLongitudFija.hpp"
+
+1257642775 source:/home/maria/Documentos/tp1/trunk/RegistroLongitudVariable.cpp
+	"RegistroLongitudVariable.hpp"
+
+1260046614 source:/home/maria/Documentos/tp1/trunk/bloque.cpp
+	"bloque.hpp"
+
+1260046614 source:/home/maria/Documentos/tp1/trunk/bloque_b_sharp.cpp
+	"bloque_b_sharp.hpp"
+	<iostream>
+
+1260046614 /home/maria/Documentos/tp1/trunk/bloque_b_sharp.hpp
+	"puntero_intrusivo.hpp"
+	"bloque.hpp"
+
+1257643440 source:/home/maria/Documentos/tp1/trunk/bloque_externo_b_sharp.cpp
+	"bloque_externo_b_sharp.hpp"
+
+1257643448 /home/maria/Documentos/tp1/trunk/bloque_externo_b_sharp.hpp
+	"puntero_intrusivo.hpp"
+	"bloque_b_sharp.hpp"
+
+1260046614 source:/home/maria/Documentos/tp1/trunk/bloque_interno_b_sharp.cpp
+	"bloque_interno_b_sharp.hpp"
+
+1260046614 /home/maria/Documentos/tp1/trunk/bloque_interno_b_sharp.hpp
+	"puntero_intrusivo.hpp"
+	"bloque_b_sharp.hpp"
+
+1257642775 source:/home/maria/Documentos/tp1/trunk/campo.cpp
+	"campo.hpp"
+
+1257642775 source:/home/maria/Documentos/tp1/trunk/campo_booleano.cpp
+	"campo_booleano.hpp"
+
+1257642775 source:/home/maria/Documentos/tp1/trunk/campo_cadena.cpp
+	"campo_cadena.hpp"
+
+1257642775 source:/home/maria/Documentos/tp1/trunk/campo_doble.cpp
+	"campo_doble.hpp"
+
+1259536144 source:/home/maria/Documentos/tp1/trunk/campo_entero.cpp
+	"campo_entero.hpp"
+
+1257642775 source:/home/maria/Documentos/tp1/trunk/campo_flotante.cpp
+	"campo_flotante.hpp"
+
+1257642775 source:/home/maria/Documentos/tp1/trunk/clave.cpp
+	"clave.hpp"
+
+1257642775 source:/home/maria/Documentos/tp1/trunk/comparador_clave.cpp
+	"comparador_clave.hpp"
+
+1257642775 source:/home/maria/Documentos/tp1/trunk/componente.cpp
+	"componente.hpp"
+
+1257723021 source:/home/maria/Documentos/tp1/trunk/componentecompuesto.cpp
+	"componentecompuesto.hpp"
+
+1257642775 source:/home/maria/Documentos/tp1/trunk/contador_referencias.cpp
+	"contador_referencias.hpp"
+
+1257642775 source:/home/maria/Documentos/tp1/trunk/esquema.cpp
+	"esquema.hpp"
+
+1258951259 source:/home/maria/Documentos/tp1/trunk/estrategia_indice.cpp
+	"estrategia_indice.hpp"
+
+1258951294 /home/maria/Documentos/tp1/trunk/estrategia_indice.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"esquema.hpp"
+	"registro.hpp"
+
+1257642775 source:/home/maria/Documentos/tp1/trunk/hash_bucket.cpp
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"hash_bucket.hpp"
+	"CampoStream.hpp"
+
+1257642775 source:/home/maria/Documentos/tp1/trunk/hash_directory.cpp
+	<math.h>
+	"hash_directory.hpp"
+
+1257642775 /home/maria/Documentos/tp1/trunk/hash_directory.hpp
+	"almacenamiento.hpp"
+	"hash_bucket.hpp"
+	"EstrategiaAlmacenamientoDirectoryHash.hpp"
+	"EstrategiaAlmacenamientoBucketHash.hpp"
+
+1259515210 source:/home/maria/Documentos/tp1/trunk/indice_hash.cpp
+	"indice_hash.hpp"
+	<math.h>
+	<string>
+	<cstring>
+	<iostream>
+	<sstream>
+	<stdlib.h>
+	<stdio.h>
+	"campo.hpp"
+	"campo_entero.hpp"
+	"campo_booleano.hpp"
+	"campo_doble.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	"campo_cadena.hpp"
+	"buffer.hpp"
+	"almacenamiento.hpp"
+	"RegistroLongitudVariable.hpp"
+	"CampoStream.hpp"
+
+1259992450 /home/maria/Documentos/tp1/trunk/indice_hash.hpp
+	"archivo.hpp"
+	"estrategia_indice.hpp"
+	"comparador_clave.hpp"
+	"bloque.hpp"
+	"hash_directory.hpp"
+	"hash_bucket.hpp"
+
+1259515210 /home/maria/Documentos/tp1/trunk/buffer.hpp
+	<map>
+	<cstring>
+	"puntero_intrusivo.hpp"
+	"almacenamiento.hpp"
+	<string.h>
+	"EsquemaBloque.hpp"
+
+1257642775 source:/home/maria/Documentos/tp1/trunk/registro.cpp
+	"registro.hpp"
+
+1257705673 source:/home/maria/Documentos/tp1/trunk/resultado_balanceo.cpp
+	"resultado_balanceo.hpp"
+
+1257705703 /home/maria/Documentos/tp1/trunk/resultado_balanceo.hpp
+	"registro.hpp"
+
+1257642775 source:/home/maria/Documentos/tp1/trunk/resultado_insercion.cpp
+	"resultado_insercion.hpp"
+
+1257671755 /home/maria/Documentos/tp1/trunk/resultado_insercion.hpp
+	"registro.hpp"
+
+1259550261 source:/home/maria/Documentos/tp1/trunk/EstrategiaAlmacenamientoBSharp.cpp
+	"EstrategiaAlmacenamientoBSharp.hpp"
+
+1257642775 /home/maria/Documentos/tp1/trunk/EstrategiaAlmacenamientoBSharp.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"archivo.hpp"
+	"bloque_interno_b_sharp.hpp"
+	"bloque_externo_b_sharp.hpp"
+	"esquema.hpp"
+	"RegistroLongitudVariable.hpp"
+	"registro.hpp"
+	"campo_booleano.hpp"
+	"campo_cadena.hpp"
+	"campo_doble.hpp"
+	"campo_entero.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	<string>
+	<cstring>
+
+1260365669 source:/home/maria/Documentos/tp1/trunk/EstrategiaRecursoEscrituraDiferida.cpp
+	"archivo.hpp"
+	"EstrategiaRecursoEscrituraDiferida.hpp"
+	"indice_secuencial.hpp"
+	"EstrategiaAlmacenamientoBloques.hpp"
+
+1260365440 /home/maria/Documentos/tp1/trunk/EstrategiaRecursoEscrituraDiferida.hpp
+	"EstrategiaAlmacenamientoCompuestoComprimido.hpp"
+	"EstrategiaRecurso.hpp"
+
+1260365955 source:/home/maria/Documentos/tp1/trunk/RecursoDeAlmacenamiento.cpp
+	"RecursoDeAlmacenamiento.hpp"
+
+1259515210 /home/maria/Documentos/tp1/trunk/RecursoDeAlmacenamiento.hpp
+	<stdio.h>
+	<cstring>
+	<sstream>
+	<iostream>
+	"campo.hpp"
+	"campo_entero.hpp"
+	"campo_booleano.hpp"
+	"campo_doble.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	"campo_cadena.hpp"
+	"esquema.hpp"
+	"clave.hpp"
+	"archivo.hpp"
+	"buffer.hpp"
+	"registro.hpp"
+	"RegistroLongitudFija.hpp"
+	"EstrategiaEspacioLibreBloque.hpp"
+	"EstrategiaAlmacenamiento.hpp"
+	"estrategia_indice.hpp"
+	"indice_b_sharp.hpp"
+	"indice_hash.hpp"
+	"estrategia_indice.hpp"
+	"EsquemaBloque.hpp"
+	"EstrategiaAlmacenamientoBloques.hpp"
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"indice_secuencial.hpp"
+	"EstrategiaRecurso.hpp"
+
+1260046614 /home/maria/Documentos/tp1/trunk/indice_b_sharp.hpp
+	<iostream>
+	"puntero_intrusivo.hpp"
+	"estrategia_indice.hpp"
+	"archivo.hpp"
+	"EstrategiaAlmacenamientoBSharp.hpp"
+	"EstrategiaEspacioLibreBloque.hpp"
+	"esquema.hpp"
+	"clave.hpp"
+	"comparador_clave.hpp"
+	"registro.hpp"
+	"bloque_interno_b_sharp.hpp"
+	"bloque_externo_b_sharp.hpp"
+	"resultado_insercion.hpp"
+	"resultado_balanceo.hpp"
+
+1260126718 /home/maria/Documentos/tp1/trunk/indice_secuencial.hpp
+	"comparador_clave.hpp"
+	"almacenamiento.hpp"
+	"registro.hpp"
+	"archivo.hpp"
+	"buffer.hpp"
+	"RegistroLongitudVariable.hpp"
+	"RegistroLongitudFija.hpp"
+	"CampoStream.hpp"
+	"campo.hpp"
+	"campo_entero.hpp"
+	"campo_booleano.hpp"
+	"campo_doble.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	"campo_cadena.hpp"
+	"EstrategiaAlmacenamientoTexto.hpp"
+	"EstrategiaAlmacenamientoRegistros.hpp"
+	"EstrategiaAlmacenamientoBloques.hpp"
+	"EstrategiaAlmacenamientoCompuestoComprimido.hpp"
+
+1259515210 source:/home/maria/Documentos/tp1/trunk/almacenamiento.cpp
+	"almacenamiento.hpp"
+
+1259798146 source:/home/maria/Documentos/tp1/trunk/archivo.cpp
+	"archivo.hpp"
+	<string.h>
+
+1259515210 source:/home/maria/Documentos/tp1/trunk/buffer.cpp
+	"buffer.hpp"
+
+1257728254 source:/home/maria/Documentos/tp1/trunk/campo_largo.cpp
+	"campo_largo.hpp"
+
+1260046614 source:/home/maria/Documentos/tp1/trunk/indice_b_sharp.cpp
+	"indice_b_sharp.hpp"
+	<typeinfo>
+
+1260141545 source:/home/maria/Documentos/tp1/trunk/indice_secuencial.cpp
+	"indice_secuencial.hpp"
+
+1260366100 source:/home/maria/Documentos/tp1/trunk/main.cpp
+	<stdio.h>
+	<cstring>
+	<sstream>
+	<iostream>
+	"campo.hpp"
+	"campo_entero.hpp"
+	"campo_booleano.hpp"
+	"campo_doble.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	"campo_cadena.hpp"
+	"esquema.hpp"
+	"clave.hpp"
+	"archivo.hpp"
+	"buffer.hpp"
+	"registro.hpp"
+	"RegistroLongitudFija.hpp"
+	"EstrategiaEspacioLibreBloque.hpp"
+	"EstrategiaAlmacenamientoRegistros.hpp"
+	"EstrategiaAlmacenamientoBSharp.hpp"
+	"EstrategiaAlmacenamientoTexto.hpp"
+	"estrategia_indice.hpp"
+	"indice_b_sharp.hpp"
+	"indice_hash.hpp"
+	"estrategia_indice.hpp"
+	"EsquemaBloque.hpp"
+	"EstrategiaAlmacenamientoBloques.hpp"
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	<cstdlib>
+	<ctime>
+	"indice_secuencial.hpp"
+	"RecursoDeAlmacenamiento.hpp"
+	"EstrategiaRecurso.hpp"
+	"EstrategiaRecursoEscrituraDirecta.hpp"
+	"EstrategiaRecursoEscrituraDiferida.hpp"
+	"EstrategiaRecursoUnAlmacenamiento.hpp"
+	"EstrategiaAlmacenamientoCompuestoComprimido.hpp"
+	"CompresorAritmetico.hpp"
+	"BloqueCompresor.hpp"
+	"EstrategiaAlmacenamientoCompuestoComprimido.hpp"
+
+1258957445 27
+
+1260058495 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/CompresorAritmetico.cpp
+	"CompresorAritmetico.hpp"
+
+1260079030 /home/connie/Documentos/Facultad/Datos/svn/trunk/CompresorAritmetico.hpp
+	<string>
+	"BitStream.hpp"
+	"TablaCompresor.hpp"
+	"math.h"
+	"CompresorAritmeticoHelper.hpp"
+	"TablaCompresor.hpp"
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1260127996 /home/connie/Documentos/Facultad/Datos/svn/trunk/tipo_almacenamiento.hpp
+
+1259554511 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/Intervalo.cpp
+	"Intervalo.hpp"
+
+1259554505 /home/connie/Documentos/Facultad/Datos/svn/trunk/Intervalo.hpp
+	"puntero_intrusivo.hpp"
+	"contador_referencias.hpp"
+	<sstream>
+
+1259816823 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/TablaIntervalos.cpp
+	"TablaIntervalos.hpp"
+
+1259548088 /home/connie/Documentos/Facultad/Datos/svn/trunk/TablaIntervalos.hpp
+	"Intervalo.hpp"
+	"puntero_intrusivo.hpp"
+	"contador_referencias.hpp"
+	<vector>
+
+1259879050 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/StreamSimbolos.cpp
+	"StreamSimbolos.hpp"
+
+1259879050 /home/connie/Documentos/Facultad/Datos/svn/trunk/StreamSimbolos.hpp
+	"puntero_intrusivo.hpp"
+	"contador_referencias.hpp"
+	"CampoStream.hpp"
+	<stdlib.h>
+
+1260055805 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/CompresorAritmeticoHelper.cpp
+	"CompresorAritmeticoHelper.hpp"
+
+1260079167 /home/connie/Documentos/Facultad/Datos/svn/trunk/CompresorAritmeticoHelper.hpp
+	<string>
+	<sstream>
+	<iomanip>
+
+1260058495 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/BitStream.cpp
+	"BitStream.hpp"
+
+1260078717 /home/connie/Documentos/Facultad/Datos/svn/trunk/BitStream.hpp
+	<string>
+	"math.h"
+	"CompresorAritmeticoHelper.hpp"
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1259792956 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/AritmeticoHelper.cpp
+	"AritmeticoHelper.hpp"
+
+1259639875 /home/connie/Documentos/Facultad/Datos/svn/trunk/AritmeticoHelper.hpp
+	"puntero_intrusivo.hpp"
+	"contador_referencias.hpp"
+	"Intervalo.hpp"
+	"TablaIntervalos.hpp"
+	<limits.h>
+
+1259643466 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/DescompresorAritmeticoHelper.cpp
+	"DescompresorAritmeticoHelper.hpp"
+
+1259643049 /home/connie/Documentos/Facultad/Datos/svn/trunk/DescompresorAritmeticoHelper.hpp
+	"puntero_intrusivo.hpp"
+	"contador_referencias.hpp"
+	"TablaIntervalos.hpp"
+	"AritmeticoHelper.hpp"
+	"BitStream.hpp"
+
+1260115689 /home/maria/Documentos/tp1/trunk/tipo_almacenamiento.hpp
+
+1259550261 source:/home/maria/Documentos/tp1/trunk/Intervalo.cpp
+	"Intervalo.hpp"
+
+1259550261 /home/maria/Documentos/tp1/trunk/Intervalo.hpp
+	"puntero_intrusivo.hpp"
+	"contador_referencias.hpp"
+	<sstream>
+
+1259550261 source:/home/maria/Documentos/tp1/trunk/TablaIntervalos.cpp
+	"TablaIntervalos.hpp"
+
+1259550261 /home/maria/Documentos/tp1/trunk/TablaIntervalos.hpp
+	"Intervalo.hpp"
+	"puntero_intrusivo.hpp"
+	"contador_referencias.hpp"
+	<vector>
+
+1259866758 source:/home/maria/Documentos/tp1/trunk/AritmeticoHelper.cpp
+	"AritmeticoHelper.hpp"
+
+1259645567 /home/maria/Documentos/tp1/trunk/AritmeticoHelper.hpp
+	"puntero_intrusivo.hpp"
+	"contador_referencias.hpp"
+	"Intervalo.hpp"
+	"TablaIntervalos.hpp"
+	<limits.h>
+
+1260064442 source:/home/maria/Documentos/tp1/trunk/BitStream.cpp
+	"BitStream.hpp"
+
+1260088689 /home/maria/Documentos/tp1/trunk/BitStream.hpp
+	<string>
+	"math.h"
+	"CompresorAritmeticoHelper.hpp"
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1260064442 source:/home/maria/Documentos/tp1/trunk/CompresorAritmetico.cpp
+	"CompresorAritmetico.hpp"
+
+1260088689 /home/maria/Documentos/tp1/trunk/CompresorAritmetico.hpp
+	<string>
+	"BitStream.hpp"
+	"TablaCompresor.hpp"
+	"math.h"
+	"CompresorAritmeticoHelper.hpp"
+	"TablaCompresor.hpp"
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1259865960 /home/maria/Documentos/tp1/trunk/StreamSimbolos.hpp
+	"puntero_intrusivo.hpp"
+	"contador_referencias.hpp"
+	"CampoStream.hpp"
+	<stdlib.h>
+
+1260088689 /home/maria/Documentos/tp1/trunk/CompresorAritmeticoHelper.hpp
+	<string>
+	<sstream>
+	<iomanip>
+
+1259645567 /home/maria/Documentos/tp1/trunk/DescompresorAritmeticoHelper.hpp
+	"puntero_intrusivo.hpp"
+	"contador_referencias.hpp"
+	"TablaIntervalos.hpp"
+	"AritmeticoHelper.hpp"
+	"BitStream.hpp"
+
+1260064442 source:/home/maria/Documentos/tp1/trunk/CompresorAritmeticoHelper.cpp
+	"CompresorAritmeticoHelper.hpp"
+
+1259645567 source:/home/maria/Documentos/tp1/trunk/DescompresorAritmeticoHelper.cpp
+	"DescompresorAritmeticoHelper.hpp"
+
+1259866208 source:/home/maria/Documentos/tp1/trunk/StreamSimbolos.cpp
+	"StreamSimbolos.hpp"
+
+1260127996 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/EstrategiaAlmacenamientoCompuestoComprimido.cpp
+	"EstrategiaAlmacenamientoCompuestoComprimido.hpp"
+
+1260127996 /home/connie/Documentos/Facultad/Datos/svn/trunk/EstrategiaAlmacenamientoCompuestoComprimido.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"BloqueCompresor.hpp"
+	"EstrategiaAlmacenamiento.hpp"
+	"bloque.hpp"
+	"clave.hpp"
+	"comparador_clave.hpp"
+	"archivo.hpp"
+
+1259984644 /home/connie/Documentos/Facultad/Datos/svn/trunk/FrecuencyTable.hpp
+	"SymbolContext.hpp"
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1260079532 /home/connie/Documentos/Facultad/Datos/svn/trunk/SymbolContext.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1259984651 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/FrecuencyTable.cpp
+	"FrecuencyTable.hpp"
+
+1259984766 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/SymbolContext.cpp
+	"SymbolContext.hpp"
+	<cstdlib>
+
+1260046297 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/ComponenteComprimido.cpp
+	"ComponenteComprimido.hpp"
+
+1259879050 /home/connie/Documentos/Facultad/Datos/svn/trunk/ComponenteComprimido.hpp
+	"componentecompuesto.hpp"
+	"esquema.hpp"
+	"registro.hpp"
+	"CompresorAritmetico.hpp"
+	<cstdlib>
+	<cstring>
+
+1260088689 /home/maria/Documentos/tp1/trunk/TablaCompresor.hpp
+	"SymbolContext.hpp"
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1260088689 /home/maria/Documentos/tp1/trunk/SymbolContext.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1260109003 source:/home/maria/Documentos/tp1/trunk/EstrategiaAlmacenamientoCompuestoComprimido.cpp
+	"EstrategiaAlmacenamientoCompuestoComprimido.hpp"
+
+1260109023 /home/maria/Documentos/tp1/trunk/EstrategiaAlmacenamientoCompuestoComprimido.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"BloqueCompresor.hpp"
+	"EstrategiaAlmacenamiento.hpp"
+	"bloque.hpp"
+	"clave.hpp"
+	"comparador_clave.hpp"
+	"archivo.hpp"
+
+1259987586 source:/home/maria/Documentos/tp1/trunk/SymbolContext.cpp
+	"SymbolContext.hpp"
+	<cstdlib>
+
+1259990940 source:/home/maria/Documentos/tp1/trunk/TablaCompresor.cpp
+	"TablaCompresor.hpp"
+
+1260079702 /home/connie/Documentos/Facultad/Datos/svn/trunk/TablaCompresor.hpp
+	"SymbolContext.hpp"
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1259991393 ntrusivo.hpp"
+
+1260361136 source:/home/maria/Documentos/tp1/trunk/BloqueCompresor.cpp
+	"BloqueCompresor.hpp"
+	"esquema.hpp"
+	<iostream>
+
+1260026674 Aritmetico.hpp"
+
+1259866758 63
+	"BloqueCompresor.hpp"
+	"esquema.hpp"
+	<iostream>
+
+1260051898 /home/maria/Documentos/tp1/trunk/BloqueCompresor.hpp
+	"bloque.hpp"
+	"registro.hpp"
+	"RegistroLongitudVariable.hpp"
+	"esquema.hpp"
+	"CompresorAritmetico.hpp"
+	"campo_booleano.hpp"
+	"campo_cadena.hpp"
+	"campo_doble.hpp"
+	"campo_entero.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	<cstdlib>
+	<cstring>
+
+1260026552 61
+
+1260047953 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/BloqueCompresor.cpp
+	"BloqueCompresor.hpp"
+	"esquema.hpp"
+	<iostream>
+
+1260047953 /home/connie/Documentos/Facultad/Datos/svn/trunk/BloqueCompresor.hpp
+	"bloque.hpp"
+	"registro.hpp"
+	"RegistroLongitudVariable.hpp"
+	"esquema.hpp"
+	"CompresorAritmetico.hpp"
+	"campo_booleano.hpp"
+	"campo_cadena.hpp"
+	"campo_doble.hpp"
+	"campo_entero.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	<cstdlib>
+	<cstring>
+
+1259991393 source:/home/connie/Documentos/Facultad/Datos/svn/trunk/TablaCompresor.cpp
+	"TablaCompresor.hpp"
+
+1259991393 resor.hpp"
+
+1259987586 source:/home/maria/Documentos/tp1/trunk/ComponenteComprimido.cpp
+	"ComponenteComprimido.hpp"
+
+1259866758 /home/maria/Documentos/tp1/trunk/ComponenteComprimido.hpp
+	"componentecompuesto.hpp"
+	"esquema.hpp"
+	"registro.hpp"
+	"CompresorAritmetico.hpp"
+	<cstdlib>
+	<cstring>
+
+<<<<<<< .mine
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/BitStream.cpp
+	"BitStream.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/BitStream.hpp
+	<string>
+	"math.h"
+	"CompresorAritmeticoHelper.hpp"
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/CompresorAritmeticoHelper.hpp
+	<string>
+	<sstream>
+	<iomanip>
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/contador_referencias.hpp
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/puntero_intrusivo.hpp
+	<typeinfo>
+	<cstddef>
+
+1260586392 source:/home/pablo/workspace/OrgDeDatos09/trunk/BloqueCompresor.cpp
+	"BloqueCompresor.hpp"
+	"esquema.hpp"
+	<iostream>
+
+1260586217 /home/pablo/workspace/OrgDeDatos09/trunk/BloqueCompresor.hpp
+	"bloque.hpp"
+	"BloqueCompresorHelper.hpp"
+	"registro.hpp"
+	"esquema.hpp"
+	"CompresorAritmetico.hpp"
+	<cstdlib>
+	<cstring>
+
+1260585285 /home/pablo/workspace/OrgDeDatos09/trunk/bloque.hpp
+	"puntero_intrusivo.hpp"
+	"componentecompuesto.hpp"
+	"registro.hpp"
+	<list>
+
+1260585181 /home/pablo/workspace/OrgDeDatos09/trunk/componentecompuesto.hpp
+	<vector>
+	<algorithm>
+	"puntero_intrusivo.hpp"
+	"componente.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/componente.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/registro.hpp
+	<list>
+	<map>
+	<algorithm>
+	"puntero_intrusivo.hpp"
+	"componente.hpp"
+	"clave.hpp"
+	"campo.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/clave.hpp
+	<list>
+	<string>
+	<algorithm>
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/campo.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"tipo_campo.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/tipo_campo.hpp
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/BloqueCompresorHelper.hpp
+	"campo_booleano.hpp"
+	"campo_cadena.hpp"
+	"campo_doble.hpp"
+	"campo_entero.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	"clave.hpp"
+	"esquema.hpp"
+	"registro.hpp"
+	"RegistroLongitudVariable.hpp"
+	<sstream>
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/campo_booleano.hpp
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/campo_cadena.hpp
+	<string>
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/campo_doble.hpp
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/campo_entero.hpp
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/campo_flotante.hpp
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/campo_largo.hpp
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/esquema.hpp
+	<map>
+	<string>
+	<algorithm>
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"tipo_campo.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/RegistroLongitudVariable.hpp
+	"puntero_intrusivo.hpp"
+	"registro.hpp"
+	"campo.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/CompresorAritmetico.hpp
+	<string>
+	"BitStream.hpp"
+	"TablaCompresor.hpp"
+	"math.h"
+	"CompresorAritmeticoHelper.hpp"
+	"TablaCompresor.hpp"
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/TablaCompresor.hpp
+	"SymbolContext.hpp"
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/SymbolContext.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/BloqueCompresorHelper.cpp
+	"BloqueCompresorHelper.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/CampoStream.cpp
+	"CampoStream.hpp"
+	<string.h>
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/CampoStream.hpp
+	<sstream>
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"tipo_campo.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/CompresorAritmetico.cpp
+	"CompresorAritmetico.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/CompresorAritmeticoHelper.cpp
+	"CompresorAritmeticoHelper.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/EsquemaBloque.cpp
+	"EsquemaBloque.hpp"
+	<iostream>
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/EsquemaBloque.hpp
+	<map>
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaAlmacenamiento.cpp
+	"EstrategiaAlmacenamiento.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaAlmacenamiento.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"componente.hpp"
+	"string.h"
+	"almacenamiento.hpp"
+	"CampoStream.hpp"
+	"RegistroLongitudVariable.hpp"
+	"RegistroLongitudFija.hpp"
+	"campo.hpp"
+	"campo_entero.hpp"
+	"campo_booleano.hpp"
+	"campo_doble.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	"campo_cadena.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/almacenamiento.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"esquema.hpp"
+	"clave.hpp"
+	"EsquemaBloque.hpp"
+	"tipo_almacenamiento.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/tipo_almacenamiento.hpp
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/RegistroLongitudFija.hpp
+	"puntero_intrusivo.hpp"
+	"registro.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaAlmacenamientoBSharp.cpp
+	"EstrategiaAlmacenamientoBSharp.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaAlmacenamientoBSharp.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"archivo.hpp"
+	"bloque_interno_b_sharp.hpp"
+	"bloque_externo_b_sharp.hpp"
+	"esquema.hpp"
+	"RegistroLongitudVariable.hpp"
+	"registro.hpp"
+	"campo_booleano.hpp"
+	"campo_cadena.hpp"
+	"campo_doble.hpp"
+	"campo_entero.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	<string>
+	<cstring>
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/archivo.hpp
+	<string>
+	<fstream>
+	"puntero_intrusivo.hpp"
+	"clave.hpp"
+	"esquema.hpp"
+	"almacenamiento.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/bloque_interno_b_sharp.hpp
+	"puntero_intrusivo.hpp"
+	"bloque_b_sharp.hpp"
+
+1260585535 /home/pablo/workspace/OrgDeDatos09/trunk/bloque_b_sharp.hpp
+	"puntero_intrusivo.hpp"
+	"bloque.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/bloque_externo_b_sharp.hpp
+	"puntero_intrusivo.hpp"
+	"bloque_b_sharp.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaAlmacenamientoBloques.cpp
+	"EstrategiaAlmacenamientoBloques.hpp"
+	"archivo.hpp"
+	<iostream>
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaAlmacenamientoBloques.hpp
+	"EstrategiaAlmacenamiento.hpp"
+	"bloque.hpp"
+	"clave.hpp"
+	"comparador_clave.hpp"
+	<list>
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/comparador_clave.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"clave.hpp"
+	"registro.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaAlmacenamientoBucketHash.cpp
+	"EstrategiaAlmacenamientoBucketHash.hpp"
+	"CampoStream.hpp"
+	<string.h>
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaAlmacenamientoBucketHash.hpp
+	"almacenamiento.hpp"
+	"hash_bucket.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/hash_bucket.hpp
+	"CampoStream.hpp"
+	"clave.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaAlmacenamientoCompuestoComprimido.cpp
+	"EstrategiaAlmacenamientoCompuestoComprimido.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaAlmacenamientoCompuestoComprimido.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"BloqueCompresor.hpp"
+	"EstrategiaAlmacenamiento.hpp"
+	"bloque.hpp"
+	"clave.hpp"
+	"comparador_clave.hpp"
+	"archivo.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaAlmacenamientoDirectoryHash.cpp
+	"EstrategiaAlmacenamientoDirectoryHash.hpp"
+	"CampoStream.hpp"
+	<string.h>
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaAlmacenamientoDirectoryHash.hpp
+	"almacenamiento.hpp"
+	<stdlib.h>
+	<stdio.h>
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaAlmacenamientoEspacioLibre.cpp
+	"EstrategiaAlmacenamientoEspacioLibre.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaAlmacenamientoEspacioLibre.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"archivo.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaAlmacenamientoRegistros.cpp
+	"EstrategiaAlmacenamientoRegistros.hpp"
+	"archivo.hpp"
+	<iostream>
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaAlmacenamientoRegistros.hpp
+	"EstrategiaAlmacenamiento.hpp"
+	"registro.hpp"
+	"almacenamiento.hpp"
+	<string.h>
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaAlmacenamientoTexto.cpp
+	"EstrategiaAlmacenamientoTexto.hpp"
+	<iostream>
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaAlmacenamientoTexto.hpp
+	"EstrategiaAlmacenamiento.hpp"
+	"bloque.hpp"
+	"registro.hpp"
+	<string>
+	"campo_cadena.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaEspacioLibreBloque.cpp
+	"EstrategiaEspacioLibreBloque.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaEspacioLibreBloque.hpp
+	"puntero_intrusivo.hpp"
+	"EstrategiaAlmacenamientoEspacioLibre.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaRecurso.cpp
+	"EstrategiaRecurso.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaRecurso.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"registro.hpp"
+	"EstrategiaAlmacenamiento.hpp"
+	"almacenamiento.hpp"
+	"indice_secuencial.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/indice_secuencial.hpp
+	"comparador_clave.hpp"
+	"almacenamiento.hpp"
+	"registro.hpp"
+	"archivo.hpp"
+	"buffer.hpp"
+	"RegistroLongitudVariable.hpp"
+	"RegistroLongitudFija.hpp"
+	"CampoStream.hpp"
+	"campo.hpp"
+	"campo_entero.hpp"
+	"campo_booleano.hpp"
+	"campo_doble.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	"campo_cadena.hpp"
+	"EstrategiaAlmacenamientoTexto.hpp"
+	"EstrategiaAlmacenamientoRegistros.hpp"
+	"EstrategiaAlmacenamientoBloques.hpp"
+	"EstrategiaAlmacenamientoCompuestoComprimido.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/buffer.hpp
+	<map>
+	<cstring>
+	"puntero_intrusivo.hpp"
+	"almacenamiento.hpp"
+	<string.h>
+	"EsquemaBloque.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaRecursoEscrituraDiferida.cpp
+	"archivo.hpp"
+	"EstrategiaRecursoEscrituraDiferida.hpp"
+	"indice_secuencial.hpp"
+	"EstrategiaAlmacenamientoBloques.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaRecursoEscrituraDiferida.hpp
+	"EstrategiaAlmacenamientoCompuestoComprimido.hpp"
+	"EstrategiaRecurso.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaRecursoEscrituraDirecta.cpp
+	"archivo.hpp"
+	"EstrategiaAlmacenamientoBloques.hpp"
+	"EstrategiaAlmacenamientoCompuestoComprimido.hpp"
+	"EstrategiaRecursoEscrituraDirecta.hpp"
+	"indice_secuencial.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaRecursoEscrituraDirecta.hpp
+	"EstrategiaRecurso.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaRecursoUnAlmacenamiento.cpp
+	"archivo.hpp"
+	"EstrategiaAlmacenamientoBloques.hpp"
+	"EstrategiaRecursoUnAlmacenamiento.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaRecursoUnAlmacenamiento.hpp
+	"EstrategiaRecurso.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/FabricaDeRecursosDeAlmacenamiento.cpp
+	"FabricaDeRecursosDeAlmacenamiento.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/FabricaDeRecursosDeAlmacenamiento.hpp
+	"EstrategiaAlmacenamiento.hpp"
+	"almacenamiento.hpp"
+	"componentecompuesto.hpp"
+	"componente.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/RecursoDeAlmacenamiento.cpp
+	"RecursoDeAlmacenamiento.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/RecursoDeAlmacenamiento.hpp
+	<stdio.h>
+	<cstring>
+	<sstream>
+	<iostream>
+	"campo.hpp"
+	"campo_entero.hpp"
+	"campo_booleano.hpp"
+	"campo_doble.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	"campo_cadena.hpp"
+	"esquema.hpp"
+	"clave.hpp"
+	"archivo.hpp"
+	"buffer.hpp"
+	"registro.hpp"
+	"RegistroLongitudFija.hpp"
+	"EstrategiaEspacioLibreBloque.hpp"
+	"EstrategiaAlmacenamiento.hpp"
+	"estrategia_indice.hpp"
+	"indice_b_sharp.hpp"
+	"indice_hash.hpp"
+	"estrategia_indice.hpp"
+	"EsquemaBloque.hpp"
+	"EstrategiaAlmacenamientoBloques.hpp"
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"indice_secuencial.hpp"
+	"EstrategiaRecurso.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/estrategia_indice.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"esquema.hpp"
+	"registro.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/indice_b_sharp.hpp
+	<iostream>
+	"puntero_intrusivo.hpp"
+	"estrategia_indice.hpp"
+	"archivo.hpp"
+	"EstrategiaAlmacenamientoBSharp.hpp"
+	"EstrategiaEspacioLibreBloque.hpp"
+	"esquema.hpp"
+	"clave.hpp"
+	"comparador_clave.hpp"
+	"registro.hpp"
+	"bloque_interno_b_sharp.hpp"
+	"bloque_externo_b_sharp.hpp"
+	"resultado_insercion.hpp"
+	"resultado_balanceo.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/resultado_insercion.hpp
+	"registro.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/resultado_balanceo.hpp
+	"registro.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/indice_hash.hpp
+	"archivo.hpp"
+	"estrategia_indice.hpp"
+	"comparador_clave.hpp"
+	"bloque.hpp"
+	"hash_directory.hpp"
+	"hash_bucket.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/hash_directory.hpp
+	"almacenamiento.hpp"
+	"hash_bucket.hpp"
+	"EstrategiaAlmacenamientoDirectoryHash.hpp"
+	"EstrategiaAlmacenamientoBucketHash.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/RegistroLongitudFija.cpp
+	"RegistroLongitudFija.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/RegistroLongitudVariable.cpp
+	"RegistroLongitudVariable.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/SymbolContext.cpp
+	"SymbolContext.hpp"
+	<cstdlib>
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/TablaCompresor.cpp
+	"TablaCompresor.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/almacenamiento.cpp
+	"almacenamiento.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/archivo.cpp
+	"archivo.hpp"
+	<string.h>
+
+1260585314 source:/home/pablo/workspace/OrgDeDatos09/trunk/bloque.cpp
+	"bloque.hpp"
+
+1260585406 source:/home/pablo/workspace/OrgDeDatos09/trunk/bloque_b_sharp.cpp
+	"bloque_b_sharp.hpp"
+	<iostream>
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/bloque_externo_b_sharp.cpp
+	"bloque_externo_b_sharp.hpp"
+
+1260585340 source:/home/pablo/workspace/OrgDeDatos09/trunk/bloque_interno_b_sharp.cpp
+	"bloque_interno_b_sharp.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/buffer.cpp
+	"buffer.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/campo.cpp
+	"campo.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/campo_booleano.cpp
+	"campo_booleano.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/campo_cadena.cpp
+	"campo_cadena.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/campo_doble.cpp
+	"campo_doble.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/campo_entero.cpp
+	"campo_entero.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/campo_flotante.cpp
+	"campo_flotante.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/campo_largo.cpp
+	"campo_largo.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/clave.cpp
+	"clave.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/comparador_clave.cpp
+	"comparador_clave.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/componente.cpp
+	"componente.hpp"
+
+1260585442 source:/home/pablo/workspace/OrgDeDatos09/trunk/componentecompuesto.cpp
+	"componentecompuesto.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/contador_referencias.cpp
+	"contador_referencias.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/esquema.cpp
+	"esquema.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/estrategia_indice.cpp
+	"estrategia_indice.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/hash_bucket.cpp
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"hash_bucket.hpp"
+	"CampoStream.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/hash_directory.cpp
+	<math.h>
+	"hash_directory.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/indice_b_sharp.cpp
+	"indice_b_sharp.hpp"
+	<typeinfo>
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/indice_hash.cpp
+	"indice_hash.hpp"
+	<math.h>
+	<string>
+	<cstring>
+	<iostream>
+	<sstream>
+	<stdlib.h>
+	<stdio.h>
+	"campo.hpp"
+	"campo_entero.hpp"
+	"campo_booleano.hpp"
+	"campo_doble.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	"campo_cadena.hpp"
+	"buffer.hpp"
+	"almacenamiento.hpp"
+	"RegistroLongitudVariable.hpp"
+	"CampoStream.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/indice_secuencial.cpp
+	"indice_secuencial.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/main.cpp
+	<stdio.h>
+	<cstring>
+	<sstream>
+	<iostream>
+	"campo.hpp"
+	"campo_entero.hpp"
+	"campo_booleano.hpp"
+	"campo_doble.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	"campo_cadena.hpp"
+	"esquema.hpp"
+	"clave.hpp"
+	"archivo.hpp"
+	"buffer.hpp"
+	"registro.hpp"
+	"RegistroLongitudFija.hpp"
+	"EstrategiaEspacioLibreBloque.hpp"
+	"EstrategiaAlmacenamientoRegistros.hpp"
+	"EstrategiaAlmacenamientoBSharp.hpp"
+	"EstrategiaAlmacenamientoTexto.hpp"
+	"estrategia_indice.hpp"
+	"indice_b_sharp.hpp"
+	"indice_hash.hpp"
+	"estrategia_indice.hpp"
+	"EsquemaBloque.hpp"
+	"EstrategiaAlmacenamientoBloques.hpp"
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	<cstdlib>
+	<ctime>
+	"indice_secuencial.hpp"
+	"RecursoDeAlmacenamiento.hpp"
+	"EstrategiaRecurso.hpp"
+	"EstrategiaRecursoEscrituraDirecta.hpp"
+	"EstrategiaRecursoEscrituraDiferida.hpp"
+	"EstrategiaRecursoUnAlmacenamiento.hpp"
+	"EstrategiaAlmacenamientoCompuestoComprimido.hpp"
+	"CompresorAritmetico.hpp"
+	"BloqueCompresor.hpp"
+	"EstrategiaAlmacenamientoCompuestoComprimido.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/registro.cpp
+	"registro.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/resultado_balanceo.cpp
+	"resultado_balanceo.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/resultado_insercion.cpp
+	"resultado_insercion.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/BitStream.cpp
+	"BitStream.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/BitStream.hpp
+	<string>
+	"math.h"
+	"CompresorAritmeticoHelper.hpp"
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/CompresorAritmeticoHelper.hpp
+	<string>
+	<sstream>
+	<iomanip>
+
+1260672742 /home/maria/Documentos/tp2/trunk/contador_referencias.hpp
+
+1260672742 /home/maria/Documentos/tp2/trunk/puntero_intrusivo.hpp
+	<typeinfo>
+	<cstddef>
+
+1260714450 source:/home/maria/Documentos/tp2/trunk/BloqueCompresor.cpp
+	"BloqueCompresor.hpp"
+	"esquema.hpp"
+	<iostream>
+
+1260714450 /home/maria/Documentos/tp2/trunk/BloqueCompresor.hpp
+	"bloque.hpp"
+	"BloqueCompresorHelper.hpp"
+	"registro.hpp"
+	"esquema.hpp"
+	"CompresorAritmetico.hpp"
+	<cstdlib>
+	<cstring>
+
+1260672743 /home/maria/Documentos/tp2/trunk/bloque.hpp
+	"puntero_intrusivo.hpp"
+	"componentecompuesto.hpp"
+	"registro.hpp"
+	<list>
+
+1260714450 /home/maria/Documentos/tp2/trunk/componentecompuesto.hpp
+	<vector>
+	<algorithm>
+	"puntero_intrusivo.hpp"
+	"componente.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/componente.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/registro.hpp
+	<list>
+	<map>
+	<algorithm>
+	"puntero_intrusivo.hpp"
+	"componente.hpp"
+	"clave.hpp"
+	"campo.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/clave.hpp
+	<list>
+	<string>
+	<algorithm>
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/campo.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"tipo_campo.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/tipo_campo.hpp
+
+1260714450 /home/maria/Documentos/tp2/trunk/BloqueCompresorHelper.hpp
+	"CompresorAritmetico.hpp"
+	"campo_booleano.hpp"
+	"campo_cadena.hpp"
+	"campo_doble.hpp"
+	"campo_entero.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	"clave.hpp"
+	"esquema.hpp"
+	"registro.hpp"
+	"RegistroLongitudVariable.hpp"
+	<sstream>
+
+1260672742 /home/maria/Documentos/tp2/trunk/CompresorAritmetico.hpp
+	<string>
+	"BitStream.hpp"
+	"TablaCompresor.hpp"
+	"math.h"
+	"CompresorAritmeticoHelper.hpp"
+	"TablaCompresor.hpp"
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/TablaCompresor.hpp
+	"SymbolContext.hpp"
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/SymbolContext.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/campo_booleano.hpp
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/campo_cadena.hpp
+	<string>
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/campo_doble.hpp
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/campo_entero.hpp
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/campo_flotante.hpp
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/campo_largo.hpp
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/esquema.hpp
+	<map>
+	<string>
+	<algorithm>
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"tipo_campo.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/RegistroLongitudVariable.hpp
+	"puntero_intrusivo.hpp"
+	"registro.hpp"
+	"campo.hpp"
+
+1260714450 source:/home/maria/Documentos/tp2/trunk/BloqueCompresorHelper.cpp
+	"BloqueCompresorHelper.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/CampoStream.cpp
+	"CampoStream.hpp"
+	<string.h>
+
+1260672742 /home/maria/Documentos/tp2/trunk/CampoStream.hpp
+	<sstream>
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"tipo_campo.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/CompresorAritmetico.cpp
+	"CompresorAritmetico.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/CompresorAritmeticoHelper.cpp
+	"CompresorAritmeticoHelper.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/EsquemaBloque.cpp
+	"EsquemaBloque.hpp"
+	<iostream>
+
+1260672742 /home/maria/Documentos/tp2/trunk/EsquemaBloque.hpp
+	<map>
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/EstrategiaAlmacenamiento.cpp
+	"EstrategiaAlmacenamiento.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/EstrategiaAlmacenamiento.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"componente.hpp"
+	"string.h"
+	"almacenamiento.hpp"
+	"CampoStream.hpp"
+	"RegistroLongitudVariable.hpp"
+	"RegistroLongitudFija.hpp"
+	"campo.hpp"
+	"campo_entero.hpp"
+	"campo_booleano.hpp"
+	"campo_doble.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	"campo_cadena.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/almacenamiento.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"esquema.hpp"
+	"clave.hpp"
+	"EsquemaBloque.hpp"
+	"tipo_almacenamiento.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/tipo_almacenamiento.hpp
+
+1260672742 /home/maria/Documentos/tp2/trunk/RegistroLongitudFija.hpp
+	"puntero_intrusivo.hpp"
+	"registro.hpp"
+
+1260714450 source:/home/maria/Documentos/tp2/trunk/EstrategiaAlmacenamientoBSharp.cpp
+	"EstrategiaAlmacenamientoBSharp.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/EstrategiaAlmacenamientoBSharp.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"archivo.hpp"
+	"bloque_interno_b_sharp.hpp"
+	"bloque_externo_b_sharp.hpp"
+	"esquema.hpp"
+	"RegistroLongitudVariable.hpp"
+	"registro.hpp"
+	"campo_booleano.hpp"
+	"campo_cadena.hpp"
+	"campo_doble.hpp"
+	"campo_entero.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	<string>
+	<cstring>
+
+1260672742 /home/maria/Documentos/tp2/trunk/archivo.hpp
+	<string>
+	<fstream>
+	"puntero_intrusivo.hpp"
+	"clave.hpp"
+	"esquema.hpp"
+	"almacenamiento.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/bloque_interno_b_sharp.hpp
+	"puntero_intrusivo.hpp"
+	"bloque_b_sharp.hpp"
+
+1260714450 /home/maria/Documentos/tp2/trunk/bloque_b_sharp.hpp
+	"puntero_intrusivo.hpp"
+	"bloque.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/bloque_externo_b_sharp.hpp
+	"puntero_intrusivo.hpp"
+	"bloque_b_sharp.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/EstrategiaAlmacenamientoBloques.cpp
+	"EstrategiaAlmacenamientoBloques.hpp"
+	"archivo.hpp"
+	<iostream>
+
+1260672742 /home/maria/Documentos/tp2/trunk/EstrategiaAlmacenamientoBloques.hpp
+	"EstrategiaAlmacenamiento.hpp"
+	"bloque.hpp"
+	"clave.hpp"
+	"comparador_clave.hpp"
+	<list>
+
+1260672742 /home/maria/Documentos/tp2/trunk/comparador_clave.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"clave.hpp"
+	"registro.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/EstrategiaAlmacenamientoBucketHash.cpp
+	"EstrategiaAlmacenamientoBucketHash.hpp"
+	"CampoStream.hpp"
+	<string.h>
+
+1260672742 /home/maria/Documentos/tp2/trunk/EstrategiaAlmacenamientoBucketHash.hpp
+	"almacenamiento.hpp"
+	"hash_bucket.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/hash_bucket.hpp
+	"CampoStream.hpp"
+	"clave.hpp"
+
+1260714450 source:/home/maria/Documentos/tp2/trunk/EstrategiaAlmacenamientoCompuestoComprimido.cpp
+	"EstrategiaAlmacenamientoCompuestoComprimido.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/EstrategiaAlmacenamientoCompuestoComprimido.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"BloqueCompresor.hpp"
+	"EstrategiaAlmacenamiento.hpp"
+	"bloque.hpp"
+	"clave.hpp"
+	"comparador_clave.hpp"
+	"archivo.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/EstrategiaAlmacenamientoDirectoryHash.cpp
+	"EstrategiaAlmacenamientoDirectoryHash.hpp"
+	"CampoStream.hpp"
+	<string.h>
+
+1260672742 /home/maria/Documentos/tp2/trunk/EstrategiaAlmacenamientoDirectoryHash.hpp
+	"almacenamiento.hpp"
+	<stdlib.h>
+	<stdio.h>
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/EstrategiaAlmacenamientoEspacioLibre.cpp
+	"EstrategiaAlmacenamientoEspacioLibre.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/EstrategiaAlmacenamientoEspacioLibre.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"archivo.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/EstrategiaAlmacenamientoRegistros.cpp
+	"EstrategiaAlmacenamientoRegistros.hpp"
+	"archivo.hpp"
+	<iostream>
+
+1260672743 /home/maria/Documentos/tp2/trunk/EstrategiaAlmacenamientoRegistros.hpp
+	"EstrategiaAlmacenamiento.hpp"
+	"registro.hpp"
+	"almacenamiento.hpp"
+	<string.h>
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/EstrategiaAlmacenamientoTexto.cpp
+	"EstrategiaAlmacenamientoTexto.hpp"
+	<iostream>
+
+1260672742 /home/maria/Documentos/tp2/trunk/EstrategiaAlmacenamientoTexto.hpp
+	"EstrategiaAlmacenamiento.hpp"
+	"bloque.hpp"
+	"registro.hpp"
+	<string>
+	"campo_cadena.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/EstrategiaEspacioLibreBloque.cpp
+	"EstrategiaEspacioLibreBloque.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/EstrategiaEspacioLibreBloque.hpp
+	"puntero_intrusivo.hpp"
+	"EstrategiaAlmacenamientoEspacioLibre.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/EstrategiaRecurso.cpp
+	"EstrategiaRecurso.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/EstrategiaRecurso.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"registro.hpp"
+	"EstrategiaAlmacenamiento.hpp"
+	"almacenamiento.hpp"
+	"indice_secuencial.hpp"
+
+1260672743 /home/maria/Documentos/tp2/trunk/indice_secuencial.hpp
+	"comparador_clave.hpp"
+	"almacenamiento.hpp"
+	"registro.hpp"
+	"archivo.hpp"
+	"buffer.hpp"
+	"RegistroLongitudVariable.hpp"
+	"RegistroLongitudFija.hpp"
+	"CampoStream.hpp"
+	"campo.hpp"
+	"campo_entero.hpp"
+	"campo_booleano.hpp"
+	"campo_doble.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	"campo_cadena.hpp"
+	"EstrategiaAlmacenamientoTexto.hpp"
+	"EstrategiaAlmacenamientoRegistros.hpp"
+	"EstrategiaAlmacenamientoBloques.hpp"
+	"EstrategiaAlmacenamientoCompuestoComprimido.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/buffer.hpp
+	<map>
+	<cstring>
+	"puntero_intrusivo.hpp"
+	"almacenamiento.hpp"
+	<string.h>
+	"EsquemaBloque.hpp"
+
+1260715993 source:/home/maria/Documentos/tp2/trunk/EstrategiaRecursoEscrituraDiferida.cpp
+	"archivo.hpp"
+	"EstrategiaRecursoEscrituraDiferida.hpp"
+	"indice_secuencial.hpp"
+	"EstrategiaAlmacenamientoBloques.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/EstrategiaRecursoEscrituraDiferida.hpp
+	"EstrategiaAlmacenamientoCompuestoComprimido.hpp"
+	"EstrategiaRecurso.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/EstrategiaRecursoEscrituraDirecta.cpp
+	"archivo.hpp"
+	"EstrategiaAlmacenamientoBloques.hpp"
+	"EstrategiaAlmacenamientoCompuestoComprimido.hpp"
+	"EstrategiaRecursoEscrituraDirecta.hpp"
+	"indice_secuencial.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/EstrategiaRecursoEscrituraDirecta.hpp
+	"EstrategiaRecurso.hpp"
+
+1260672743 source:/home/maria/Documentos/tp2/trunk/EstrategiaRecursoUnAlmacenamiento.cpp
+	"archivo.hpp"
+	"EstrategiaAlmacenamientoBloques.hpp"
+	"EstrategiaRecursoUnAlmacenamiento.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/EstrategiaRecursoUnAlmacenamiento.hpp
+	"EstrategiaRecurso.hpp"
+
+1260672743 source:/home/maria/Documentos/tp2/trunk/FabricaDeRecursosDeAlmacenamiento.cpp
+	"FabricaDeRecursosDeAlmacenamiento.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/FabricaDeRecursosDeAlmacenamiento.hpp
+	"EstrategiaAlmacenamiento.hpp"
+	"almacenamiento.hpp"
+	"componentecompuesto.hpp"
+	"componente.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/RecursoDeAlmacenamiento.cpp
+	"RecursoDeAlmacenamiento.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/RecursoDeAlmacenamiento.hpp
+	<stdio.h>
+	<cstring>
+	<sstream>
+	<iostream>
+	"campo.hpp"
+	"campo_entero.hpp"
+	"campo_booleano.hpp"
+	"campo_doble.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	"campo_cadena.hpp"
+	"esquema.hpp"
+	"clave.hpp"
+	"archivo.hpp"
+	"buffer.hpp"
+	"registro.hpp"
+	"RegistroLongitudFija.hpp"
+	"EstrategiaEspacioLibreBloque.hpp"
+	"EstrategiaAlmacenamiento.hpp"
+	"estrategia_indice.hpp"
+	"indice_b_sharp.hpp"
+	"indice_hash.hpp"
+	"estrategia_indice.hpp"
+	"EsquemaBloque.hpp"
+	"EstrategiaAlmacenamientoBloques.hpp"
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"indice_secuencial.hpp"
+	"EstrategiaRecurso.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/estrategia_indice.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"esquema.hpp"
+	"registro.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/indice_b_sharp.hpp
+	<iostream>
+	"puntero_intrusivo.hpp"
+	"estrategia_indice.hpp"
+	"archivo.hpp"
+	"EstrategiaAlmacenamientoBSharp.hpp"
+	"EstrategiaEspacioLibreBloque.hpp"
+	"esquema.hpp"
+	"clave.hpp"
+	"comparador_clave.hpp"
+	"registro.hpp"
+	"bloque_interno_b_sharp.hpp"
+	"bloque_externo_b_sharp.hpp"
+	"resultado_insercion.hpp"
+	"resultado_balanceo.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/resultado_insercion.hpp
+	"registro.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/resultado_balanceo.hpp
+	"registro.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/indice_hash.hpp
+	"archivo.hpp"
+	"estrategia_indice.hpp"
+	"comparador_clave.hpp"
+	"bloque.hpp"
+	"hash_directory.hpp"
+	"hash_bucket.hpp"
+
+1260672742 /home/maria/Documentos/tp2/trunk/hash_directory.hpp
+	"almacenamiento.hpp"
+	"hash_bucket.hpp"
+	"EstrategiaAlmacenamientoDirectoryHash.hpp"
+	"EstrategiaAlmacenamientoBucketHash.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/RegistroLongitudFija.cpp
+	"RegistroLongitudFija.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/RegistroLongitudVariable.cpp
+	"RegistroLongitudVariable.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/SymbolContext.cpp
+	"SymbolContext.hpp"
+	<cstdlib>
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/TablaCompresor.cpp
+	"TablaCompresor.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/almacenamiento.cpp
+	"almacenamiento.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/archivo.cpp
+	"archivo.hpp"
+	<string.h>
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/bloque.cpp
+	"bloque.hpp"
+
+1260714450 source:/home/maria/Documentos/tp2/trunk/bloque_b_sharp.cpp
+	"bloque_b_sharp.hpp"
+	<iostream>
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/bloque_externo_b_sharp.cpp
+	"bloque_externo_b_sharp.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/bloque_interno_b_sharp.cpp
+	"bloque_interno_b_sharp.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/buffer.cpp
+	"buffer.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/campo.cpp
+	"campo.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/campo_booleano.cpp
+	"campo_booleano.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/campo_cadena.cpp
+	"campo_cadena.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/campo_doble.cpp
+	"campo_doble.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/campo_entero.cpp
+	"campo_entero.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/campo_flotante.cpp
+	"campo_flotante.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/campo_largo.cpp
+	"campo_largo.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/clave.cpp
+	"clave.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/comparador_clave.cpp
+	"comparador_clave.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/componente.cpp
+	"componente.hpp"
+
+1260714450 source:/home/maria/Documentos/tp2/trunk/componentecompuesto.cpp
+	"componentecompuesto.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/contador_referencias.cpp
+	"contador_referencias.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/esquema.cpp
+	"esquema.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/estrategia_indice.cpp
+	"estrategia_indice.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/hash_bucket.cpp
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"hash_bucket.hpp"
+	"CampoStream.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/hash_directory.cpp
+	<math.h>
+	"hash_directory.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/indice_b_sharp.cpp
+	"indice_b_sharp.hpp"
+	<typeinfo>
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/indice_hash.cpp
+	"indice_hash.hpp"
+	<math.h>
+	<string>
+	<cstring>
+	<iostream>
+	<sstream>
+	<stdlib.h>
+	<stdio.h>
+	"campo.hpp"
+	"campo_entero.hpp"
+	"campo_booleano.hpp"
+	"campo_doble.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	"campo_cadena.hpp"
+	"buffer.hpp"
+	"almacenamiento.hpp"
+	"RegistroLongitudVariable.hpp"
+	"CampoStream.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/indice_secuencial.cpp
+	"indice_secuencial.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/main.cpp
+	<stdio.h>
+	<cstring>
+	<sstream>
+	<iostream>
+	"campo.hpp"
+	"campo_entero.hpp"
+	"campo_booleano.hpp"
+	"campo_doble.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	"campo_cadena.hpp"
+	"esquema.hpp"
+	"clave.hpp"
+	"archivo.hpp"
+	"buffer.hpp"
+	"registro.hpp"
+	"RegistroLongitudFija.hpp"
+	"EstrategiaEspacioLibreBloque.hpp"
+	"EstrategiaAlmacenamientoRegistros.hpp"
+	"EstrategiaAlmacenamientoBSharp.hpp"
+	"EstrategiaAlmacenamientoTexto.hpp"
+	"estrategia_indice.hpp"
+	"indice_b_sharp.hpp"
+	"indice_hash.hpp"
+	"estrategia_indice.hpp"
+	"EsquemaBloque.hpp"
+	"EstrategiaAlmacenamientoBloques.hpp"
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	<cstdlib>
+	<ctime>
+	"indice_secuencial.hpp"
+	"RecursoDeAlmacenamiento.hpp"
+	"EstrategiaRecurso.hpp"
+	"EstrategiaRecursoEscrituraDirecta.hpp"
+	"EstrategiaRecursoEscrituraDiferida.hpp"
+	"EstrategiaRecursoUnAlmacenamiento.hpp"
+	"EstrategiaAlmacenamientoCompuestoComprimido.hpp"
+	"CompresorAritmetico.hpp"
+	"BloqueCompresor.hpp"
+	"EstrategiaAlmacenamientoCompuestoComprimido.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/registro.cpp
+	"registro.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/resultado_balanceo.cpp
+	"resultado_balanceo.hpp"
+
+1260672742 source:/home/maria/Documentos/tp2/trunk/resultado_insercion.cpp
+	"resultado_insercion.hpp"
+
+1260672742 91
+
+1260715199 source:/home/maria/Documentos/tp2/trunk/CompresorAritmeticoDiferido.cpp
+	"CompresorAritmeticoDiferido.hpp"
+
+1260715185 /home/maria/Documentos/tp2/trunk/CompresorAritmeticoDiferido.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"BloqueCompresor.hpp"
+	"EstrategiaAlmacenamiento.hpp"
+	"bloque.hpp"
+	"clave.hpp"
+	"comparador_clave.hpp"
+	"archivo.hpp"
+
+=======
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/BitStream.cpp
+	"BitStream.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/BitStream.hpp
+	<string>
+	"math.h"
+	"CompresorAritmeticoHelper.hpp"
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/CompresorAritmeticoHelper.hpp
+	<string>
+	<sstream>
+	<iomanip>
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/contador_referencias.hpp
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/puntero_intrusivo.hpp
+	<typeinfo>
+	<cstddef>
+
+1260586392 source:/home/pablo/workspace/OrgDeDatos09/trunk/BloqueCompresor.cpp
+	"BloqueCompresor.hpp"
+	"esquema.hpp"
+	<iostream>
+
+1260586217 /home/pablo/workspace/OrgDeDatos09/trunk/BloqueCompresor.hpp
+	"bloque.hpp"
+	"BloqueCompresorHelper.hpp"
+	"registro.hpp"
+	"esquema.hpp"
+	"CompresorAritmetico.hpp"
+	<cstdlib>
+	<cstring>
+
+1260585285 /home/pablo/workspace/OrgDeDatos09/trunk/bloque.hpp
+	"puntero_intrusivo.hpp"
+	"componentecompuesto.hpp"
+	"registro.hpp"
+	<list>
+
+1260585181 /home/pablo/workspace/OrgDeDatos09/trunk/componentecompuesto.hpp
+	<vector>
+	<algorithm>
+	"puntero_intrusivo.hpp"
+	"componente.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/componente.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/registro.hpp
+	<list>
+	<map>
+	<algorithm>
+	"puntero_intrusivo.hpp"
+	"componente.hpp"
+	"clave.hpp"
+	"campo.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/clave.hpp
+	<list>
+	<string>
+	<algorithm>
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/campo.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"tipo_campo.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/tipo_campo.hpp
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/BloqueCompresorHelper.hpp
+	"campo_booleano.hpp"
+	"campo_cadena.hpp"
+	"campo_doble.hpp"
+	"campo_entero.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	"clave.hpp"
+	"esquema.hpp"
+	"registro.hpp"
+	"RegistroLongitudVariable.hpp"
+	<sstream>
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/campo_booleano.hpp
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/campo_cadena.hpp
+	<string>
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/campo_doble.hpp
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/campo_entero.hpp
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/campo_flotante.hpp
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/campo_largo.hpp
+	"puntero_intrusivo.hpp"
+	"campo.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/esquema.hpp
+	<map>
+	<string>
+	<algorithm>
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"tipo_campo.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/RegistroLongitudVariable.hpp
+	"puntero_intrusivo.hpp"
+	"registro.hpp"
+	"campo.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/CompresorAritmetico.hpp
+	<string>
+	"BitStream.hpp"
+	"TablaCompresor.hpp"
+	"math.h"
+	"CompresorAritmeticoHelper.hpp"
+	"TablaCompresor.hpp"
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/TablaCompresor.hpp
+	"SymbolContext.hpp"
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/SymbolContext.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/BloqueCompresorHelper.cpp
+	"BloqueCompresorHelper.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/CampoStream.cpp
+	"CampoStream.hpp"
+	<string.h>
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/CampoStream.hpp
+	<sstream>
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"tipo_campo.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/CompresorAritmetico.cpp
+	"CompresorAritmetico.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/CompresorAritmeticoHelper.cpp
+	"CompresorAritmeticoHelper.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/EsquemaBloque.cpp
+	"EsquemaBloque.hpp"
+	<iostream>
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/EsquemaBloque.hpp
+	<map>
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaAlmacenamiento.cpp
+	"EstrategiaAlmacenamiento.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaAlmacenamiento.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"componente.hpp"
+	"string.h"
+	"almacenamiento.hpp"
+	"CampoStream.hpp"
+	"RegistroLongitudVariable.hpp"
+	"RegistroLongitudFija.hpp"
+	"campo.hpp"
+	"campo_entero.hpp"
+	"campo_booleano.hpp"
+	"campo_doble.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	"campo_cadena.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/almacenamiento.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"esquema.hpp"
+	"clave.hpp"
+	"EsquemaBloque.hpp"
+	"tipo_almacenamiento.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/tipo_almacenamiento.hpp
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/RegistroLongitudFija.hpp
+	"puntero_intrusivo.hpp"
+	"registro.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaAlmacenamientoBSharp.cpp
+	"EstrategiaAlmacenamientoBSharp.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaAlmacenamientoBSharp.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"archivo.hpp"
+	"bloque_interno_b_sharp.hpp"
+	"bloque_externo_b_sharp.hpp"
+	"esquema.hpp"
+	"RegistroLongitudVariable.hpp"
+	"registro.hpp"
+	"campo_booleano.hpp"
+	"campo_cadena.hpp"
+	"campo_doble.hpp"
+	"campo_entero.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	<string>
+	<cstring>
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/archivo.hpp
+	<string>
+	<fstream>
+	"puntero_intrusivo.hpp"
+	"clave.hpp"
+	"esquema.hpp"
+	"almacenamiento.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/bloque_interno_b_sharp.hpp
+	"puntero_intrusivo.hpp"
+	"bloque_b_sharp.hpp"
+
+1260585535 /home/pablo/workspace/OrgDeDatos09/trunk/bloque_b_sharp.hpp
+	"puntero_intrusivo.hpp"
+	"bloque.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/bloque_externo_b_sharp.hpp
+	"puntero_intrusivo.hpp"
+	"bloque_b_sharp.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaAlmacenamientoBloques.cpp
+	"EstrategiaAlmacenamientoBloques.hpp"
+	"archivo.hpp"
+	<iostream>
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaAlmacenamientoBloques.hpp
+	"EstrategiaAlmacenamiento.hpp"
+	"bloque.hpp"
+	"clave.hpp"
+	"comparador_clave.hpp"
+	<list>
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/comparador_clave.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"clave.hpp"
+	"registro.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaAlmacenamientoBucketHash.cpp
+	"EstrategiaAlmacenamientoBucketHash.hpp"
+	"CampoStream.hpp"
+	<string.h>
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaAlmacenamientoBucketHash.hpp
+	"almacenamiento.hpp"
+	"hash_bucket.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/hash_bucket.hpp
+	"CampoStream.hpp"
+	"clave.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaAlmacenamientoCompuestoComprimido.cpp
+	"EstrategiaAlmacenamientoCompuestoComprimido.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaAlmacenamientoCompuestoComprimido.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"BloqueCompresor.hpp"
+	"EstrategiaAlmacenamiento.hpp"
+	"bloque.hpp"
+	"clave.hpp"
+	"comparador_clave.hpp"
+	"archivo.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaAlmacenamientoDirectoryHash.cpp
+	"EstrategiaAlmacenamientoDirectoryHash.hpp"
+	"CampoStream.hpp"
+	<string.h>
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaAlmacenamientoDirectoryHash.hpp
+	"almacenamiento.hpp"
+	<stdlib.h>
+	<stdio.h>
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaAlmacenamientoEspacioLibre.cpp
+	"EstrategiaAlmacenamientoEspacioLibre.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaAlmacenamientoEspacioLibre.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"archivo.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaAlmacenamientoRegistros.cpp
+	"EstrategiaAlmacenamientoRegistros.hpp"
+	"archivo.hpp"
+	<iostream>
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaAlmacenamientoRegistros.hpp
+	"EstrategiaAlmacenamiento.hpp"
+	"registro.hpp"
+	"almacenamiento.hpp"
+	<string.h>
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaAlmacenamientoTexto.cpp
+	"EstrategiaAlmacenamientoTexto.hpp"
+	<iostream>
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaAlmacenamientoTexto.hpp
+	"EstrategiaAlmacenamiento.hpp"
+	"bloque.hpp"
+	"registro.hpp"
+	<string>
+	"campo_cadena.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaEspacioLibreBloque.cpp
+	"EstrategiaEspacioLibreBloque.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaEspacioLibreBloque.hpp
+	"puntero_intrusivo.hpp"
+	"EstrategiaAlmacenamientoEspacioLibre.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaRecurso.cpp
+	"EstrategiaRecurso.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaRecurso.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"registro.hpp"
+	"EstrategiaAlmacenamiento.hpp"
+	"almacenamiento.hpp"
+	"indice_secuencial.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/indice_secuencial.hpp
+	"comparador_clave.hpp"
+	"almacenamiento.hpp"
+	"registro.hpp"
+	"archivo.hpp"
+	"buffer.hpp"
+	"RegistroLongitudVariable.hpp"
+	"RegistroLongitudFija.hpp"
+	"CampoStream.hpp"
+	"campo.hpp"
+	"campo_entero.hpp"
+	"campo_booleano.hpp"
+	"campo_doble.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	"campo_cadena.hpp"
+	"EstrategiaAlmacenamientoTexto.hpp"
+	"EstrategiaAlmacenamientoRegistros.hpp"
+	"EstrategiaAlmacenamientoBloques.hpp"
+	"EstrategiaAlmacenamientoCompuestoComprimido.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/buffer.hpp
+	<map>
+	<cstring>
+	"puntero_intrusivo.hpp"
+	"almacenamiento.hpp"
+	<string.h>
+	"EsquemaBloque.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaRecursoEscrituraDiferida.cpp
+	"archivo.hpp"
+	"EstrategiaRecursoEscrituraDiferida.hpp"
+	"indice_secuencial.hpp"
+	"EstrategiaAlmacenamientoBloques.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaRecursoEscrituraDiferida.hpp
+	"EstrategiaAlmacenamientoCompuestoComprimido.hpp"
+	"EstrategiaRecurso.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaRecursoEscrituraDirecta.cpp
+	"archivo.hpp"
+	"EstrategiaAlmacenamientoBloques.hpp"
+	"EstrategiaAlmacenamientoCompuestoComprimido.hpp"
+	"EstrategiaRecursoEscrituraDirecta.hpp"
+	"indice_secuencial.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaRecursoEscrituraDirecta.hpp
+	"EstrategiaRecurso.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaRecursoUnAlmacenamiento.cpp
+	"archivo.hpp"
+	"EstrategiaAlmacenamientoBloques.hpp"
+	"EstrategiaRecursoUnAlmacenamiento.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/EstrategiaRecursoUnAlmacenamiento.hpp
+	"EstrategiaRecurso.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/FabricaDeRecursosDeAlmacenamiento.cpp
+	"FabricaDeRecursosDeAlmacenamiento.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/FabricaDeRecursosDeAlmacenamiento.hpp
+	"EstrategiaAlmacenamiento.hpp"
+	"almacenamiento.hpp"
+	"componentecompuesto.hpp"
+	"componente.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/RecursoDeAlmacenamiento.cpp
+	"RecursoDeAlmacenamiento.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/RecursoDeAlmacenamiento.hpp
+	<stdio.h>
+	<cstring>
+	<sstream>
+	<iostream>
+	"campo.hpp"
+	"campo_entero.hpp"
+	"campo_booleano.hpp"
+	"campo_doble.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	"campo_cadena.hpp"
+	"esquema.hpp"
+	"clave.hpp"
+	"archivo.hpp"
+	"buffer.hpp"
+	"registro.hpp"
+	"RegistroLongitudFija.hpp"
+	"EstrategiaEspacioLibreBloque.hpp"
+	"EstrategiaAlmacenamiento.hpp"
+	"estrategia_indice.hpp"
+	"indice_b_sharp.hpp"
+	"indice_hash.hpp"
+	"estrategia_indice.hpp"
+	"EsquemaBloque.hpp"
+	"EstrategiaAlmacenamientoBloques.hpp"
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"indice_secuencial.hpp"
+	"EstrategiaRecurso.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/estrategia_indice.hpp
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	"esquema.hpp"
+	"registro.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/indice_b_sharp.hpp
+	<iostream>
+	"puntero_intrusivo.hpp"
+	"estrategia_indice.hpp"
+	"archivo.hpp"
+	"EstrategiaAlmacenamientoBSharp.hpp"
+	"EstrategiaEspacioLibreBloque.hpp"
+	"esquema.hpp"
+	"clave.hpp"
+	"comparador_clave.hpp"
+	"registro.hpp"
+	"bloque_interno_b_sharp.hpp"
+	"bloque_externo_b_sharp.hpp"
+	"resultado_insercion.hpp"
+	"resultado_balanceo.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/resultado_insercion.hpp
+	"registro.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/resultado_balanceo.hpp
+	"registro.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/indice_hash.hpp
+	"archivo.hpp"
+	"estrategia_indice.hpp"
+	"comparador_clave.hpp"
+	"bloque.hpp"
+	"hash_directory.hpp"
+	"hash_bucket.hpp"
+
+1260584788 /home/pablo/workspace/OrgDeDatos09/trunk/hash_directory.hpp
+	"almacenamiento.hpp"
+	"hash_bucket.hpp"
+	"EstrategiaAlmacenamientoDirectoryHash.hpp"
+	"EstrategiaAlmacenamientoBucketHash.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/RegistroLongitudFija.cpp
+	"RegistroLongitudFija.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/RegistroLongitudVariable.cpp
+	"RegistroLongitudVariable.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/SymbolContext.cpp
+	"SymbolContext.hpp"
+	<cstdlib>
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/TablaCompresor.cpp
+	"TablaCompresor.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/almacenamiento.cpp
+	"almacenamiento.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/archivo.cpp
+	"archivo.hpp"
+	<string.h>
+
+1260585314 source:/home/pablo/workspace/OrgDeDatos09/trunk/bloque.cpp
+	"bloque.hpp"
+
+1260585406 source:/home/pablo/workspace/OrgDeDatos09/trunk/bloque_b_sharp.cpp
+	"bloque_b_sharp.hpp"
+	<iostream>
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/bloque_externo_b_sharp.cpp
+	"bloque_externo_b_sharp.hpp"
+
+1260585340 source:/home/pablo/workspace/OrgDeDatos09/trunk/bloque_interno_b_sharp.cpp
+	"bloque_interno_b_sharp.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/buffer.cpp
+	"buffer.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/campo.cpp
+	"campo.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/campo_booleano.cpp
+	"campo_booleano.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/campo_cadena.cpp
+	"campo_cadena.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/campo_doble.cpp
+	"campo_doble.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/campo_entero.cpp
+	"campo_entero.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/campo_flotante.cpp
+	"campo_flotante.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/campo_largo.cpp
+	"campo_largo.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/clave.cpp
+	"clave.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/comparador_clave.cpp
+	"comparador_clave.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/componente.cpp
+	"componente.hpp"
+
+1260585442 source:/home/pablo/workspace/OrgDeDatos09/trunk/componentecompuesto.cpp
+	"componentecompuesto.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/contador_referencias.cpp
+	"contador_referencias.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/esquema.cpp
+	"esquema.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/estrategia_indice.cpp
+	"estrategia_indice.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/hash_bucket.cpp
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"hash_bucket.hpp"
+	"CampoStream.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/hash_directory.cpp
+	<math.h>
+	"hash_directory.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/indice_b_sharp.cpp
+	"indice_b_sharp.hpp"
+	<typeinfo>
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/indice_hash.cpp
+	"indice_hash.hpp"
+	<math.h>
+	<string>
+	<cstring>
+	<iostream>
+	<sstream>
+	<stdlib.h>
+	<stdio.h>
+	"campo.hpp"
+	"campo_entero.hpp"
+	"campo_booleano.hpp"
+	"campo_doble.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	"campo_cadena.hpp"
+	"buffer.hpp"
+	"almacenamiento.hpp"
+	"RegistroLongitudVariable.hpp"
+	"CampoStream.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/indice_secuencial.cpp
+	"indice_secuencial.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/main.cpp
+	<stdio.h>
+	<cstring>
+	<sstream>
+	<iostream>
+	"campo.hpp"
+	"campo_entero.hpp"
+	"campo_booleano.hpp"
+	"campo_doble.hpp"
+	"campo_flotante.hpp"
+	"campo_largo.hpp"
+	"campo_cadena.hpp"
+	"esquema.hpp"
+	"clave.hpp"
+	"archivo.hpp"
+	"buffer.hpp"
+	"registro.hpp"
+	"RegistroLongitudFija.hpp"
+	"EstrategiaEspacioLibreBloque.hpp"
+	"EstrategiaAlmacenamientoRegistros.hpp"
+	"EstrategiaAlmacenamientoBSharp.hpp"
+	"EstrategiaAlmacenamientoTexto.hpp"
+	"estrategia_indice.hpp"
+	"indice_b_sharp.hpp"
+	"indice_hash.hpp"
+	"estrategia_indice.hpp"
+	"EsquemaBloque.hpp"
+	"EstrategiaAlmacenamientoBloques.hpp"
+	"contador_referencias.hpp"
+	"puntero_intrusivo.hpp"
+	<cstdlib>
+	<ctime>
+	"indice_secuencial.hpp"
+	"RecursoDeAlmacenamiento.hpp"
+	"EstrategiaRecurso.hpp"
+	"EstrategiaRecursoEscrituraDirecta.hpp"
+	"EstrategiaRecursoEscrituraDiferida.hpp"
+	"EstrategiaRecursoUnAlmacenamiento.hpp"
+	"EstrategiaAlmacenamientoCompuestoComprimido.hpp"
+	"CompresorAritmetico.hpp"
+	"BloqueCompresor.hpp"
+	"EstrategiaAlmacenamientoCompuestoComprimido.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/registro.cpp
+	"registro.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/resultado_balanceo.cpp
+	"resultado_balanceo.hpp"
+
+1260584788 source:/home/pablo/workspace/OrgDeDatos09/trunk/resultado_insercion.cpp
+	"resultado_insercion.hpp"
+
+>>>>>>> .r297

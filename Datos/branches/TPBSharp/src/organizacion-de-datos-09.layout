@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Debug" />
+	<File name="BitStream.cpp" open="0" top="0" tabpos="4">
+		<Cursor position="2295" topLine="161" />
+	</File>
+	<File name="BitStream.hpp" open="0" top="0" tabpos="4">
+		<Cursor position="312" topLine="0" />
+	</File>
+	<File name="BloqueCompresor.cpp" open="1" top="1" tabpos="1">
+		<Cursor position="2705" topLine="47" />
+	</File>
+	<File name="BloqueCompresor.hpp" open="0" top="0" tabpos="3">
+		<Cursor position="1588" topLine="0" />
+	</File>
+	<File name="CampoStream.cpp" open="0" top="0" tabpos="5">
+		<Cursor position="4261" topLine="93" />
+	</File>
+	<File name="CampoStream.hpp" open="0" top="0" tabpos="3">
+		<Cursor position="71" topLine="35" />
+	</File>
+	<File name="CompresorAritmetico.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="984" topLine="0" />
+	</File>
+	<File name="CompresorAritmetico.hpp" open="0" top="0" tabpos="9">
+		<Cursor position="415" topLine="4" />
+	</File>
+	<File name="CompresorAritmeticoHelper.cpp" open="0" top="0" tabpos="1">
+		<Cursor position="417" topLine="0" />
+	</File>
+	<File name="CompresorAritmeticoHelper.hpp" open="0" top="0" tabpos="1">
+		<Cursor position="715" topLine="0" />
+	</File>
+	<File name="EsquemaBloque.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="597" topLine="11" />
+	</File>
+	<File name="EsquemaBloque.hpp" open="0" top="0" tabpos="0">
+		<Cursor position="973" topLine="18" />
+	</File>
+	<File name="EstrategiaAlmacenamiento.hpp" open="0" top="0" tabpos="0">
+		<Cursor position="0" topLine="15" />
+	</File>
+	<File name="EstrategiaAlmacenamientoBloques.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="11125" topLine="275" />
+	</File>
+	<File name="EstrategiaAlmacenamientoBloques.hpp" open="0" top="0" tabpos="0">
+		<Cursor position="2142" topLine="47" />
+	</File>
+	<File name="EstrategiaAlmacenamientoBucketHash.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="2792" topLine="67" />
+	</File>
+	<File name="EstrategiaAlmacenamientoCompuestoComprimido.cpp" open="1" top="0" tabpos="5">
+		<Cursor position="4819" topLine="11" />
+	</File>
+	<File name="EstrategiaAlmacenamientoCompuestoComprimido.hpp" open="0" top="0" tabpos="1">
+		<Cursor position="1951" topLine="38" />
+	</File>
+	<File name="EstrategiaAlmacenamientoRegistros.cpp" open="0" top="0" tabpos="5">
+		<Cursor position="6495" topLine="156" />
+	</File>
+	<File name="EstrategiaAlmacenamientoRegistros.hpp" open="0" top="0" tabpos="0">
+		<Cursor position="0" topLine="7" />
+	</File>
+	<File name="EstrategiaAlmacenamientoTexto.cpp" open="0" top="0" tabpos="5">
+		<Cursor position="463" topLine="6" />
+	</File>
+	<File name="EstrategiaRecursoEscrituraDiferida.cpp" open="1" top="1" tabpos="6">
+		<Cursor position="4810" topLine="86" />
+	</File>
+	<File name="EstrategiaRecursoEscrituraDiferida.hpp" open="0" top="0" tabpos="0">
+		<Cursor position="1942" topLine="32" />
+	</File>
+	<File name="EstrategiaRecursoEscrituraDirecta.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="622" topLine="97" />
+	</File>
+	<File name="EstrategiaRecursoUnAlmacenamiento.cpp" open="1" top="0" tabpos="3">
+		<Cursor position="1207" topLine="17" />
+	</File>
+	<File name="RecursoDeAlmacenamiento.cpp" open="1" top="0" tabpos="4">
+		<Cursor position="7151" topLine="98" />
+	</File>
+	<File name="RegistroLongitudFija.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="0" topLine="6" />
+	</File>
+	<File name="RegistroLongitudVariable.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="0" topLine="5" />
+	</File>
+	<File name="SymbolContext.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="725" topLine="6" />
+	</File>
+	<File name="TablaCompresor.cpp" open="0" top="0" tabpos="4">
+		<Cursor position="115" topLine="0" />
+	</File>
+	<File name="TablaCompresor.hpp" open="0" top="0" tabpos="0">
+		<Cursor position="458" topLine="0" />
+	</File>
+	<File name="almacenamiento.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="812" topLine="18" />
+	</File>
+	<File name="archivo.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="15817" topLine="124" />
+	</File>
+	<File name="archivo.hpp" open="0" top="0" tabpos="0">
+		<Cursor position="0" topLine="135" />
+	</File>
+	<File name="bloque_interno_b_sharp.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="841" topLine="0" />
+	</File>
+	<File name="bloque_interno_b_sharp.hpp" open="0" top="0" tabpos="0">
+		<Cursor position="520" topLine="8" />
+	</File>
+	<File name="componente.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="96" topLine="0" />
+	</File>
+	<File name="componente.hpp" open="0" top="0" tabpos="0">
+		<Cursor position="720" topLine="7" />
+	</File>
+	<File name="componentecompuesto.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="502" topLine="0" />
+	</File>
+	<File name="componentecompuesto.hpp" open="0" top="0" tabpos="0">
+		<Cursor position="67" topLine="65" />
+	</File>
+	<File name="contador_referencias.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="246" topLine="0" />
+	</File>
+	<File name="esquema.hpp" open="0" top="0" tabpos="0">
+		<Cursor position="0" topLine="47" />
+	</File>
+	<File name="estrategia_indice.hpp" open="0" top="0" tabpos="0">
+		<Cursor position="1553" topLine="33" />
+	</File>
+	<File name="indice_b_sharp.hpp" open="0" top="0" tabpos="0">
+		<Cursor position="12604" topLine="251" />
+	</File>
+	<File name="indice_hash.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="3871" topLine="99" />
+	</File>
+	<File name="indice_hash.hpp" open="0" top="0" tabpos="0">
+		<Cursor position="234" topLine="0" />
+	</File>
+	<File name="indice_secuencial.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="778" topLine="18" />
+	</File>
+	<File name="indice_secuencial.hpp" open="0" top="0" tabpos="1">
+		<Cursor position="3042" topLine="47" />
+	</File>
+<<<<<<< .mine
+	<File name="main.cpp" open="1" top="0" tabpos="3">
+=======
+	<File name="main.cpp" open="0" top="0" tabpos="3">
+>>>>>>> .r297
+		<Cursor position="14574" topLine="342" />
+	</File>
+	<File name="puntero_intrusivo.hpp" open="0" top="0" tabpos="0">
+		<Cursor position="10364" topLine="291" />
+	</File>
+	<File name="registro.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="3045" topLine="86" />
+	</File>
+	<File name="registro.hpp" open="0" top="0" tabpos="0">
+		<Cursor position="3965" topLine="121" />
+	</File>
+	<File name="tipo_almacenamiento.hpp" open="0" top="0" tabpos="0">
+		<Cursor position="262" topLine="0" />
+	</File>
+</CodeBlocks_layout_file>
