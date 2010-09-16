@@ -7,16 +7,13 @@
 
 #include "LeafNode.h"
 
-LeafNode::LeafNode(int type,unsigned int maxLong, unsigned int numBlock, unsigned int level) throw():Node(maxLong,numBlock,level){
-	this->typeElement=type;
-	this->setSizeFree(maxLong- sizeof(int)*4);
+LeafNode::LeafNode(int typeElement,unsigned int maxLong, unsigned int numBlock, unsigned int level) throw():Node(maxLong,numBlock,level){
     this->nextNode=-1;
 
 }
 LeafNode::LeafNode(int typeElement,unsigned int maxLong){
 	this->typeElement=typeElement;
 	this->setMaxLong(maxLong);
-	this->setSizeFree(maxLong - sizeof(int)*4);
 }
 LeafNode::~LeafNode()throw() {
 	// TODO Auto-generated destructor stub
@@ -31,8 +28,9 @@ bool LeafNode::isLeaf() const throw(){
 }
 
 bool LeafNode::posibleToAgregateComponent(Registry* registry) throw(){
-
-	return (this->getOcupedLong() + registry->getLongBytes() <= this->getMaxLong());
+   unsigned int ocupedLong=this->getOcupedLong();
+   unsigned int longBytes=registry->getLongBytes();
+	return (( ocupedLong+longBytes)  <= this->getMaxLong());
 
 }
 

@@ -22,14 +22,3 @@ void Registry::setKey(Key* key){
   this->key=key;
 }
 
-bool Registry::isInternal()
-{
-    return internal;
-}
-
-void Registry::setInternal(bool internal)
-{
-    this->internal = internal;
-}
-
-

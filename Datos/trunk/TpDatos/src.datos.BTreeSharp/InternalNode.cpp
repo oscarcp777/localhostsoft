@@ -8,14 +8,11 @@
 #include "InternalNode.h"
 
 using namespace std;
-InternalNode::InternalNode(unsigned int maxLong, unsigned int numBlock, unsigned int level) throw():Node(maxLong,numBlock,level){
-	this->typeElement= TYPE_KEY;
-	unsigned int sizeBusy=sizeof(int)*4+this->branchList.size()*4;
-	this->setSizeFree(maxLong- sizeBusy);
-	//TODO y las ramas???
+InternalNode::InternalNode(unsigned int typeElement,unsigned int maxLong, unsigned int numBlock, unsigned int level) throw():Node(maxLong,numBlock,level){
+	this->typeElement = typeElement+1;
 }
-InternalNode::InternalNode(unsigned int maxLong) {
-	this->typeElement= TYPE_KEY;
+InternalNode::InternalNode(unsigned int maxLong,unsigned int typeElement) {
+	this->typeElement= typeElement+1;
 	unsigned int sizeBusy=sizeof(int)*4+this->branchList.size();
 	this->setSizeFree(maxLong- sizeBusy);
 	this->setMaxLong(maxLong);
@@ -34,8 +31,10 @@ bool InternalNode::isLeaf() const throw(){
 }
 
 bool InternalNode::posibleToAgregateComponent(Registry* registry) throw(){
-
-	return (this->getOcupedLong() + registry->getLongBytes() <= this->getMaxLong());
+	 unsigned int ocupedLong=this->getOcupedLong();
+	   unsigned int longBytes=registry->getLongBytes();
+	   // se le agrega la longitud de una rama para ver si puede agrarse otro elemento
+		return (( ocupedLong+longBytes+sizeof(int))  <= this->getMaxLong());
 
 }
 void InternalNode::addBranch(int branch) throw(){
@@ -135,5 +134,5 @@ void InternalNode::pack(Buffer* buffer){
 }
 void InternalNode::unPack(Buffer* buffer){
 	int numElements = this->unPackMetadata(buffer);
-	this->unPackListRegistry(buffer,numElements,TYPE_KEY);
+	this->unPackListRegistry(buffer,numElements,this->typeElement);
 }

@@ -57,3 +57,6 @@ int Key::compareTo(Registry* registry){
 	Key* key=(Key*)registry;
 	return this->value.compare(key->getValue());
 }
+Registry* Key::cloneRegKey(){
+	return NULL;
+}

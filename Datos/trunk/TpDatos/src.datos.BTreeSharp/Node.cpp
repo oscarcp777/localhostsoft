@@ -8,6 +8,7 @@
 #include "Node.h"
 
 Node::Node(unsigned int maxLong, unsigned int numBlock, unsigned int level) throw():Block(maxLong,numBlock,level){
+
 }
 Node::Node(){
 

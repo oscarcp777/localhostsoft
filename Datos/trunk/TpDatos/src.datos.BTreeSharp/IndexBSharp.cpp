@@ -76,16 +76,34 @@ void IndexBSharp::writeBlockRoot() throw(){
      this->writeBlock(this->rootNode,0);
 }
 void IndexBSharp::writeBlock(Node* node,int numBlock) throw(){
-	if(node->getNumBlock()==9)
-		cout<<"";
 	this->buffer->clear();
 	node->pack(this->buffer);
+//	int var2=node->getOcupedLong()/4;
+//	if(node->getNumBlock()==9){
+//		buffer->init();
+//	for (int var = 0;var<= var2 ; ++var) {
+//       int num;
+//       buffer->unPackField(&num,sizeof(num));
+//       cout<<" | "<<num;
+//	}
+//	cout<<"fin del bloque "<<endl;
+//}
 	this->binaryFile->write(this->buffer->getData(),this->buffer->getMaxBytes(),numBlock*this->sizeBlock);
 }
 Node* IndexBSharp::readNode(unsigned int numBlock) throw() {
 	this->buffer->clear();
 	if(this->binaryFile->read(buffer->getData(),this->sizeBlock,this->sizeBlock*numBlock)){
 		Node* node = readNodeBytes(buffer);
+//		buffer->init();
+//		int var2=this->sizeBlock/4;
+//		if(node->getNumBlock()==9){
+//			for (int var = 0;var<= var2; ++var) {
+//			       int num;
+//			       buffer->unPackField(&num,sizeof(num));
+//			       cout<<" | "<<num;
+//				}
+//				cout<<"fin del bloque "<<endl;
+//			}
 		return node;
 	}else {
 		return NULL;
@@ -105,7 +123,7 @@ Node* IndexBSharp::readNodeBytes(Buffer* buffer) throw(){
 	return NULL;
 }
 Node* IndexBSharp::readInternalNodeBytes(Buffer* buffer) throw(){
-	InternalNode* internalNode= new InternalNode(this->sizeBlock);
+	InternalNode* internalNode= new InternalNode(this->sizeBlock,this->typeElement);
 	internalNode->unPack(buffer);
 	return internalNode;
 }
@@ -125,7 +143,7 @@ void IndexBSharp::splitRoot(ContainerInsertion* container) throw(){
 	// Escribe el bloque raiz en una nueva posicion
 	this->writeBlock(this->rootNode);
 	// Crea una nueva raiz
-	InternalNode* newRoot = new InternalNode(this->sizeBlock,0, this->rootNode->getLevel() + 1);
+	InternalNode* newRoot = new InternalNode(this->typeElement,this->sizeBlock,0, this->rootNode->getLevel() + 1);
 	newRoot->addBranch(positionFree);
 	newRoot->addBranch(container->getRightBlock());
 	newRoot->addComponent(container->getRegMidleKey());
@@ -228,7 +246,6 @@ bool IndexBSharp::insertInternalNode(InternalNode* internalNode,Registry* regist
 	int branchInsert = this->searchBranch(internalNode, registryKey);
 	// Leo el bloque por el cual insertar
 	Node* nodeInsert= this->readNode(branchInsert);
-
 	// Si el bloque existe
 	if (nodeInsert != NULL) {
 		// Considero que no hay sobreflujo al insertar en el bloque hijo
@@ -278,7 +295,7 @@ void IndexBSharp::insertInternalNodeFull(InternalNode* internalNode,Registry* re
 	// Busco numero de bloque libre
 	unsigned int numBlockFree = this->freeBlockController->searchSizeBusy();
 	// Creo nuevo bloque interno para dividir
-	InternalNode* newInternalNode = new InternalNode(this->sizeBlock, numBlockFree, internalNode->getLevel());
+	InternalNode* newInternalNode = new InternalNode(this->typeElement,this->sizeBlock, numBlockFree, internalNode->getLevel());
 
 	// Crea contenedor de registros para insertar ordenado el registro...
 	listRegistry.clear();
@@ -291,10 +308,14 @@ void IndexBSharp::insertInternalNodeFull(InternalNode* internalNode,Registry* re
 	internalNode->transferBranchs(branchList);
 	// Busca posicion de insercion para el registro...
 	unsigned int insertPos = searchPositionInsertInternalNode(registry, listRegistry.begin(), listRegistry.end());
-
+	for (std::list<Registry*>::iterator actual = listRegistry.begin(); actual != listRegistry.end(); ++actual) {
+				Registry* reg=*actual;
+			}
 	listRegistry.push_back(registry);
 	listRegistry.sort(comparatorRegistry);
-
+	for (std::list<Registry*>::iterator actual = listRegistry.begin(); actual != listRegistry.end(); ++actual) {
+			Registry* reg=*actual;
+		}
 	//adelanto el puntero
 	std::vector<int>::iterator itListBranchs = branchList.begin();
 	this->advanceVectorPointer(itListBranchs ,insertPos + 1);
@@ -306,7 +327,8 @@ void IndexBSharp::insertInternalNodeFull(InternalNode* internalNode,Registry* re
 	this->advanceListPointer(iteratorPosMedium,(listRegistry.size() / 2));
 
 	// Establece el elemento medio a subir en el resultado de insercion
-	container->setRegMidleKey(*iteratorPosMedium);
+	Registry* registryMedium=*iteratorPosMedium;
+	container->setRegMidleKey(registryMedium->clone());
 
 	// Inserta elementos a la izquierda del medio en bloque a dividir
 
@@ -397,7 +419,7 @@ int IndexBSharp::searchBranch(InternalNode* internalNode,Registry* registry) thr
 
 }
 Registry* IndexBSharp::extractKey(Registry* registry) throw(){
-	return registry->clone();
+	return registry->cloneRegKey();
 }
 Registry* IndexBSharp::searchLeafNode(LeafNode* leafNode,Registry* registry) throw(){
 	Registry* findRegistry;

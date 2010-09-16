@@ -152,3 +152,6 @@ Registry* Mail::clone(){
 int Mail::compareTo(Registry* registry){
 	return 0; //TODO implementar
 }
+Registry* Mail::cloneRegKey(){
+   return NULL;
+}

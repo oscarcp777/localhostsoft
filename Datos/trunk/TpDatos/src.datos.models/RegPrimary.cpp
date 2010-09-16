@@ -8,22 +8,24 @@
 #include "RegPrimary.h"
 #include "Key.h"
 #include "KeyIndexPrimary.h"
+#include "RegKeyPrimary.h"
 
 RegPrimary::RegPrimary() {
-	this->setInternal(false);
+}
 
-}
-RegPrimary::RegPrimary(bool internal) {
-	this->setInternal(internal);
-}
 RegPrimary::~RegPrimary() {
 	// TODO Auto-generated destructor stub
 }
 Registry* RegPrimary::clone(){
 	RegPrimary* regPrimary = new RegPrimary();
-	regPrimary->setInternal(true);
 	regPrimary->setKey((KeyIndexPrimary*)this->getKey()->clone());
+	regPrimary->setNumberBlock(this->numberBlock);
 	return regPrimary;
+}
+Registry* RegPrimary::cloneRegKey(){
+	RegKeyPrimary* regKeyPrimary = new RegKeyPrimary();
+	regKeyPrimary->setKey((KeyIndexPrimary*)this->getKey()->clone());
+	return regKeyPrimary;
 }
 bool RegPrimary::equals(Registry* registry){
 	KeyIndexPrimary* key=(KeyIndexPrimary*)registry->getKey();
@@ -31,13 +33,11 @@ bool RegPrimary::equals(Registry* registry){
 }
 void RegPrimary::pack(Buffer* buffer){
 	this->getKey()->pack(buffer);
-	if(!this->isInternal())
 	buffer->packField(&this->numberBlock,sizeof(this->numberBlock));
 }
 void RegPrimary::unPack(Buffer* buffer){
 	this->setKey(new KeyIndexPrimary(0));
 	this->getKey()->unPack(buffer);
-	if(!this->isInternal())
 	buffer->unPackField(&this->numberBlock,sizeof(this->numberBlock));
 }
 int RegPrimary::compareTo(Registry* registry){
@@ -45,22 +45,13 @@ int RegPrimary::compareTo(Registry* registry){
   return this->getKey()->compareTo(key);
 }
 unsigned int RegPrimary::getSize(){
-	int sizeBusyAll=0;
-	if(!this->isInternal())
-		sizeBusyAll=NUM_FIELDS_REG_PRIMARY*sizeof(int);
-	else{
-		KeyIndexPrimary* key=(KeyIndexPrimary*)this->getKey();
-		sizeBusyAll=key->getSize();
-	}
-
-    return sizeBusyAll;
+    return NUM_FIELDS_REG_PRIMARY*sizeof(int);
 }
 int RegPrimary::print(std::ostream& outStream){
 	this->getKey()->print(outStream);
-	if(!this->isInternal()){
 	outStream<<" | ";
-	outStream<<"numero Bloque: ";outStream<<this->numberBlock;
-	}
+	outStream<<"numero Bloque: ";
+	outStream<<this->numberBlock;
 	outStream<<endl;
 	return 1;
 }

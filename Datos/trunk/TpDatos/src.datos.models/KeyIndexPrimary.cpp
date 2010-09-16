@@ -13,7 +13,9 @@ this->value=value;
 }
 KeyIndexPrimary::KeyIndexPrimary() {
 }
-
+Registry* KeyIndexPrimary::cloneRegKey(){
+  return NULL;
+}
 KeyIndexPrimary::~KeyIndexPrimary() {
 	// TODO Auto-generated destructor stub
 }

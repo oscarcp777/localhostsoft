@@ -49,7 +49,7 @@ void TestStorage::testBlock(){
 	BinaryFile* file = new BinaryFile();
 	Block* block = new Block(200,0,0);
 	Mail* mail1 = new Mail();
-	mail1->setKey(new Key("100"));
+//	mail1->setKey(new Key("100"));
 	mail1->setDate("27/8/2009");
 	mail1->setFrom("richy");
 	mail1->setMessage("aprobamooooossss");
@@ -57,7 +57,7 @@ void TestStorage::testBlock(){
 	mail1->setTo("yogui");
 
 	Mail* mail2 = new Mail();
-	mail2->setKey(new Key("101"));
+//	mail2->setKey(new Key("101"));
 	mail2->setDate("27/18/2009");
 	mail2->setFrom("oscar");
 	mail2->setMessage("aprobamooooossss");
@@ -65,7 +65,7 @@ void TestStorage::testBlock(){
 	mail2->setTo("richy");
 
 	Mail* mail3 = new Mail();
-	mail3->setKey(new Key("102"));
+//	mail3->setKey(new Key("102"));
 	mail3->setDate("27/38/2009");
 	mail3->setFrom("richy");
 	mail3->setMessage("trabajode nada de nada");

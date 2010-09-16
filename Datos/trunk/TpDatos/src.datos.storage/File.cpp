@@ -40,7 +40,7 @@ bool File::read(char* buffer, int tamanio, int pos){
 
 	if (this->file.is_open()) {
 		if(pos>=0)
-			this->file.seekg(pos);
+			this->file.seekg(pos, std::ios_base::beg);
 		this->file.read(buffer,tamanio);
 	}
 	else {
@@ -57,8 +57,9 @@ bool File::read(char* buffer, int tamanio, int pos){
 }
 void File::readInteger(int* num, int pos){
 	if (this->file.is_open()) {
-			if(pos>=0)
-				this->file.seekg(pos);
+			if(pos>=0){
+				this->file.seekg(pos, std::ios_base::beg);
+			}
 			this->file.read(reinterpret_cast<char*>(num),sizeof(num));
 		}
 		else {
@@ -89,7 +90,9 @@ void File::write(char* buffer, int tamanio, int pos){
 
 	if (this->file.is_open()) {
 		if (pos >= 0)
-			this->file.seekp(pos);
+			this->file.seekp(pos, std::ios_base::beg);
+		else
+			this->file.seekp(0, std::ios_base::end);
 		this->file.write(buffer,tamanio);
 
 

@@ -34,6 +34,7 @@ public:
 	int getLongBytes();
 	Registry* clone();
 	int compareTo(Registry* registry);
+	Registry* cloneRegKey();
 private:
 	string from;
 	string to;

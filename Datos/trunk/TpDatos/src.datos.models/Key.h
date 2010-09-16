@@ -26,6 +26,7 @@ public:
     Registry* clone();
     void setValue(string value);
     virtual int compareTo(Registry* registry);
+    Registry* cloneRegKey();
 
 private:
 	string value;

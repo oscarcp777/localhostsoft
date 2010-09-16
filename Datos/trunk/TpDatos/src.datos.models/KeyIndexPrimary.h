@@ -23,6 +23,7 @@ public:
 	int getValue();
 	int compareTo(Registry* registry);
 	Registry* clone();
+	Registry* cloneRegKey();
 
 private:
 	int value;

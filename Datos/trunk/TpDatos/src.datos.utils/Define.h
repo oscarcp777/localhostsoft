@@ -17,8 +17,8 @@
 #define TYPE_REG_CLASIFICATION 0
 #define TYPE_REG_SELECTION 7
 #define TYPE_REG_PRIMARY 1
-#define TYPE_MAIL 2
-#define TYPE_KEY 3
+#define TYPE_REG_KEY_PRIMARY 2
+#define TYPE_MAIL 3
 #define TYPE_DIRECTION 4
 
 #endif /* DEFINE_H_ */

@@ -23,12 +23,10 @@ public:
 	virtual void unPack(Buffer* buffer)=0;
 	virtual int getLongBytes() = 0;
 	virtual Registry* clone() = 0;
+	virtual Registry* cloneRegKey() = 0;
 	virtual int compareTo(Registry* registry) = 0;
-    bool isInternal();
-    void setInternal(bool internal);
 protected:
 	Key* key;
-	bool internal;
 };
 
 #endif /* REGISTRY_H_ */

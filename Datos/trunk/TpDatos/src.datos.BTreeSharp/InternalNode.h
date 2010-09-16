@@ -16,8 +16,8 @@
 
 class InternalNode: public Node {
 public:
-	InternalNode(unsigned int maxLong);
-	InternalNode(unsigned int maxLong, unsigned int numBlock, unsigned int level)throw();
+	InternalNode(unsigned int maxLong,unsigned int typeElement);
+	InternalNode(unsigned int typeElement,unsigned int maxLong, unsigned int numBlock, unsigned int level)throw();
 	virtual ~InternalNode() throw();
 	bool isLeaf() const throw();
 	void pack(Buffer* buffer);

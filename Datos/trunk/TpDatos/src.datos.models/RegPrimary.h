@@ -13,7 +13,6 @@
 class RegPrimary : public Registry {
 public:
 	RegPrimary();
-	RegPrimary(bool internal);
 	virtual ~RegPrimary();
 	Registry* clone();
 	bool equals(Registry* comp);
@@ -25,6 +24,7 @@ public:
 	int print(std::ostream& outStream);
     int getNumberBlock() ;
     void setNumberBlock(int numberBlock);
+    Registry* cloneRegKey();
 
 
 private:
