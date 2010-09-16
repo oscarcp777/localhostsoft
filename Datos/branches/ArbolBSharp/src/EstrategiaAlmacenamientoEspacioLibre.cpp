@@ -26,11 +26,15 @@ unsigned int EstrategiaAlmacenamientoEspacioLibre::buscar_espacio_libre() throw(
 
 	while (contador < cantidad_elementos && !encontrado) {
 		this->archivo->leer((char*) &espacio_ocupado, contador);
-		if (this->es_espacio_libre(espacio_ocupado)) {
+		if (this->es_espacio_libre(espacio_ocupado) && contador!=1) {
 			encontrado = true;
 		} else {
 			++contador;
 		}
+	}
+	if (contador == 1){
+		this->archivo->agregar((char *) &espacio_ocupado);
+		contador++;
 	}
 
 	if (!encontrado) {
