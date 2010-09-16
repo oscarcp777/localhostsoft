@@ -892,6 +892,129 @@ void IndiceBSharp::insertar_bloque_interno_lleno(BloqueInternoBSharp::puntero& b
 	resultado.establecer_bloque_derecho(nuevoBloqueInterno->obtener_numero_bloque());
 }
 
+bool IndiceBSharp::insertar_bloque_interno_lleno2(BloqueInternoBSharp::puntero& bloqueInterno,BloqueInternoBSharp::puntero& bloqueHermano, const Registro::puntero& registroClave,
+	 ResultadoInsercion& resultado,Registro::puntero& registroPadre) throw() {
+	if (bloqueHermano == NULL)
+			return false;
+		// Busco numero de bloque libre
+		unsigned int numero_bloque_libre = this->estrategiaEspacioLibre->buscar_espacio_libre();
+		// Creo nuevo bloque interno para dividir
+		BloqueInternoBSharp::puntero nuevoBloqueInterno = new BloqueInternoBSharp(this->longitud_bloque, numero_bloque_libre, bloqueInterno->obtener_nivel());
+		unsigned int bloque_izquierdo = resultado.obtener_bloque_izquierdo();
+		unsigned int bloque_derecho = resultado.obtener_bloque_derecho();
+
+		// Crea contenedor de componentes para insertar ordenado el registro...
+		BloqueInternoBSharp::contenedor_componentes lista_registros;
+		// Crea contenedor de ramas para insertar la rama nueva...
+		BloqueInternoBSharp::contenedor_ramas lista_ramas;
+
+
+		//Registro menor del bloque actual
+		Registro::puntero registroActual = static_cast<Registro::puntero>(*(bloqueInterno->primer_componente()));
+
+		//Registro menor bloque hermano
+		Registro::puntero registroHermano = static_cast<Registro::puntero>(*(bloqueHermano->primer_componente()));
+
+
+		BloqueInternoBSharp::puntero bloqueIzquierdo;
+		BloqueInternoBSharp::puntero bloqueDerecho;
+		BloqueInternoBSharp::contenedor_componentes registrosBloqueIzquierdo;
+		BloqueInternoBSharp::contenedor_componentes registrosBloqueDerecho;
+		BloqueInternoBSharp::contenedor_ramas ramasBloqueIzquierdo;
+		BloqueInternoBSharp::contenedor_ramas ramasBloqueDerecho;
+
+		//Diferencio cual es el bloque izquierdo del derecho
+		if (this->comparadorClave->es_menor(this->clave, registroActual, registroHermano)) {
+			bloqueInterno->transferir_componentes(registrosBloqueIzquierdo);
+			bloqueHermano->transferir_componentes(registrosBloqueDerecho);
+			bloqueInterno->transferir_ramas(ramasBloqueIzquierdo);
+			bloqueInterno->transferir_ramas(ramasBloqueDerecho);
+			bloqueIzquierdo = bloqueInterno;
+			bloqueDerecho = bloqueHermano;
+		}else{
+			bloqueHermano->transferir_componentes(registrosBloqueIzquierdo);
+			bloqueInterno->transferir_componentes(registrosBloqueDerecho);
+			bloqueHermano->transferir_ramas(ramasBloqueIzquierdo);
+			bloqueInterno->transferir_ramas(ramasBloqueDerecho);
+			bloqueIzquierdo = bloqueHermano;
+			bloqueDerecho = bloqueInterno;
+		}
+		this->juntarListasComponentes(lista_registros,registrosBloqueIzquierdo,registrosBloqueDerecho);
+		this->juntarListaRamas(lista_ramas,ramasBloqueIzquierdo,ramasBloqueDerecho);
+		// Busca posicion de insercion para el registro padre...
+		unsigned int posicion_insercion = buscar_posicion_insercion_interna(registroPadre, lista_registros.begin(), lista_registros.end());
+		// Inserta ordenado el registro padre
+		lista_registros.insert(lista_registros.begin() + posicion_insercion, registroPadre);
+		// Busca posicion de insercion para el registroClave
+		posicion_insercion = buscar_posicion_insercion_interna(registroClave, lista_registros.begin(), lista_registros.end());
+		// Inserta ordenado el registro clave
+		lista_registros.insert(lista_registros.begin() + posicion_insercion, registroClave);
+
+		// Inserta la rama
+		lista_ramas.insert(lista_ramas.begin() + posicion_insercion + 1, bloque_derecho);
+
+
+		BloqueInternoBSharp::iterador_componentes componenteListaFinal = lista_registros.begin();
+		BloqueInternoBSharp::iterador_rama ramaListaFinal = lista_ramas.begin();
+		bloqueIzquierdo->agregar_rama(*ramaListaFinal);
+		ramaListaFinal++;
+		while (bloqueIzquierdo->puede_agregar_componente(*componenteListaFinal)){
+			bloqueIzquierdo->agregar_rama(*ramaListaFinal);
+			bloqueIzquierdo->agregar_componente(*componenteListaFinal);
+			componenteListaFinal++;
+			ramaListaFinal++;
+		}
+		bloqueDerecho->agregar_rama(*ramaListaFinal);
+		ramaListaFinal++;
+		// Establece el elemento izquierdo a subir en el resultado de insercion
+		resultado.establecer_registro_clave_izq(this->extraer_clave(*componenteListaFinal));
+
+		while (bloqueDerecho->puede_agregar_componente(*componenteListaFinal)){
+			bloqueDerecho->agregar_rama(*ramaListaFinal);
+			bloqueDerecho->agregar_componente(*componenteListaFinal);
+			componenteListaFinal++;
+			ramaListaFinal++;
+		}
+		nuevoBloqueInterno->agregar_rama(*ramaListaFinal);
+		ramaListaFinal++;
+		// Establece el elemento derecho a subir en el resultado de insercion
+		resultado.establecer_registro_clave_der(this->extraer_clave(*componenteListaFinal));
+		componenteListaFinal++;
+		while (componenteListaFinal != lista_registros.end()){
+			if (nuevoBloqueInterno->puede_agregar_componente(*componenteListaFinal)){
+				nuevoBloqueInterno->agregar_rama(*ramaListaFinal);
+				nuevoBloqueInterno->agregar_componente(*componenteListaFinal);
+			}
+			else
+				break;
+			componenteListaFinal++;
+			ramaListaFinal++;
+		}
+
+
+		// Actualiza espacio ocupado para el bloque a dividir
+		this->estrategiaEspacioLibre->escribir_espacio_ocupado(bloqueIzquierdo->obtener_numero_bloque(), bloqueIzquierdo->obtener_longitud_ocupada());
+		// Escribe bloque a dividir en disco
+		this->estrategiaAlmacenamiento->escribir_bloque(bloqueIzquierdo->obtener_numero_bloque(), bloqueIzquierdo, this->archivoIndice);
+		// Actualiza espacio ocupado para el bloque a dividir
+		this->estrategiaEspacioLibre->escribir_espacio_ocupado(bloqueDerecho->obtener_numero_bloque(), bloqueDerecho->obtener_longitud_ocupada());
+		// Escribe bloque a dividir en disco
+		this->estrategiaAlmacenamiento->escribir_bloque(bloqueDerecho->obtener_numero_bloque(), bloqueDerecho, this->archivoIndice);
+		// Actualiza espacio ocupado para el bloque nuevo
+		this->estrategiaEspacioLibre->escribir_espacio_ocupado(nuevoBloqueInterno->obtener_numero_bloque(), nuevoBloqueInterno->obtener_longitud_ocupada());
+		// Escribe bloque nuevo
+		this->estrategiaAlmacenamiento->escribir_bloque(nuevoBloqueInterno->obtener_numero_bloque(), nuevoBloqueInterno, this->archivoIndice);
+
+
+	// Establezco bloque izquierdo en resultado de insercion
+	resultado.establecer_bloque_izquierdo(bloqueIzquierdo->obtener_numero_bloque());
+	// Establezco bloque derecho en resultado de insercion
+	resultado.establecer_bloque_derecho(nuevoBloqueInterno->obtener_numero_bloque());
+	// Establezco bloque medio en resultado de insercion
+	resultado.establecer_bloque_medio(bloqueDerecho->obtener_numero_bloque());
+	return true;
+}
+
 unsigned int IndiceBSharp::buscar_posicion_insercion_externa(const Registro::puntero& registro, BloqueExternoBSharp::iterador_componentes primer_registro,
 	BloqueExternoBSharp::iterador_componentes ultimo_registro) throw() {
 	unsigned int posicion_insercion = 0;
