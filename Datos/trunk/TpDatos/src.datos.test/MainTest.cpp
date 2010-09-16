@@ -14,9 +14,9 @@ using namespace std;
 int main() {
 
 	TestBSharp* test= new TestBSharp();
-	test->testInsert();
+//	test->testInsert();
 
-//	test->testsearch();
+	test->testsearch();
 	delete test;
 /*
 	//TEST STORAGE

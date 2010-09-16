@@ -29,20 +29,22 @@ IndexBSharp::~IndexBSharp() {
 }
 
 void IndexBSharp::addRegistry(Registry* registry) throw(){
-	ContainerInsertion* containerInsertion=new ContainerInsertion();
-	bool isOverflow = false;
-	if (this->rootNode->isLeaf()){
-		LeafNode* leafNode = static_cast<LeafNode*>(this->rootNode);
-		isOverflow = this->insertLeafNode(leafNode, registry, containerInsertion);
-	} else {
-		InternalNode* internalNode  = static_cast<InternalNode*>(this->rootNode);
-		isOverflow = this->insertInternalNode(internalNode, registry, containerInsertion);
-	}
+	if(this->searchRegistry(registry) == NULL){
+		ContainerInsertion* containerInsertion=new ContainerInsertion();
+		bool isOverflow = false;
+		if (this->rootNode->isLeaf()){
+			LeafNode* leafNode = static_cast<LeafNode*>(this->rootNode);
+			isOverflow = this->insertLeafNode(leafNode, registry, containerInsertion);
+		} else {
+			InternalNode* internalNode  = static_cast<InternalNode*>(this->rootNode);
+			isOverflow = this->insertInternalNode(internalNode, registry, containerInsertion);
+		}
 
-	if (isOverflow) {
-		this->splitRoot(containerInsertion);
+		if (isOverflow) {
+			this->splitRoot(containerInsertion);
+		}
+		delete containerInsertion;
 	}
-   delete containerInsertion;
 }
 
 void IndexBSharp::deleteRegistry(Registry* registry) throw(){
@@ -422,7 +424,7 @@ Registry* IndexBSharp::extractKey(Registry* registry) throw(){
 	return registry->cloneRegKey();
 }
 Registry* IndexBSharp::searchLeafNode(LeafNode* leafNode,Registry* registry) throw(){
-	Registry* findRegistry;
+	Registry* findRegistry = NULL;
 	bool find = false;
 
 	if (leafNode != NULL) {
@@ -442,7 +444,7 @@ Registry* IndexBSharp::searchLeafNode(LeafNode* leafNode,Registry* registry) thr
 }
 Registry*  IndexBSharp::searchInternalNode(InternalNode* internalNode,Registry* registry) throw(){
 
-	Registry* findRegistry;
+	Registry* findRegistry = NULL;
 	if (internalNode != NULL) {
 		int searchBranch = this->searchBranch(internalNode,registry);
 		Node* readNode = this->readNode(searchBranch);
