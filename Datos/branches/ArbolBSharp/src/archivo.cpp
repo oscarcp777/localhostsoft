@@ -325,10 +325,34 @@ bool Archivo::escribir(const char* bytes, unsigned int posicion) throw() {
 	return exitoso;
 }
 
+bool Archivo::escribir(const char* bytes, unsigned int posicion, unsigned int tamanio) throw() {
+	unsigned int offset = posicion * this->obtener_longitud_en_bytes();
+	this->archivo.seekp(offset, std::ios_base::beg);
+	this->archivo.write(bytes, tamanio);
+	bool exitoso = this->archivo.good();
+
+	if (!exitoso) {
+		this->archivo.clear();
+	}
+	return exitoso;
+}
+
 bool Archivo::leer(char* bytes, unsigned int posicion) throw() {
 	unsigned int offset = posicion * this->obtener_longitud_en_bytes();
 	this->archivo.seekg(offset, std::ios_base::beg);
 	this->archivo.read(bytes, this->obtener_longitud_en_bytes());
+	bool exitoso = this->archivo.good();
+
+	if (!exitoso) {
+		this->archivo.clear();
+	}
+	return exitoso;
+}
+
+bool Archivo::leer(char* bytes, unsigned int posicion, unsigned int tamanio) throw() {
+	unsigned int offset = posicion * this->obtener_longitud_en_bytes();
+	this->archivo.seekg(offset, std::ios_base::beg);
+	this->archivo.read(bytes, tamanio);
 	bool exitoso = this->archivo.good();
 
 	if (!exitoso) {

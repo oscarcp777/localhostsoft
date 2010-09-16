@@ -96,10 +96,20 @@ class Archivo: public Almacenamiento {
 		 */
 		bool escribir(const char* bytes, unsigned int posicion) throw();
 		/**
+		 * Escribe una secuencia de bytes en el almacenamiento
+		 * en la posicion dada por indice con el tamanio especificado.
+		 */
+		bool escribir(const char* bytes, unsigned int posicion, unsigned int tamanio) throw();
+		/**
 		 * Leer una secuencia de bytes desde el almacenamiento
 		 * en la posicion dada por indice.
 		 */
 		bool leer(char* bytes, unsigned int posicion) throw();
+		/**
+		 * Leer una secuencia de bytes desde el almacenamiento
+		 * en la posicion dada por indice con el tamanio especificado.
+		 */
+		bool leer(char* bytes, unsigned int posicion, unsigned int tamanio) throw();
 		/**
 		 * Agrega una secuencia de bytes en el almacenamiento
 		 * al final, devuelve el numero de registro agregado.
