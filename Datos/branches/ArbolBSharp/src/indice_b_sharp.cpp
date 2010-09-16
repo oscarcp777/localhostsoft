@@ -355,6 +355,11 @@ void IndiceBSharp::insertar_bloque_externo_lleno2(BloqueExternoBSharp::puntero& 
 		BloqueExternoBSharp::contenedor_componentes registrosBloqueIzquierdo;
 		BloqueExternoBSharp::contenedor_componentes registrosBloqueDerecho;
 
+		//Registro menor del bloque actual
+		Registro::puntero registroActual = static_cast<Registro::puntero>(*(bloqueExterno->primer_componente()));
+		//Registro menor bloque hermano
+		Registro::puntero registroHermano = static_cast<Registro::puntero>(*(bloqueHermano->primer_componente()));
+
 		//Diferencio cual es el bloque izquierdo del derecho
 		if (this->comparadorClave->es_menor(this->clave, registroActual, registroHermano)) {
 			bloqueExterno->transferir_componentes(registrosBloqueIzquierdo);
@@ -384,31 +389,48 @@ void IndiceBSharp::insertar_bloque_externo_lleno2(BloqueExternoBSharp::puntero& 
 		///////resultado.establecer_registro_clave_media(this->extraer_clave(*posicion_medio));
 
 		// Inserta elementos a la izquierda del medio en bloque a dividir
-		for (BloqueExternoBSharp::iterador_componentes actual = lista_registros.begin(); actual != posicion_medio; ++actual) {
-			bloqueExterno->agregar_componente(*actual);
+		BloqueExternoBSharp::iterador_componentes componenteListaFinal = lista_registros.begin();
+		while (bloqueIzquierdo->puede_agregar_componente(*componenteListaFinal)){
+			bloqueIzquierdo->agregar_componente(*componenteListaFinal);
+			componenteListaFinal++;
 		}
 
-		// Inserta elementos a la derecha del medio en bloque nuevo
-		for (BloqueExternoBSharp::iterador_componentes actual = posicion_medio; actual != lista_registros.end(); ++actual) {
-			nuevoBloqueExterno->agregar_componente(*actual);
+		// Establece el elemento medio a subir en el resultado de insercion
+		resultado.establecer_registro_clave_izq(this->extraer_clave(*componenteListaFinal));////MODIFICAR ESTABLECER CALVE IZQ
+		while (bloqueDerecho->puede_agregar_componente(*componenteListaFinal)){
+			bloqueDerecho->agregar_componente(*componenteListaFinal);
+			componenteListaFinal++;
+		}
+		resultado.establecer_registro_clave_der(this->extraer_clave(*componenteListaFinal));////MODIFICAR ESTABLECER CALVE DER
+		while (componenteListaFinal != lista_registros.end()){
+			if (nuevoBloqueExterno->puede_agregar_componente(*componenteListaFinal))
+				nuevoBloqueExterno->agregar_componente(*componenteListaFinal);
+			else
+				break;
+			componenteListaFinal++;
 		}
 
 		// Enlaza a los bloques
-		nuevoBloqueExterno->establecer_bloque_siguiente(bloqueExterno->obtener_bloque_siguiente());
-		bloqueExterno->establecer_bloque_siguiente(nuevoBloqueExterno->obtener_numero_bloque());
+		nuevoBloqueExterno->establecer_bloque_siguiente(bloqueDerecho->obtener_bloque_siguiente());
+		bloqueDerecho->establecer_bloque_siguiente(nuevoBloqueExterno->obtener_numero_bloque());
 
 		// Actualiza espacio ocupado para el bloque a dividir
-		this->estrategiaEspacioLibre->escribir_espacio_ocupado(bloqueExterno->obtener_numero_bloque(), bloqueExterno->obtener_longitud_ocupada());
+		this->estrategiaEspacioLibre->escribir_espacio_ocupado(bloqueIzquierdo->obtener_numero_bloque(), bloqueIzquierdo->obtener_longitud_ocupada());
 		// Escribe bloque a dividir en disco
-		this->estrategiaAlmacenamiento->escribir_bloque(bloqueExterno->obtener_numero_bloque(), bloqueExterno, this->archivoIndice);
-
+		this->estrategiaAlmacenamiento->escribir_bloque(bloqueIzquierdo->obtener_numero_bloque(), bloqueIzquierdo, this->archivoIndice);
+		// Actualiza espacio ocupado para el bloque a dividir
+		this->estrategiaEspacioLibre->escribir_espacio_ocupado(bloqueDerecho->obtener_numero_bloque(), bloqueDerecho->obtener_longitud_ocupada());
+		// Escribe bloque a dividir en disco
+		this->estrategiaAlmacenamiento->escribir_bloque(bloqueDerecho->obtener_numero_bloque(), bloqueDerecho, this->archivoIndice);
 		// Actualiza espacio ocupado para el bloque nuevo
 		this->estrategiaEspacioLibre->escribir_espacio_ocupado(nuevoBloqueExterno->obtener_numero_bloque(), nuevoBloqueExterno->obtener_longitud_ocupada());
 		// Escribe bloque nuevo
 		this->estrategiaAlmacenamiento->escribir_bloque(nuevoBloqueExterno->obtener_numero_bloque(), nuevoBloqueExterno, this->archivoIndice);
 
 		// Establece numero de bloque izquierdo en resultado de insercion
-		resultado.establecer_bloque_izquierdo(bloqueExterno->obtener_numero_bloque());
+		resultado.establecer_bloque_izquierdo(bloqueIzquierdo->obtener_numero_bloque());
+		// Establece numero de bloque medio en resultado de insercion
+		resultado.establecer_bloque_medio(bloqueDerecho->obtener_numero_bloque());
 		// Establece numero de bloque derecho en resultado de insercion
 		resultado.establecer_bloque_derecho(nuevoBloqueExterno->obtener_numero_bloque());
 }
