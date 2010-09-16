@@ -197,6 +197,7 @@ bool IndiceBSharp::balancearBloquesExternos(const Registro::puntero& registro, B
 	}
 
 	// Establece el elemento medio a subir en el resultado de insercion
+	Registro::puntero copia = resultado.obtener_registro_clave_media();
 	resultado.establecer_registro_clave_media(this->extraer_clave(*componenteListaFinal));
 	while (componenteListaFinal != lista_registros.end()){
 		if (bloqueDerecho->puede_agregar_componente(*componenteListaFinal))
@@ -220,6 +221,9 @@ bool IndiceBSharp::balancearBloquesExternos(const Registro::puntero& registro, B
 			bloqueDerecho->agregar_componente(*componenteListaBloque);
 			componenteListaBloque++;
 		}
+
+		resultado.establecer_registro_clave_media(copia);
+
 		registrosBloqueIzquierdo.clear();
 		registrosBloqueDerecho.clear();
 		return false;
@@ -599,32 +603,32 @@ bool IndiceBSharp::balancearBloquesInternos(BloqueInternoBSharp::puntero& bloque
 			registrosBloqueIzquierdo.clear();
 			registrosBloqueDerecho.clear();
 
-
-			std::cout<<"LISTA COMPONENTES BLOQUE IZQ: "<< std::endl;
-			std::cout << "NUMERO BLOQUE: " << bloqueIzquierdo->obtener_numero_bloque() << " ";
-			std::cout << "NIVEL: " << bloqueIzquierdo->obtener_nivel() << " ";
-			std::cout << "COMPONENTES BLOQUE: ";
-			Bloque::iterador_componentes_constante act = bloqueIzquierdo->primer_componente();
-			Bloque::iterador_componentes_constante fin = bloqueIzquierdo->ultimo_componente();
-			while (act != fin) {
-				Registro::puntero registro = (Registro::puntero) *act;
-				this->imprimir_registro(registro, std::cout);
-				++act;
-					}
-			std::cout<<" FIN LISTA COMPONENTES BLOQUE IZQ "<< std::endl;
-
-			std::cout<<"LISTA COMPONENTES BLOQUE DER: "<< std::endl;
-			std::cout << "NUMERO BLOQUE: " << bloqueDerecho->obtener_numero_bloque() << " ";
-			std::cout << "NIVEL: " << bloqueDerecho->obtener_nivel() << " ";
-			std::cout << "COMPONENTES BLOQUE: ";
-			act = bloqueDerecho->primer_componente();
-			fin = bloqueDerecho->ultimo_componente();
-			while (act != fin) {
-				Registro::puntero registro = (Registro::puntero) *act;
-				this->imprimir_registro(registro, std::cout);
-				++act;
-			}
-			std::cout<<" FIN LISTA COMPONENTES BLOQUE DER "<< std::endl;
+			//SACAR
+//			std::cout<<"LISTA COMPONENTES BLOQUE IZQ: "<< std::endl;
+//			std::cout << "NUMERO BLOQUE: " << bloqueIzquierdo->obtener_numero_bloque() << " ";
+//			std::cout << "NIVEL: " << bloqueIzquierdo->obtener_nivel() << " ";
+//			std::cout << "COMPONENTES BLOQUE: ";
+//			Bloque::iterador_componentes_constante act = bloqueIzquierdo->primer_componente();
+//			Bloque::iterador_componentes_constante fin = bloqueIzquierdo->ultimo_componente();
+//			while (act != fin) {
+//				Registro::puntero registro = (Registro::puntero) *act;
+//				this->imprimir_registro(registro, std::cout);
+//				++act;
+//					}
+//			std::cout<<" FIN LISTA COMPONENTES BLOQUE IZQ "<< std::endl;
+//
+//			std::cout<<"LISTA COMPONENTES BLOQUE DER: "<< std::endl;
+//			std::cout << "NUMERO BLOQUE: " << bloqueDerecho->obtener_numero_bloque() << " ";
+//			std::cout << "NIVEL: " << bloqueDerecho->obtener_nivel() << " ";
+//			std::cout << "COMPONENTES BLOQUE: ";
+//			act = bloqueDerecho->primer_componente();
+//			fin = bloqueDerecho->ultimo_componente();
+//			while (act != fin) {
+//				Registro::puntero registro = (Registro::puntero) *act;
+//				this->imprimir_registro(registro, std::cout);
+//				++act;
+//			}
+//			std::cout<<" FIN LISTA COMPONENTES BLOQUE DER "<< std::endl;
 
 			bloqueIzquierdo->vaciar_ramas();
 			BloqueInternoBSharp::iterador_rama ramaListaBloque = ramasBloqueIzquierdo.begin();
@@ -643,30 +647,30 @@ bool IndiceBSharp::balancearBloquesInternos(BloqueInternoBSharp::puntero& bloque
 
 			resultado.establecer_registro_clave_media(copia);
 
-			std::cout<<"LISTA RAMAS IZQ: "<< std::endl;
-			BloqueInternoBSharp::iterador_rama_constante actualRama = bloqueIzquierdo->primer_rama();
-			BloqueInternoBSharp::iterador_rama_constante finRama = bloqueIzquierdo->ultima_rama();
-			std::cout << "RAMAS(";
-			while (actualRama != finRama) {
-				std::cout << " " << *actualRama;
-			    ++actualRama;
-			}
-			std::cout << ")";
-			std::cout << std::endl;
-			std::cout<<"FIN LISTA RAMAS IZQ: "<< std::endl;
-
-
-			std::cout<<"LISTA RAMAS DER: "<< std::endl;
-			actualRama = bloqueDerecho->primer_rama();
-			finRama = bloqueDerecho->ultima_rama();
-			std::cout << "RAMAS(";
-			while (actualRama != finRama) {
-				std::cout << " " << *actualRama;
-				++actualRama;
-			}
-			std::cout << ")";
-			std::cout << std::endl;
-			std::cout<<"FIN LISTA RAMAS DER: "<< std::endl;
+			//SACAR
+//			std::cout<<"LISTA RAMAS IZQ: "<< std::endl;
+//			BloqueInternoBSharp::iterador_rama_constante actualRama = bloqueIzquierdo->primer_rama();
+//			BloqueInternoBSharp::iterador_rama_constante finRama = bloqueIzquierdo->ultima_rama();
+//			std::cout << "RAMAS(";
+//			while (actualRama != finRama) {
+//				std::cout << " " << *actualRama;
+//			    ++actualRama;
+//			}
+//			std::cout << ")";
+//			std::cout << std::endl;
+//			std::cout<<"FIN LISTA RAMAS IZQ: "<< std::endl;
+//
+//			std::cout<<"LISTA RAMAS DER: "<< std::endl;
+//			actualRama = bloqueDerecho->primer_rama();
+//			finRama = bloqueDerecho->ultima_rama();
+//			std::cout << "RAMAS(";
+//			while (actualRama != finRama) {
+//				std::cout << " " << *actualRama;
+//				++actualRama;
+//			}
+//			std::cout << ")";
+//			std::cout << std::endl;
+//			std::cout<<"FIN LISTA RAMAS DER: "<< std::endl;
 
 			return false;
 		}
@@ -1066,29 +1070,29 @@ void IndiceBSharp::imprimir_registro(const Registro::puntero& registro, std::ost
 	Registro::iterador_campos_constante finCampo = registro->ultimo_campo();
 	streamSalida << "(";
 	while (actualCampo != finCampo) {
-		std::cout << actualCampo->first << ":";
+		std::cout << actualCampo->first << ": ";
 		Campo::puntero campo = actualCampo->second;
 		switch (campo->obtener_tipo_campo()) {
 			case TIPO_CAMPO_BOOLEANO:
-				streamSalida << (*(bool*) campo->obtener_valor()) << "";
+				streamSalida << (*(bool*) campo->obtener_valor()) << " ";
 				break;
 			case TIPO_CAMPO_CADENA:
-                                streamSalida << (*(std::string*) campo->obtener_valor()) << "";
+                                streamSalida << (*(std::string*) campo->obtener_valor()) << " ";
                                 break;
 			case TIPO_CAMPO_DOBLE:
-                                streamSalida << (*(double*) campo->obtener_valor()) << "";
+                                streamSalida << (*(double*) campo->obtener_valor()) << " ";
                                 break;
 			case TIPO_CAMPO_ENTERO:
-                                streamSalida << (*(int*) campo->obtener_valor()) << "";
+                                streamSalida << (*(int*) campo->obtener_valor()) << " ";
                                 break;
 			case TIPO_CAMPO_FLOTANTE:
-                                streamSalida << (*(float*) campo->obtener_valor()) << "";
+                                streamSalida << (*(float*) campo->obtener_valor()) << " ";
                                 break;
 			case TIPO_CAMPO_LARGO:
-                                streamSalida << (*(long*) campo->obtener_valor()) << "";
+                                streamSalida << (*(long*) campo->obtener_valor()) << " ";
                                 break;
 		}
 		++actualCampo;
 	}
-	streamSalida << ")";
+	streamSalida << ") ";
 }

@@ -182,6 +182,24 @@ void probarPunteroIntrusivo() {
 
 }
 
+string convertIntToString(int numero){
+
+	string retorno;
+	int temp;
+	int tempCountFiles = numero;
+
+	while((tempCountFiles/ 10) != 0){
+		temp = tempCountFiles % 10;
+		tempCountFiles = tempCountFiles/10;
+		temp =temp + 48;
+		retorno = (char)temp + retorno;
+	}
+
+	tempCountFiles = tempCountFiles + 48;
+	retorno = (char)tempCountFiles + retorno ;
+	return retorno;
+}
+
 void probarIndiceBSharpImprimir() {
 	Esquema::puntero esquema = new Esquema();
 	Clave::puntero clavePrimaria = new Clave();
@@ -189,7 +207,6 @@ void probarIndiceBSharpImprimir() {
 	esquema->agregar_campo("id", TIPO_CAMPO_ENTERO);
 	esquema->agregar_campo("nombre", TIPO_CAMPO_CADENA);
 	esquema->agregar_campo("apellido", TIPO_CAMPO_CADENA);
-	esquema->agregar_campo("lalala", TIPO_CAMPO_CADENA);
 
 	clavePrimaria->agregar_campo("id");
 
@@ -197,33 +214,39 @@ void probarIndiceBSharpImprimir() {
 	srand((unsigned) time(0));
 	int cantidad_insertar = 20; //rand() % RAND_MAX;
 
+
+	std::string stream;
+	std::string streamApellido;
 	for (int counter = 0; counter < cantidad_insertar; ++counter) {
 		RegistroLongitudVariable::puntero registro = new RegistroLongitudVariable(clavePrimaria);
-		std::stringstream stream;
-		std::stringstream streamApellido;
-		std::stringstream streamLalala;
-		int id_agregar = rand() % 100;
-		stream << "PABLO " << id_agregar; 
-		streamApellido << "VIVA " << id_agregar;
-		streamLalala << "LALALA " << id_agregar;
+
+		int id_agregar = rand() % 1000;
+
+		stream.append("SAN ").append(convertIntToString(id_agregar));
+		streamApellido.append("DONI ").append(convertIntToString(id_agregar));
+		std::cout << "----A Insertar----" << std::endl;
+		std::cout << "ID: " << id_agregar;
+		std::cout << " Nombre:\"" << stream << "\"";
+		std::cout << " Apellido:\"" << streamApellido << "\""<< std::endl;
+
 
 		registro->agregar_campo("id", new CampoEntero(id_agregar));
-		registro->agregar_campo("nombre", new CampoCadena(stream.str()));
-		registro->agregar_campo("apellido", new CampoCadena(streamApellido.str()));
-		registro->agregar_campo("lalala", new CampoCadena(streamLalala.str()));
+		registro->agregar_campo("nombre", new CampoCadena(stream));
+		registro->agregar_campo("apellido", new CampoCadena(streamApellido));
 
 
 		indice->agregar_registro(registro);
-		std::cout << "REGISTRO AGREGADO id: " << id_agregar << std::endl << std::endl;
+		std::cout << "REGISTRO AGREGADO id: " << id_agregar << std::endl;
 		std::cout << "longitud registro:  "<< registro->GetLongitudBytesAlmacenada() << std::endl;
 //		std::cout << *(std::string*) registro->obtener_campo("nombre")->obtener_valor() << std::endl;
 //      std::cout << *(std::string*) registro->obtener_campo("apellido")->obtener_valor() << std::endl;
-//		std::cout << *(std::string*) registro->obtener_campo("lalala")->obtener_valor() << std::endl;
 
-		std::cout << std::endl << std::endl;
 
+		stream.clear();
+		streamApellido.clear();
+		indice->imprimir(std::cout);
 	}
-	indice->imprimir(std::cout);
+
 
 //	int cantidad_busquedas = 4; //rand() % RAND_MAX;
 //	for (int counter = 0; counter < cantidad_busquedas; ++counter) {
@@ -257,13 +280,12 @@ void probarIndiceBSharp() {
 	esquema->agregar_campo("edad", TIPO_CAMPO_ENTERO);
 	clavePrimaria->agregar_campo("id");
 
-	IndiceBSharp::puntero indice = new IndiceBSharp("personas", 50, esquema, clavePrimaria, comparadorClave);
+	IndiceBSharp::puntero indice = new IndiceBSharp("personas", 100, esquema, clavePrimaria, comparadorClave);
 
 	for (int counter = 0; counter < 5; ++counter) {
 		std::string nombre;
 		int id;
 		int edad;
-		indice->imprimir(std::cout);
 		std::cout << "----INGRESE REGISTRO----" << std::endl;
 		std::cout << "Ingrese id (Clave primaria): ";
 		std::cin >> id;
@@ -285,28 +307,28 @@ void probarIndiceBSharp() {
 	std::ofstream salidaDebugIndice("debugIndice.log");
 	indice->imprimir(salidaDebugIndice);
 	salidaDebugIndice.close();
-	do {
-		std::cout << "--------PRUEBA DE BUSQUEDA-----" << std::endl;
-		int id;
-		std::cout << "Ingrese id a buscar: ";
-		std::cin >> id;
-		std::cout << "Se va a buscar el id: " << id << std::endl;
-		RegistroLongitudVariable::puntero registro = new RegistroLongitudVariable(clavePrimaria);
-		registro->agregar_campo("id", new CampoEntero(id));
-
-		Registro::puntero registroLeido = indice->buscar_registro(registro);
-
-		if (registroLeido != NULL) {
-			std::cout << "Registro encontrado..." << std::endl;
-			std::cout << "id: " << (*(int*)  registroLeido->obtener_campo("id")->obtener_valor()) << std::endl;
-			std::cout << "Nombre: " << (*(std::string*) registroLeido->obtener_campo("nombre")->obtener_valor()) << std::endl;
-			std::cout << "Edad: " << (*(int*) registroLeido->obtener_campo("edad")->obtener_valor()) << std::endl;
-		} else {
-			std::cout << "No se pudo encontrar registro con ese id..." << std::endl;
-		}
-		std::cout << "Desea buscar nuevamente? (SI / NO) " << std::endl;
-		std::cin >> opcion;
-	} while (opcion == "SI");
+//	do {
+//		std::cout << "--------PRUEBA DE BUSQUEDA-----" << std::endl;
+//		int id;
+//		std::cout << "Ingrese id a buscar: ";
+//		std::cin >> id;
+//		std::cout << "Se va a buscar el id: " << id << std::endl;
+//		RegistroLongitudVariable::puntero registro = new RegistroLongitudVariable(clavePrimaria);
+//		registro->agregar_campo("id", new CampoEntero(id));
+//
+//		Registro::puntero registroLeido = indice->buscar_registro(registro);
+//
+//		if (registroLeido != NULL) {
+//			std::cout << "Registro encontrado..." << std::endl;
+//			std::cout << "id: " << (*(int*)  registroLeido->obtener_campo("id")->obtener_valor()) << std::endl;
+//			std::cout << "Nombre: " << (*(std::string*) registroLeido->obtener_campo("nombre")->obtener_valor()) << std::endl;
+//			std::cout << "Edad: " << (*(int*) registroLeido->obtener_campo("edad")->obtener_valor()) << std::endl;
+//		} else {
+//			std::cout << "No se pudo encontrar registro con ese id..." << std::endl;
+//		}
+//		std::cout << "Desea buscar nuevamente? (SI / NO) " << std::endl;
+//		std::cin >> opcion;
+//	} while (opcion == "SI");
 
 }
 
@@ -1357,8 +1379,8 @@ void probarRecursoDeAlmacenamiento( void )
 int main(int argc, char** argv)
 {
 	/**pruebas indice b#**/
-    //probarIndiceBSharpImprimir();
-    probarIndiceBSharp();
+    probarIndiceBSharpImprimir();
+//    probarIndiceBSharp();
 
     /**pruebas hash**/
 	//probarHash();
