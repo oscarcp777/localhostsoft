@@ -9,7 +9,12 @@ ResultadoInsercion::~ResultadoInsercion() throw() {
 const Registro::puntero& ResultadoInsercion::obtener_registro_clave_media() const throw() {
 	return this->registro_clave_media;
 }
-
+const Registro::puntero& ResultadoInsercion::obtener_registro_clave_izq() const throw() {
+	return this->registro_clave_izq;
+}
+const Registro::puntero& ResultadoInsercion::obtener_registro_clave_der() const throw() {
+	return this->registro_clave_der;
+}
 void ResultadoInsercion::establecer_registro_clave_media(const Registro::puntero& registro_clave_media) throw() {
 	this->registro_clave_media = registro_clave_media;
 }

@@ -38,6 +38,16 @@ class ResultadoInsercion {
 		 */
 		const Registro::puntero& obtener_registro_clave_media() const throw();
 		/**
+		 * Obtiene el registro con la clave de dato izq luego de una division de bloques de 2 a 3.
+		 * @param Registro::puntero - El registro con la clave de dato izq luego de una division de bloques de 2 a 3.
+		 */
+		const Registro::puntero& obtener_registro_clave_izq() const throw();
+		/**
+		 * Obtiene el registro con la clave de dato derecha luego de una division de bloques de 2 a 3.
+		 * @param Registro::puntero - El registro con la clave de dato derecha luego de una division de bloques de 2 a 3.
+		 */
+		const Registro::puntero& obtener_registro_clave_der() const throw();
+		/**
 		 * Establece el numero de bloque izquierdo luego de una division de bloques.
 		 * @param numero_bloque - El numero de bloque izquierdo luego de una division de bloques.
 		 */
