@@ -15,8 +15,10 @@ int main() {
 
 	TestBSharp* test= new TestBSharp();
 //	test->testInsert();
+//	test->testsearch();
 
-	test->testsearch();
+//	test->testInsertRegClassification();
+	test->testsearchRegClassification();
 	delete test;
 /*
 	//TEST STORAGE

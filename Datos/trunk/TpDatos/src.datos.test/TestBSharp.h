@@ -15,6 +15,8 @@ public:
 	virtual ~TestBSharp();
 	void testInsert();
 	void testsearch();
+	void testInsertRegClassification();
+	void testsearchRegClassification();
 };
 
 #endif /* TESTBSHARP_H_ */

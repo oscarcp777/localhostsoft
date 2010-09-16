@@ -19,7 +19,7 @@ string Key::getValue(){
 	return this->value;
 }
 unsigned int Key::getSize(){
-		return this->value.length();
+	return this->value.size();
 }
 bool Key::equals(Registry* comp){
 	Key* key= (Key*)comp;
@@ -49,7 +49,10 @@ void Key::setValue(string value){
 
 Registry* Key::clone(){
 	Key* cloneKey = new Key();
-	cloneKey->setValue(this->getValue());
+	string copy = this->getValue();
+	cloneKey->setValue(copy);
+	cout<<"EN CLONE this->getValue()  "<<this->getValue()<<endl;
+	cout<<"EN CLONE cloneKey"<<cloneKey->getValue()<<endl;
 	return cloneKey;
 }
 
