@@ -100,11 +100,13 @@ void TestBSharp::testsearchRegClassification(){
      Key* key= new Key();
      key->setValue("29_numero");
      regClassif->setKey(key);
-     regClassif = (RegClassification*)indexBSharp->searchRegistry(regClassif);
-     if(regClassif == NULL)
+     RegClassification* regFind = (RegClassification*)indexBSharp->searchRegistry(regClassif);
+     if(regFind == NULL)
     	 cout<<"CLAVE: "<<key->getValue()<<" NO ENCONTRADA"<<endl;
      else
-    	 regClassif->print(std::cout);
+    	 regFind->print(std::cout);
+     delete regClassif;
+     delete regFind;
      delete indexBSharp;
 
 }

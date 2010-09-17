@@ -31,6 +31,7 @@ Block::~Block() throw(){
 		reg=*iterRegistry;
 		delete reg;
 	}
+	 delete this->factory;
 }
 unsigned int Block::getSize(){
 	return BLOCK_SIZE;
@@ -106,8 +107,6 @@ void Block::unPack(Buffer* buffer){
 void Block::unPackListRegistry(Buffer* buffer,int numberElements,int typeElement){
 	list<Registry*>::iterator iterRegistry;
 	Registry* reg;
-	//TODO llamar a la fabrica con una constante para saber que clase instanciar
-	FactoryOfRegistry* factory = new FactoryOfRegistry();
 	for(int i=0; i<numberElements; i++){
 		this->regList.push_back(factory->createRegistry(typeElement));
 	}

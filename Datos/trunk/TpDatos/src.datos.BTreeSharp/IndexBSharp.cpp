@@ -25,6 +25,7 @@ IndexBSharp::IndexBSharp(const std::string& nameFile,unsigned int sizeBlock,int 
 
 IndexBSharp::~IndexBSharp() {
 	this->binaryFile->close();
+	delete this->buffer;
 	delete this->freeBlockController;
 	delete this->binaryFile;
 }

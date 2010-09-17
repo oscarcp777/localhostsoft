@@ -12,6 +12,7 @@
 #include <iostream>
 #include "Component.h"
 #include "../src.datos.storage/Buffer.h"
+#include "FactoryOfRegistry.h"
 #include "Registry.h"
 #include "Key.h"
 #include "Mail.h"
@@ -95,6 +96,7 @@ private:
 	unsigned int numBlock;
 	unsigned int level;
 	unsigned int maxLong;
+	FactoryOfRegistry* factory;
 };
 
 #endif /* BLOCK_H_ */
