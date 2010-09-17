@@ -7,6 +7,7 @@
 
 #include "RegClassification.h"
 #include "Key.h"
+#include "RegKeyClassification.h"
 
 RegClassification::RegClassification() {
 	// TODO Auto-generated constructor stub
@@ -20,17 +21,18 @@ RegClassification::~RegClassification() {
 Registry* RegClassification::clone(){
 	RegClassification* regClone = new RegClassification();
 	regClone->setKey((Key*)this->getKey()->clone());
+	regClone->setAttribute(this->attribute);
 	return regClone;
 }
 bool RegClassification::equals(Registry* registry){
 	Key* key=(Key*)registry->getKey();
-	return this->getKey()->equals(key) && this->attribute.compare(((RegClassification*)registry)->getAttribute());
+	return this->getKey()->equals(key) ;
 }
 void RegClassification::pack(Buffer* buffer){
 	this->getKey()->pack(buffer);
 	int size = this->attribute.size();
 	buffer->packField(&size, sizeof(size));
-	buffer->packField(this->attribute.c_str(),this->attribute.size());
+	buffer->packField(this->attribute.c_str(),size);
 }
 void RegClassification::unPack(Buffer* buffer){
 	this->setKey(new Key());
@@ -45,21 +47,22 @@ int RegClassification::compareTo(Registry* registry){
 }
 unsigned int RegClassification::getSize(){
 	Key* key=(Key*)this->getKey();
-	return key->getSize()+this->attribute.size();
+	return key->getSize()+sizeof(int)+this->attribute.size();
 }
 int RegClassification::print(std::ostream& outStream){
-	Key* key=(Key*)this->getKey();
-	outStream<<this->attribute<<" ";
-	key->print(outStream);
+	this->getKey()->print(outStream);
+		outStream<<" | ";
+		outStream<<this->attribute;
+		outStream<<endl;
 	return 1;
 }
 int RegClassification::getLongBytes(){
-	return this->getSize()+this->attribute.size();
+	return this->getSize();
 }
 Registry* RegClassification::cloneRegKey(){
-	Key* key = new Key();
-	key->setValue(this->getKey()->getValue());
-	return key;
+	RegKeyClassification* regKeyClassification=new RegKeyClassification();
+	regKeyClassification->setKey(this->getKey());
+	return regKeyClassification;
 }
 std::string RegClassification::getAttribute() {
 	return this->attribute;

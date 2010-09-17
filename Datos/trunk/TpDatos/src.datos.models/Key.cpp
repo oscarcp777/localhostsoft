@@ -19,7 +19,7 @@ string Key::getValue(){
 	return this->value;
 }
 unsigned int Key::getSize(){
-	return this->value.size();
+	return this->value.size()+sizeof(int);
 }
 bool Key::equals(Registry* comp){
 	Key* key= (Key*)comp;
@@ -40,8 +40,7 @@ int  Key::print(std::ostream& outStream){
      return 1;
 }
 int Key::getLongBytes(){
-	//TODO
-	return this->value.length();
+	return this->getSize();
 }
 void Key::setValue(string value){
 	this->value = value;
@@ -51,8 +50,6 @@ Registry* Key::clone(){
 	Key* cloneKey = new Key();
 	string copy = this->getValue();
 	cloneKey->setValue(copy);
-	cout<<"EN CLONE this->getValue()  "<<this->getValue()<<endl;
-	cout<<"EN CLONE cloneKey"<<cloneKey->getValue()<<endl;
 	return cloneKey;
 }
 

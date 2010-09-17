@@ -7,7 +7,8 @@
 
 #include "IndexBSharp.h"
 bool comparatorRegistry( Registry* reg1, Registry* reg2) {
-	return (reg1->compareTo(reg2)==-1);
+	int compare= reg1->compareTo(reg2);
+		return (compare< 0);
 }
 IndexBSharp::IndexBSharp(const std::string& nameFile,unsigned int sizeBlock,int typeElement){
 	this->sizeBlock=sizeBlock;
@@ -29,7 +30,7 @@ IndexBSharp::~IndexBSharp() {
 }
 
 void IndexBSharp::addRegistry(Registry* registry) throw(){
-	if(this->searchRegistry(registry) == NULL){
+//	if(this->searchRegistry(registry) == NULL){
 		ContainerInsertion* containerInsertion=new ContainerInsertion();
 		bool isOverflow = false;
 		if (this->rootNode->isLeaf()){
@@ -45,7 +46,7 @@ void IndexBSharp::addRegistry(Registry* registry) throw(){
 		}
 		delete containerInsertion;
 	}
-}
+//}
 
 void IndexBSharp::deleteRegistry(Registry* registry) throw(){
 
@@ -89,13 +90,16 @@ void IndexBSharp::writeBlock(Node* node,int numBlock) throw(){
 //       cout<<" | "<<num;
 //	}
 //	cout<<"fin del bloque "<<endl;
-//}
+//}this->buffer-
+//	cout<<"escribo bloque "<< node->getNumBlock()<<endl;
+
 	this->binaryFile->write(this->buffer->getData(),this->buffer->getMaxBytes(),numBlock*this->sizeBlock);
 }
 Node* IndexBSharp::readNode(unsigned int numBlock) throw() {
 	this->buffer->clear();
 	if(this->binaryFile->read(buffer->getData(),this->sizeBlock,this->sizeBlock*numBlock)){
 		Node* node = readNodeBytes(buffer);
+//		cout<<"lee bloque "<< node->getNumBlock()<<endl;
 //		buffer->init();
 //		int var2=this->sizeBlock/4;
 //		if(node->getNumBlock()==9){
@@ -174,6 +178,8 @@ void IndexBSharp::insertLeafNodeNotFull(LeafNode* leafNode,Registry* registry) t
 	// Inserta el registro en el bloque externo
 	leafNode->addReg(registry);
 	leafNode->sortListRegistry();
+//	leafNode->print(cout);
+//	cout<<"termoni leaf "<<endl;
 	// Actualiza espacio ocupado para el bloque
 	this->freeBlockController->writeSizeBusy(leafNode->getNumBlock(), leafNode->getOcupedLong());
 	// Escribe bloque en disco
@@ -248,6 +254,7 @@ bool IndexBSharp::insertInternalNode(InternalNode* internalNode,Registry* regist
 	int branchInsert = this->searchBranch(internalNode, registryKey);
 	// Leo el bloque por el cual insertar
 	Node* nodeInsert= this->readNode(branchInsert);
+	nodeInsert->print(cout);
 	// Si el bloque existe
 	if (nodeInsert != NULL) {
 		// Considero que no hay sobreflujo al insertar en el bloque hijo
@@ -310,14 +317,9 @@ void IndexBSharp::insertInternalNodeFull(InternalNode* internalNode,Registry* re
 	internalNode->transferBranchs(branchList);
 	// Busca posicion de insercion para el registro...
 	unsigned int insertPos = searchPositionInsertInternalNode(registry, listRegistry.begin(), listRegistry.end());
-	for (std::list<Registry*>::iterator actual = listRegistry.begin(); actual != listRegistry.end(); ++actual) {
-				Registry* reg=*actual;
-			}
+
 	listRegistry.push_back(registry);
 	listRegistry.sort(comparatorRegistry);
-	for (std::list<Registry*>::iterator actual = listRegistry.begin(); actual != listRegistry.end(); ++actual) {
-			Registry* reg=*actual;
-		}
 	//adelanto el puntero
 	std::vector<int>::iterator itListBranchs = branchList.begin();
 	this->advanceVectorPointer(itListBranchs ,insertPos + 1);

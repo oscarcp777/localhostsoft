@@ -8,7 +8,8 @@
 #include "Block.h"
 #include "FactoryOfRegistry.h"
 bool comparator( Registry* reg1, Registry* reg2) {
-	return (reg1->compareTo(reg2)==-1);
+	int compare= reg1->compareTo(reg2);
+	return (compare< 0);
 
 }
 Block::Block(unsigned int maxLong, unsigned int numBlock, unsigned int level) throw(){

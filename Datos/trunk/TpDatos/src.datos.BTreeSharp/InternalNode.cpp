@@ -32,7 +32,6 @@ bool InternalNode::isLeaf() const throw(){
 
 bool InternalNode::posibleToAgregateComponent(Registry* registry) throw(){
 	 unsigned int ocupedLong=this->getOcupedLong();
-	 cout<<"clave en resgistro clonado "<<((Key*)registry)->getValue()<<endl;
 	 unsigned int longBytes=registry->getLongBytes();
 	   // se le agrega la longitud de una rama para ver si puede agrarse otro elemento
 		return (( ocupedLong+longBytes+sizeof(int))  <= this->getMaxLong());

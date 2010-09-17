@@ -12,8 +12,8 @@
 using namespace std;
 
 int main() {
-
 	TestBSharp* test= new TestBSharp();
+
 //	test->testInsert();
 //	test->testsearch();
 

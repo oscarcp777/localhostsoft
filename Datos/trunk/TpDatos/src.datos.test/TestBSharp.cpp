@@ -61,24 +61,27 @@ void TestBSharp::testsearch(){
 
 
 void TestBSharp::testInsertRegClassification(){
-     IndexBSharp* indexBSharp = new IndexBSharp("BTreeRegClassifi.dat",BLOCK_SIZE,TYPE_REG_CLASSIFICATION);
+     IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTreeRegClassifi.dat",BLOCK_SIZE,TYPE_REG_CLASSIFICATION);
 
 
-     for (int var = 0; var < 6; ++var) {
-    	 if(var==4)
+     for (int var = 0; var < 30; ++var) {
+    	 if(var==16)
     		 cout<<"";
 			 std::stringstream stream;
     	     std::stringstream attribute;
-			 stream << "numero ";
 			 attribute<<" attributo ";
 			 RegClassification* regClassif = new RegClassification();
-    	     stream<< rand()%200;//rand()%n los numeros van de 0 a n-1
-    	     //cout<<"stream "<<stream.str()<<endl;
-    		 Key* key= new Key(stream.str());
+//    	     stream<< rand()%200;//rand()%n los numeros van de 0 a n-1
+    	     stream<< var;
+    	     stream << "_numero";
+    	     string keyString=stream.str();
+    		 Key* key= new Key(keyString);
     		 regClassif->setKey(key);
-    		 attribute<<var*2;
-    		//cout<<"atributo: "<<attribute.str()<<endl;
+    		 attribute<<var*2+10;
     		 regClassif->setAttribute(attribute.str());
+    		 cout<<"###########################################################"<<endl;
+             cout<<" Inserto el : ";
+             regClassif->print(cout);
              indexBSharp->addRegistry(regClassif);
     	     cout<<endl;
     	     stream.clear();
@@ -87,15 +90,15 @@ void TestBSharp::testInsertRegClassification(){
 	}
 
      indexBSharp->print(std::cout);
-     delete indexBSharp;
-
+     cout<<" esto es una manteca bambino!!!"<<endl;
+       delete indexBSharp;
 }
 
 void TestBSharp::testsearchRegClassification(){
-     IndexBSharp* indexBSharp = new IndexBSharp("BTreeRegClassifi.dat",BLOCK_SIZE,TYPE_REG_CLASSIFICATION);
+     IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTreeRegClassifi.dat",BLOCK_SIZE,TYPE_REG_CLASSIFICATION);
      RegClassification* regClassif = new RegClassification();
      Key* key= new Key();
-     key->setValue("numero 177");
+     key->setValue("29_numero");
      regClassif->setKey(key);
      regClassif = (RegClassification*)indexBSharp->searchRegistry(regClassif);
      if(regClassif == NULL)
