@@ -1015,9 +1015,9 @@ int IndiceBSharp::insertar_bloque_interno(BloqueInternoBSharp::puntero& bloqueIn
 
 					// Si la rama hermana es nula el sobreflujo se da en la raiz, no inserto, la raiz se encarga
 					if (bloqueRamaHermana != NULL){
-						this->insertar_bloque_interno_lleno(bloqueInterno, resultado.obtener_registro_clave_media(),
-								resultado.obtener_bloque_izquierdo(),
-								resultado.obtener_bloque_derecho(), resultado);
+						this->insertar_bloque_interno_lleno2(bloqueInterno,bloqueRamaHermana, resultado.obtener_registro_clave_der(), resultado, registroPadre);
+
+
 					}
 				}
 			}
