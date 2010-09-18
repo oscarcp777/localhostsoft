@@ -7,6 +7,7 @@ ComponenteCompuesto::~ComponenteCompuesto() throw() {
 
 void ComponenteCompuesto::agregar_componente(Componente::puntero componente) throw() {
 	this->listaComponentes.push_back(componente);
+
 }
 
 void ComponenteCompuesto::agregar_componente(Componente::puntero componente, ComponenteCompuesto::iterador_componentes posicion) throw() {

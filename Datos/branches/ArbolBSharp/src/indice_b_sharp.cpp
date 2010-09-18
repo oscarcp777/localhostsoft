@@ -114,7 +114,7 @@ void IndiceBSharp::manejarDivisionRaizHoja(ResultadoInsercion& resultado, const 
 
 	// Inserta elementos en bloque izquierdo
 	BloqueExternoBSharp::iterador_componentes componenteListaFinal = lista_registros.begin();
-	while (nuevoBloqueIzq->puede_agregar_componente(*componenteListaFinal)){
+	while (nuevoBloqueIzq->hay_subflujo()){
 		nuevoBloqueIzq->agregar_componente(*componenteListaFinal);
 		componenteListaFinal++;
 	}
@@ -123,7 +123,7 @@ void IndiceBSharp::manejarDivisionRaizHoja(ResultadoInsercion& resultado, const 
 	resultado.establecer_registro_clave_izq(this->extraer_clave(*componenteListaFinal));
 
 	// Inserta elementos en bloque central
-	while (nuevoBloqueCen->puede_agregar_componente(*componenteListaFinal)){
+	while (nuevoBloqueCen->hay_subflujo()                ){
 		nuevoBloqueCen->agregar_componente(*componenteListaFinal);
 		componenteListaFinal++;
 	}
@@ -222,7 +222,7 @@ void IndiceBSharp::manejarDivisionRaizInterna(ResultadoInsercion& resultado) thr
 	nuevoBloqueIzq->agregar_rama(*ramaListaFinal);
 	std::cout<<"  RAMA: "<<*ramaListaFinal<<" - "<<std::endl;
 	ramaListaFinal++;
-	while (nuevoBloqueIzq->puede_agregar_componente(*componenteListaFinal)){
+	while (nuevoBloqueIzq->hay_subflujo()){
 		Registro::puntero registroAux = static_cast<Registro::puntero>(*componenteListaFinal);
 		imprimir_registro(registroAux,std::cout);
 		std::cout<<"  RAMA: "<<*ramaListaFinal<<" - "<<std::endl;
@@ -241,7 +241,7 @@ void IndiceBSharp::manejarDivisionRaizInterna(ResultadoInsercion& resultado) thr
 	componenteListaFinal++;
 
 	// Inserta elementos en bloque central
-	while (nuevoBloqueCen->puede_agregar_componente(*componenteListaFinal)){
+	while (nuevoBloqueCen->hay_subflujo()){
 		Registro::puntero registroAux = static_cast<Registro::puntero>(*componenteListaFinal);
 		imprimir_registro(registroAux,std::cout);
 		std::cout<<"  RAMA: "<<*ramaListaFinal<<" - "<<std::endl;
@@ -606,14 +606,14 @@ void IndiceBSharp::insertar_bloque_externo_lleno2(BloqueExternoBSharp::puntero& 
 
 		// Inserta elementos a la izquierda del medio en bloque a dividir
 		BloqueExternoBSharp::iterador_componentes componenteListaFinal = lista_registros.begin();
-		while (bloqueIzquierdo->puede_agregar_componente(*componenteListaFinal)){
+		while (bloqueIzquierdo->hay_subflujo()){
 			bloqueIzquierdo->agregar_componente(*componenteListaFinal);
 			componenteListaFinal++;
 		}
 
 		// Establece el elemento medio a subir en el resultado de insercion
 		resultado.establecer_registro_clave_izq(this->extraer_clave(*componenteListaFinal));////MODIFICAR ESTABLECER CALVE IZQ
-		while (bloqueDerecho->puede_agregar_componente(*componenteListaFinal)){
+		while (bloqueDerecho->hay_subflujo()){
 			bloqueDerecho->agregar_componente(*componenteListaFinal);
 			componenteListaFinal++;
 		}
@@ -660,7 +660,7 @@ bool IndiceBSharp::balancearBloquesInternos(BloqueInternoBSharp::puntero& bloque
 		return false;
 
 
-	const Registro::puntero& registroClave = resultado.obtener_registro_clave_media();
+	const Registro::puntero& registroClave = resultado.obtener_registro_clave_der();
 	unsigned int bloque_izquierdo = resultado.obtener_bloque_izquierdo();
 	unsigned int bloque_derecho = resultado.obtener_bloque_derecho();
 
@@ -1188,7 +1188,7 @@ bool IndiceBSharp::insertar_bloque_interno_lleno2(BloqueInternoBSharp::puntero& 
 		BloqueInternoBSharp::iterador_rama ramaListaFinal = lista_ramas.begin();
 		bloqueIzquierdo->agregar_rama(*ramaListaFinal);
 		ramaListaFinal++;
-		while (bloqueIzquierdo->puede_agregar_componente(*componenteListaFinal)){
+		while (bloqueIzquierdo->hay_subflujo()){
 			bloqueIzquierdo->agregar_rama(*ramaListaFinal);
 			bloqueIzquierdo->agregar_componente(*componenteListaFinal);
 			componenteListaFinal++;
@@ -1199,7 +1199,7 @@ bool IndiceBSharp::insertar_bloque_interno_lleno2(BloqueInternoBSharp::puntero& 
 		// Establece el elemento izquierdo a subir en el resultado de insercion
 		resultado.establecer_registro_clave_izq(this->extraer_clave(*componenteListaFinal));
 
-		while (bloqueDerecho->puede_agregar_componente(*componenteListaFinal)){
+		while (bloqueDerecho->hay_subflujo()){
 			bloqueDerecho->agregar_rama(*ramaListaFinal);
 			bloqueDerecho->agregar_componente(*componenteListaFinal);
 			componenteListaFinal++;

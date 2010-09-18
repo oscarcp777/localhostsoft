@@ -37,3 +37,7 @@ bool Bloque::puede_agregar_componente(Componente::puntero componente) const thro
 	return true;
 }
 
+unsigned int Bloque::obtener_espacio_metadata() const{
+	return (sizeof(unsigned int));
+}
+

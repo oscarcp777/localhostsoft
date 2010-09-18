@@ -48,6 +48,12 @@ class Bloque: public ComponenteCompuesto {
 		 * Almacena la longitud maxima en bytes del bloque.
 		 */
 		unsigned int longitud_maxima;
+	protected:
+		/**
+		 * Devuelve el espacio de metadata utilizado
+		 */
+		virtual unsigned int obtener_espacio_metadata() const;
+
 };
 
 #endif /** BLOQUE_HPP */

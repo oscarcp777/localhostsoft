@@ -89,11 +89,19 @@ class BloqueInternoBSharp: public BloqueBSharp {
 		 * Obtiene la longitud ocupada del bloque.
 		 */
 		virtual unsigned int obtener_longitud_ocupada() const throw();
+		/**
+		 * Devuelve si hay subflujo o no
+		 */
+		virtual bool hay_subflujo() const throw();
 	private:
 		/**
 		 * Almacena la lista de ramas del bloque interno b sharp.
 		 */
 		BloqueInternoBSharp::contenedor_ramas listaRamas;
+		/**
+		 * Devuelve el espacio de metadata utilizado
+		 */
+		virtual unsigned int obtener_espacio_metadata() const;
 };
 
 #endif /** BLOQUE_INTERNO_B_SHARP_HPP */

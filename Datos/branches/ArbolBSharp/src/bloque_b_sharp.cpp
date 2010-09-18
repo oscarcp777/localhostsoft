@@ -51,3 +51,10 @@ unsigned int BloqueBSharp::obtener_longitud_ocupada() const throw() {
 	return longitud_ocupada;
 }
 
+unsigned int BloqueBSharp::obtener_espacio_metadata() const{
+	unsigned int espacio_metadata = Bloque::obtener_espacio_metadata();
+	espacio_metadata += sizeof(unsigned int);
+	espacio_metadata += sizeof(unsigned int);
+	return espacio_metadata;
+}
+

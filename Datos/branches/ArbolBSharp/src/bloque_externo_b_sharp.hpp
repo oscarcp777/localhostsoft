@@ -42,11 +42,19 @@ class BloqueExternoBSharp: public BloqueBSharp {
 		 * Obtiene la longitud ocupada en bytes del bloque.
 		 */
 		virtual unsigned int obtener_longitud_ocupada() const throw();
+		/**
+		 * Devuelve si hay subflujo o no
+		 */
+		virtual bool hay_subflujo() const throw();
 	private:
 		/**
 		 * Almacena el bloque externo siguiente del arbol b sharp.
 		 */
 		int bloque_siguiente;
+		/**
+		 * Devuelve el espacio de metadata utilizado
+		 */
+		virtual unsigned int obtener_espacio_metadata() const;
 };
 
 #endif /** BLOQUE_EXTERNO_B_SHARP_HPP */
