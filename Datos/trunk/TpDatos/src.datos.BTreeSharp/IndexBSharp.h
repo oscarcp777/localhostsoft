@@ -69,7 +69,9 @@ private:
 		/**
 		 * Maneja el sobreflujo al dividirse el nodo raiz del indice b sharp.
 		 */
-		void splitRoot(ContainerInsertion* container) throw();
+		void splitLeafRoot(ContainerInsertion* container, Registry* registry) throw();
+
+		void splitInternalRoot(ContainerInsertion* container) throw();
 		/**
 		 * Inserta un registro en un bloque externo.
 		 * @param leafNode - El bloque externo donde insertar el registro.
@@ -77,7 +79,7 @@ private:
 		 * @param resultado - El resultado de la insercion del registro en el bloque externo.
 		 * @return boolean - Retorna true si hubo division del bloque externo.
 		 */
-		bool insertLeafNode(LeafNode* leafNode,Registry* registry,ContainerInsertion* container) throw();
+		int insertLeafNode(LeafNode* leafNode,Registry* registry,ContainerInsertion* container) throw();
 		/**
 		 * Inserta un registro en un bloque externo no lleno.
 		 * @param LeafNode - El bloque externo donde insertar el registro.
@@ -98,7 +100,7 @@ private:
 		 * @param container - El resultado de la insercion del registro en el bloque interno.
 		 * @preturn boolean - Retorna true si hubo division del bloque interno.
 		 */
-		bool insertInternalNode(InternalNode* internalNode,Registry* registry,ContainerInsertion* container) throw();
+		int insertInternalNode(InternalNode* internalNode,Registry* registry,ContainerInsertion* container,unsigned int brotherBlock,Registry* aux) throw();
 		/**
 		 * Inserta un registro en un bloque interno no lleno.
 		 * @param internalNode - El bloque interno donde insertar el registro.
@@ -160,6 +162,9 @@ private:
 		void writeBlock(Node* node,int position=-1) throw();
 		void advanceListPointer(list<Registry*>::iterator& iterator,unsigned int countAdvance);
 		void advanceVectorPointer(vector<int>::iterator& iterator,unsigned int countAdvance);
+		void mergeComponentList(list<Registry*> &listRegistry, list<Registry*> &listLeftNode,list<Registry*> &listRightNode);
+		void mergeBranchList(std::vector<int> &listBranch,std::vector<int> &listLeftNode,std::vector<int> &listRightNode);
+		bool balanceLeafNode(Registry* reg, LeafNode* actualNode, LeafNode* brotherNode,ContainerInsertion* container)throw();
 		/**
 		 * Almacena la longitud de los bloques del indice b sharp.
 		 */

@@ -23,4 +23,8 @@
 #define TYPE_DIRECTION 6
 #define TYPE_REG_SELECTION 7
 
+#define INSERTION_OK 0
+#define OVERFLOW 1
+#define BALANCE 2
+
 #endif /* DEFINE_H_ */
