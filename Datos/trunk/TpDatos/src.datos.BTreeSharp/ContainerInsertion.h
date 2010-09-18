@@ -16,15 +16,15 @@ public:
 
 	/**
 	 * Establece el regsitro con la clve de dato media luego de una division de bloques.
-	  */
+	 */
 	void setRegMidleKey(Registry* reg) throw();
 	/**
 	 * Obtiene el registro con la clave de dato media luego de una division de bloques.
 	 */
-	 Registry* getRegMidleKey() throw();
+	Registry* getRegMidleKey() throw();
 	/**
 	 * Establece el numero de bloque izquierdo luego de una division de bloques.
-	  */
+	 */
 	void setLeftBlock(unsigned int numBlock) throw();
 	/**
 	 * Obtiene el numero de bloque izquierdo luego de una division de bloques.
@@ -32,17 +32,39 @@ public:
 	unsigned int getLeftBlock() const throw();
 	/**
 	 * Establece el numero de bloque derecho luego de una division de bloques.
-	  */
+	 */
 	void setRightBlock(unsigned int numBlock) throw();
 	/**
 	 * Obtiene el numero de bloque derecho luego de una division de bloques.
 	 */
 	unsigned int getRightBlock() const throw();
+	/**
+	 * Obtiene el numero de bloque medio luego de una division de bloques de 2 a 3.
+	 * @return unsigned int - El numero de bloque medio luego de una division de bloques de 2 a 3.
+	 */
+	unsigned int getRigthMedium() const;
+	/**
+	 * Establece el numero de bloque medio luego de una division de bloques de 2 a 3.
+	 * @param numero_bloque - El numero de bloque medio luego de una division de bloques de 2 a 3.
+	 */
+	void setRigthMedium(unsigned int rigthMedium);
+    Registry *getLeftRegKey() const;
+    Registry *getRightRegKey() const;
+    void setLeftRegKey(Registry *leftRegKey);
+    void setRightRegKey(Registry *rightRegKey);
 private:
 	/**
 	 * Almacena el registro con la clave de dato media luego de una division de bloques.
 	 */
 	Registry* midleRegKey;
+	/**
+	 * Almacena el registro con la clave de dato izquierda luego de una division de bloques para el split de 2 a 3.
+	 */
+	Registry* rightRegKey;
+	/**
+	 * Almacena el registro con la clave de dato derecha luego de una division de bloques para el split de 2 a 3.
+	 */
+	Registry* leftRegKey;
 	/**
 	 * Almacena el numero de bloque izquierdo luego de una division de bloques.
 	 */
@@ -52,7 +74,10 @@ private:
 	 */
 	unsigned int rigthBlock;
 
-
+	/**
+	 * Almacena el numero de bloque medio luego de una division de bloques de 2 a 3.
+	 */
+	unsigned int rigthMedium;
 
 };
 

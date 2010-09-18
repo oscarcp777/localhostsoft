@@ -24,6 +24,13 @@ Block::Block(){
 void Block::sortListRegistry(){
      this->regList.sort(comparator);
 }
+void Block::replaceRegistry(Registry* registryOld,Registry* registryNew) throw(){
+	std::replace(this->regList.begin(),this->regList.end(),registryOld,registryNew);
+}
+
+void Block::clearListRegistry() throw(){
+   this->regList.clear();
+}
 Block::~Block() throw(){
 	list<Registry*>::iterator iterRegistry;
 	Registry* reg;

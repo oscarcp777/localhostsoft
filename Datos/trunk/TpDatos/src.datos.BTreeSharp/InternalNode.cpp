@@ -17,6 +17,9 @@ InternalNode::InternalNode(unsigned int maxLong,unsigned int typeElement) {
 	this->setSizeFree(maxLong- sizeBusy);
 	this->setMaxLong(maxLong);
 }
+void InternalNode::clearBranch() throw(){
+   this->branchList.clear();
+}
 InternalNode::~InternalNode() throw(){
 	// TODO Auto-generated destructor stub
 }

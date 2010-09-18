@@ -38,3 +38,37 @@ unsigned int ContainerInsertion::getRightBlock() const throw(){
 void ContainerInsertion::setRightBlock(unsigned int numBlock) throw(){
 	this->rigthBlock = numBlock;
 }
+
+unsigned int ContainerInsertion::getRigthMedium() const
+{
+    return rigthMedium;
+}
+
+void ContainerInsertion::setRigthMedium(unsigned int rigthMedium)
+{
+    this->rigthMedium = rigthMedium;
+}
+
+Registry *ContainerInsertion::getLeftRegKey() const
+{
+    return leftRegKey;
+}
+
+Registry *ContainerInsertion::getRightRegKey() const
+{
+    return rightRegKey;
+}
+
+void ContainerInsertion::setLeftRegKey(Registry *leftRegKey)
+{
+    this->leftRegKey = leftRegKey;
+}
+
+void ContainerInsertion::setRightRegKey(Registry *rightRegKey)
+{
+    this->rightRegKey = rightRegKey;
+}
+
+
+
+

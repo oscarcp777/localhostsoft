@@ -10,6 +10,7 @@
 
 #include <list>
 #include <iostream>
+#include<algorithm>
 #include "Component.h"
 #include "../src.datos.storage/Buffer.h"
 #include "FactoryOfRegistry.h"
@@ -40,6 +41,14 @@ public:
     void transferRegistry(list<Registry*> &listElement) throw();
     list<Registry*>::iterator iteratorBegin();
     list<Registry*>::iterator iteratorEnd();
+	/**
+	 * Reemplaza un componente por otro
+	 */
+	void replaceRegistry(Registry* registryOld,Registry* registryNew) throw();
+	/**
+	 * Vacia la lista de componentes del bloque
+	 */
+	void clearListRegistry() throw();
 
     /* Obtiene el numero de bloque en el arbol B sharp.
      */

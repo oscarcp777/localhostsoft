@@ -27,6 +27,10 @@ public:
 	void packListBranch(Buffer* buffer);
 	void unPackListBranch(Buffer* buffer, int numBranchs);
 	/**
+		 * Elimina todas las ramas del indice b sharp del contenedor de ramas.
+		 */
+		void clearBranch() throw();
+	/**
 	 * Agrega una rama al bloque interno b sharp.
 	 */
 	void addBranch(int branch) throw();
