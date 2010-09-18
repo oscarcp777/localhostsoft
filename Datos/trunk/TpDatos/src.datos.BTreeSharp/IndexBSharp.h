@@ -79,7 +79,7 @@ private:
 		 * @param resultado - El resultado de la insercion del registro en el bloque externo.
 		 * @return boolean - Retorna true si hubo division del bloque externo.
 		 */
-		int insertLeafNode(LeafNode* leafNode,Registry* registry,ContainerInsertion* container) throw();
+		int insertLeafNode(LeafNode* leafNode,Registry* registry,ContainerInsertion* container,unsigned int brotherNode) throw();
 		/**
 		 * Inserta un registro en un bloque externo no lleno.
 		 * @param LeafNode - El bloque externo donde insertar el registro.
@@ -92,7 +92,7 @@ private:
 		 * @param registry - El registro a insertar.
 		 * @param container - El resultado de insercion del registro en el bloque externo.
 		 */
-		void insertLeafNodeFull(LeafNode* leafNode,Registry* registry,ContainerInsertion* container) throw();
+		void insertLeafNodeFull(LeafNode* leafNode,LeafNode* brotherNode,Registry* registry,ContainerInsertion* container) throw();
 		/**
 		 * Inserta un registro en un bloque interno.
 		 * @param internalNode - El bloque interno donde insertar el registro.

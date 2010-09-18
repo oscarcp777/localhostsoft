@@ -36,7 +36,7 @@ void IndexBSharp::addRegistry(Registry* registry) throw(){
 		int answer = INSERTION_OK;
 		if (this->rootNode->isLeaf()){
 			LeafNode* leafNode = static_cast<LeafNode*>(this->rootNode);
-			answer = this->insertLeafNode(leafNode, registry, containerInsertion);
+			answer = this->insertLeafNode(leafNode, registry, containerInsertion,0);
 		} else {
 			InternalNode* internalNode  = static_cast<InternalNode*>(this->rootNode);
 			Registry* aux = NULL;
@@ -81,23 +81,13 @@ void IndexBSharp::readBlockRoot() throw(){
 	}
 }
 void IndexBSharp::writeBlockRoot() throw(){
-     this->writeBlock(this->rootNode,0);
+		Buffer* bufferRoot=new Buffer(this->sizeBlock*2);
+		this->rootNode->pack(bufferRoot);
+		this->binaryFile->write(bufferRoot->getData(),bufferRoot->getMaxBytes(),0);
 }
 void IndexBSharp::writeBlock(Node* node,int numBlock) throw(){
 	this->buffer->clear();
 	node->pack(this->buffer);
-//	int var2=node->getOcupedLong()/4;
-//	if(node->getNumBlock()==9){
-//		buffer->init();
-//	for (int var = 0;var<= var2 ; ++var) {
-//       int num;
-//       buffer->unPackField(&num,sizeof(num));
-//       cout<<" | "<<num;
-//	}
-//	cout<<"fin del bloque "<<endl;
-//}this->buffer-
-//	cout<<"escribo bloque "<< node->getNumBlock()<<endl;
-
 	this->binaryFile->write(this->buffer->getData(),this->buffer->getMaxBytes(),numBlock*this->sizeBlock);
 }
 Node* IndexBSharp::readNode(unsigned int numBlock) throw() {
@@ -300,21 +290,30 @@ void IndexBSharp::splitInternalRoot(ContainerInsertion* container) throw(){
 
 
 }
-int IndexBSharp::insertLeafNode(LeafNode* leafNode,Registry* registry,ContainerInsertion* container) throw(){
+int IndexBSharp::insertLeafNode(LeafNode* leafNode,Registry* registry,ContainerInsertion* container, unsigned int brotherNode) throw(){
 	// Consideramos que no hay sobreflujo
-	bool isOverflow = false;
+	bool answer = INSERTION_OK;
 	// Verifica que el bloque externo puede agregar el registro
 	if (leafNode->posibleToAgregateComponent(registry)) {
 		// Agrega el registro en el bloque externo no lleno
 		this->insertLeafNodeNotFull(leafNode,registry);
 	} else {
-		// Hubo sobreflujo
-		isOverflow = true;
-		// Agrega el registro en el bloque externo lleno
-		this->insertLeafNodeFull(leafNode,registry,container);
+		LeafNode* sisterBranchNode;
+		if(brotherNode != 0)
+			sisterBranchNode = (LeafNode*)this->readNode(brotherNode);
+		else
+			sisterBranchNode = NULL;
+
+		if(this->balanceLeafNode(registry,leafNode,sisterBranchNode,container)){
+			answer = BALANCE;
+		}else{
+			answer = OVERFLOW;
+			if(sisterBranchNode != NULL){
+				this->insertLeafNodeFull(leafNode,sisterBranchNode,registry,container);
+			}
+		}
 	}
-	// Devuelve si hubo sobreflujo o no
-	return isOverflow;
+	return answer;
 }
 
 void IndexBSharp::mergeComponentList(list<Registry*> &listRegistry, list<Registry*> &listLeftNode,list<Registry*> &listRightNode){
@@ -421,8 +420,12 @@ void IndexBSharp::insertLeafNodeNotFull(LeafNode* leafNode,Registry* registry) t
 //	cout<<"termoni leaf "<<endl;
 	// Actualiza espacio ocupado para el bloque
 	this->freeBlockController->writeSizeBusy(leafNode->getNumBlock(), leafNode->getOcupedLong());
-	// Escribe bloque en disco
-	this->writeBlock(leafNode, leafNode->getNumBlock());
+
+	if(leafNode->getNumBlock() == 0)
+		this->writeBlockRoot();
+
+	else// Escribe bloque en disco
+		this->writeBlock(leafNode, leafNode->getNumBlock());
 
 }
 void IndexBSharp::advanceListPointer(list<Registry*>::iterator& iterator,unsigned int countAdvance){
@@ -435,56 +438,74 @@ void IndexBSharp::advanceVectorPointer(vector<int>::iterator& iterator,unsigned 
     	  iterator++;
 	}
 }
-//todo hasta aca
-void IndexBSharp::insertLeafNodeFull(LeafNode* leafNode,Registry* registry,ContainerInsertion* container) throw(){
+
+void IndexBSharp::insertLeafNodeFull(LeafNode* leafNode,LeafNode* brotherNode,Registry* registry,ContainerInsertion* container) throw(){
 
 	// Busco numero de bloque libre
 	unsigned int numBlockFree = this->freeBlockController->searchSizeBusy();
 	// Creo nuevo bloque externo para dividir bloque..
 	LeafNode* newLeafNode = new LeafNode(this->typeElement,this->sizeBlock, numBlockFree,0);
 
-	// Crea contenedor de componentes para insertar ordenado el registro...
 	listRegistry.clear();
-	list<Registry*>::iterator iterator=listRegistry.begin();
-	// Transfiere todos los regsitros del bloque externo a la lista de registros para insertar ordenado el regitro...
-	leafNode->transferRegistry(listRegistry);
-	listRegistry.push_back(registry);
-	listRegistry.sort(comparatorRegistry);
 
-	// Obtiene elemento medio...
-	list<Registry*>::iterator iteratorPosMedium=listRegistry.begin();
-	this->advanceListPointer(iteratorPosMedium,(listRegistry.size() / 2));
+	LeafNode* leftNode;
+	LeafNode* rightNode;
+	list<Registry*> listRegLeftNode;
+	list<Registry*> listRegRightNode;
 
-	// Establece el elemento medio a subir en el resultado de insercion
-	container->setRegMidleKey(this->extractKey(*iteratorPosMedium));
-	// Inserta elementos a la izquierda del medio en bloque a dividir
-	for (list<Registry*>::iterator current = listRegistry.begin(); current != iteratorPosMedium; ++current) {
-		Registry* registry=*current;
-		leafNode->addComponent(registry);
-	}
-	// Inserta elementos a la derecha del medio en bloque nuevo
-	for (list<Registry*>::iterator current = iteratorPosMedium; current != listRegistry.end(); ++current) {
-		Registry* registry=*current;
-		newLeafNode->addComponent(registry);
+	Registry* actualReg = *(leafNode->iteratorBegin());
+	Registry* brotherReg = *(brotherNode->iteratorBegin());
+
+	if(actualReg->compareTo(brotherReg) < 0){
+		leafNode->transferRegistry(listRegLeftNode);
+		brotherNode->transferRegistry(listRegRightNode);
+		leftNode = leafNode;
+		rightNode = brotherNode;
+	}else{
+		brotherNode->transferRegistry(listRegLeftNode);
+		leafNode->transferRegistry(listRegRightNode);
+		leftNode = brotherNode;
+		rightNode = leafNode;
 	}
 
-	// Enlaza a los bloques
-	newLeafNode->setNextBlock(leafNode->getNextBlock());
-	leafNode->setNextBlock(newLeafNode->getNumBlock());
+	this->mergeComponentList(this->listRegistry,listRegLeftNode,listRegRightNode);
 
-	// Actualiza espacio ocupado para el bloque a dividir
-	this->freeBlockController->writeSizeBusy(leafNode->getNumBlock(), leafNode->getOcupedLong());
-	// Escribe bloque a dividir en disco
-	this->writeBlock(leafNode, leafNode->getNumBlock());
+	this->listRegistry.push_back(registry);
+	this->listRegistry.sort(comparatorRegistry);
 
-	// Actualiza espacio ocupado para el bloque nuevo
-	this->freeBlockController->writeSizeBusy(newLeafNode->getNumBlock(), newLeafNode->getOcupedLong());
-	// Escribe bloque nuevo
-	this->writeBlock(newLeafNode, newLeafNode->getNumBlock());
+	list<Registry*>::iterator itListRegistry = this->listRegistry.begin();
+	while(leftNode->posibleToAgregateComponent(*itListRegistry)){
+		leftNode->addComponent(*itListRegistry);
+		itListRegistry++;
+	}
 
+	container->setLeftRegKey(this->extractKey(*itListRegistry));
 
-	// Establece numero de bloque derecho en resultado de insercion
+	while(rightNode->posibleToAgregateComponent(*itListRegistry)){
+			rightNode->addComponent(*itListRegistry);
+			itListRegistry++;
+		}
+	container->setRightRegKey(this->extractKey(*itListRegistry));
+
+	while(itListRegistry != this->listRegistry.end()){
+		if(newLeafNode->posibleToAgregateComponent(*itListRegistry))
+			newLeafNode->addComponent(*itListRegistry);
+		else
+			break;
+		itListRegistry++;
+	}
+
+	newLeafNode->setNextBlock(rightNode->getNextBlock());
+	rightNode->setNextBlock(newLeafNode->getNumBlock());
+
+	this->writeBlock(leftNode,leftNode->getNumBlock());
+	this->writeBlock(rightNode,rightNode->getNumBlock());
+	this->writeBlock(newLeafNode,newLeafNode->getNumBlock());
+
+	container->setLeftBlock(leftNode->getNumBlock());
+	container->setRigthMedium(rightNode->getNumBlock());
 	container->setRightBlock(newLeafNode->getNumBlock());
+
 }
 int IndexBSharp::insertInternalNode(InternalNode* internalNode,Registry* registryKey,ContainerInsertion* container,unsigned int brotherBlock, Registry* aux) throw(){
 	// Considero que no hay sobreflujo al insertar en el bloque interno
