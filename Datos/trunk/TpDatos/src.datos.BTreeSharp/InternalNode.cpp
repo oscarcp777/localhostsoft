@@ -35,13 +35,8 @@ bool InternalNode::isLeaf() const throw(){
 
 bool InternalNode::isUnderflow()throw() {
 	unsigned int sizeBusy=Block::getSizeRegistry();
-	std::cout << "Bloque: " << this->getNumBlock() <<" Espacio Ocupado: " << sizeBusy << std::endl;
-
-	unsigned int percentUnderflow;
-	if (this->getNumElements() == 0)
-		percentUnderflow = (this->getLongBytes()/2);
-	else
-		percentUnderflow = (this->getLongBytes()/2)+(0.5*(sizeBusy/this->getNumElements()));
+	std::cout << "Bloque: " << this->getNumBlock() <<" Espacio Ocupado: "<<sizeBusy<<" peso promedio : " << this->getAverageWeight() << std::endl;
+    unsigned int percentUnderflow = (2*this->getLongBytes()/3)-(0.5*this->getAverageWeight());
 	std::cout << "Limite Subflujo: " <<  percentUnderflow << std::endl;
 	return (this->getOcupedLong()< percentUnderflow);
 

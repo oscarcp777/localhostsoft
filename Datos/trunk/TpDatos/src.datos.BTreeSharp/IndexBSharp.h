@@ -168,6 +168,11 @@ private:
 		bool balanceLeafNode(Registry* reg, LeafNode* actualNode, LeafNode* brotherNode,ContainerInsertion* container)throw();
 		int searchBranchSister(InternalNode* internalNode , Registry* registry) throw();
 		bool balanceInternalNode(InternalNode* internalNode, InternalNode* brotherNode, ContainerInsertion* container, Registry* fatherReg) throw();
+
+		/**
+		 * Calcula el peso promedio de los registros contenidos en los bloques a ser divididos
+		 */
+		unsigned int averageEstimate(list<Registry*>::iterator iteratorBegin,list<Registry*>::iterator iteratorEnd) throw() ;
 		/**
 		 * Almacena la longitud de los bloques del indice b sharp.
 		 */
