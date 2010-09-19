@@ -165,6 +165,7 @@ private:
 		void mergeComponentList(list<Registry*> &listRegistry, list<Registry*> &listLeftNode,list<Registry*> &listRightNode);
 		void mergeBranchList(std::vector<int> &listBranch,std::vector<int> &listLeftNode,std::vector<int> &listRightNode);
 		bool balanceLeafNode(Registry* reg, LeafNode* actualNode, LeafNode* brotherNode,ContainerInsertion* container)throw();
+		bool balanceInternalNode(InternalNode* internalNode, InternalNode* brotherNode, ContainerInsertion* container, Registry* fatherReg) throw();
 		/**
 		 * Almacena la longitud de los bloques del indice b sharp.
 		 */
