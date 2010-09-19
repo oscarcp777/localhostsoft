@@ -92,6 +92,15 @@ void IndexBSharp::writeBlock(Node* node,int numBlock) throw(){
 	this->buffer->clear();
 	node->pack(this->buffer);
 	this->binaryFile->write(this->buffer->getData(),this->buffer->getMaxBytes(),numBlock*this->sizeBlock);
+//	cout<<"escribe bloque "<< node->getNumBlock()<<endl;
+//			buffer->init();
+//			int var2=this->sizeBlock/4;
+//				for (int var = 0;var<= var2; ++var) {
+//				       int num;
+//				       buffer->unPackField(&num,sizeof(num));
+//				       cout<<" | "<<num;
+//					}
+//					cout<<"fin del bloque "<<endl;
 }
 Node* IndexBSharp::readNode(unsigned int numBlock) throw() {
 	this->buffer->clear();
@@ -100,14 +109,13 @@ Node* IndexBSharp::readNode(unsigned int numBlock) throw() {
 //		cout<<"lee bloque "<< node->getNumBlock()<<endl;
 //		buffer->init();
 //		int var2=this->sizeBlock/4;
-//		if(node->getNumBlock()==9){
 //			for (int var = 0;var<= var2; ++var) {
 //			       int num;
 //			       buffer->unPackField(&num,sizeof(num));
 //			       cout<<" | "<<num;
 //				}
 //				cout<<"fin del bloque "<<endl;
-//			}
+
 		return node;
 	}else {
 		return NULL;
@@ -144,11 +152,11 @@ void IndexBSharp::splitLeafRoot(ContainerInsertion* container, Registry* registr
 	LeafNode* newLeftNode = new LeafNode(this->typeElement,this->sizeBlock,positionFree,0);
 
 	positionFree = this->freeBlockController->searchFreeBlock();
-	LeafNode* newCenterNode = new LeafNode(this->typeElement,this->sizeBlock,positionFree+1,0);
+	LeafNode* newCenterNode = new LeafNode(this->typeElement,this->sizeBlock,positionFree,0);
 
 
 	positionFree = this->freeBlockController->searchFreeBlock();
-	LeafNode* newRightNode = new LeafNode(this->typeElement,this->sizeBlock,positionFree+2,0);
+	LeafNode* newRightNode = new LeafNode(this->typeElement,this->sizeBlock,positionFree,0);
 
 	this->listRegistry.clear();
 	this->rootNode->transferRegistry(this->listRegistry);
@@ -209,11 +217,11 @@ void IndexBSharp::splitInternalRoot(ContainerInsertion* container) throw(){
 	InternalNode* newLeftNode = new InternalNode(this->typeElement,this->sizeBlock,positionFree,this->rootNode->getLevel());
 
 	positionFree = this->freeBlockController->searchFreeBlock();
-	InternalNode* newCenterNode = new InternalNode(this->typeElement,this->sizeBlock,positionFree+1,this->rootNode->getLevel());
+	InternalNode* newCenterNode = new InternalNode(this->typeElement,this->sizeBlock,positionFree,this->rootNode->getLevel());
 
 
 	positionFree = this->freeBlockController->searchFreeBlock();
-	InternalNode* newRightNode = new InternalNode(this->typeElement,this->sizeBlock,positionFree+2,this->rootNode->getLevel());
+	InternalNode* newRightNode = new InternalNode(this->typeElement,this->sizeBlock,positionFree,this->rootNode->getLevel());
 
 	this->listRegistry.clear();
 	this->branchList.clear();
