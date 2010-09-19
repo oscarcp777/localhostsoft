@@ -59,8 +59,20 @@ class BloqueBSharp: public Bloque {
 		/**
 		 * Devuelve si hay subflujo o no
 		 */
-		virtual bool hay_subflujo() const throw() = 0;
-	private:
+		virtual bool hay_subflujo() const throw () = 0;
+
+
+		unsigned int getPesoPromedio() const
+		{
+			return pesoPromedio;
+		}
+
+		void setPesoPromedio(unsigned int pesoPromedio)
+		{
+			this->pesoPromedio = pesoPromedio;
+		}
+
+private:
 		/**
 		 * Almacena el numero de bloque en el arbol B sharp.
 		 */
@@ -69,6 +81,12 @@ class BloqueBSharp: public Bloque {
 		 * Almacena el nivel del bloque en el arbol b sharp.
 		 */
 		unsigned int nivel;
+
+		/**
+		 * Promedio pesos en bytes de la lista de registros a splitear
+		 */
+		unsigned int pesoPromedio;
+
 	protected:
 		/**
 		 * Devuelve el espacio de metadata utilizado

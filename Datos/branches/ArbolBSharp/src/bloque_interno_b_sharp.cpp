@@ -82,13 +82,9 @@ unsigned int BloqueInternoBSharp::obtener_longitud_ocupada() const throw() {
 
 bool BloqueInternoBSharp::hay_subflujo() const throw() {
 	unsigned int espacio_ocupado = this->obtener_longitud_ocupada() - this->obtener_espacio_metadata();
-	std::cout << "Bloque: " << this->obtener_numero_bloque() <<" Espacio Ocupado: " << espacio_ocupado << std::endl;
+	std::cout << "Bloque: " << this->obtener_numero_bloque() <<" Espacio Ocupado: " << espacio_ocupado << " Peso prom: " << this->getPesoPromedio() << std::endl;
 
-	unsigned int cota_subflujo;
-	if (this->cantidad_componentes() == 0)
-		cota_subflujo = (this->GetLongitudBytes()/2);
-	else
-		cota_subflujo = (this->GetLongitudBytes()/2)+(0.5*(espacio_ocupado/this->cantidad_componentes()));
+	unsigned int cota_subflujo = (2*this->GetLongitudBytes()/3)-(0.5*this->getPesoPromedio());
 	std::cout << "Limite Subflujo: " <<  cota_subflujo << std::endl;
 	if (this->obtener_longitud_ocupada() < cota_subflujo) {
 		return true;

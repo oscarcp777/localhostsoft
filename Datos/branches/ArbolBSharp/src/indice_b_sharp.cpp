@@ -112,6 +112,12 @@ void IndiceBSharp::manejarDivisionRaizHoja(ResultadoInsercion& resultado, const 
 	lista_registros.insert(lista_registros.begin() + posicion_insercion, registro);
 
 
+	unsigned int peso_promedio = this->calcularPromedio(lista_registros.begin(), lista_registros.end());
+	nuevoBloqueIzq->setPesoPromedio(peso_promedio);
+	nuevoBloqueCen->setPesoPromedio(peso_promedio);
+	nuevoBloqueDer->setPesoPromedio(peso_promedio);
+
+
 	// Inserta elementos en bloque izquierdo
 	BloqueExternoBSharp::iterador_componentes componenteListaFinal = lista_registros.begin();
 	while (nuevoBloqueIzq->hay_subflujo()){
@@ -173,6 +179,7 @@ void IndiceBSharp::manejarDivisionRaizHoja(ResultadoInsercion& resultado, const 
 }
 
 
+
 void IndiceBSharp::manejarDivisionRaizInterna(ResultadoInsercion& resultado) throw() {
 
 	unsigned int numero_bloque_libre;
@@ -215,6 +222,14 @@ void IndiceBSharp::manejarDivisionRaizInterna(ResultadoInsercion& resultado) thr
 
 	// Inserta la rama
 	lista_ramas.insert(lista_ramas.begin() + posicion_insercion + 1, resultado.obtener_bloque_derecho());
+
+	// Calcula peso promedio
+	//BloqueBSharp::pesoPromedio = this->calcularPromedio(lista_registros.begin(), lista_registros.end());
+
+	unsigned int peso_promedio = this->calcularPromedio(lista_registros.begin(), lista_registros.end());
+	nuevoBloqueIzq->setPesoPromedio(peso_promedio);
+	nuevoBloqueCen->setPesoPromedio(peso_promedio);
+	nuevoBloqueDer->setPesoPromedio(peso_promedio);
 
 	// Inserta elementos en bloque izquierdo
 	BloqueInternoBSharp::iterador_componentes componenteListaFinal = lista_registros.begin();
@@ -596,13 +611,12 @@ void IndiceBSharp::insertar_bloque_externo_lleno2(BloqueExternoBSharp::puntero& 
 		// Inserta ordenado el registro
 		lista_registros.insert(lista_registros.begin() + posicion_insercion, registro);
 
-		//DONI-FAQ    BALANCEAR POR TAMAÑO NO BUSCAR ELEMENTO MEDIO DE LA LISTA
-		//SE LLENA EL BLOQUE DE LA DERECHA HASTA SUPERAR LOS 2/3, LUEGO SE CARGA EL
-		// Obtiene elemento medio...
-		////////BloqueExternoBSharp::iterador_componentes posicion_medio = lista_registros.begin() + (lista_registros.size() / 2);
 
-		// Establece el elemento medio a subir en el resultado de insercion
-		///////resultado.establecer_registro_clave_media(this->extraer_clave(*posicion_medio));
+		unsigned int peso_promedio = this->calcularPromedio(lista_registros.begin(), lista_registros.end());
+		bloqueIzquierdo->setPesoPromedio(peso_promedio);
+		bloqueDerecho->setPesoPromedio(peso_promedio);
+		nuevoBloqueExterno->setPesoPromedio(peso_promedio);
+
 
 		// Inserta elementos a la izquierda del medio en bloque a dividir
 		BloqueExternoBSharp::iterador_componentes componenteListaFinal = lista_registros.begin();
@@ -689,7 +703,7 @@ bool IndiceBSharp::balancearBloquesInternos(BloqueInternoBSharp::puntero& bloque
 		bloqueInterno->transferir_componentes(registrosBloqueIzquierdo);
 		bloqueHermano->transferir_componentes(registrosBloqueDerecho);
 		bloqueInterno->transferir_ramas(ramasBloqueIzquierdo);
-		bloqueInterno->transferir_ramas(ramasBloqueDerecho);
+		bloqueHermano->transferir_ramas(ramasBloqueDerecho);
 		bloqueIzquierdo = bloqueInterno;
 		bloqueDerecho = bloqueHermano;
 	}else{
@@ -767,6 +781,7 @@ bool IndiceBSharp::balancearBloquesInternos(BloqueInternoBSharp::puntero& bloque
 	BloqueInternoBSharp::iterador_componentes componenteListaFinal = lista_registros.begin();
 	BloqueInternoBSharp::iterador_rama ramaListaFinal = lista_ramas.begin();
 	bloqueIzquierdo->agregar_rama(*ramaListaFinal);
+	std::cout<<"  RAMA: "<<*ramaListaFinal<<" - "<<std::endl;
 	ramaListaFinal++;
 	while (bloqueIzquierdo->puede_agregar_componente(*componenteListaFinal)){
 		Registro::puntero registroAux = static_cast<Registro::puntero>(*componenteListaFinal);
@@ -1158,7 +1173,7 @@ bool IndiceBSharp::insertar_bloque_interno_lleno2(BloqueInternoBSharp::puntero& 
 			bloqueInterno->transferir_componentes(registrosBloqueIzquierdo);
 			bloqueHermano->transferir_componentes(registrosBloqueDerecho);
 			bloqueInterno->transferir_ramas(ramasBloqueIzquierdo);
-			bloqueInterno->transferir_ramas(ramasBloqueDerecho);
+			bloqueHermano->transferir_ramas(ramasBloqueDerecho);
 			bloqueIzquierdo = bloqueInterno;
 			bloqueDerecho = bloqueHermano;
 		}else{
@@ -1183,6 +1198,11 @@ bool IndiceBSharp::insertar_bloque_interno_lleno2(BloqueInternoBSharp::puntero& 
 		// Inserta la rama
 		lista_ramas.insert(lista_ramas.begin() + posicion_insercion + 1, bloque_derecho);
 
+		unsigned int peso_promedio = this->calcularPromedio(lista_registros.begin(), lista_registros.end());
+		bloqueIzquierdo->setPesoPromedio(peso_promedio);
+		bloqueDerecho->setPesoPromedio(peso_promedio);
+		nuevoBloqueInterno->setPesoPromedio(peso_promedio);
+
 
 		BloqueInternoBSharp::iterador_componentes componenteListaFinal = lista_registros.begin();
 		BloqueInternoBSharp::iterador_rama ramaListaFinal = lista_ramas.begin();
@@ -1199,6 +1219,11 @@ bool IndiceBSharp::insertar_bloque_interno_lleno2(BloqueInternoBSharp::puntero& 
 		// Establece el elemento izquierdo a subir en el resultado de insercion
 		resultado.establecer_registro_clave_izq(this->extraer_clave(*componenteListaFinal));
 
+		Registro::puntero registroAux = static_cast<Registro::puntero>(*componenteListaFinal);
+		std::cout << "Registro clave izquierda a subir: ";
+		imprimir_registro(registroAux,std::cout);
+		componenteListaFinal++;
+
 		while (bloqueDerecho->hay_subflujo()){
 			bloqueDerecho->agregar_rama(*ramaListaFinal);
 			bloqueDerecho->agregar_componente(*componenteListaFinal);
@@ -1209,6 +1234,11 @@ bool IndiceBSharp::insertar_bloque_interno_lleno2(BloqueInternoBSharp::puntero& 
 		ramaListaFinal++;
 		// Establece el elemento derecho a subir en el resultado de insercion
 		resultado.establecer_registro_clave_der(this->extraer_clave(*componenteListaFinal));
+
+		registroAux = static_cast<Registro::puntero>(*componenteListaFinal);
+		std::cout << "Registro clave derecha a subir: ";
+		imprimir_registro(registroAux,std::cout);
+
 		componenteListaFinal++;
 		while (componenteListaFinal != lista_registros.end()){
 			if (nuevoBloqueInterno->puede_agregar_componente(*componenteListaFinal)){
@@ -1238,10 +1268,13 @@ bool IndiceBSharp::insertar_bloque_interno_lleno2(BloqueInternoBSharp::puntero& 
 
 	// Establezco bloque izquierdo en resultado de insercion
 	resultado.establecer_bloque_izquierdo(bloqueIzquierdo->obtener_numero_bloque());
+	std::cout << "bloqueIzquierdo: "<< bloqueIzquierdo->obtener_numero_bloque();
 	// Establezco bloque derecho en resultado de insercion
 	resultado.establecer_bloque_derecho(nuevoBloqueInterno->obtener_numero_bloque());
+	std::cout << "bloqueDerecho: "<< nuevoBloqueInterno->obtener_numero_bloque();
 	// Establezco bloque medio en resultado de insercion
 	resultado.establecer_bloque_medio(bloqueDerecho->obtener_numero_bloque());
+	std::cout << "bloqueMedio: "<< bloqueDerecho->obtener_numero_bloque();
 	return true;
 }
 
@@ -1274,6 +1307,20 @@ unsigned int IndiceBSharp::buscar_posicion_insercion_interna(const Registro::pun
 	        }
     	}
 	return posicion_insercion;
+}
+
+
+unsigned int IndiceBSharp::calcularPromedio(BloqueBSharp::iterador_componentes actual, BloqueBSharp::iterador_componentes ultimo_registro) throw() {
+	unsigned int pesoTotal = 0;
+	unsigned int contador = 0;
+	while (actual != ultimo_registro){
+			Registro::puntero registroAux = static_cast<Registro::puntero>(*actual);
+			pesoTotal += registroAux->GetLongitudBytes();
+			actual++;
+			contador++;
+	}
+	unsigned int pesoPromedio = pesoTotal/contador;
+	return pesoPromedio;
 }
 
 int IndiceBSharp::buscar_rama(const BloqueInternoBSharp::puntero& bloqueInterno, const Registro::puntero& registro) throw() {
@@ -1377,10 +1424,22 @@ void IndiceBSharp::imprimir_recursivo(const BloqueBSharp::puntero& bloqueActual,
 		streamSalida << "COMPONENTES BLOQUE: ";
 		Bloque::iterador_componentes_constante actualComponente = bloqueActual->primer_componente();
 		Bloque::iterador_componentes_constante finComponente = bloqueActual->ultimo_componente();
+		BloqueInternoBSharp::iterador_rama_constante actualRama;
+		if (!bloqueActual->es_hoja()) {
+			const BloqueInternoBSharp::puntero& bloque = static_cast<BloqueInternoBSharp::puntero>(bloqueActual);
+			actualRama  = bloque->primer_rama();
+			streamSalida << " " << *actualRama<< " ";
+			actualRama++;
+		}
+
 		while (actualComponente != finComponente) {
 			Registro::puntero registro = (Registro::puntero) *actualComponente;
 			this->imprimir_registro(registro, streamSalida);
+			if (!bloqueActual->es_hoja()) {
+					streamSalida << " " << *actualRama<< " ";
+			}
 			++actualComponente;
+			actualRama++;
 		}
 		streamSalida << "--ESPACIO OCUPADO-- " << bloqueActual->obtener_longitud_ocupada();
 		if (bloqueActual->es_hoja()) {

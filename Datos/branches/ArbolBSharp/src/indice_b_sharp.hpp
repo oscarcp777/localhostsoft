@@ -184,6 +184,10 @@ class IndiceBSharp: public EstrategiaIndice {
 		unsigned int buscar_posicion_insercion_interna(const Registro::puntero& registro, BloqueInternoBSharp::iterador_componentes primer_registro,
 			BloqueInternoBSharp::iterador_componentes ultimo_registro) throw();
 		/**
+		 * Calcula el peso promedio de los registros contenidos en los bloques a ser divididos
+		 */
+		unsigned int calcularPromedio(BloqueBSharp::iterador_componentes actual, BloqueBSharp::iterador_componentes ultimo_registro) throw();
+		/**
 		 * Busca la rama por la cual insertar o buscar un registro.
 		 */
 		int buscar_rama(const BloqueInternoBSharp::puntero& bloqueInterno, const Registro::puntero& registro) throw();
