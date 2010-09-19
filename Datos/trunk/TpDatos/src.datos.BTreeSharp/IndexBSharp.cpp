@@ -14,12 +14,15 @@ IndexBSharp::IndexBSharp(const std::string& nameFile,unsigned int sizeBlock,int 
 	this->sizeBlock=sizeBlock;
 	this->typeElement=typeElement;
 	this->binaryFile= new BinaryFile();
-	if(!this->binaryFile->isCreated(nameFile))
+	if(!this->binaryFile->isCreated(nameFile)){
 		this->binaryFile->create(nameFile);
-	else
+	    this->freeBlockController = new FreeBlockController(nameFile+"free",2);
+	}else{
 		this->binaryFile->open(nameFile);
+	    this->freeBlockController = new FreeBlockController(nameFile+"free",this->binaryFile->getCountBlockInFile(sizeBlock));
+	}
 	this->buffer= new Buffer(sizeBlock);
-	this->freeBlockController = new FreeBlockController(nameFile+"free",this->binaryFile->getCountBlockInFile(sizeBlock));
+
 	this->readBlockRoot();
 }
 

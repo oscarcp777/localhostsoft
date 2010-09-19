@@ -13,7 +13,7 @@
  */
 #define NUM_FIELDS_MAILS 6
 #define NUM_FIELDS_REG_PRIMARY 2
-#define BLOCK_SIZE 128
+#define BLOCK_SIZE 64
 
 #define TYPE_REG_PRIMARY 1
 #define TYPE_REG_KEY_PRIMARY 2

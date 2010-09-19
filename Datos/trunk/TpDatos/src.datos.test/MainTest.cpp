@@ -15,11 +15,11 @@ using namespace std;
 int main() {
 	TestBSharp* test= new TestBSharp();
 
-//	test->testInsert();
+	test->testInsert();
 //	test->testsearch();
 
 //	test->testInsertRegClassification();
-	test->testsearchRegClassification();
+//	test->testsearchRegClassification();
 	delete test;
 /*
 	//TEST STORAGE

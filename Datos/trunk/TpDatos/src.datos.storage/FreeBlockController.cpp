@@ -32,7 +32,7 @@ unsigned int FreeBlockController::searchFreeBlock() throw() {
 	if(this->vectorFreeBlock.size()!=0)
 	return this->vectorFreeBlock.back();
 	else{
-		unsigned int nextBlock=counterBlock++;
+		unsigned int nextBlock=++counterBlock;
 		if(nextBlock==1)
 			nextBlock++;
 		return nextBlock;
