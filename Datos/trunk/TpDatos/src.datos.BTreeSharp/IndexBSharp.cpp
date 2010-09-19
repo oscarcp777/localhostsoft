@@ -186,7 +186,7 @@ void IndexBSharp::splitLeafRoot(ContainerInsertion* container, Registry* registr
 	InternalNode* newRoot = new InternalNode(this->typeElement,2*this->sizeBlock,0, this->rootNode->getLevel() + 1);
 	newRoot->addBranch(newLeftNode->getNumBlock());
 	newRoot->addBranch(newCenterNode->getNumBlock());
-	newRoot->addBranch(newRightNode->getNextBlock());
+	newRoot->addBranch(newRightNode->getNumBlock());
 
 	newRoot->addComponent(container->getLeftRegKey());
 	newRoot->addComponent(container->getRightRegKey());
