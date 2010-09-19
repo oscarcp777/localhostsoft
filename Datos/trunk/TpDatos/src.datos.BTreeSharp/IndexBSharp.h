@@ -100,7 +100,7 @@ private:
 		 * @param container - El resultado de la insercion del registro en el bloque interno.
 		 * @preturn boolean - Retorna true si hubo division del bloque interno.
 		 */
-		int insertInternalNode(InternalNode* internalNode,Registry* registry,ContainerInsertion* container,unsigned int brotherBlock,Registry* aux) throw();
+		int insertInternalNode(InternalNode* internalNode,Registry* registry,ContainerInsertion* container,unsigned int brotherBlock,Registry* fatherRegistry) throw();
 		/**
 		 * Inserta un registro en un bloque interno no lleno.
 		 * @param internalNode - El bloque interno donde insertar el registro.

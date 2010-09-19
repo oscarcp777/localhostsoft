@@ -647,42 +647,101 @@ bool IndexBSharp::balanceInternalNode(InternalNode* internalNode, InternalNode* 
 	return false;
 }
 
-int IndexBSharp::insertInternalNode(InternalNode* internalNode,Registry* registryKey,ContainerInsertion* container,unsigned int brotherBlock, Registry* aux) throw(){
+
+int IndexBSharp::insertInternalNode(InternalNode* internalNode,Registry* registryKey,ContainerInsertion* container,unsigned int brotherBlock, Registry* fatherRegistry) throw(){
+
+
 	// Considero que no hay sobreflujo al insertar en el bloque interno
-	bool isOverflow = false;
-	// Busco la rama por la cual insertar
-	int branchInsert = this->searchBranch(internalNode, registryKey);
-	// Leo el bloque por el cual insertar
-	Node* nodeInsert= this->readNode(branchInsert);
-	nodeInsert->print(cout);
-	// Si el bloque existe
-	if (nodeInsert != NULL) {
-		// Considero que no hay sobreflujo al insertar en el bloque hijo
-		bool isOverflowChild = false;
-		if (nodeInsert->isLeaf()) {
-			LeafNode* leafNodeInsert =static_cast<LeafNode*>(nodeInsert);
-			// Inserto en el bloque externo hijo
-			isOverflowChild = this->insertLeafNode(leafNodeInsert, registryKey, container);
-		} else {
-			InternalNode* internalNodeInsert =static_cast<InternalNode*>(nodeInsert);
-			// Inserto en el bloque interno hijo
-			isOverflowChild = this->insertInternalNode(internalNodeInsert, registryKey, container);
+		int answer = INSERTION_OK;
+		// Busco la rama por la cual insertar
+		int insertBranch = this->searchBranch(internalNode, registryKey);
+
+		//OBTENER RAMA HERMANA PARA ENVIAR A LOS INSERTAR DE MAS ABAJO, ES LA RAMA DERECHA POR DEFECTO, SINO LA IZQ
+		int sisterBranch = this->searchBranchSister(internalNode, registryKey);
+
+		//Obtengo elemento actual del bloque por el cual bajo a la rama siguiente
+		list<Registry*>::iterator actualRegistry = internalNode->iteratorBegin();
+		list<Registry*>::iterator endRegistry = internalNode->iteratorEnd();
+		--endRegistry;
+
+		while (actualRegistry != endRegistry) {
+			if (registryKey->compareTo(*actualRegistry) < 0){
+				break;
+			}
+			actualRegistry++;
 		}
 
-		// Verifico si hubo sobrelujo al insertar en el bloque hijo
-		if (isOverflowChild) {
-			// Verifico si puedo agregar en el bloque interno
-			if (internalNode->posibleToAgregateComponent(container->getRegMidleKey())) {
-				// Inserto en el bloque interno no lleno
-				this->insertInternalNodeNotFull(internalNode, container->getRegMidleKey(),container->getRightBlock());
+		// Leo el bloque por el cual insertar
+		Node* nodeInsertBranch = this->readNode(insertBranch);
+
+		// Si el bloque existe
+		if (nodeInsertBranch != NULL) {
+			// Considero que no hay sobreflujo al insertar en el bloque hijo
+			int childAnswer = INSERTION_OK;
+			if (nodeInsertBranch->isLeaf()) {
+				//MANDAR TAMBIEN POR PARAMETRO EL NUMERO DE BLOQUE QUE CONSEGUI
+				LeafNode* leafInsertNode = (LeafNode*)nodeInsertBranch;
+				// Inserto en el bloque externo hijo
+				childAnswer = this->insertLeafNode(leafInsertNode, registryKey, container, sisterBranch);
 			} else {
-				// Inserto en el bloque interno lleno
-				isOverflow = true;
-				this->insertInternalNodeFull(internalNode, container->getRegMidleKey(),container->getRightBlock(),container);
+				InternalNode* internalInsertNode = (InternalNode*)nodeInsertBranch;
+				Registry* regFatherSon = (Registry*)(*actualRegistry);
+				// Inserto en el bloque interno hijo
+				childAnswer = this->insertInternalNode(internalInsertNode, registryKey, container, sisterBranch, regFatherSon);
+			}
+
+			//Se actualiza la clave cuando hay balanceo en el hijo
+			if (childAnswer == BALANCE){
+				// Agrego componente
+				Registry* replaceReg = (Registry*)(*actualRegistry);
+				internalNode->replaceRegistry(replaceReg, container->getRegMidleKey());
+
+				// Escribo bloque
+				this->writeBlock(internalNode,internalNode->getNumBlock());
+			}
+
+			// Verifico si hubo sobrelujo al insertar en el bloque hijo
+			if (childAnswer == OVERFLOW) {
+				// Verifico si puedo agregar en el bloque interno
+				Registry* replaceReg = (Registry*)(*actualRegistry);
+				internalNode->replaceRegistry(replaceReg, container->getLeftRegKey());
+
+				if (internalNode->posibleToAgregateComponent(container->getRightRegKey())){
+					// Inserto en el bloque interno no lleno
+					this->insertInternalNodeNotFull(internalNode, container->getRightRegKey(),container->getRightBlock());
+
+				} else {
+
+					// LEO BLOQUE DE LA DIR DEL HERMANO
+					InternalNode* branchSisterNode;
+
+					if (brotherBlock != 0)
+						branchSisterNode = (InternalNode*)this->readNode(brotherBlock);
+					else
+						branchSisterNode = NULL;
+
+
+
+					// BALANCEO
+					if (this->balanceInternalNode(internalNode, branchSisterNode, container, fatherRegistry)){
+						// Hubo balanceo
+						answer = BALANCE;
+					}else{
+						// Inserto en el bloque interno lleno
+						answer = OVERFLOW;
+
+						// Si la rama hermana es nula el sobreflujo se da en la raiz, no inserto, la raiz se encarga
+						if (branchSisterNode != NULL){
+							this->insertInternalNodeFull(internalNode,branchSisterNode, container->getRightRegKey(), container, fatherRegistry);
+
+
+						}
+					}
+				}
 			}
 		}
-	}
-	return isOverflow;
+
+		return answer;
 }
 void IndexBSharp::insertInternalNodeNotFull(InternalNode* internalNode,Registry* registryKey,unsigned int rightBlock) throw(){
 	unsigned int insertPosition = this->searchPositionInsertInternalNode(registryKey, internalNode->iteratorBegin(), internalNode->iteratorEnd());
@@ -698,8 +757,12 @@ void IndexBSharp::insertInternalNodeNotFull(InternalNode* internalNode,Registry*
 	// Actualizo espacio libre
 	this->freeBlockController->writeSizeBusy(internalNode->getNumBlock(), internalNode->getOcupedLong());
 	// Escribo bloque
-	this->writeBlock(internalNode, internalNode->getNumBlock());
+	if (internalNode->getNumBlock() == 0)
+		this->writeBlockRoot();
+	else
+		this->writeBlock(internalNode, internalNode->getNumBlock());
 }
+
 void IndexBSharp::insertInternalNodeFull(InternalNode* internalNode,Registry* registry,unsigned int rightBlock,ContainerInsertion* container) throw(){
 	// Busco numero de bloque libre
 	unsigned int numBlockFree = this->freeBlockController->searchSizeBusy();
