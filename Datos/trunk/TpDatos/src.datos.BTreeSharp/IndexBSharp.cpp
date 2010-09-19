@@ -841,7 +841,7 @@ bool IndexBSharp::insertInternalNodeFull(InternalNode* internalNode,InternalNode
 		iteratorBranchsFinal++;
 		// Establece el elemento izquierdo a subir en el resultado de insercion
 		container->setLeftRegKey(this->extractKey(*iteratorListRegFinal));
-
+		iteratorListRegFinal++;
 		while (rightNode->isUnderflow()){
 			rightNode->addBranch(*iteratorBranchsFinal);
 			rightNode->addComponent(*iteratorListRegFinal);
