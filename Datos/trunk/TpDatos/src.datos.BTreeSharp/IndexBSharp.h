@@ -113,7 +113,8 @@ private:
 		 * @param registry - El registro con la clave a insertar.
 		 * @param resultado - El resultado de insercion del registro en el bloque interno.
 		 */
-		void insertInternalNodeFull(InternalNode* internalNode,Registry* registry,unsigned int rightBlock,ContainerInsertion* container) throw();
+		bool insertInternalNodeFull(InternalNode* internalNode,InternalNode* brothersNode,Registry* registryKey,
+				ContainerInsertion* container,Registry* registryFather) throw();
 		/**
 		 * Busca la posicion de insercion hoja para el registro dado.
 		 * @param registry - El registro a insertar en el bloque externo.
@@ -165,6 +166,7 @@ private:
 		void mergeComponentList(list<Registry*> &listRegistry, list<Registry*> &listLeftNode,list<Registry*> &listRightNode);
 		void mergeBranchList(std::vector<int> &listBranch,std::vector<int> &listLeftNode,std::vector<int> &listRightNode);
 		bool balanceLeafNode(Registry* reg, LeafNode* actualNode, LeafNode* brotherNode,ContainerInsertion* container)throw();
+		int searchBranchSister(InternalNode* internalNode , Registry* registry) throw();
 		bool balanceInternalNode(InternalNode* internalNode, InternalNode* brotherNode, ContainerInsertion* container, Registry* fatherReg) throw();
 		/**
 		 * Almacena la longitud de los bloques del indice b sharp.

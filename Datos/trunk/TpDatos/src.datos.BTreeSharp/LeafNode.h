@@ -24,8 +24,13 @@ public:
 	/**
 	 * Obtiene la longitud ocupada en bytes del bloque.
 	 */
-
 	 unsigned int getOcupedLong() throw();
+	/**
+	 * Devuelve si hay subflujo o no
+	 */
+	bool isUnderflow()throw();
+
+
 	 bool posibleToAgregateComponent(Registry* registry)throw();
 
 private:

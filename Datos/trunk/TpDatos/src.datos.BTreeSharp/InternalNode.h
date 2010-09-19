@@ -30,6 +30,10 @@ public:
 		 * Elimina todas las ramas del indice b sharp del contenedor de ramas.
 		 */
 		void clearBranch() throw();
+		/**
+		 * Devuelve si hay subflujo o no
+		 */
+		bool isUnderflow()throw();
 	/**
 	 * Agrega una rama al bloque interno b sharp.
 	 */

@@ -31,6 +31,7 @@ void Block::replaceRegistry(Registry* registryOld,Registry* registryNew) throw()
 void Block::clearListRegistry() throw(){
    this->regList.clear();
 }
+
 Block::~Block() throw(){
 	list<Registry*>::iterator iterRegistry;
 	Registry* reg;

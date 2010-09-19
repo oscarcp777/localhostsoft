@@ -42,12 +42,12 @@ public:
 	 * Obtiene el numero de bloque medio luego de una division de bloques de 2 a 3.
 	 * @return unsigned int - El numero de bloque medio luego de una division de bloques de 2 a 3.
 	 */
-	unsigned int getRigthMedium() const;
+	unsigned int getMediumBlock() const;
 	/**
 	 * Establece el numero de bloque medio luego de una division de bloques de 2 a 3.
 	 * @param numero_bloque - El numero de bloque medio luego de una division de bloques de 2 a 3.
 	 */
-	void setRigthMedium(unsigned int rigthMedium);
+	void setMediumBlock(unsigned int mediumBlock);
     Registry *getLeftRegKey() const;
     Registry *getRightRegKey() const;
     void setLeftRegKey(Registry *leftRegKey);
@@ -77,7 +77,7 @@ private:
 	/**
 	 * Almacena el numero de bloque medio luego de una division de bloques de 2 a 3.
 	 */
-	unsigned int rigthMedium;
+	unsigned int mediumBlock;
 
 };
 

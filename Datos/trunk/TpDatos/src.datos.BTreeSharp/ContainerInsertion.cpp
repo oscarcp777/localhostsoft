@@ -39,14 +39,14 @@ void ContainerInsertion::setRightBlock(unsigned int numBlock) throw(){
 	this->rigthBlock = numBlock;
 }
 
-unsigned int ContainerInsertion::getRigthMedium() const
+unsigned int ContainerInsertion::getMediumBlock() const
 {
-    return rigthMedium;
+    return mediumBlock;
 }
 
-void ContainerInsertion::setRigthMedium(unsigned int rigthMedium)
+void ContainerInsertion::setMediumBlock(unsigned int mediumBlock)
 {
-    this->rigthMedium = rigthMedium;
+    this->mediumBlock = mediumBlock;
 }
 
 Registry *ContainerInsertion::getLeftRegKey() const

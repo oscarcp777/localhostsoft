@@ -24,6 +24,10 @@ public:
 	virtual int unPackMetadata(Buffer* buffer)= 0;
 	virtual bool posibleToAgregateComponent(Registry* registry) throw()=0;
 	/**
+	 * Devuelve si hay subflujo o no
+	 */
+	virtual bool isUnderflow() throw() = 0;
+	/**
 	 * Obtiene el id del bloque externo siguiente del arbol b sharp.
 	 */
 	int getNextBlock() const throw();

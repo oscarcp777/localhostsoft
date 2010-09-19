@@ -39,8 +39,14 @@ public:
 	unsigned int getSize();
     unsigned int getSizeRegistry();
     void transferRegistry(list<Registry*> &listElement) throw();
+	/**
+	 * Devuelve si hay subflujo o no
+	 */
+//	virtual bool isUnderflow() const throw() = 0;
     list<Registry*>::iterator iteratorBegin();
     list<Registry*>::iterator iteratorEnd();
+
+
 	/**
 	 * Reemplaza un componente por otro
 	 */
@@ -99,6 +105,8 @@ public:
      */
     void sortListRegistry();
     virtual bool posibleToAgregateComponent(Registry* registry) throw();
+
+
 private:
 	list<Registry*> regList;
 	unsigned int freeSize;

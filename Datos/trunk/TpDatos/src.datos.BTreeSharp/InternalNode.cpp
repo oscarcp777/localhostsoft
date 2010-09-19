@@ -33,6 +33,20 @@ bool InternalNode::isLeaf() const throw(){
 	return false;
 }
 
+bool InternalNode::isUnderflow()throw() {
+	unsigned int sizeBusy=Block::getSizeRegistry();
+	std::cout << "Bloque: " << this->getNumBlock() <<" Espacio Ocupado: " << sizeBusy << std::endl;
+
+	unsigned int percentUnderflow;
+	if (this->getNumElements() == 0)
+		percentUnderflow = (this->getLongBytes()/2);
+	else
+		percentUnderflow = (this->getLongBytes()/2)+(0.5*(sizeBusy/this->getNumElements()));
+	std::cout << "Limite Subflujo: " <<  percentUnderflow << std::endl;
+	return (this->getOcupedLong()< percentUnderflow);
+
+}
+
 bool InternalNode::posibleToAgregateComponent(Registry* registry) throw(){
 	 unsigned int ocupedLong=this->getOcupedLong();
 	 unsigned int longBytes=registry->getLongBytes();
