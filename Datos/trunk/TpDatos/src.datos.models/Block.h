@@ -39,81 +39,33 @@ public:
 	unsigned int getSize();
     unsigned int getSizeRegistry();
     void transferRegistry(list<Registry*> &listElement) throw();
-	/**
-	 * Devuelve si hay subflujo o no
-	 */
-//	virtual bool isUnderflow() const throw() = 0;
     list<Registry*>::iterator iteratorBegin();
     list<Registry*>::iterator iteratorEnd();
-
-
-	/**
-	 * Reemplaza un componente por otro
-	 */
-	void replaceRegistry(Registry* registryOld,Registry* registryNew) throw();
-	/**
-	 * Vacia la lista de componentes del bloque
-	 */
-	void clearListRegistry() throw();
-
-    /* Obtiene el numero de bloque en el arbol B sharp.
-     */
-    unsigned int getNumBlock() const throw();
-    /**
-     * Establece el numero de bloque en el arbol B sharp.
-     */
-    void setNumBlock(unsigned int numBlock) throw();
-    /**
-     * Obtiene el nivel del bloque en el arbol B sharp.
-     */
-    unsigned int getLevel() const throw();
-    /**
-     * Establece el nivel del bloque en el arbol B sharp.
-     */
-    void setLevel(unsigned int level) throw();
-    /**
-     * Devuelve si el bloque es hoja o no, si su nivel es 0.
-     */
-    virtual bool isLeaf() const throw();
-    /**
-     * Agrega un componente al bloque en el arbol b sharp.
-     */
-	 void addComponent(Registry* registry) throw() ;
-	  /**
-	     * Agrega un componente al bloque en el arbol B sharp en la posicion especificada.
-	     */
-	 void addComponent(Registry* registry,list<Registry*>::iterator it,int pos) throw() ;
-
-    /**
-     * Obtiene la longitud en bytes ocupada del bloque.
-     * */
-    virtual unsigned int getOcupedLong() throw();
-    /**
-     * Obtiene la longitud maxima en bytes del bloque.
-     */
-    unsigned int getMaxLong() const throw();
-    /**
-     * Establece la longitud maxima en bytes del bloque.
-     */
-    void setMaxLong(unsigned int maxLong) throw();
-    /**
-     * Obtiene la longitud en bytes  del bloque.
-     */
-    virtual unsigned int getLongBytes() throw();
-    /**
-     *ordena la lista de registros
-     */
+    void replaceRegistry(Registry *registryOld, Registry *registryNew) throw ();
+    void clearListRegistry() throw ();
+    unsigned int getNumBlock() const throw ();
+    void setNumBlock(unsigned int numBlock) throw ();
+    unsigned int getLevel() const throw ();
+    void setLevel(unsigned int level) throw ();
+    virtual bool isLeaf() const throw ();
+    void addComponent(Registry *registry) throw ();
+    void addComponent(Registry *registry, list<Registry*>::iterator it, int pos) throw ();
+    virtual unsigned int getOcupedLong() throw ();
+    unsigned int getMaxLong() const throw ();
+    void setMaxLong(unsigned int maxLong) throw ();
+    virtual unsigned int getLongBytes() throw ();
     void sortListRegistry();
-    virtual bool posibleToAgregateComponent(Registry* registry) throw();
-
-
+    virtual bool posibleToAgregateComponent(Registry *registry) throw ();
+    unsigned int getAverageWeight() const;
+    void setAverageWeight(unsigned int averageWeight);
 private:
-	list<Registry*> regList;
-	unsigned int freeSize;
-	unsigned int numBlock;
-	unsigned int level;
-	unsigned int maxLong;
-	FactoryOfRegistry* factory;
+    list<Registry*> regList;
+    unsigned int freeSize;
+    unsigned int numBlock;
+    unsigned int level;
+    unsigned int maxLong;
+    FactoryOfRegistry *factory;
+    unsigned int averageWeight;
 };
 
 #endif /* BLOCK_H_ */

@@ -203,3 +203,15 @@ bool Block::posibleToAgregateComponent(Registry* registry) throw(){
 	return (this->getOcupedLong() + registry->getLongBytes() <= this->getMaxLong());
 
 }
+
+unsigned int Block::getAverageWeight() const
+{
+    return averageWeight;
+}
+
+void Block::setAverageWeight(unsigned int averageWeight)
+{
+    this->averageWeight = averageWeight;
+}
+
+

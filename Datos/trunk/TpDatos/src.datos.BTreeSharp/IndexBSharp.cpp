@@ -274,8 +274,8 @@ void IndexBSharp::splitInternalRoot(ContainerInsertion* container) throw(){
 
 	newCenterNode->addBranch(*itListBranchs);
 	itListBranchs++;
-
-	container->setLeftRegKey(this->extractKey(*itListRegistry));
+    Registry* leftRegistryKey=(Registry*)*itListRegistry;
+	container->setLeftRegKey(leftRegistryKey->clone());
 	itListRegistry++;
 
 	while(newCenterNode->isUnderflow()){
@@ -288,7 +288,8 @@ void IndexBSharp::splitInternalRoot(ContainerInsertion* container) throw(){
 
 	newRightNode->addBranch(*itListBranchs);
 	itListBranchs++;
-	container->setRightRegKey(this->extractKey(*itListRegistry));
+	Registry* reg=(Registry*)*itListRegistry;
+	container->setRightRegKey(reg->clone());
 	itListRegistry++;
 
 	while(itListRegistry != this->listRegistry.end()){
@@ -447,9 +448,6 @@ void IndexBSharp::insertLeafNodeNotFull(LeafNode* leafNode,Registry* registry) t
 	// Inserta el registro en el bloque externo
 	leafNode->addReg(registry);
 	leafNode->sortListRegistry();
-//	leafNode->print(cout);
-//	cout<<"termoni leaf "<<endl;
-
 
 	if(leafNode->getNumBlock() == 0)
 		this->writeBlockRoot();
@@ -503,6 +501,10 @@ void IndexBSharp::insertLeafNodeFull(LeafNode* leafNode,LeafNode* brotherNode,Re
 	this->listRegistry.push_back(registry);
 	this->listRegistry.sort(comparatorRegistry);
 
+	unsigned int averageEstimate = this->averageEstimate(listRegistry.begin(), listRegistry.end());
+    leftNode->setAverageWeight(averageEstimate);
+	rightNode->setAverageWeight(averageEstimate);
+	newLeafNode->setAverageWeight(averageEstimate);
 	list<Registry*>::iterator itListRegistry = this->listRegistry.begin();
 	while(leftNode->isUnderflow()){
 		leftNode->addComponent(*itListRegistry);
@@ -510,7 +512,6 @@ void IndexBSharp::insertLeafNodeFull(LeafNode* leafNode,LeafNode* brotherNode,Re
 	}
 
 	container->setLeftRegKey(this->extractKey(*itListRegistry));
-
 	while(rightNode->isUnderflow()){
 			rightNode->addComponent(*itListRegistry);
 			itListRegistry++;
@@ -618,7 +619,8 @@ bool IndexBSharp::balanceInternalNode(InternalNode* internalNode, InternalNode* 
 
 	// Establece el elemento medio a subir en el resultado de insercion
 	Registry* copy = container->getRegMidleKey();
-	container->setRegMidleKey(this->extractKey(*itFinalListRegistry));
+	Registry* regMidleKey =(Registry*)*itFinalListRegistry;
+	container->setRegMidleKey(regMidleKey->clone());
 	itFinalListRegistry++;
 	while (itFinalListRegistry != this->listRegistry.end()){
 		if (rightNode->posibleToAgregateComponent(*itFinalListRegistry)){
@@ -859,6 +861,12 @@ bool IndexBSharp::insertInternalNodeFull(InternalNode* internalNode,InternalNode
 		vector<int>::iterator  iteratorBranchsFinal= branchList.begin();
 		leftNode->addBranch(*iteratorBranchsFinal);
 		iteratorBranchsFinal++;
+
+
+		unsigned int averageEstimate = this->averageEstimate(listRegistry.begin(), listRegistry.end());
+		leftNode->setAverageWeight(averageEstimate);
+		rightNode->setAverageWeight(averageEstimate);
+		newInternalNode->setAverageWeight(averageEstimate);
 		while (leftNode->isUnderflow()){
 			leftNode->addBranch(*iteratorBranchsFinal);
 			leftNode->addComponent(*iteratorListRegFinal);
@@ -868,7 +876,8 @@ bool IndexBSharp::insertInternalNodeFull(InternalNode* internalNode,InternalNode
 		rightNode->addBranch(*iteratorBranchsFinal);
 		iteratorBranchsFinal++;
 		// Establece el elemento izquierdo a subir en el resultado de insercion
-		container->setLeftRegKey(this->extractKey(*iteratorListRegFinal));
+		Registry* leftRegKey =(Registry*)*iteratorListRegFinal;
+			container->setLeftRegKey(leftRegKey->clone());
 		iteratorListRegFinal++;
 		while (rightNode->isUnderflow()){
 			rightNode->addBranch(*iteratorBranchsFinal);
@@ -880,7 +889,8 @@ bool IndexBSharp::insertInternalNodeFull(InternalNode* internalNode,InternalNode
 		newInternalNode->addBranch(*iteratorBranchsFinal);
 		iteratorBranchsFinal++;
 		// Establece el elemento derecho a subir en el resultado de insercion
-		container->setRightRegKey(this->extractKey(*iteratorListRegFinal));
+		Registry* rightRegKey =(Registry*)*iteratorListRegFinal;
+			container->setRightRegKey(rightRegKey->clone());
 		iteratorListRegFinal++;
 		while (iteratorListRegFinal != listRegistry.end()){
 			if (newInternalNode->posibleToAgregateComponent(*iteratorListRegFinal)){

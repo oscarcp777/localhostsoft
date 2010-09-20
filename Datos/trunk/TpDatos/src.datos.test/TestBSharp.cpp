@@ -24,19 +24,19 @@ TestBSharp::~TestBSharp() {
 void TestBSharp::testInsert(){
      IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTree.dat",BLOCK_SIZE,TYPE_REG_PRIMARY);
 
-     for (int var = 0; var < 50; ++var) {
-//    	 if(21==var)
-//    		 cout<<"";
+     for (int var = 0; var < 500; ++var) {
+    	 if(12==var)
+    		 cout<<"";
     		 RegPrimary* regPrimary = new RegPrimary();
     	     KeyIndexPrimary* key= new KeyIndexPrimary(var);
     	     regPrimary->setKey(key);
     	     regPrimary->setNumberBlock(var*2);
-    	     cout<<"###########################################################"<<endl;
-    	     cout<<" Inserto el : ";
-    	     regPrimary->print(cout);
+//    	     cout<<"###########################################################"<<endl;
+//    	     cout<<" Inserto el : ";
+//    	     regPrimary->print(cout);
              indexBSharp->addRegistry(regPrimary);
-    	     cout<<endl;
-    	     indexBSharp->print(std::cout);
+//    	     cout<<endl;
+//    	     indexBSharp->print(std::cout);
 
 	}
 
@@ -46,9 +46,9 @@ void TestBSharp::testInsert(){
 
 }
 void TestBSharp::testsearch(){
-     IndexBSharp* indexBSharp = new IndexBSharp("BTree.dat",BLOCK_SIZE,TYPE_REG_PRIMARY);
+     IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTree.dat",BLOCK_SIZE,TYPE_REG_PRIMARY);
      RegPrimary* regPrimary = new RegPrimary();
-     KeyIndexPrimary* key= new KeyIndexPrimary(113);
+     KeyIndexPrimary* key= new KeyIndexPrimary(499);
      regPrimary->setKey(key);
      regPrimary = (RegPrimary*)indexBSharp->searchRegistry(regPrimary);
      if(regPrimary == NULL)
@@ -64,7 +64,7 @@ void TestBSharp::testInsertRegClassification(){
      IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTreeRegClassifi.dat",BLOCK_SIZE,TYPE_REG_CLASSIFICATION);
 
 
-     for (int var = 0; var < 30; ++var) {
+     for (int var = 0; var < 500; ++var) {
     	 if(var==16)
     		 cout<<"";
 			 std::stringstream stream;
@@ -79,14 +79,14 @@ void TestBSharp::testInsertRegClassification(){
     		 regClassif->setKey(key);
     		 attribute<<var*2+10;
     		 regClassif->setAttribute(attribute.str());
-    		 cout<<"###########################################################"<<endl;
-             cout<<" Inserto el : ";
+//    		 cout<<"###########################################################"<<endl;
+//             cout<<" Inserto el : ";
              regClassif->print(cout);
              indexBSharp->addRegistry(regClassif);
-    	     cout<<endl;
+//    	     cout<<endl;
     	     stream.clear();
     	     attribute.clear();
-    	     indexBSharp->print(std::cout);
+//    	     indexBSharp->print(std::cout);
 	}
 
      indexBSharp->print(std::cout);

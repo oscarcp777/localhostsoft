@@ -49,12 +49,12 @@ void ContainerInsertion::setMediumBlock(unsigned int mediumBlock)
     this->mediumBlock = mediumBlock;
 }
 
-Registry *ContainerInsertion::getLeftRegKey() const
+Registry* ContainerInsertion::getLeftRegKey()
 {
     return leftRegKey;
 }
 
-Registry *ContainerInsertion::getRightRegKey() const
+Registry* ContainerInsertion::getRightRegKey()
 {
     return rightRegKey;
 }

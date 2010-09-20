@@ -48,10 +48,10 @@ public:
 	 * @param numero_bloque - El numero de bloque medio luego de una division de bloques de 2 a 3.
 	 */
 	void setMediumBlock(unsigned int mediumBlock);
-    Registry *getLeftRegKey() const;
-    Registry *getRightRegKey() const;
-    void setLeftRegKey(Registry *leftRegKey);
-    void setRightRegKey(Registry *rightRegKey);
+    Registry* getLeftRegKey();
+    Registry* getRightRegKey();
+    void setLeftRegKey(Registry* leftRegKey);
+    void setRightRegKey(Registry* rightRegKey);
 private:
 	/**
 	 * Almacena el registro con la clave de dato media luego de una division de bloques.
