@@ -12,7 +12,7 @@
 
 using namespace std;
 
-int main() {
+int main_old() {
 	TestBSharp* test= new TestBSharp();
 
 	test->testInsert();
