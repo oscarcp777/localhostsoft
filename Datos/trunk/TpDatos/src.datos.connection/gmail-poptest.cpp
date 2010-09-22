@@ -6,6 +6,7 @@
  * See RFC 1725 for pop3 specifications.
  * more information on http://brouits.free.fr/libspopc/
  */
+
 #include <string.h> /* use of strcpy() */
 #include <stdio.h> /* use of printf() */
 #include <stdlib.h> /* use of exit() */
@@ -13,11 +14,13 @@
 #include <sys/socket.h>
 #include <netdb.h>
 #include <netinet/in.h>
-
 #include "../lib/libspopc.h"
+#include "../src.datos.models/Mail.h"
+
+void pop3_cert_setup(const char *certfile);
 
 int main(int argc,char** argv){
-
+	Mail* mail = new Mail();
 	pop3sock_t mysock;
 	char myservername[64];
 	char username[64];
@@ -36,7 +39,7 @@ int main(int argc,char** argv){
 	if(argc<3){
 		printf("Usage: %s username password [ssl-cert]\n",argv[0]);
 		exit(0);
-	} else if (argc>4) pop3_cert_setup(argv[4]);
+	}
 
 
 	/* Conexi�n */
@@ -102,6 +105,7 @@ int main(int argc,char** argv){
 		free(srvdata);
 		printf("mail is %d:\n",i);
 		printf("%s",mymessage);
+		mail->parseMail(mymessage);
 		free(mymessage);mymessage=NULL;
 		i--;
 	}

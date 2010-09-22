@@ -9,8 +9,7 @@
 #define COMPONENT_H_
 #include "../src.datos.storage/Buffer.h"
 #include "../src.datos.utils/Define.h"
-#include <iostream>
-#include <sstream>
+
 class Component {
 
 public:

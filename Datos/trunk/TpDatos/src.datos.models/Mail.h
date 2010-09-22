@@ -9,8 +9,8 @@
 #define MAIL_H_
 
 #include "Registry.h"
-#include <string>
-using namespace std;
+
+
 class Mail: public Registry {
 
 public:
@@ -35,6 +35,7 @@ public:
 	Registry* clone();
 	int compareTo(Registry* registry);
 	Registry* cloneRegKey();
+	void parseMail(char* text);
 private:
 	string from;
 	string to;

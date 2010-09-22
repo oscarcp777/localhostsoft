@@ -155,3 +155,50 @@ int Mail::compareTo(Registry* registry){
 Registry* Mail::cloneRegKey(){
    return NULL;
 }
+void Mail::parseMail(char* text){
+	int posInitial = 0;
+	int posFinal = 0;
+	string aux;
+	string textMail = text;
+	string date = "Date:";
+	string to = "To:";
+	string from = "From:";
+	string subject = "Subject:";
+	string message = "Content-Type: text";
+	string messageId = "Message-Id:";
+	string endLine = "\n";
+
+
+	posInitial = textMail.find(date.c_str(),0);
+	posFinal = textMail.find(endLine.c_str(),posInitial);
+	aux = textMail.substr(posInitial+date.size(),posFinal-(posInitial+date.size()));
+	this->setDate(aux);
+
+	posInitial = textMail.find(to.c_str(),posFinal);
+	posFinal = textMail.find(endLine.c_str(),posInitial);
+	aux = textMail.substr(posInitial+to.size(),posFinal-(posInitial+to.size()));
+	this->setTo(aux);
+
+	posInitial = textMail.find(from.c_str(),posFinal);
+	posFinal = textMail.find(endLine.c_str(),posInitial);
+	aux = textMail.substr(posInitial+from.size(),posFinal-(posInitial+from.size()));
+	this->setFrom(aux);
+
+	posInitial = textMail.find(subject.c_str(),posFinal);
+	posFinal = textMail.find(endLine.c_str(),posInitial);
+	aux = textMail.substr(posInitial+subject.size(),posFinal-(posInitial+subject.size()));
+	this->setSubject(aux);
+
+	posInitial = textMail.find(message.c_str(),posFinal);
+	posFinal = textMail.find(endLine.c_str(),posInitial);
+	aux = textMail.substr(posInitial+message.size(),posFinal-(posInitial+message.size()));
+	this->setMessage(aux);
+
+
+	cout<<"****************************************Date: "<<this->getDate()<<"********************"<<endl;
+	cout<<"****************************************To: "<<this->getTo()<<"********************"<<endl;
+	cout<<"****************************************From: "<<this->getFrom()<<"********************"<<endl;
+	cout<<"****************************************Subject: "<<this->getSubject()<<"********************"<<endl;
+	cout<<"****************************************Message: "<<this->getMessage()<<"********************"<<endl;
+
+}

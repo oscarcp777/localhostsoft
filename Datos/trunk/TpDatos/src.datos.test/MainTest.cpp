@@ -10,14 +10,13 @@
 #include <list>
 #include "TestBSharp.h"
 
+
 using namespace std;
 
-int main_old() {
+int mainsfesf(int argc,char** argv) {
 	TestBSharp* test= new TestBSharp();
-
 	test->testInsert();
 //	test->testsearch();
-
 //	test->testInsertRegClassification();
 //	test->testsearchRegClassification();
 	delete test;
@@ -36,6 +35,7 @@ int main_old() {
 //      testMailManager->testUnpackMail();
 //      delete testMailManager;
 //***********************************************
+
 
    return 0;
 }
