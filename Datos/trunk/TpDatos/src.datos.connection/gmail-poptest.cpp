@@ -16,11 +16,13 @@
 #include <netinet/in.h>
 #include "../lib/libspopc.h"
 #include "../src.datos.models/Mail.h"
+#include <list>
 
 void pop3_cert_setup(const char *certfile);
 
 int main(int argc,char** argv){
-	Mail* mail = new Mail();
+	Mail* mail;
+	list<Mail*> mailList;
 	pop3sock_t mysock;
 	char myservername[64];
 	char username[64];
@@ -73,7 +75,8 @@ int main(int argc,char** argv){
 	/* Inicio de Test */
 	printf("\n---\nTEST STAT\n\n");
 	srvdata=pop3_stat(mysock);
-	printf("stat: %d mail(s)\n",stat2num(srvdata));
+	int numberOfMails = stat2num(srvdata);
+	printf("stat: %d mail(s)\n",numberOfMails);
 	printf("stat: %d bytes\n",stat2bytes(srvdata));
 	free(srvdata);
 
@@ -99,17 +102,25 @@ int main(int argc,char** argv){
 	free(srvdata);
 
 	printf("\n---\nTEST RETR\n\n");
+
 	while(i){
 		srvdata=pop3_retr(mysock,i);
 		mymessage=retr2msg(srvdata);
 		free(srvdata);
 		printf("mail is %d:\n",i);
-		printf("%s",mymessage);
+		//printf("%s",mymessage);
+		mail = new Mail;
 		mail->parseMail(mymessage);
+		mailList.push_back(mail);
 		free(mymessage);mymessage=NULL;
 		i--;
 	}
-
+	list<Mail*>::iterator it;
+	for(it=mailList.begin(); it!=mailList.end();it++){
+		cout<<"*******************************************************"<<endl;
+		(*it)->print(std::cout);
+		cout<<"*******************************************************"<<endl;
+	}
 	/* Comento la funci�n de borrado de mails
 	printf("\n---TEST DELE\n\n");
 	for(i=1; i<=last; i++){
@@ -130,7 +141,7 @@ int main(int argc,char** argv){
 	pop3_disconnect(mysock, &myserver);
 
 	libspopc_clean();
-
+	mailList.clear();
 	exit(0);
 }
 

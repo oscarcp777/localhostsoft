@@ -133,8 +133,9 @@ int Mail::print(std::ostream& outStream){
 	outStream << "from: "<<from<< endl;
 	outStream << "to: "<<to<< endl;
 	outStream << "subject: "<<subject<< endl;
-	outStream << "message: "<<message<< endl;
 	outStream << "date: "<<date<< endl;
+	outStream << "message: "<<message<< endl;
+
 	return 1;
 }
 Registry* Mail::clone(){
@@ -193,12 +194,5 @@ void Mail::parseMail(char* text){
 	posFinal = textMail.find(endLine.c_str(),posInitial);
 	aux = textMail.substr(posInitial+message.size(),posFinal-(posInitial+message.size()));
 	this->setMessage(aux);
-
-
-	cout<<"****************************************Date: "<<this->getDate()<<"********************"<<endl;
-	cout<<"****************************************To: "<<this->getTo()<<"********************"<<endl;
-	cout<<"****************************************From: "<<this->getFrom()<<"********************"<<endl;
-	cout<<"****************************************Subject: "<<this->getSubject()<<"********************"<<endl;
-	cout<<"****************************************Message: "<<this->getMessage()<<"********************"<<endl;
 
 }
