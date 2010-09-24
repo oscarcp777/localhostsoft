@@ -7,7 +7,7 @@
 
 #include "RegPrimary.h"
 #include "Key.h"
-#include "KeyIndexPrimary.h"
+#include "KeyInteger.h"
 #include "RegKeyPrimary.h"
 
 RegPrimary::RegPrimary() {
@@ -18,17 +18,17 @@ RegPrimary::~RegPrimary() {
 }
 Registry* RegPrimary::clone(){
 	RegPrimary* regPrimary = new RegPrimary();
-	regPrimary->setKey((KeyIndexPrimary*)this->getKey()->clone());
+	regPrimary->setKey((KeyInteger*)this->getKey()->clone());
 	regPrimary->setNumberBlock(this->numberBlock);
 	return regPrimary;
 }
 Registry* RegPrimary::cloneRegKey(){
 	RegKeyPrimary* regKeyPrimary = new RegKeyPrimary();
-	regKeyPrimary->setKey((KeyIndexPrimary*)this->getKey()->clone());
+	regKeyPrimary->setKey((KeyInteger*)this->getKey()->clone());
 	return regKeyPrimary;
 }
 bool RegPrimary::equals(Registry* registry){
-	KeyIndexPrimary* key=(KeyIndexPrimary*)registry->getKey();
+	KeyInteger* key=(KeyInteger*)registry->getKey();
  return this->getKey()->equals(key);
 }
 void RegPrimary::pack(Buffer* buffer){
@@ -36,12 +36,12 @@ void RegPrimary::pack(Buffer* buffer){
 	buffer->packField(&this->numberBlock,sizeof(this->numberBlock));
 }
 void RegPrimary::unPack(Buffer* buffer){
-	this->setKey(new KeyIndexPrimary(0));
+	this->setKey(new KeyInteger(0));
 	this->getKey()->unPack(buffer);
 	buffer->unPackField(&this->numberBlock,sizeof(this->numberBlock));
 }
 int RegPrimary::compareTo(Registry* registry){
-	KeyIndexPrimary* key=(KeyIndexPrimary*)registry->getKey();
+	KeyInteger* key=(KeyInteger*)registry->getKey();
   return this->getKey()->compareTo(key);
 }
 unsigned int RegPrimary::getSize(){
@@ -66,3 +66,15 @@ int RegPrimary::print(std::ostream& outStream){
  {
      this->numberBlock = numberBlock;
  }
+
+Mail *RegPrimary::getMail() const
+{
+    return mail;
+}
+
+void RegPrimary::setMail(Mail *mail)
+{
+    this->mail = mail;
+}
+
+

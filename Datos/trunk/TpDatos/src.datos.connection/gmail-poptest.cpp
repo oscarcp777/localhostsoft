@@ -20,7 +20,7 @@
 
 void pop3_cert_setup(const char *certfile);
 
-int main(int argc,char** argv){
+int main343434(int argc,char** argv){
 	Mail* mail;
 	list<Mail*> mailList;
 	pop3sock_t mysock;

@@ -6,6 +6,7 @@
  */
 
 #include "LeafNode.h"
+#include "../src.datos.models/RegPrimary.h"
 
 LeafNode::LeafNode(int typeElement,unsigned int maxLong, unsigned int numBlock, unsigned int level) throw():Node(maxLong,numBlock,level){
     this->nextNode=-1;
@@ -18,16 +19,94 @@ LeafNode::LeafNode(int typeElement,unsigned int maxLong){
 LeafNode::~LeafNode()throw() {
 	// TODO Auto-generated destructor stub
 }
+
 unsigned int LeafNode::getOcupedLong() throw(){
 	unsigned int sizeBusy=Block::getSizeRegistry();
 	sizeBusy += sizeof(unsigned int)*4;
 	return sizeBusy;
 }
+Registry* LeafNode::insertBlockData(Registry* registry,ContainerInsertDataBlock* container){
+
+	if(container->getTypeElement()==TYPE_REG_PRIMARY){
+		registry=insertBlockMails( registry, container);
+	}
+	if(container->getTypeElement()==TYPE_REG_CLASSIFICATION){
+		registry=insertBlockRegClassification( registry, container);
+		}
+
+return registry;
+}
+Block* LeafNode::readBlockData(unsigned int numBlock,ContainerInsertDataBlock* container){
+       Buffer* buffer= new Buffer(container->getSizeBlockData());
+       container->getBinaryFile()->read(buffer->getData(),container->getSizeBlockData(),container->getSizeBlockData()*numBlock);
+       		Block* block =new Block();
+       		block->setTypeElement(container->getTypeElementData());
+       		block->setIndexed(container->getIndexed());
+       		block->unPack(buffer);
+       		delete buffer;
+       return block;
+}
+void LeafNode::writeBlockData(Block* block ,unsigned int numBlock,ContainerInsertDataBlock* container){
+	 Buffer* buffer= new Buffer(container->getSizeBlockData());
+	 block->pack(buffer);
+     container->getBinaryFile()->write(buffer->getData(),container->getSizeBlockData(),container->getSizeBlockData()*numBlock);
+     delete block;
+     delete buffer;
+}
+Registry* LeafNode::insertMailBlockNew(Registry* registry,ContainerInsertDataBlock* container){
+	unsigned int numblock=container->getFreeBlockController()->searchFreeBlock();
+			Block* blockMailsNew= new Block(container->getSizeBlockData(),container->getTypeElementData(),container->getIndexed());
+			blockMailsNew->addReg(((RegPrimary*)registry)->getMail());
+			((RegPrimary*)registry)->setNumberBlock(numblock);
+			this->writeBlockData(blockMailsNew,numblock,container);
+			return registry;
+}
+Registry* LeafNode::insertBlockMails(Registry* registry,ContainerInsertDataBlock* container){
+	list<Registry*>::iterator iterRegistry;
+	Registry* reg=registry;
+	Block* blockMails;
+	if(this->regList.size()==0){
+		return this->insertMailBlockNew(registry,container);
+	}
+	for ( iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
+		reg=*iterRegistry;
+		if(registry->compareTo(reg)<0){
+			//si entro es menor al actual entonces retrocedo un reg que es donde debo insertar
+			iterRegistry--;
+			reg=*iterRegistry;
+			break;
+		}
+	}
+	RegPrimary* regPrevious=(RegPrimary*)reg;
+	blockMails=this->readBlockData(regPrevious->getNumberBlock(),container);
+	if(blockMails->posibleToAgregateComponent(((RegPrimary*)registry)->getMail())){
+		blockMails->addReg(((RegPrimary*)registry)->getMail());
+		this->writeBlockData(blockMails,regPrevious->getNumberBlock(),container);
+		return NULL;
+	}else{
+		return this->insertMailBlockNew(registry,container);
+	}
+	return NULL;
+}
+Registry* LeafNode::insertBlockRegClassification(Registry* registry,ContainerInsertDataBlock* container){
+	   list<Registry*>::iterator iterRegistry;
+	     Registry* reg;
+		for ( iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
+			reg=*iterRegistry;
+			if(registry->equals(reg)){
+              break;
+			}
+		}
+//		RegClassification* regPrevious=(RegClassification*)reg;
+
+
+return registry;
+}
 bool LeafNode::isLeaf() const throw(){
 	return true;
 }
 bool LeafNode::isUnderflow()throw() {
-	unsigned int sizeBusy=Block::getSizeRegistry();
+//	unsigned int sizeBusy=Block::getSizeRegistry();
 //	std::cout << "Bloque: " << this->getNumBlock() <<" Espacio Ocupado: "<<sizeBusy<<" peso promedio : " << this->getAverageWeight() << std::endl;
     unsigned int percentUnderflow = (2*this->getLongBytes()/3)-(0.5*this->getAverageWeight());
 //	std::cout << "Limite Subflujo: " <<  percentUnderflow << std::endl;

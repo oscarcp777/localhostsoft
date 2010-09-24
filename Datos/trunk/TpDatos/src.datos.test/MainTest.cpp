@@ -13,9 +13,9 @@
 
 using namespace std;
 
-int mainsfesf(int argc,char** argv) {
+int main(int argc,char** argv) {
 	TestBSharp* test= new TestBSharp();
-	test->testInsert();
+	test->testInsertMails();
 //	test->testsearch();
 //	test->testInsertRegClassification();
 //	test->testsearchRegClassification();

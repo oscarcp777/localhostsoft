@@ -13,6 +13,7 @@
 #include "../src.datos.models/Registry.h"
 #include "../src.datos.storage/BinaryFile.h"
 #include "../src.datos.storage/FreeBlockController.h"
+#include "ContainerInsertDataBlock.h"
 
 #include <string>
 #include <list>
@@ -157,6 +158,7 @@ private:
 		 * Imprime un registro en la salida.
 		 */
 		void printRegistry(Registry* registry, std::ostream& streamSalida) throw();
+		void initContainerDataBlock(const std::string& nameFile,unsigned int sizeBlock,int typeElement,int typeElementData,bool indexed);
 		/**
 		 *escribwe un bloque en disco
 		 */
@@ -207,6 +209,10 @@ private:
 		 * Almacena el bloque raiz del indice b sharp.
 		 */
 		Node*  rootNode;
+		/**
+		 * contenedor de las inserciones de registros en los boques de datos
+		 */
+		ContainerInsertDataBlock* containerInsertDataBlock;
 };
 
 #endif /* INDEXBSHARP_H_ */

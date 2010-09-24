@@ -6,7 +6,7 @@
  */
 
 #include "RegClassification.h"
-#include "Key.h"
+#include "KeyString.h"
 #include "RegKeyClassification.h"
 
 RegClassification::RegClassification() {
@@ -35,7 +35,7 @@ void RegClassification::pack(Buffer* buffer){
 	buffer->packField(this->attribute.c_str(),size);
 }
 void RegClassification::unPack(Buffer* buffer){
-	this->setKey(new Key());
+	this->setKey(new KeyString(""));
 	this->getKey()->unPack(buffer);
 	int size;
 	buffer->unPackField(&size, sizeof(size));
@@ -70,3 +70,20 @@ std::string RegClassification::getAttribute() {
 void RegClassification::setAttribute(std::string atribute){
 	this->attribute = atribute;
 }
+
+int RegClassification::getNumBlock() const
+{
+    return numBlock;
+}
+
+void RegClassification::addIuc(unsigned int iuc)
+{
+	this->listIuc.push_back(iuc);
+}
+
+void RegClassification::setNumBlock(int numBlock)
+{
+    this->numBlock = numBlock;
+}
+
+

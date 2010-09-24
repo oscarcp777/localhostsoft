@@ -9,7 +9,7 @@
 #include "Mail.h"
 #include "RegPrimary.h"
 #include "RegKeyPrimary.h"
-#include "KeyIndexPrimary.h"
+#include "KeyInteger.h"
 #include "RegClassification.h"
 #include "RegKeyClassification.h"
 #include "../src.datos.utils/Define.h"

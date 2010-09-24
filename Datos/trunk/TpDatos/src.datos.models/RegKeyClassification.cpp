@@ -6,7 +6,7 @@
  */
 
 #include "RegKeyClassification.h"
-#include "Key.h"
+#include "KeyString.h"
 
 RegKeyClassification::RegKeyClassification() {
 	// TODO Auto-generated constructor stub
@@ -29,7 +29,7 @@ void RegKeyClassification::pack(Buffer* buffer){
 	this->getKey()->pack(buffer);
 }
 void RegKeyClassification::unPack(Buffer* buffer){
-	this->setKey(new Key(""));
+	this->setKey(new KeyString(""));
 	this->getKey()->unPack(buffer);
 }
 int RegKeyClassification::compareTo(Registry* registry){

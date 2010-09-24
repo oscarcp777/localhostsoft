@@ -6,7 +6,7 @@
  */
 
 #include "Mail.h"
-#include "Key.h"
+#include "KeyInteger.h"
 using namespace std;
 Mail::Mail() {
 	// TODO Auto-generated constructor stub
@@ -106,7 +106,7 @@ void Mail::pack(Buffer* buffer){
 void Mail::unPack(Buffer* buffer){
 	int totalSize;
 	int size;
-	this->setKey(new Key());
+	this->setKey(new KeyInteger(0));
     buffer->unPackField(&totalSize,sizeof(totalSize));
     this->getKey()->unPack(buffer);
 
@@ -145,9 +145,7 @@ Registry* Mail::clone(){
 	cloneMail->setMessage(this->getMessage());
 	cloneMail->setSubject(this->getSubject());
 	cloneMail->setTo(this->getTo());
-	Key* cloneKey = new Key();
-	cloneKey->setValue(this->getKey()->getValue());
-	cloneMail->setKey(cloneKey);
+	cloneMail->setKey((Key*)this->getKey()->clone());
 	return cloneMail;
 }
 int Mail::compareTo(Registry* registry){

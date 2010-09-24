@@ -8,6 +8,7 @@
 #ifndef REGPRIMARY_H_
 #define REGPRIMARY_H_
 #include "Registry.h"
+#include "Mail.h"
 #include <list>
 
 class RegPrimary : public Registry {
@@ -25,10 +26,13 @@ public:
     int getNumberBlock() ;
     void setNumberBlock(int numberBlock);
     Registry* cloneRegKey();
+    Mail *getMail() const;
+    void setMail(Mail *mail);
 
 
 private:
 	int numberBlock;
+	Mail* mail;
 };
 
 #endif /* REGPRIMARY_H_ */

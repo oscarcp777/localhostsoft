@@ -10,6 +10,43 @@ bool comparatorRegistry( Registry* reg1, Registry* reg2) {
 	int compare= reg1->compareTo(reg2);
 		return (compare< 0);
 }
+void IndexBSharp::initContainerDataBlock(const std::string& nameFile,unsigned int sizeBlock,int typeElement,int typeElementData,bool indexed){
+    this->containerInsertDataBlock= new ContainerInsertDataBlock();
+    this->containerInsertDataBlock->setIndexed(indexed);
+    this->containerInsertDataBlock->setTypeElementData(typeElementData);
+    string nameFileData=nameFile+"data";
+    BinaryFile* binaryFileData= new BinaryFile();
+    FreeBlockController* freeBlockControllerData;
+    if(!binaryFileData->isCreated(nameFileData)){
+    	    binaryFileData->create(nameFileData);
+    	    freeBlockControllerData = new FreeBlockController(nameFileData+".free",-1);
+    	}else{
+    		binaryFileData->open(nameFileData);
+    		freeBlockControllerData = new FreeBlockController(nameFileData+".free",binaryFileData->getCountBlockInFile(sizeBlock)-1);
+    	}
+    this->containerInsertDataBlock->setBinaryFile(binaryFileData);
+    this->containerInsertDataBlock->setFreeBlockController(freeBlockControllerData);
+    this->containerInsertDataBlock->setTypeElement(typeElement);
+    this->containerInsertDataBlock->setSizeBlockData(sizeBlock);
+}
+IndexBSharp::IndexBSharp(const std::string& nameFile,unsigned int sizeBlock,int typeElement){
+	this->sizeBlock=sizeBlock;
+	this->typeElement=typeElement;
+	this->binaryFile= new BinaryFile();
+	if(!this->binaryFile->isCreated(nameFile)){
+		this->binaryFile->create(nameFile);
+	    this->freeBlockController = new FreeBlockController(nameFile+"free",1);
+	}else{
+		this->binaryFile->open(nameFile);
+	    this->freeBlockController = new FreeBlockController(nameFile+"free",this->binaryFile->getCountBlockInFile(sizeBlock));
+	}
+	this->buffer= new Buffer(sizeBlock);
+	if(typeElement==TYPE_REG_PRIMARY)
+    this->initContainerDataBlock(nameFile,BLOCK_SIZE_MAILS,typeElement,TYPE_MAIL,false);
+	if(typeElement==TYPE_REG_CLASSIFICATION)
+	this->initContainerDataBlock(nameFile,sizeBlock,typeElement,TYPE_INTEGER,true);
+	this->readBlockRoot();
+}
 unsigned int IndexBSharp::averageEstimate(list<Registry*>::iterator iteratorBegin,list<Registry*>::iterator iteratorEnd) throw() {
 	unsigned int totalWeight = 0;
 	unsigned int cont = 0;
@@ -22,22 +59,6 @@ unsigned int IndexBSharp::averageEstimate(list<Registry*>::iterator iteratorBegi
 	unsigned int averageEstimate = totalWeight/cont;
 	return averageEstimate;
 }
-IndexBSharp::IndexBSharp(const std::string& nameFile,unsigned int sizeBlock,int typeElement){
-	this->sizeBlock=sizeBlock;
-	this->typeElement=typeElement;
-	this->binaryFile= new BinaryFile();
-	if(!this->binaryFile->isCreated(nameFile)){
-		this->binaryFile->create(nameFile);
-	    this->freeBlockController = new FreeBlockController(nameFile+"free",2);
-	}else{
-		this->binaryFile->open(nameFile);
-	    this->freeBlockController = new FreeBlockController(nameFile+"free",this->binaryFile->getCountBlockInFile(sizeBlock));
-	}
-	this->buffer= new Buffer(sizeBlock);
-
-	this->readBlockRoot();
-}
-
 IndexBSharp::~IndexBSharp() {
 	this->binaryFile->close();
 	delete this->buffer;
@@ -323,6 +344,15 @@ void IndexBSharp::splitInternalRoot(ContainerInsertion* container) throw(){
 
 }
 int IndexBSharp::insertLeafNode(LeafNode* leafNode,Registry* registry,ContainerInsertion* container, unsigned int brotherNode) throw(){
+
+
+	   if(this->typeElement==TYPE_REG_PRIMARY||this->typeElement==TYPE_REG_CLASSIFICATION){
+		   registry=  leafNode->insertBlockData(registry,this->containerInsertDataBlock);
+	   }
+       if(registry==NULL)
+    	   return INSERTION_OK;
+
+
 	// Consideramos que no hay sobreflujo
 	bool answer = INSERTION_OK;
 	// Verifica que el bloque externo puede agregar el registro

@@ -9,6 +9,7 @@
 #define LEAFNODE_H_
 
 #include "Node.h"
+#include "ContainerInsertDataBlock.h"
 
 class LeafNode: public Node {
 public:
@@ -29,12 +30,19 @@ public:
 	 * Devuelve si hay subflujo o no
 	 */
 	bool isUnderflow()throw();
-
-
+  /**
+   * inserta el mail el bloque de datos
+   * y devuelve el registro para insertarlo en el arbol si es necesario
+   */
+	Registry* insertBlockData(Registry* registry,ContainerInsertDataBlock* container);
 	 bool posibleToAgregateComponent(Registry* registry)throw();
 
 private:
-
+	 void writeBlockData(Block* block ,unsigned int numBlock,ContainerInsertDataBlock* container);
+	 Block* readBlockData(unsigned int numBlock,ContainerInsertDataBlock* container);
+	 Registry* insertBlockMails(Registry* registry,ContainerInsertDataBlock* container);
+	 Registry* insertBlockRegClassification(Registry* registry,ContainerInsertDataBlock* container);
+	 Registry* insertMailBlockNew(Registry* registry,ContainerInsertDataBlock* container);
 
 };
 

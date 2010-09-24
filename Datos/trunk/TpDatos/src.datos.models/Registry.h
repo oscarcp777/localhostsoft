@@ -7,12 +7,11 @@
 
 #ifndef REGISTRY_H_
 #define REGISTRY_H_
-
-#include "Component.h"
-
+#include "../src.datos.storage/Buffer.h"
+#include "../src.datos.utils/Define.h"
 class Key;
 
-class Registry: public Component {
+class Registry {
 public:
 	Registry();
 	virtual ~Registry();
@@ -25,6 +24,8 @@ public:
 	virtual Registry* clone() = 0;
 	virtual Registry* cloneRegKey() = 0;
 	virtual int compareTo(Registry* registry) = 0;
+	virtual unsigned int getSize()=0;
+	virtual int print(std::ostream& outStream)=0;
 protected:
 	Key* key;
 };

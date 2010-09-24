@@ -16,20 +16,17 @@ public:
 	Key(string value);
 	Key();
 	virtual ~Key();
-	virtual bool equals(Registry* comp);
-	string getValue();
-	virtual unsigned int getSize();
-	virtual void pack(Buffer* buffer);
-	virtual void unPack(Buffer* buffer);
-	virtual int print(std::ostream& outStream);
-    virtual int getLongBytes();
-    Registry* clone();
-    void setValue(string value);
-    virtual int compareTo(Registry* registry);
-    Registry* cloneRegKey();
+	virtual bool equals(Registry* comp)=0;
+	virtual unsigned int getSize()=0;
+	virtual void pack(Buffer* buffer)=0;
+	virtual void unPack(Buffer* buffer)=0;
+	virtual int print(std::ostream& outStream)=0;
+    virtual int getLongBytes()=0;
+    Registry* clone()=0;
+    virtual int compareTo(Registry* registry)=0;
+    Registry* cloneRegKey()=0;
 
-private:
-	string value;
+
 };
 
 #endif /* KEY_H_ */

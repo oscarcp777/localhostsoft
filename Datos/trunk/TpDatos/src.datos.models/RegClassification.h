@@ -9,6 +9,8 @@
 #define REGCLASSIFICATION_H_
 
 #include "Registry.h"
+#include <list>
+using namespace std;
 
 class RegClassification: public Registry {
 public:
@@ -25,8 +27,13 @@ public:
 	int print(std::ostream& outStream);
 	std::string getAttribute() ;
 	void setAttribute(std::string atribute);
+	void addIuc(unsigned int iuc);
+    int getNumBlock() const;
+    void setNumBlock(int numBlock);
 private:
+	list<int > listIuc;
 	std::string attribute;
+	int numBlock;
 };
 
 #endif /* REGCLASSIFICATION_H_ */

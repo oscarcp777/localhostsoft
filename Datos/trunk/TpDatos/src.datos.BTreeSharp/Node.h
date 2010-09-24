@@ -15,8 +15,6 @@ public:
 	Node();
 	Node(unsigned int maxLong, unsigned int numBlock, unsigned int level)throw();
 	virtual ~Node()throw();
-	int getTypeElement();
-	void setTypeElement(int typeElement);
 	virtual bool isLeaf() const throw() = 0;
 	virtual void pack(Buffer* buffer) = 0;
 	virtual void unPack(Buffer* buffer) = 0;
@@ -27,17 +25,7 @@ public:
 	 * Devuelve si hay subflujo o no
 	 */
 	virtual bool isUnderflow() throw() = 0;
-	/**
-	 * Obtiene el id del bloque externo siguiente del arbol b sharp.
-	 */
-	int getNextBlock() const throw();
-	/**
-	 * Establece el id del bloque externo siguiente del arbol b sharp.
-	 */
-	void setNextBlock(int numero_bloque) throw();
-protected:
-	int typeElement;
-	int nextNode;
+
 };
 
 #endif /* NODE_H_ */

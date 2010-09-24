@@ -11,17 +11,18 @@
 #include <list>
 #include <iostream>
 #include<algorithm>
-#include "Component.h"
 #include "../src.datos.storage/Buffer.h"
+#include "../src.datos.utils/Define.h"
 #include "FactoryOfRegistry.h"
 #include "Registry.h"
 #include "Key.h"
 #include "Mail.h"
 using namespace std;
 
-class Block: public Component {
+class Block {
 public:
 	Block(unsigned int maxLong, unsigned int numBlock, unsigned int level) throw();
+	Block(unsigned int sizeBlock,int typeElement,bool indexed);
 	~Block() throw();
 	Block();
 	int getNumElements();
@@ -58,8 +59,18 @@ public:
     virtual bool posibleToAgregateComponent(Registry *registry) throw ();
     unsigned int getAverageWeight() const;
     void setAverageWeight(unsigned int averageWeight);
-private:
+	int getTypeElement();
+	void setTypeElement(int typeElement);
+    int getNextBlock() const;
+    void setNextBlock(int numero_bloque);
+    bool getIndexed() const;
+    void setIndexed(bool indexed);
+protected:
     list<Registry*> regList;
+	int nextNode;
+	int typeElement;
+private:
+    bool indexed;
     unsigned int freeSize;
     unsigned int numBlock;
     unsigned int level;

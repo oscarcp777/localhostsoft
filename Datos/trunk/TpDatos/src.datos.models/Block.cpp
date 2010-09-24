@@ -18,6 +18,11 @@ Block::Block(unsigned int maxLong, unsigned int numBlock, unsigned int level) th
 	this->numBlock=numBlock;
 	this->level= level;
 }
+Block::Block(unsigned int sizeBlock,int typeElement,bool indexed){
+	this->maxLong=sizeBlock;
+	this->indexed=indexed;
+	this->typeElement=typeElement;
+}
 Block::Block(){
 
 }
@@ -42,7 +47,7 @@ Block::~Block() throw(){
 	 delete this->factory;
 }
 unsigned int Block::getSize(){
-	return BLOCK_SIZE;
+	return this->maxLong;
 }
 unsigned int Block::getSizeRegistry(){
 	unsigned int sizeBusy=0;
@@ -109,7 +114,7 @@ void Block::packListRegistry(Buffer* buffer){
 }
 void Block::unPack(Buffer* buffer){
 	int numberElements = this->unPackMetadata(buffer);
-	this->unPackListRegistry(buffer,numberElements,TYPE_REG_PRIMARY);
+	this->unPackListRegistry(buffer,numberElements,this->typeElement);
 
 }
 void Block::unPackListRegistry(Buffer* buffer,int numberElements,int typeElement){
@@ -126,12 +131,14 @@ void Block::unPackListRegistry(Buffer* buffer,int numberElements,int typeElement
 void Block::packMetadata(Buffer* buffer){
 	int numberElements = this->regList.size();
 	buffer->packField(&numberElements, sizeof(numberElements));
-	buffer->packField(&this->freeSize, sizeof(this->freeSize));
+	if(this->indexed)
+	buffer->packField(&this->nextNode, sizeof(this->nextNode));
 }
 int Block::unPackMetadata(Buffer* buffer){
 	int numberElements;
 	buffer->unPackField(&numberElements,sizeof(numberElements));
-	buffer->unPackField(&this->freeSize,sizeof(this->freeSize));
+	if(this->indexed)
+	buffer->unPackField(&this->nextNode,sizeof(this->nextNode));
 	return numberElements;
 }
 int Block::print(std::ostream& outStream){
@@ -212,6 +219,29 @@ unsigned int Block::getAverageWeight() const
 void Block::setAverageWeight(unsigned int averageWeight)
 {
     this->averageWeight = averageWeight;
+}
+int Block::getTypeElement(){
+      return typeElement;
+ }
+
+void Block::setTypeElement(int typeElement){
+      this->typeElement = typeElement;
+  }
+void Block::setNextBlock(int numBlock){
+	this->nextNode = numBlock;
+}
+int Block::getNextBlock() const{
+	return this->nextNode;
+}
+
+bool Block::getIndexed() const
+{
+    return indexed;
+}
+
+void Block::setIndexed(bool indexed)
+{
+    this->indexed = indexed;
 }
 
 
