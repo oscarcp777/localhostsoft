@@ -36,12 +36,14 @@ public:
 	int compareTo(Registry* registry);
 	Registry* cloneRegKey();
 	void parseMail(char* text);
+	int getIuc();
 private:
 	string from;
 	string to;
 	string subject;
 	string message;
 	string date;
+
 
 };
 

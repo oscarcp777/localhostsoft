@@ -194,3 +194,6 @@ void Mail::parseMail(char* text){
 	this->setMessage(aux);
 
 }
+int Mail::getIuc(){
+	return ((KeyInteger*)this->getKey())->getValue();
+}
