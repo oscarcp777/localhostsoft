@@ -17,14 +17,16 @@ Block::Block(unsigned int maxLong, unsigned int numBlock, unsigned int level) th
 	this->maxLong=maxLong;
 	this->numBlock=numBlock;
 	this->level= level;
+	this->factory= new FactoryOfRegistry();
 }
 Block::Block(unsigned int sizeBlock,int typeElement,bool indexed){
 	this->maxLong=sizeBlock;
 	this->indexed=indexed;
 	this->typeElement=typeElement;
+	this->factory= new FactoryOfRegistry();
 }
 Block::Block(){
-
+   this->factory=new FactoryOfRegistry();
 }
 void Block::sortListRegistry(){
      this->regList.sort(comparator);
@@ -44,6 +46,7 @@ Block::~Block() throw(){
 		reg=*iterRegistry;
 		delete reg;
 	}
+	if(this->factory!=NULL)
 	 delete this->factory;
 }
 unsigned int Block::getSize(){

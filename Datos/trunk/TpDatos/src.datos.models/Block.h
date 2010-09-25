@@ -75,7 +75,7 @@ private:
     unsigned int numBlock;
     unsigned int level;
     unsigned int maxLong;
-    FactoryOfRegistry *factory;
+    FactoryOfRegistry* factory;
     unsigned int averageWeight;
 };
 

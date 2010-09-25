@@ -23,22 +23,16 @@ TestBSharp::~TestBSharp() {
 	// TODO Auto-generated destructor stub
 }
 void TestBSharp::testInsert(){
-	IndexBSharp* indexBSharp = new IndexBSharp("BTree.dat",BLOCK_SIZE,TYPE_REG_PRIMARY);
-	int num;
-	for (int var = 0; var < 50; ++var) {
-		//    	 if(21==var)
-		//    		 cout<<"";
+	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTree.dat",BLOCK_SIZE,TYPE_REG_PRIMARY);
+	for (int var = 0; var < 900; ++var) {
 		RegPrimary* regPrimary = new RegPrimary();
-		num = rand()%200;
 		KeyInteger* key= new KeyInteger(var);
 		regPrimary->setKey(key);
 		regPrimary->setNumberBlock(var*2);
-		//    	     cout<<"###########################################################"<<endl;
-		//    	     cout<<" Inserto el : ";
-		//    	     regPrimary->print(cout);
+//		cout<<"###########################################################"<<endl;
+//		cout<<" Inserto el : ";
+//		regPrimary->print(cout);
 		indexBSharp->addRegistry(regPrimary);
-		//    	     cout<<endl;
-		//    	     indexBSharp->print(std::cout);
 
 	}
 
@@ -160,24 +154,16 @@ void TestBSharp::testInsertMails(){
 	indexBSharp->addRegistry(regPrimary2);
 	indexBSharp->addRegistry(regPrimary3);
 	indexBSharp->addRegistry(regPrimary4);
+	indexBSharp->print(std::cout);
 	indexBSharp->addRegistry(regPrimary5);
 	indexBSharp->addRegistry(regPrimary6);
 	indexBSharp->addRegistry(regPrimary7);
+	indexBSharp->print(std::cout);
 	indexBSharp->addRegistry(regPrimary8);
 
 	indexBSharp->print(std::cout);
 	cout<<" esto es una manteca bambino!!!"<<endl;
 	delete indexBSharp;
-
-
-	delete mail1;
-	delete mail2;
-	delete mail3;
-	delete mail4;
-	delete mail5;
-	delete mail6;
-	delete mail7;
-	delete mail8;
 
 }
 void TestBSharp::testsearch(){

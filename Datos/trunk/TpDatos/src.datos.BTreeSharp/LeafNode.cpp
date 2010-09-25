@@ -10,7 +10,10 @@
 
 LeafNode::LeafNode(int typeElement,unsigned int maxLong, unsigned int numBlock, unsigned int level) throw():Node(maxLong,numBlock,level){
     this->nextNode=-1;
-
+   this->typeElement=typeElement;
+   this->setMaxLong(maxLong);
+   this->setNumBlock(numBlock);
+   this->setLevel(level);
 }
 LeafNode::LeafNode(int typeElement,unsigned int maxLong){
 	this->typeElement=typeElement;
@@ -39,9 +42,7 @@ return registry;
 Block* LeafNode::readBlockData(unsigned int numBlock,ContainerInsertDataBlock* container){
        Buffer* buffer= new Buffer(container->getSizeBlockData());
        container->getBinaryFile()->read(buffer->getData(),container->getSizeBlockData(),container->getSizeBlockData()*numBlock);
-       		Block* block =new Block();
-       		block->setTypeElement(container->getTypeElementData());
-       		block->setIndexed(container->getIndexed());
+       Block* block = new Block(container->getSizeBlockData(),container->getTypeElementData(),container->getIndexed());
        		block->unPack(buffer);
        		delete buffer;
        return block;
@@ -59,6 +60,7 @@ Registry* LeafNode::insertMailBlockNew(Registry* registry,ContainerInsertDataBlo
 			blockMailsNew->addReg(((RegPrimary*)registry)->getMail());
 			((RegPrimary*)registry)->setNumberBlock(numblock);
 			this->writeBlockData(blockMailsNew,numblock,container);
+			((RegPrimary*)registry)->setMail(NULL);
 			return registry;
 }
 Registry* LeafNode::insertBlockMails(Registry* registry,ContainerInsertDataBlock* container){
@@ -82,6 +84,7 @@ Registry* LeafNode::insertBlockMails(Registry* registry,ContainerInsertDataBlock
 	if(blockMails->posibleToAgregateComponent(((RegPrimary*)registry)->getMail())){
 		blockMails->addReg(((RegPrimary*)registry)->getMail());
 		this->writeBlockData(blockMails,regPrevious->getNumberBlock(),container);
+		delete registry;
 		return NULL;
 	}else{
 		return this->insertMailBlockNew(registry,container);

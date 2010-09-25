@@ -184,6 +184,10 @@ private:
 		 */
 		Buffer* buffer;
 		/**
+				 * clase para cargar los bytes del bloque de la raiz
+				 */
+				Buffer* bufferRoot;
+		/**
 		 * Almacena el archivo del indice b sharp.
 		 */
 	    BinaryFile* binaryFile;
@@ -201,6 +205,8 @@ private:
 		 *
 		 */
 		list<Registry*> listRegistry;
+		list<Registry*> listRegLeftNode;
+		list<Registry*> listRegRightNode;
 		/**
 		 * lista de ramas temporal
 		 */

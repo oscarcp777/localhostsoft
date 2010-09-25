@@ -13,7 +13,9 @@ ContainerInsertDataBlock::ContainerInsertDataBlock() {
 }
 
 ContainerInsertDataBlock::~ContainerInsertDataBlock() {
-	// TODO Auto-generated destructor stub
+	this->binaryFile->close();
+	delete this->binaryFile;
+	delete this->freeBlockController;
 }
 
 BinaryFile *ContainerInsertDataBlock::getBinaryFile() const

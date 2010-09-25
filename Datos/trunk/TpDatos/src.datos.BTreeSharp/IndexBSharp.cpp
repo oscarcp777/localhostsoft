@@ -38,9 +38,10 @@ IndexBSharp::IndexBSharp(const std::string& nameFile,unsigned int sizeBlock,int 
 	    this->freeBlockController = new FreeBlockController(nameFile+"free",1);
 	}else{
 		this->binaryFile->open(nameFile);
-	    this->freeBlockController = new FreeBlockController(nameFile+"free",this->binaryFile->getCountBlockInFile(sizeBlock));
+	    this->freeBlockController = new FreeBlockController(nameFile+"free",this->binaryFile->getCountBlockInFile(sizeBlock)-1);
 	}
 	this->buffer= new Buffer(sizeBlock);
+	this->bufferRoot= new Buffer(sizeBlock*2);
 	if(typeElement==TYPE_REG_PRIMARY)
     this->initContainerDataBlock(nameFile,BLOCK_SIZE_MAILS,typeElement,TYPE_MAIL,false);
 	if(typeElement==TYPE_REG_CLASSIFICATION)
@@ -62,8 +63,11 @@ unsigned int IndexBSharp::averageEstimate(list<Registry*>::iterator iteratorBegi
 IndexBSharp::~IndexBSharp() {
 	this->binaryFile->close();
 	delete this->buffer;
+	delete this->bufferRoot;
+	delete this->containerInsertDataBlock;
 	delete this->freeBlockController;
 	delete this->binaryFile;
+	delete this->rootNode;
 }
 
 void IndexBSharp::addRegistry(Registry* registry) throw(){
@@ -111,15 +115,17 @@ void IndexBSharp::createBlockRoot() throw(){
 	this->writeBlockRoot();
 }
 void IndexBSharp::readBlockRoot() throw(){
-	this->rootNode= this->readNode(0);
-	if (this->rootNode== NULL) {
+	 this->bufferRoot->clear();
+	if(this->binaryFile->read(this->bufferRoot->getData(),this->bufferRoot->getMaxBytes(),0)){
+		this->rootNode = readNodeBytes(this->bufferRoot);
+	}else {
 		this->createBlockRoot();
 	}
 }
 void IndexBSharp::writeBlockRoot() throw(){
-		Buffer* bufferRoot=new Buffer(this->sizeBlock*2);
-		this->rootNode->pack(bufferRoot);
-		this->binaryFile->write(bufferRoot->getData(),bufferRoot->getMaxBytes(),0);
+	    this->bufferRoot->clear();
+		this->rootNode->pack(this->bufferRoot);
+		this->binaryFile->write(this->bufferRoot->getData(),this->bufferRoot->getMaxBytes(),0);
 }
 void IndexBSharp::writeBlock(Node* node,int numBlock) throw(){
 	this->buffer->clear();
@@ -168,12 +174,12 @@ Node* IndexBSharp::readNodeBytes(Buffer* buffer) throw(){
 	return NULL;
 }
 Node* IndexBSharp::readInternalNodeBytes(Buffer* buffer) throw(){
-	InternalNode* internalNode= new InternalNode(this->sizeBlock,this->typeElement);
+	InternalNode* internalNode= new InternalNode(buffer->getMaxBytes(),this->typeElement);
 	internalNode->unPack(buffer);
 	return internalNode;
 }
 Node* IndexBSharp::readLeafNodeBytes(Buffer* buffer) throw(){
-	LeafNode* leafNode= new LeafNode(this->typeElement,this->sizeBlock);
+	LeafNode* leafNode= new LeafNode(this->typeElement,buffer->getMaxBytes());
 	leafNode->unPack(buffer);
 	return leafNode;
 }
@@ -237,6 +243,7 @@ void IndexBSharp::splitLeafRoot(ContainerInsertion* container, Registry* registr
 	newRoot->addComponent(container->getLeftRegKey());
 	newRoot->addComponent(container->getRightRegKey());
 	// Escribe el bloque raiz
+	delete this->rootNode;
 	this->rootNode = newRoot;
 	this->writeBlockRoot();
 
@@ -244,7 +251,9 @@ void IndexBSharp::splitLeafRoot(ContainerInsertion* container, Registry* registr
 	this->writeBlock(newLeftNode,newLeftNode->getNumBlock());
 	this->writeBlock(newRightNode,newRightNode->getNumBlock() );
 	this->writeBlock(newCenterNode, newCenterNode->getNumBlock());
-
+	delete newCenterNode;
+	delete newLeftNode;
+	delete newRightNode;
 
 }
 
@@ -341,6 +350,10 @@ void IndexBSharp::splitInternalRoot(ContainerInsertion* container) throw(){
 	this->writeBlock(newRightNode,newRightNode->getNumBlock());
 	this->writeBlock(newCenterNode, newCenterNode->getNumBlock());
 
+	delete newLeftNode;
+	delete newRightNode;
+	delete newCenterNode;
+
 
 }
 int IndexBSharp::insertLeafNode(LeafNode* leafNode,Registry* registry,ContainerInsertion* container, unsigned int brotherNode) throw(){
@@ -354,7 +367,7 @@ int IndexBSharp::insertLeafNode(LeafNode* leafNode,Registry* registry,ContainerI
 
 
 	// Consideramos que no hay sobreflujo
-	bool answer = INSERTION_OK;
+	int answer = INSERTION_OK;
 	// Verifica que el bloque externo puede agregar el registro
 	if (leafNode->posibleToAgregateComponent(registry)) {
 		// Agrega el registro en el bloque externo no lleno
@@ -374,7 +387,9 @@ int IndexBSharp::insertLeafNode(LeafNode* leafNode,Registry* registry,ContainerI
 				this->insertLeafNodeFull(leafNode,sisterBranchNode,registry,container);
 			}
 		}
+		delete sisterBranchNode;
 	}
+
 	return answer;
 }
 
@@ -426,7 +441,7 @@ bool IndexBSharp::balanceLeafNode(Registry* reg, LeafNode* actualNode, LeafNode*
 		leftNode = brotherNode;
 		rightNode = actualNode;
 	}
-
+	this->listRegistry.clear();
 	this->mergeComponentList(this->listRegistry,listRegLeftNode,listRegRightNode);
 
 	this->listRegistry.push_back(reg);
@@ -566,6 +581,7 @@ void IndexBSharp::insertLeafNodeFull(LeafNode* leafNode,LeafNode* brotherNode,Re
 	container->setLeftBlock(leftNode->getNumBlock());
 	container->setMediumBlock(rightNode->getNumBlock());
 	container->setRightBlock(newLeafNode->getNumBlock());
+	delete newLeafNode;
 
 }
 
@@ -775,7 +791,7 @@ int IndexBSharp::insertInternalNode(InternalNode* internalNode,Registry* registr
 				} else {
 
 					// LEO BLOQUE DE LA DIR DEL HERMANO
-					InternalNode* branchSisterNode;
+					InternalNode* branchSisterNode=NULL;
 
 					if (brotherBlock != 0)
 						branchSisterNode = (InternalNode*)this->readNode(brotherBlock);
@@ -799,10 +815,11 @@ int IndexBSharp::insertInternalNode(InternalNode* internalNode,Registry* registr
 
 						}
 					}
+					delete branchSisterNode;
 				}
 			}
 		}
-
+       delete nodeInsertBranch;
 		return answer;
 }
 void IndexBSharp::insertInternalNodeNotFull(InternalNode* internalNode,Registry* registryKey,unsigned int rightBlock) throw(){
@@ -854,7 +871,7 @@ bool IndexBSharp::insertInternalNodeFull(InternalNode* internalNode,InternalNode
 		vector<int> branchListRightNode;
 
 		//Diferencio cual es el bloque izquierdo del derecho
-		if (registryCurrent->compareTo(registrybrothers)) {
+		if (registryCurrent->compareTo(registrybrothers)<0) {
 			internalNode->transferRegistry(listRegLeftNode);
 			brothersNode->transferRegistry(listRegRightNode);
 			internalNode->transferBranchs(branchListLeftNode);
@@ -948,6 +965,7 @@ bool IndexBSharp::insertInternalNodeFull(InternalNode* internalNode,InternalNode
 	// Establezco bloque medio en resultado de insercion
 	container->setRightBlock(newInternalNode->getNumBlock());
 	container->setMediumBlock(rightNode->getNumBlock());
+	delete newInternalNode;
 	return true;
 }
 
@@ -1066,6 +1084,7 @@ Registry*  IndexBSharp::searchInternalNode(InternalNode* internalNode,Registry* 
 				findRegistry = this->searchInternalNode(internalNodeRead, registry);
 			}
 		}
+		delete readNode;
 	}
 	return findRegistry;
 
@@ -1115,6 +1134,7 @@ void IndexBSharp::printRecursive(Node* currentNode, std::ostream& outStream, uns
 					this->printRecursive(childNode, outStream, level + 1);
 				}
 				++actualBranch;
+				delete childNode;
 			}
 		}
 	}
