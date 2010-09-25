@@ -359,11 +359,11 @@ void IndexBSharp::splitInternalRoot(ContainerInsertion* container) throw(){
 int IndexBSharp::insertLeafNode(LeafNode* leafNode,Registry* registry,ContainerInsertion* container, unsigned int brotherNode) throw(){
 
 
-//	   if(this->typeElement==TYPE_REG_PRIMARY||this->typeElement==TYPE_REG_CLASSIFICATION){
-//		   registry=  leafNode->insertBlockData(registry,this->containerInsertDataBlock);
-//	   }
-//       if(registry==NULL)
-//    	   return INSERTION_OK;
+	   if(this->typeElement==TYPE_REG_PRIMARY||this->typeElement==TYPE_REG_CLASSIFICATION){
+		   registry=  leafNode->insertBlockData(registry,this->containerInsertDataBlock);
+	   }
+       if(registry==NULL)
+    	   return INSERTION_OK;
 
 
 	// Consideramos que no hay sobreflujo
