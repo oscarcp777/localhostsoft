@@ -39,6 +39,16 @@ Registry* LeafNode::insertBlockData(Registry* registry,ContainerInsertDataBlock*
 
 return registry;
 }
+Registry* LeafNode::searchRegistryBlockData(Registry* registry,ContainerInsertDataBlock* container){
+	if(container->getTypeElement()==TYPE_REG_PRIMARY){
+		registry=searchBlockMails(registry, container);
+	}
+	if(container->getTypeElement()==TYPE_REG_CLASSIFICATION){
+		registry=searchBlockRegClassification(registry, container);
+	}
+
+	return registry;
+}
 Block* LeafNode::readBlockData(unsigned int numBlock,ContainerInsertDataBlock* container){
        Buffer* buffer= new Buffer(container->getSizeBlockData());
        container->getBinaryFile()->read(buffer->getData(),container->getSizeBlockData(),container->getSizeBlockData()*numBlock);
@@ -81,6 +91,8 @@ Registry* LeafNode::insertBlockMails(Registry* registry,ContainerInsertDataBlock
 	}
 	RegPrimary* regPrevious=(RegPrimary*)reg;
 	blockMails=this->readBlockData(regPrevious->getNumberBlock(),container);
+	cout<<"TAMAÑO MAIL"<<((RegPrimary*)registry)->getMail()->getLongBytes()<<endl;
+	cout<<"TAMAÑO OCUPADO"<<blockMails->getOcupedLong()<<endl;
 	if(blockMails->posibleToAgregateComponent(((RegPrimary*)registry)->getMail())){
 		blockMails->addReg(((RegPrimary*)registry)->getMail());
 		this->writeBlockData(blockMails,regPrevious->getNumberBlock(),container);
@@ -104,6 +116,48 @@ Registry* LeafNode::insertBlockRegClassification(Registry* registry,ContainerIns
 
 
 return registry;
+}
+Registry* LeafNode::searchBlockRegClassification(Registry* registry,ContainerInsertDataBlock* container){
+//	list<Registry*>::iterator iterRegistry;
+//	Registry* reg;
+//	for ( iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
+//		reg=*iterRegistry;
+//		if(registry->equals(reg)){
+//			break;
+//		}
+//	}
+	//		RegClassification* regPrevious=(RegClassification*)reg;
+
+
+	return NULL;//registry;
+}
+Registry* LeafNode::searchBlockMails(Registry* registry,ContainerInsertDataBlock* container){
+	list<Registry*>::iterator iterRegistry;
+	Registry* reg=registry;
+	Block* blockMails;
+	if(this->regList.size()==0){
+		return NULL;
+	}
+	for ( iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
+		reg=*iterRegistry;
+		if(registry->compareTo(reg)<0){
+			//si entro es menor al actual entonces retrocedo un reg que es donde debo insertar
+			iterRegistry--;
+			reg=*iterRegistry;
+			break;
+		}
+	}
+	RegPrimary* regPrevious=(RegPrimary*)reg;
+	blockMails=this->readBlockData(regPrevious->getNumberBlock(),container);
+	for(iterRegistry = blockMails->iteratorBegin(); iterRegistry != blockMails->iteratorEnd(); iterRegistry++){
+		reg=*iterRegistry;
+		if(registry->compareTo(reg) == 0){
+			((RegPrimary*)registry)->setMail((Mail*)reg);
+			return registry;
+		}
+	}
+
+	return NULL;
 }
 bool LeafNode::isLeaf() const throw(){
 	return true;

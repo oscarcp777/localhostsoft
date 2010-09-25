@@ -36,13 +36,15 @@ public:
    */
 	Registry* insertBlockData(Registry* registry,ContainerInsertDataBlock* container);
 	 bool posibleToAgregateComponent(Registry* registry)throw();
-
+	 Registry* searchRegistryBlockData(Registry* registry,ContainerInsertDataBlock* container);
 private:
 	 void writeBlockData(Block* block ,unsigned int numBlock,ContainerInsertDataBlock* container);
 	 Block* readBlockData(unsigned int numBlock,ContainerInsertDataBlock* container);
 	 Registry* insertBlockMails(Registry* registry,ContainerInsertDataBlock* container);
 	 Registry* insertBlockRegClassification(Registry* registry,ContainerInsertDataBlock* container);
 	 Registry* insertMailBlockNew(Registry* registry,ContainerInsertDataBlock* container);
+	 Registry* searchBlockMails(Registry* registry,ContainerInsertDataBlock* container);
+	 Registry* searchBlockRegClassification(Registry* registry,ContainerInsertDataBlock* container);
 
 };
 

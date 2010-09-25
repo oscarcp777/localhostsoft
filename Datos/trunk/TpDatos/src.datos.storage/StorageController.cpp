@@ -18,7 +18,7 @@ StorageController::StorageController() {
 }
 
 StorageController::~StorageController() {
-	// TODO Auto-generated destructor stub
+	delete this->primaryIndex;
 }
 void StorageController::addMail(char* message){
 	Mail* mail = this->generateMail(message);
@@ -27,7 +27,7 @@ void StorageController::addMail(char* message){
 	regPrimary->setKey((KeyInteger*)mail->getKey()->clone());
 	regPrimary->setMail(mail);
 	this->primaryIndex->addRegistry(regPrimary);
-	//TODO hago delete de mail??????????? ¿***********************************************
+
 }
 Mail* StorageController::generateMail(char* message){
 	Mail* mail = new Mail();
@@ -42,5 +42,6 @@ IndexBSharp* StorageController::generatePrimaryIndex(char* userName, char* passw
 	fileName += ".IndPrimario";
 	this->primaryIndex = new IndexBSharp(fileName,BLOCK_SIZE,TYPE_REG_PRIMARY);
 	connection(userName,password,this);
+
 	return this->primaryIndex;
 }

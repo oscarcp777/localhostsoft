@@ -135,6 +135,7 @@ int Mail::print(std::ostream& outStream){
 	outStream << "subject: "<<subject<< endl;
 	outStream << "date: "<<date<< endl;
 	outStream << "message: "<<message<< endl;
+	outStream << "IUC: "<<((KeyInteger*)(this->getKey()))->getValue()<< endl;
 
 	return 1;
 }

@@ -18,6 +18,7 @@ public:
 	void testInsertRegClassification();
 	void testsearchRegClassification();
 	void testInsertMails();
+	void print();
 };
 
 #endif /* TESTBSHARP_H_ */

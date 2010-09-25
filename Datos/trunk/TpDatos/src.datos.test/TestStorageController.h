@@ -13,6 +13,8 @@ public:
 	TestStorageController();
 	virtual ~TestStorageController();
 	void testConnectAndCreatePrimaryIndex();
+	void testPrintPrimaryIndex();
+	void testSearchPrimaryIndex();
 };
 
 #endif /* TESTSTORAGECONTROLLER_H_ */

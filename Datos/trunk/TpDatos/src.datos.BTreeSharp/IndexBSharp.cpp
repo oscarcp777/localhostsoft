@@ -1053,20 +1053,24 @@ Registry* IndexBSharp::extractKey(Registry* registry) throw(){
 Registry* IndexBSharp::searchLeafNode(LeafNode* leafNode,Registry* registry) throw(){
 	Registry* findRegistry = NULL;
 	bool find = false;
-
-	if (leafNode != NULL) {
-		std::list<Registry*>::const_iterator actualComponent = leafNode->iteratorBegin();
-		std::list<Registry*>::const_iterator endComponent = leafNode->iteratorEnd();
-
-		while (actualComponent != endComponent && !find) {
-			Registry* iterRegistry = *actualComponent;
-			if (iterRegistry->compareTo(registry)==0) {
-				findRegistry = iterRegistry;
-				find = true;
-			}
-			++actualComponent;
-		}
+	 if(this->typeElement==TYPE_REG_PRIMARY||this->typeElement==TYPE_REG_CLASSIFICATION){
+		 findRegistry=  leafNode->searchRegistryBlockData(registry,this->containerInsertDataBlock);
 	}
+	 else{
+		 if (leafNode != NULL) {
+			 std::list<Registry*>::const_iterator actualComponent = leafNode->iteratorBegin();
+			 std::list<Registry*>::const_iterator endComponent = leafNode->iteratorEnd();
+
+			 while (actualComponent != endComponent && !find) {
+				 Registry* iterRegistry = *actualComponent;
+				 if (iterRegistry->compareTo(registry)==0) {
+					 findRegistry = iterRegistry;
+					 find = true;
+				 }
+				 ++actualComponent;
+			 }
+		 }
+	 }
 	return findRegistry;
 }
 Registry*  IndexBSharp::searchInternalNode(InternalNode* internalNode,Registry* registry) throw(){

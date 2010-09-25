@@ -11,6 +11,7 @@
 #include "RegKeyPrimary.h"
 
 RegPrimary::RegPrimary() {
+	this->mail = NULL;
 }
 
 RegPrimary::~RegPrimary() {
@@ -53,6 +54,8 @@ int RegPrimary::print(std::ostream& outStream){
 	outStream<<"numero Bloque: ";
 	outStream<<this->numberBlock;
 	outStream<<endl;
+	if(this->mail != NULL)
+		this->mail->print(outStream);
 	return 1;
 }
  int RegPrimary::getLongBytes(){
