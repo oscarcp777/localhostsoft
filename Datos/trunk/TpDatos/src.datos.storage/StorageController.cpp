@@ -22,6 +22,7 @@ StorageController::~StorageController() {
 void StorageController::addMail(char* message){
 	Mail* mail = this->generateMail(message);
 	this->primaryIndex->addRegistry(mail);
+	mail->print(std::cout);
 	//TODO hago delete de mail??????????? ¿***********************************************
 }
 Mail* StorageController::generateMail(char* message){

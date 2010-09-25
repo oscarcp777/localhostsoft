@@ -9,17 +9,18 @@
 #include <iostream>
 #include <list>
 #include "TestBSharp.h"
+#include "TestStorageController.h"
 
 
 using namespace std;
 
 int main(int argc,char** argv) {
-	TestBSharp* test= new TestBSharp();
-	test->testInsert();
+//	TestBSharp* test= new TestBSharp();
+//	test->testInsert();
 //	test->testsearch();
 //	test->testInsertRegClassification();
 //	test->testsearchRegClassification();
-	delete test;
+//	delete test;
 /*
 	//TEST STORAGE
    TestStorage* teststorage = new TestStorage();
@@ -35,7 +36,8 @@ int main(int argc,char** argv) {
 //      testMailManager->testUnpackMail();
 //      delete testMailManager;
 //***********************************************
-
+	TestStorageController* test = new TestStorageController();
+	test->testConnectAndCreatePrimaryIndex();
 
    return 0;
 }
