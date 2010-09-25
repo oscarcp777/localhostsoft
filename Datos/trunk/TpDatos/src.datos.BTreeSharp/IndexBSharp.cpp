@@ -14,15 +14,15 @@ void IndexBSharp::initContainerDataBlock(const std::string& nameFile,unsigned in
     this->containerInsertDataBlock= new ContainerInsertDataBlock();
     this->containerInsertDataBlock->setIndexed(indexed);
     this->containerInsertDataBlock->setTypeElementData(typeElementData);
-    string nameFileData=nameFile+"data";
+    string nameFileData=nameFile+".dt";
     BinaryFile* binaryFileData= new BinaryFile();
     FreeBlockController* freeBlockControllerData;
     if(!binaryFileData->isCreated(nameFileData)){
     	    binaryFileData->create(nameFileData);
-    	    freeBlockControllerData = new FreeBlockController(nameFileData+".free",-1);
+    	    freeBlockControllerData = new FreeBlockController(nameFile+".fr2",-1);
     	}else{
     		binaryFileData->open(nameFileData);
-    		freeBlockControllerData = new FreeBlockController(nameFileData+".free",binaryFileData->getCountBlockInFile(sizeBlock)-1);
+    		freeBlockControllerData = new FreeBlockController(nameFile+".fr2",binaryFileData->getCountBlockInFile(sizeBlock)-1);
     	}
     this->containerInsertDataBlock->setBinaryFile(binaryFileData);
     this->containerInsertDataBlock->setFreeBlockController(freeBlockControllerData);
@@ -35,10 +35,10 @@ IndexBSharp::IndexBSharp(const std::string& nameFile,unsigned int sizeBlock,int 
 	this->binaryFile= new BinaryFile();
 	if(!this->binaryFile->isCreated(nameFile)){
 		this->binaryFile->create(nameFile);
-	    this->freeBlockController = new FreeBlockController(nameFile+"free",1);
+	    this->freeBlockController = new FreeBlockController(nameFile+".fr",1);
 	}else{
 		this->binaryFile->open(nameFile);
-	    this->freeBlockController = new FreeBlockController(nameFile+"free",this->binaryFile->getCountBlockInFile(sizeBlock)-1);
+	    this->freeBlockController = new FreeBlockController(nameFile+".fr",this->binaryFile->getCountBlockInFile(sizeBlock)-1);
 	}
 	this->buffer= new Buffer(sizeBlock);
 	this->bufferRoot= new Buffer(sizeBlock*2);
@@ -358,13 +358,13 @@ void IndexBSharp::splitInternalRoot(ContainerInsertion* container) throw(){
 }
 int IndexBSharp::insertLeafNode(LeafNode* leafNode,Registry* registry,ContainerInsertion* container, unsigned int brotherNode) throw(){
 
-
+      if(DATA==1){
 	   if(this->typeElement==TYPE_REG_PRIMARY||this->typeElement==TYPE_REG_CLASSIFICATION){
 		   registry=  leafNode->insertBlockData(registry,this->containerInsertDataBlock);
 	   }
        if(registry==NULL)
     	   return INSERTION_OK;
-
+      }
 
 	// Consideramos que no hay sobreflujo
 	int answer = INSERTION_OK;

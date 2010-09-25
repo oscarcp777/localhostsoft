@@ -14,10 +14,10 @@ FreeBlockController::~FreeBlockController()throw(){
 }
 FreeBlockController::FreeBlockController(string nameFile,unsigned int counterBlock) throw() {
 	this->binaryFile = new BinaryFile();
-	if(!this->binaryFile->isCreated(nameFile.append(".free"))){
-		this->binaryFile->create(nameFile.append(".free"));
+	if(!this->binaryFile->isCreated(nameFile)){
+		this->binaryFile->create(nameFile);
 	}else{
-		this->binaryFile->open(nameFile.append(".free"));
+		this->binaryFile->open(nameFile);
 	}
 	this->counterBlock=counterBlock;
 }
@@ -33,8 +33,6 @@ unsigned int FreeBlockController::searchFreeBlock() throw() {
 	return this->vectorFreeBlock.back();
 	else{
 		unsigned int nextBlock=++counterBlock;
-		if(nextBlock==1)
-			nextBlock++;
 		return nextBlock;
 	}
 

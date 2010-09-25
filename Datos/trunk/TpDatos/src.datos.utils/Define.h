@@ -26,7 +26,7 @@
 #define TYPE_INTEGER 8
 #define TYPE_INTEGER 8
 
-
+#define DATA 0
 #define INSERTION_OK 0
 #define OVERFLOW 1
 #define BALANCE 2

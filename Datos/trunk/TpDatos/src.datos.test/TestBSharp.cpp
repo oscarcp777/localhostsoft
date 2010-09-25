@@ -24,14 +24,15 @@ TestBSharp::~TestBSharp() {
 }
 void TestBSharp::testInsert(){
 	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTree.dat",BLOCK_SIZE,TYPE_REG_PRIMARY);
-	for (int var = 0; var < 900; ++var) {
+	for (int var =0; var < 10000; ++var) {
 		RegPrimary* regPrimary = new RegPrimary();
-		KeyInteger* key= new KeyInteger(var);
+		int keyInt= rand()%1000000;
+		KeyInteger* key= new KeyInteger(keyInt);
 		regPrimary->setKey(key);
-		regPrimary->setNumberBlock(var*2);
+		regPrimary->setNumberBlock(var);
 //		cout<<"###########################################################"<<endl;
 //		cout<<" Inserto el : ";
-		regPrimary->print(cout);
+//		regPrimary->print(cout);
 		indexBSharp->addRegistry(regPrimary);
 
 	}
@@ -182,10 +183,10 @@ void TestBSharp::testsearch(){
 
 
 void TestBSharp::testInsertRegClassification(){
-	IndexBSharp* indexBSharp = new IndexBSharp("BTreeRegClassifi.dat",BLOCK_SIZE,TYPE_REG_CLASSIFICATION);
+	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTreeRegClassifi.dat",BLOCK_SIZE,TYPE_REG_CLASSIFICATION);
 
 
-	for (int var = 0; var < 15; ++var) {
+	for (int var = 0; var < 100; ++var) {
 		if(var==16)
 			cout<<"";
 		std::stringstream stream;
