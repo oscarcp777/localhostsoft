@@ -10,6 +10,7 @@
 #include "../src.datos.connection/gmail-poptest.h"
 #include "../src.datos.models/Mail.h"
 #include "../src.datos.models/KeyInteger.h"
+#include "../src.datos.models/RegPrimary.h"
 
 StorageController::StorageController() {
 	this->numberOfIuc = 1;
@@ -21,8 +22,11 @@ StorageController::~StorageController() {
 }
 void StorageController::addMail(char* message){
 	Mail* mail = this->generateMail(message);
-	this->primaryIndex->addRegistry(mail);
 	mail->print(std::cout);
+	RegPrimary* regPrimary = new RegPrimary();
+	regPrimary->setKey((KeyInteger*)mail->getKey()->clone());
+	regPrimary->setMail(mail);
+	this->primaryIndex->addRegistry(regPrimary);
 	//TODO hago delete de mail??????????? ¿***********************************************
 }
 Mail* StorageController::generateMail(char* message){
