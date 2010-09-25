@@ -26,7 +26,7 @@ Block::Block(unsigned int sizeBlock,int typeElement,bool indexed){
 	this->factory= new FactoryOfRegistry();
 }
 Block::Block(){
-   this->factory=new FactoryOfRegistry();
+	this->factory= new FactoryOfRegistry();
 }
 void Block::sortListRegistry(){
      this->regList.sort(comparator);

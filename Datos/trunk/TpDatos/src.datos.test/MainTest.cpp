@@ -15,7 +15,7 @@ using namespace std;
 
 int main(int argc,char** argv) {
 	TestBSharp* test= new TestBSharp();
-	test->testInsertMails();
+	test->testInsert();
 //	test->testsearch();
 //	test->testInsertRegClassification();
 //	test->testsearchRegClassification();

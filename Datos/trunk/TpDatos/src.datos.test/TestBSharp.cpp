@@ -31,7 +31,7 @@ void TestBSharp::testInsert(){
 		regPrimary->setNumberBlock(var*2);
 //		cout<<"###########################################################"<<endl;
 //		cout<<" Inserto el : ";
-//		regPrimary->print(cout);
+		regPrimary->print(cout);
 		indexBSharp->addRegistry(regPrimary);
 
 	}
