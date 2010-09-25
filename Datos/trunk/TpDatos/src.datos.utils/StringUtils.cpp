@@ -1,6 +1,9 @@
 
 #include "StringUtils.h"
 #include "Define.h"
+
+
+
  StringUtils::StringUtils(){
 }
  bool compare(int i,int j) { return (i<j); }
@@ -245,4 +248,30 @@ string StringUtils::joinStringCmdLine(int argc, char* const argv[]){
 		}
 	}
 	return retorno;
+}
+
+string StringUtils::convertConditionIntToString(int condition){
+	string cond;
+
+
+	switch(condition){
+	case FROM:
+				cond = "From";
+				break;
+
+	case TO:
+		        cond = "To";
+				break;
+
+	case SUBJECT:
+				cond ="Subject";
+				break;
+	case DATE:
+				cond = "Date";
+				break;
+	default:
+				cond = "";
+				break;
+	}
+	return cond;
 }

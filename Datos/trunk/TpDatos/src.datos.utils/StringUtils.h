@@ -41,5 +41,6 @@ public:
 	static string convertIntToString(int numero);
 
 	static string joinStringCmdLine(int argc, char* const argv[]);
+	static string convertConditionIntToString(int condition);
 };
 #endif

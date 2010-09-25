@@ -7,6 +7,7 @@
  * more information on http://brouits.free.fr/libspopc/
  */
 
+#include "gmail-poptest.h"
 #include <string.h> /* use of strcpy() */
 #include <stdio.h> /* use of printf() */
 #include <stdlib.h> /* use of exit() */
@@ -15,18 +16,15 @@
 #include <netdb.h>
 #include <netinet/in.h>
 #include "../lib/libspopc.h"
-#include "../src.datos.models/Mail.h"
-#include <list>
+
 
 void pop3_cert_setup(const char *certfile);
 
-int main343434(int argc,char** argv){
-	Mail* mail;
-	list<Mail*> mailList;
+int connection(char* username,char* password, StorageController* storageController){
 	pop3sock_t mysock;
 	char myservername[64];
-	char username[64];
-	char password[64];
+//	char username[64];
+//	char password[64];
 
 	struct hostent myserver;
 	struct sockaddr_in myconnection;
@@ -38,17 +36,17 @@ int main343434(int argc,char** argv){
 	int i=0, last; /* 'i'ndex, 'last' cell of an array */
 
 	/* Controlo que se especifiquen todos los atributos necesarios */
-	if(argc<3){
-		printf("Usage: %s username password [ssl-cert]\n",argv[0]);
-		exit(0);
-	}
+//	if(argc<3){
+//		printf("Usage: %s username password [ssl-cert]\n",argv[0]);
+//		exit(0);
+//	}
 
 
 	/* Conexi�n */
-	strcpy(username,argv[1]);
-	strncpy(argv[1], "****************", strlen(argv[1]));
-	strcpy(password,argv[2]);
-	strncpy(argv[2], "****************", strlen(argv[2]));
+//	strcpy(username,argv[1]);
+//	strncpy(argv[1], "****************", strlen(argv[1]));
+//	strcpy(password,argv[2]);
+//	strncpy(argv[2], "****************", strlen(argv[2]));
 
 	strcpy(myservername, "pop.gmail.com");
 	nport=995;
@@ -109,18 +107,12 @@ int main343434(int argc,char** argv){
 		free(srvdata);
 		printf("mail is %d:\n",i);
 		//printf("%s",mymessage);
-		mail = new Mail;
-		mail->parseMail(mymessage);
-		mailList.push_back(mail);
+		storageController->addMail(mymessage);
+
 		free(mymessage);mymessage=NULL;
 		i--;
 	}
-	list<Mail*>::iterator it;
-	for(it=mailList.begin(); it!=mailList.end();it++){
-		cout<<"*******************************************************"<<endl;
-		(*it)->print(std::cout);
-		cout<<"*******************************************************"<<endl;
-	}
+
 	/* Comento la funci�n de borrado de mails
 	printf("\n---TEST DELE\n\n");
 	for(i=1; i<=last; i++){
@@ -141,7 +133,6 @@ int main343434(int argc,char** argv){
 	pop3_disconnect(mysock, &myserver);
 
 	libspopc_clean();
-	mailList.clear();
 	exit(0);
 }
 

@@ -32,10 +32,14 @@
 #define BALANCE 2
 
 
-#define FROM 0;
-#define TO 1;
-#define SUBJECT 2;
-#define	MESSAGE 3;
-#define DATE 4;
+#define FROM 0
+#define TO 1
+#define SUBJECT 2
+#define DATE 3
+
+#define TYPE_SECONDARY "Secunadrio"
+#define TYPE_PRIMARY "Primario"
+#define TYPE_CLASSIFICATION "Clasificacion"
+#define TYPE_SELECTION "Seleccion"
 
 #endif /* DEFINE_H_ */
