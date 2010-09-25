@@ -31,4 +31,11 @@
 #define OVERFLOW 1
 #define BALANCE 2
 
+
+#define FROM 0;
+#define TO 1;
+#define SUBJECT 2;
+#define	MESSAGE 3;
+#define DATE 4;
+
 #endif /* DEFINE_H_ */
