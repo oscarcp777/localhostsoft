@@ -131,12 +131,14 @@ void Mail::unPack(Buffer* buffer){
 }
 int Mail::print(std::ostream& outStream){
 	//this->getKey()->print();
-	outStream << "from: "<<from<< endl;
-	outStream << "to: "<<to<< endl;
-	outStream << "subject: "<<subject<< endl;
-	outStream << "date: "<<date<< endl;
-	outStream << "message: "<<message<< endl;
-	outStream << "IUC: "<<((KeyInteger*)(this->getKey()))->getValue()<< endl;
+	outStream << "****************************************************"<< endl;
+	outStream << "**from: "<<from<< endl;
+	outStream << "**to: "<<to<< endl;
+	outStream << "**subject: "<<subject<< endl;
+	outStream << "**date: "<<date<< endl;
+	outStream << "**message: "<<message<< endl;
+	outStream << "**IUC: "<<((KeyInteger*)(this->getKey()))->getValue()<< endl;
+	outStream << "****************************************************"<< endl;
 
 	return 1;
 }
@@ -177,17 +179,17 @@ void Mail::parseMail(char* text){
 	aux = textMail.substr(posInitial+date.size(),posFinal-(posInitial+date.size()));
 	this->setDate(aux);
 
-	posInitial = textMail.find(to.c_str(),posFinal);
+	posInitial = textMail.find(to.c_str(),0);
 	posFinal = textMail.find(endLine.c_str(),posInitial);
 	aux = textMail.substr(posInitial+to.size(),posFinal-(posInitial+to.size()));
 	this->setTo(aux);
 
-	posInitial = textMail.find(from.c_str(),posFinal);
+	posInitial = textMail.find(from.c_str(),0);
 	posFinal = textMail.find(endLine.c_str(),posInitial);
 	aux = textMail.substr(posInitial+from.size(),posFinal-(posInitial+from.size()));
 	this->setFrom(aux);
 
-	posInitial = textMail.find(subject.c_str(),posFinal);
+	posInitial = textMail.find(subject.c_str(),0);
 	posFinal = textMail.find(endLine.c_str(),posInitial);
 	aux = textMail.substr(posInitial+subject.size(),posFinal-(posInitial+subject.size()));
 	this->setSubject(aux);

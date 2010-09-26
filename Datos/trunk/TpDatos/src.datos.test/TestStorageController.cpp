@@ -32,16 +32,26 @@ void TestStorageController::testPrintPrimaryIndex(){
 }
 
 void TestStorageController::testSearchPrimaryIndex(){
-	IndexBSharp* index = new IndexBSharp("Datos.2c2010.IndPrimario",BLOCK_SIZE,TYPE_REG_PRIMARY);
-	RegPrimary* regPrimary = new RegPrimary();
-	KeyInteger* key= new KeyInteger(330);
-	regPrimary->setKey(key);
-	regPrimary = (RegPrimary*)index->searchRegistry(regPrimary);
+	IndexBSharp* index = new IndexBSharp("elfacu.sanchez.IndPrimario",BLOCK_SIZE,TYPE_REG_PRIMARY);
+	std::string option;
+	int iuc;
+	do{
+		std::cout << "Ingrese IUC a buscar: ";
+		std::cin >> iuc;
+		RegPrimary* regPrimary = new RegPrimary();
+		KeyInteger* key= new KeyInteger(iuc);
+		regPrimary->setKey(key);
+		regPrimary = (RegPrimary*)index->searchRegistry(regPrimary);
 
-	if(regPrimary == NULL)
-		cout<<"CLAVE NO ENCONTRADA"<<endl;
-	else
-		regPrimary->print(std::cout);
+		if(regPrimary == NULL)
+			cout<<"CLAVE NO ENCONTRADA"<<endl;
+		else
+			regPrimary->print(std::cout);
+		delete regPrimary;
+
+		std::cout << "Desea buscar nuevamente? (SI / NO) " << std::endl;
+		std::cin >> option;
+	} while (option == "SI");
 
 	delete index;
 }

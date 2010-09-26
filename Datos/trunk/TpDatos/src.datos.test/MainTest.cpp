@@ -37,9 +37,9 @@ int main(int argc,char** argv) {
 //      delete testMailManager;
 //***********************************************
 	TestStorageController* test = new TestStorageController();
-	test->testConnectAndCreatePrimaryIndex();
+//	test->testConnectAndCreatePrimaryIndex();
 //	test->testPrintPrimaryIndex();
-//	test->testSearchPrimaryIndex();
+	test->testSearchPrimaryIndex();
 	return 0;
 }
 
