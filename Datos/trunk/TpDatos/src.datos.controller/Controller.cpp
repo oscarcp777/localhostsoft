@@ -125,7 +125,6 @@ int Controller::createPrimaryIndex() {
 	StorageController* storage = new StorageController();
 	IndexConfig* configIndex = new IndexConfig();
 	this->primaryTree = storage->generatePrimaryIndex((char*)this->strEmail.c_str(),(char*)this->strPass.c_str(),configIndex);
-	this->primaryTree->print(cout);
 	this->addIndexToFile(configIndex);
 	this->indexes.push_back(configIndex);
 
@@ -135,9 +134,7 @@ int Controller::loadSecondIndex(IndexConfig* indexConfig){
 	Classification* classification = new Classification();
 	if(this->primaryTree == NULL)
 		this->createPrimaryIndex();
-    this->primaryTree->print(cout);
-
-	classification->loadSecondaryIndex(indexConfig,this->primaryTree->getIterator());
+ 	classification->loadSecondaryIndex(indexConfig,this->primaryTree->getIterator());
 
 	return 0;
 }

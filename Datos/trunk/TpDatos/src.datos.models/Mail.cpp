@@ -7,6 +7,7 @@
 
 #include "Mail.h"
 #include "KeyInteger.h"
+#include "../src.datos.utils/StringUtils.h"
 using namespace std;
 Mail::Mail() {
 	// TODO Auto-generated constructor stub
@@ -177,17 +178,20 @@ void Mail::parseMail(char* text){
 	posInitial = textMail.find(date.c_str(),0);
 	posFinal = textMail.find(endLine.c_str(),posInitial);
 	aux = textMail.substr(posInitial+date.size(),posFinal-(posInitial+date.size()));
-	this->setDate(aux);
+	this->setDate(StringUtils::trim(aux));
 
 	posInitial = textMail.find(to.c_str(),0);
 	posFinal = textMail.find(endLine.c_str(),posInitial);
 	aux = textMail.substr(posInitial+to.size(),posFinal-(posInitial+to.size()));
-	this->setTo(aux);
+	this->setTo(StringUtils::trim(aux));
 
 	posInitial = textMail.find(from.c_str(),0);
 	posFinal = textMail.find(endLine.c_str(),posInitial);
 	aux = textMail.substr(posInitial+from.size(),posFinal-(posInitial+from.size()));
-	this->setFrom(aux);
+	string aux2 = "";
+	aux2 = StringUtils::trim(aux);
+	cout<<"*************"<<aux2<<"***********"<<endl;
+	this->setFrom(aux2);
 
 	posInitial = textMail.find(subject.c_str(),0);
 	posFinal = textMail.find(endLine.c_str(),posInitial);

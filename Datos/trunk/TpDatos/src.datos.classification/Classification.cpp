@@ -60,11 +60,13 @@ void Classification::loadSelectionIndex(IndexConfig* indexConfig,IteratorBSharp*
 	RegSelection* regSelection;
 	int condition = indexConfig->getCondition();
 	string value = indexConfig->getValue();
-
+	cout<<"condition: "<<condition<<endl;
+	cout<<"value: "<<value<<endl;
 
 	while (it->hasNext()){
 		regPrimary = (RegPrimary*)it->next();
 		if(regPrimary->getMail()->containCondition(condition,value)){
+			cout<<"ENTRO*******************************************"<<endl;
 			regSelection = new RegSelection();
 			regSelection->setKey((Key*)regPrimary->getMail()->getKey()->clone());
 			secondaryIndex->addRegistry(regSelection);

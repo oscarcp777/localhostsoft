@@ -39,6 +39,8 @@ Registry* FactoryOfRegistry::createRegistry(int type){
 		break;
 	case TYPE_REG_SELECTION: return new RegSelection();
 			break;
+	case TYPE_REG_KEY_SELECTION: return new RegSelection();
+				break;
 
 	default: return NULL;
 	}

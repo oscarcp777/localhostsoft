@@ -22,13 +22,10 @@ StorageController::~StorageController() {
 }
 void StorageController::addMail(char* message){
 	Mail* mail = this->generateMail(message);
-	mail->print(std::cout);
 	RegPrimary* regPrimary = new RegPrimary();
 	regPrimary->setKey((KeyInteger*)mail->getKey()->clone());
 	regPrimary->setMail(mail);
 	this->primaryIndex->addRegistry(regPrimary);
-	this->primaryIndex->print(cout);
-
 
 }
 Mail* StorageController::generateMail(char* message){
@@ -50,6 +47,5 @@ IndexBSharp* StorageController::generatePrimaryIndex(char* userName, char* passw
 	configIndex->setUserName(user);
 	configIndex->setFilterName(TYPE_PRIMARY+user);
 	connection(userName,password,this);
-	this->primaryIndex->print(cout);
 	return this->primaryIndex;
 }

@@ -234,11 +234,13 @@ void TestBSharp::testsearchRegClassification(){
 }
 
 void TestBSharp::testIterator(){
-	IndexBSharp* indexBSharp = new IndexBSharp("Datos.2c2010.IndSecundario.Seleccion.From.asyura.from@gmail.com",BLOCK_SIZE,TYPE_REG_KEY_SELECTION);
+	IndexBSharp* indexBSharp = new IndexBSharp("Datos.2c2010.IndSecundario.Seleccion.From. asyura.from@gmail.com",BLOCK_SIZE,TYPE_REG_KEY_SELECTION);
 	IteratorBSharp* it = indexBSharp->getIterator();
-	while (it->hasNext())
-		(it->next())->print(std::cout);
-
+	RegSelection* reg;
+	while (it->hasNext()){
+		reg = (RegSelection* )(it->next());
+		reg->print(std::cout);
+	}
 	delete indexBSharp;
 
 }

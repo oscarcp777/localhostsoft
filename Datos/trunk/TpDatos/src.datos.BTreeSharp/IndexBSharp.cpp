@@ -1221,7 +1221,6 @@ IteratorBSharp* IndexBSharp::getIterator() throw(){
 }
 
 int IndexBSharp::getFirstNode() throw(){
-	this->rootNode->print(cout);
 	if (this->rootNode->isLeaf()) {
 		return 0;
 	}else{
