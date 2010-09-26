@@ -12,6 +12,7 @@
 #include "../src.datos.models/RegClassification.h"
 #include "../src.datos.models/KeyInteger.h"
 #include "../src.datos.models/KeyString.h"
+#include "../src.datos.models/RegSelection.h"
 #include "../src.datos.utils/StringUtils.h"
 
 
@@ -34,10 +35,11 @@ void Classification::loadClassificationIndex(IndexConfig* indexConfig,IteratorBS
 	IndexBSharp* secondaryIndex = new IndexBSharp(indexConfig->getFileName(),indexConfig->getBlockSize(),TYPE_REG_CLASSIFICATION);
 	RegPrimary* regPrimary;
 	RegClassification* regClassification;
+	KeyString* key;
 	int condition = indexConfig->getCondition();
 	string value = indexConfig->getValue();
 
-	KeyString* key;
+
 
 	while (it->hasNext()){
 		regPrimary = (RegPrimary*)it->next();
@@ -55,8 +57,7 @@ void Classification::loadClassificationIndex(IndexConfig* indexConfig,IteratorBS
 void Classification::loadSelectionIndex(IndexConfig* indexConfig,IteratorBSharp* it){
 	IndexBSharp* secondaryIndex = new IndexBSharp(indexConfig->getFileName(),indexConfig->getBlockSize(),TYPE_REG_KEY_SELECTION);
 	RegPrimary* regPrimary;
-	//TODO RegSelection
-	KeyInteger* key;
+	RegSelection* regSelection;
 	int condition = indexConfig->getCondition();
 	string value = indexConfig->getValue();
 
@@ -64,8 +65,9 @@ void Classification::loadSelectionIndex(IndexConfig* indexConfig,IteratorBSharp*
 	while (it->hasNext()){
 		regPrimary = (RegPrimary*)it->next();
 		if(regPrimary->getMail()->containCondition(condition,value)){
-			key = new KeyInteger(regPrimary->getMail()->getIuc());
-			secondaryIndex->addRegistry(key);
+			regSelection = new RegSelection();
+			regSelection->setKey((Key*)regPrimary->getMail()->getKey()->clone());
+			secondaryIndex->addRegistry(regSelection);
 		}
 	}
 	delete secondaryIndex;
