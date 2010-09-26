@@ -15,12 +15,14 @@ public:
 	IndexConfig();
 	virtual ~IndexConfig();
     int getBlockSize() const;
+    string getFilterName() const;
     string getFileName() const;
     string getTypeIndex() const;
     string getTypeSecundaryIndex() const;
     string getUserName() const;
     void setBlockSize(int blockSize);
     void setFileName(string fileName);
+    void setFilterName(string filterName);
     void setTypeIndex(string typeIndex);
     void setTypeSecundaryIndex(string typeSecundaryIndex);
     void setUserName(string userName);
@@ -30,6 +32,7 @@ public:
     void setValue(string value);
 
 private:
+    string filterName;
 	string fileName;
 	string userName;
 	int blockSize;

@@ -9,6 +9,9 @@
 
 IndexConfig::IndexConfig() {
 	// TODO Auto-generated constructor stub
+	this->condition =0;
+	this->value="";
+	this->typeSecundaryIndex ="";
 
 }
 
@@ -23,6 +26,10 @@ int IndexConfig::getBlockSize() const
 string IndexConfig::getFileName() const
 {
 	return fileName;
+}
+string IndexConfig::getFilterName() const
+{
+	return filterName;
 }
 
 string IndexConfig::getTypeIndex() const
@@ -48,6 +55,10 @@ void IndexConfig::setBlockSize(int blockSize)
 void IndexConfig::setFileName(string fileName)
 {
 	this->fileName = fileName;
+}
+void IndexConfig::setFilterName(string filterName)
+{
+	this->filterName = filterName;
 }
 
 void IndexConfig::setTypeIndex(string typeIndex)

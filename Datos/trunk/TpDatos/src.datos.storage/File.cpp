@@ -18,20 +18,26 @@ File::~File() {
 void File::flush(){
     this->file.flush();
 }
-void File::read(std::string& datos){
+bool File::read(std::string& datos){
 
 	/* verifica que el file esté abierto */
 	if (this->file.is_open()) {
 		/* lee del file una linea */
 		getline(this->file, datos);
+		return true;
 		/* chequea si se ha producido un error */
-		if (this->file.fail())
+		if (this->file.fail()){
 			/* arroja una excepción ante la imposibilidad de leer un reg */
+			return false;
 			throw string("Read line error");
+
+		}
 	}
 	else {
 		/* arroja una excepción porque el file no está abierto */
+		return false;
 		throw string("File not open");
+
 	}
 }
 

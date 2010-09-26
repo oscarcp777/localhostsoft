@@ -26,7 +26,7 @@ public:
 	 * Si no puede realizar la operación, arroja una excepción
 	 */
 	void open(string fileName);
-
+   void end();
 };
 
 #endif /* TEXTFILE_H_ */

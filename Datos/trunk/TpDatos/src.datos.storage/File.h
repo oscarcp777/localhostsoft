@@ -34,7 +34,7 @@ public:
       * Luego de escribirlo, el cursor queda en la posición siguiente al último caracter de la cadena
       *  Si no puede escribir, arroja una excepción
       */
-    void read(std::string & datos);
+    bool read(std::string & datos);
     bool read(char *buffer, int tamanio, int pos=-1);
     void readInteger(int* num, int pos=-1);
 
