@@ -39,11 +39,16 @@ Mail* StorageController::generateMail(char* message){
 	this->numberOfIuc++;
 	return mail;
 }
-IndexBSharp* StorageController::generatePrimaryIndex(char* userName, char* password){
+IndexBSharp* StorageController::generatePrimaryIndex(char* userName, char* password,IndexConfig* configIndex){
+	string user = userName;
 	string fileName = userName;
 	fileName += ".IndPrimario";
 	this->primaryIndex = new IndexBSharp(fileName,BLOCK_SIZE,TYPE_REG_PRIMARY);
+	configIndex->setBlockSize(BLOCK_SIZE);
+	configIndex->setFileName(fileName);
+	configIndex->setTypeIndex(TYPE_PRIMARY);
+	configIndex->setUserName(user);
+	configIndex->setFilterName(TYPE_PRIMARY+user);
 	connection(userName,password,this);
-
 	return this->primaryIndex;
 }

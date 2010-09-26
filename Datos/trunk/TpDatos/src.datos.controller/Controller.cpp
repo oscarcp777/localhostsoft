@@ -7,6 +7,7 @@
 
 #include "Controller.h"
 
+
 Controller::Controller() {
 	this->programFile = new TextFile();
 	this->loadIndexNames();
@@ -14,7 +15,8 @@ Controller::Controller() {
 }
 
 Controller::~Controller() {
-	// TODO Auto-generated destructor stub
+	// TODO borrar lista indexConfig
+
 }
 void Controller::loadInfoIndex(std::string linea,IndexConfig* index){
 
@@ -108,16 +110,23 @@ void Controller::addIndexToFile(IndexConfig* index){
 	this->programFile->close();
 
 }
-void Controller::addSecondIndex(IndexBSharp* indexPrimary,IndexConfig* index) {
+void Controller::addSecondIndex(IndexConfig* indexConfig) {
 	//crea un archivo del indice secundario vacio, agrega en la lista de indices y genera un boton por el indice
-	this->addIndexToFile(index);
-	this->indexes.push_back(index);
+	IndexController* indexController = new IndexController();
+	indexController->generateSecondaryIndex(this->primaryTree,indexConfig);
+	this->addIndexToFile(indexConfig);
+	this->indexes.push_back(indexConfig);
 	//creoelIndice
 
 }
 
 int Controller::createPrimaryIndex() {
-
+	StorageController* storage = new StorageController();
+	IndexConfig* configIndex = new IndexConfig();
+	this->primaryTree = storage->generatePrimaryIndex((char*)this->strEmail.c_str(),(char*)this->strPass.c_str(),configIndex);
+	this->addIndexToFile(configIndex);
+	this->indexes.push_back(configIndex);
+	delete storage;
 	return 0;
 }
 int Controller::loadSecondIndex(std::string indexName){

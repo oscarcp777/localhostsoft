@@ -14,7 +14,7 @@
 #define NUM_FIELDS_MAILS 6
 #define NUM_FIELDS_REG_PRIMARY 2
 #define BLOCK_SIZE 128
-#define BLOCK_SIZE_MAILS 4096
+#define BLOCK_SIZE_MAILS 32768
 //TODO IMPORTANTE NO MODIFICAR ENTE ORDEN
 #define TYPE_REG_PRIMARY 1
 #define TYPE_REG_KEY_PRIMARY 2
@@ -32,10 +32,10 @@
 #define BALANCE 2
 
 
-#define FROM 0
-#define TO 1
-#define SUBJECT 2
-#define DATE 3
+#define FROM 1
+#define TO 2
+#define SUBJECT 3
+#define DATE 4
 
 #define TYPE_SECONDARY "Secunadrio"
 #define TYPE_PRIMARY "Primario"

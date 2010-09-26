@@ -20,33 +20,32 @@ IndexController::~IndexController() {
 	// TODO Auto-generated destructor stub
 }
 
-IndexConfig* IndexController::generateClassificationIndex(char* userName, int condition){
-	//estan todos los del primario. tengo q saber atributo  (CONSTANTE)
-	IndexConfig* config = new IndexConfig();
-	string fileName = userName;
-	fileName += ".IndSecundario.Clasificacion."+StringUtils::convertConditionIntToString(condition);
-	IndexBSharp* primaryIndex = new IndexBSharp(fileName,BLOCK_SIZE,TYPE_REG_CLASSIFICATION);
-	config->setBlockSize(BLOCK_SIZE);
-	config->setFileName(fileName);
-	config->setTypeIndex(TYPE_SECONDARY);
-	config->setTypeSecundaryIndex(TYPE_CLASSIFICATION);
-	config->setCondition(condition);
-	delete primaryIndex;
-	return config;
-}
-IndexConfig* IndexController::generateSelectionIndex(char* userName,int condition, string value){
-	//existen menos q en el primario.......tengo q saber atributo y valor, (CONSTANTE,VALOR)
-	IndexConfig* config = new IndexConfig();
-	string fileName = userName;
-	fileName += ".IndSecundario.Seleccion."+StringUtils::convertConditionIntToString(condition)+"."+value;
-	IndexBSharp* primaryIndex = new IndexBSharp(fileName,BLOCK_SIZE,TYPE_REG_KEY_SELECTION);
-	config->setBlockSize(BLOCK_SIZE);
-	config->setFileName(fileName);
-	config->setTypeIndex(TYPE_SECONDARY);
-	config->setTypeSecundaryIndex(TYPE_SELECTION);
-	config->setCondition(condition);
-	config->setValue(value);
-	delete primaryIndex;
-	return config;
 
+void IndexController::generateClassificationIndex(IndexConfig* indexConfig){
+	//estan todos los del primario. tengo q saber atributo  (CONSTANTE)
+	string fileName = indexConfig->getUserName();
+	fileName += ".IndSecundario.Clasificacion."+StringUtils::convertConditionIntToString(indexConfig->getCondition());
+	IndexBSharp* primaryIndex = new IndexBSharp(fileName,BLOCK_SIZE,TYPE_REG_CLASSIFICATION);
+	indexConfig->setBlockSize(BLOCK_SIZE);
+	indexConfig->setFileName(fileName);
+	delete primaryIndex;
+}
+void IndexController::generateSelectionIndex(IndexConfig* indexConfig){
+	//existen menos q en el primario.......tengo q saber atributo y valor, (CONSTANTE,VALOR)
+
+	string fileName = indexConfig->getUserName();
+	fileName += ".IndSecundario.Seleccion."+StringUtils::convertConditionIntToString(indexConfig->getCondition())+"."+indexConfig->getValue();
+	IndexBSharp* primaryIndex = new IndexBSharp(fileName,BLOCK_SIZE,TYPE_REG_KEY_SELECTION);
+	indexConfig->setBlockSize(BLOCK_SIZE);
+	indexConfig->setFileName(fileName);
+	delete primaryIndex;
+
+}
+void IndexController::generateSecondaryIndex(IndexBSharp* primaryIndex,IndexConfig* indexConfig){
+
+	if(indexConfig->getTypeSecundaryIndex().compare((char*)TYPE_CLASSIFICATION) == 0)
+		this->generateClassificationIndex(indexConfig);
+
+	else if(indexConfig->getTypeSecundaryIndex().compare((char*)TYPE_SELECTION) == 0)
+		this->generateSelectionIndex(indexConfig);
 }

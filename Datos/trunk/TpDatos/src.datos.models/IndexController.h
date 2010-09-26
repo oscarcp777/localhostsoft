@@ -9,14 +9,15 @@
 #define INDEXCONTROLLER_H_
 #include <string>
 #include "../src.datos.models/IndexConfig.h"
+#include "../src.datos.BTreeSharp/IndexBSharp.h"
 
 class IndexController {
 public:
 	IndexController();
 	virtual ~IndexController();
-	IndexConfig* generateClassificationIndex(char* userName,int condition); //estan todos los del primario. tengo q saber atributo  (CONSTANTE)
-	IndexConfig* generateSelectionIndex(char* userName, int condition, std::string value); //existen menos q en el primario.......tengo q saber atributo y valor, (CONSTANTE,VALOR)
-
+	void generateClassificationIndex(IndexConfig* indexConfig); //estan todos los del primario. tengo q saber atributo  (CONSTANTE)
+	void generateSelectionIndex(IndexConfig* indexConfig); //existen menos q en el primario.......tengo q saber atributo y valor, (CONSTANTE,VALOR)
+	void generateSecondaryIndex(IndexBSharp* primaryIndex,IndexConfig* indexConfig);
 };
 
 #endif /* INDEXCONTROLLER_H_ */

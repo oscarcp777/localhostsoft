@@ -22,23 +22,13 @@ void TestStorageController::testConnectAndCreatePrimaryIndex(){
 	StorageController* controller = new StorageController();
 	string userName = "Datos.2c2010";
 	string pass = "75067506";
-	controller->generatePrimaryIndex((char*)userName.c_str(),(char*)pass.c_str());
+	IndexConfig* configIndex = new IndexConfig();
+	controller->generatePrimaryIndex((char*)userName.c_str(),(char*)pass.c_str(),configIndex);
 	delete controller;
 }
 void TestStorageController::testPrintPrimaryIndex(){
 	IndexBSharp* index = new IndexBSharp("Datos.2c2010.IndPrimario",BLOCK_SIZE,TYPE_REG_PRIMARY);
 	index->print(std::cout);
-	delete index;
-}
-
-void TestStorageController::testIteratorPrimaryIndex(){
-	IndexBSharp* index = new IndexBSharp("Datos.2c2010.IndPrimario",BLOCK_SIZE,TYPE_REG_PRIMARY);
-	index->print(std::cout);
-	IteratorBSharp* it = index->getIterator();
-	while (it->hasNext())
-		it->next();
-
-	delete it;
 	delete index;
 }
 

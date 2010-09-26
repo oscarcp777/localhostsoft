@@ -12,6 +12,9 @@
 #include "../src.datos.models/IndexConfig.h"
 #include "../src.datos.BTreeSharp/IndexBSharp.h"
 #include "../src.datos.utils/StringUtils.h"
+#include "../src.datos.storage/StorageController.h"
+#include "../src.datos.models/IndexController.h"
+
 #include <vector>
 #include <stdlib.h>
 
@@ -31,7 +34,7 @@ private:
 public:
 	Controller();
 	virtual ~Controller();
-	void addSecondIndex(IndexBSharp* indexPrimary, IndexConfig* index);
+	void addSecondIndex(IndexConfig* index);
 	int loadSecondIndex(std::string indexName);
 	void addIndexToFile(IndexConfig* index);
 	int searchMails(std::string strSearch);
