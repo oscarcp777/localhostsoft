@@ -12,11 +12,13 @@
 #include "../src.datos.models/IndexConfig.h"
 #include "../src.datos.BTreeSharp/IndexBSharp.h"
 #include "../src.datos.utils/StringUtils.h"
+#include "../src.datos.consultations/Search.h"
 #include "../src.datos.storage/StorageController.h"
 #include "../src.datos.models/IndexController.h"
 
 #include <vector>
 #include <stdlib.h>
+
 
 
 
@@ -26,6 +28,7 @@ private:
 	std::string strEmail;
 	std::string strPass;
 	std::string strSearch;
+	Search* search;
 	list<IndexConfig*> indexes;
 	IndexBSharp* primaryTree;
 	void loadIndexNames();
@@ -34,11 +37,11 @@ private:
 public:
 	Controller();
 	virtual ~Controller();
-	void addSecondIndex(IndexConfig* index);
-	int loadSecondIndex(IndexConfig* indexConfig);
+	void addSecondIndex(IndexBSharp* indexPrimary, IndexConfig* index);
+	int loadSecondIndex(std::string indexName);
 	void addIndexToFile(IndexConfig* index);
 	int searchMails(std::string strSearch);
-	int parseStrSearch(std::string atrSearch);
+	Search* parseStrSearch(std::string strSearch);
 	void addEmail(std::string email);
 	void addPass(std::string pass);
 	void printIndexNames();

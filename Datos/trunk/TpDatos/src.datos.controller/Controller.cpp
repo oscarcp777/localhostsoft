@@ -15,8 +15,7 @@ Controller::Controller() {
 }
 
 Controller::~Controller() {
-	// TODO borrar lista indexConfig
-
+	// TODO Auto-generated destructor stub
 }
 void Controller::loadInfoIndex(std::string linea,IndexConfig* index){
 
@@ -110,7 +109,7 @@ void Controller::addIndexToFile(IndexConfig* index){
 	this->programFile->close();
 
 }
-void Controller::addSecondIndex(IndexConfig* indexConfig) {
+void Controller::addSecondIndex(IndexBSharp* indexPrimary,IndexConfig* index) {
 	//crea un archivo del indice secundario vacio, agrega en la lista de indices y genera un boton por el indice
 	IndexController* indexController = new IndexController();
 	indexController->generateSecondaryIndex(this->primaryTree,indexConfig);
@@ -135,10 +134,11 @@ int Controller::loadSecondIndex(IndexConfig* indexConfig){
 
 	return 0;
 }
-int Controller::parseStrSearch(std::string strSearch){
+Search* Controller::parseStrSearch(std::string strSearch){
 	std::string aux;
 	std::string filterName;
 	std::string filterValue;
+	Search* search =new Search();
 	int posInitial =1;
 	int posFinal=1;
 	int pos;
@@ -148,16 +148,39 @@ int Controller::parseStrSearch(std::string strSearch){
 			pos = aux.find("=",0);
 			filterName = aux.substr(0,pos);
 			filterValue = aux.substr(pos+1,(aux.length()-1)- pos);
+			search->setStrSearch(filterValue);
+			search->setIndex(filterName);
 			std::cout<<filterName<<std::endl;
 			std::cout<<filterValue<<std::endl;
 		posInitial = strSearch.find("[",posFinal)+1;
 		posFinal = strSearch.find("]",posInitial);
 	}
 
-	return 0;
+	return search;
 }
 int Controller::searchMails(std::string strSearch){
 	this->strSearch = strSearch;
+	this->search = this->parseStrSearch(strSearch);
+	std::string index;
+	std::string auxIndex;
+	int result;
+	int cant = this->search->sizeOfListIndex();// tamaño de la lista de indices a buscar
+		for (int i = 0; i < cant; ++i) {
+			auxIndex = this->search->getIndex();
+
+			//tengo q buscar auxIndex en la lista de indices, en el caso que hayan IUCS fijarse en this->search->strSearch
+			//imprimo los IUCS DE ESOS INDICEs terminar
+			list<IndexConfig*>::iterator current = this->indexes.begin();
+
+				while((current != this->indexes.end())&& result < 0){
+					index = (*current)->getFilterName();
+					result =auxIndex.compare(index);
+					if (result == 0){
+						//funCion de RICHY BUSCAR!!
+					}
+					current++;
+					}
+		}
 
 	return 0;
 }
