@@ -32,7 +32,7 @@ void TestStorageController::testPrintPrimaryIndex(){
 }
 
 void TestStorageController::testSearchPrimaryIndex(){
-	IndexBSharp* index = new IndexBSharp("elfacu.sanchez.IndPrimario",BLOCK_SIZE,TYPE_REG_PRIMARY);
+	IndexBSharp* index = new IndexBSharp("Datos.2c2010.IndPrimario",BLOCK_SIZE,TYPE_REG_PRIMARY);
 	std::string option;
 	int iuc;
 	do{

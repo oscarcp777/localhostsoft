@@ -91,8 +91,7 @@ Registry* LeafNode::insertBlockMails(Registry* registry,ContainerInsertDataBlock
 	}
 	RegPrimary* regPrevious=(RegPrimary*)reg;
 	blockMails=this->readBlockData(regPrevious->getNumberBlock(),container);
-	cout<<"TAMAÑO MAIL"<<((RegPrimary*)registry)->getMail()->getLongBytes()<<endl;
-	cout<<"TAMAÑO OCUPADO"<<blockMails->getOcupedLong()<<endl;
+
 	if(blockMails->posibleToAgregateComponent(((RegPrimary*)registry)->getMail())){
 		blockMails->addReg(((RegPrimary*)registry)->getMail());
 		this->writeBlockData(blockMails,regPrevious->getNumberBlock(),container);
