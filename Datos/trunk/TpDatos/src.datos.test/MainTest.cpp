@@ -15,8 +15,10 @@
 using namespace std;
 
 int main(int argc,char** argv) {
-
-
+//	TestBSharp* test= new TestBSharp();
+//	test->testInsertMails();
+//	test->testInsert();
+//	test->testIterator();
 //	test->testsearch();
 //	test->testInsertRegClassification();
 //	test->testsearchRegClassification();
@@ -36,10 +38,15 @@ int main(int argc,char** argv) {
 //      testMailManager->testUnpackMail();
 //      delete testMailManager;
 //***********************************************
-	TestStorageController* test = new TestStorageController();
-	test->testConnectAndCreatePrimaryIndex();
-//	test->testPrintPrimaryIndex();
-//	test->testSearchPrimaryIndex();
+//	TestStorageController* test1 = new TestStorageController();
+//	test1->testConnectAndCreatePrimaryIndex();
+
+    TestStorageController* test1 = new TestStorageController();
+//	test1->testConnectAndCreatePrimaryIndex();
+	test1->testIteratorPrimaryIndex();
+	delete test1;
+//	test1->testPrintPrimaryIndex();
+//	test1->testSearchPrimaryIndex();
 	return 0;
 }
 

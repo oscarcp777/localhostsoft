@@ -14,6 +14,7 @@
 #include "../src.datos.storage/BinaryFile.h"
 #include "../src.datos.storage/FreeBlockController.h"
 #include "ContainerInsertDataBlock.h"
+#include "IteratorBSharp.h"
 
 #include <string>
 #include <list>
@@ -38,6 +39,10 @@ public:
 	 * Imprime el arbol en el stream de salida pasado por parametro.
 	 */
 	void print(std::ostream& streamSalida) throw();
+	/**
+	 * Devuelve un iterador del arbol
+	 */
+	IteratorBSharp* getIterator() throw();
 private:
 	/**
 	 * lee de la posicion de  disco el numero de bloque pasado por parametro
@@ -171,6 +176,11 @@ private:
 		int searchBranchSister(InternalNode* internalNode , Registry* registry) throw();
 		bool balanceInternalNode(InternalNode* internalNode, InternalNode* brotherNode, ContainerInsertion* container, Registry* fatherReg) throw();
 
+
+		/**
+		 * Obtiene el primer nodo hoja del arbol
+		 */
+		int getFirstNode() throw();
 		/**
 		 * Calcula el peso promedio de los registros contenidos en los bloques a ser divididos
 		 */
@@ -205,8 +215,6 @@ private:
 		 *
 		 */
 		list<Registry*> listRegistry;
-		list<Registry*> listRegLeftNode;
-		list<Registry*> listRegRightNode;
 		/**
 		 * lista de ramas temporal
 		 */

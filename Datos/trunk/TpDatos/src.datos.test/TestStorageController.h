@@ -15,6 +15,7 @@ public:
 	void testConnectAndCreatePrimaryIndex();
 	void testPrintPrimaryIndex();
 	void testSearchPrimaryIndex();
+	void testIteratorPrimaryIndex();
 };
 
 #endif /* TESTSTORAGECONTROLLER_H_ */

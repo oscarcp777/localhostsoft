@@ -24,9 +24,9 @@ TestBSharp::~TestBSharp() {
 }
 void TestBSharp::testInsert(){
 	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTree.dat",BLOCK_SIZE,TYPE_REG_PRIMARY);
-	for (int var =0; var < 10000; ++var) {
+	for (int var =0; var < 500; ++var) {
 		RegPrimary* regPrimary = new RegPrimary();
-		int keyInt= rand()%1000000;
+		int keyInt= rand()%100000;
 		KeyInteger* key= new KeyInteger(keyInt);
 		regPrimary->setKey(key);
 		regPrimary->setNumberBlock(var);
@@ -228,6 +228,17 @@ void TestBSharp::testsearchRegClassification(){
 		regFind->print(std::cout);
 	delete regClassif;
 	delete regFind;
+	delete indexBSharp;
+
+}
+
+void TestBSharp::testIterator(){
+	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTree.dat",BLOCK_SIZE,TYPE_REG_PRIMARY);
+	indexBSharp->print(std::cout);
+	IteratorBSharp* it = indexBSharp->getIterator();
+	while (it->hasNext())
+		it->next();
+
 	delete indexBSharp;
 
 }

@@ -31,6 +31,17 @@ void TestStorageController::testPrintPrimaryIndex(){
 	delete index;
 }
 
+void TestStorageController::testIteratorPrimaryIndex(){
+	IndexBSharp* index = new IndexBSharp("Datos.2c2010.IndPrimario",BLOCK_SIZE,TYPE_REG_PRIMARY);
+	index->print(std::cout);
+	IteratorBSharp* it = index->getIterator();
+	while (it->hasNext())
+		it->next();
+
+	delete it;
+	delete index;
+}
+
 void TestStorageController::testSearchPrimaryIndex(){
 	IndexBSharp* index = new IndexBSharp("Datos.2c2010.IndPrimario",BLOCK_SIZE,TYPE_REG_PRIMARY);
 	std::string option;

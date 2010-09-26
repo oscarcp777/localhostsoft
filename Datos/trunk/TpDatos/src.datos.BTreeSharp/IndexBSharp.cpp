@@ -1159,12 +1159,12 @@ void IndexBSharp::printRecursive(Node* currentNode, std::ostream& outStream,
 		while (actualComp != endComp) {
 			Registry* reg = *actualComp;
 			this->printRegistry(reg, outStream);
-			if (currentNode->isLeaf()) {
-				LeafNode* leafNode = (LeafNode*) currentNode;
-				leafNode->printMails(outStream, reg,
-						this->containerInsertDataBlock);
-
-			}
+//			if (currentNode->isLeaf()) {
+//				LeafNode* leafNode = (LeafNode*) currentNode;
+//				leafNode->printMails(outStream, reg,
+//						this->containerInsertDataBlock);
+//
+//			}
 			++actualComp;
 		}
 		if (currentNode->isLeaf()) {
@@ -1208,4 +1208,26 @@ void IndexBSharp::printRecursive(Node* currentNode, std::ostream& outStream,
 }
 void IndexBSharp::printRegistry(Registry* registry, std::ostream& outStream) throw () {
 	registry->print(outStream);
+}
+
+IteratorBSharp* IndexBSharp::getIterator() throw(){
+	int firstNode = getFirstNode();
+	return new IteratorBSharp(firstNode, this->typeElement, this->binaryFile, this->sizeBlock, this->containerInsertDataBlock);
+}
+
+int IndexBSharp::getFirstNode() throw(){
+	if (this->rootNode->isLeaf()) {
+		return 0;
+	}else{
+		InternalNode* internalNode = static_cast<InternalNode*> (this->rootNode);
+		int branch = internalNode->getBranch(0);
+		while(internalNode->getLevel()!=1){
+			if (internalNode->getNumBlock()!=0)
+				delete internalNode;
+			Node* node = this->readNode(branch);
+			InternalNode* internalNode = static_cast<InternalNode*> (node);
+			branch = internalNode->getBranch(0);
+		}
+		return branch;
+	}
 }
