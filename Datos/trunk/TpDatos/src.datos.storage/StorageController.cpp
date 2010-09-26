@@ -27,7 +27,7 @@ void StorageController::addMail(char* message){
 	regPrimary->setKey((KeyInteger*)mail->getKey()->clone());
 	regPrimary->setMail(mail);
 	this->primaryIndex->addRegistry(regPrimary);
-
+	this->primaryIndex->print(cout);
 
 
 }
@@ -50,5 +50,6 @@ IndexBSharp* StorageController::generatePrimaryIndex(char* userName, char* passw
 	configIndex->setUserName(user);
 	configIndex->setFilterName(TYPE_PRIMARY+user);
 	connection(userName,password,this);
+	this->primaryIndex->print(cout);
 	return this->primaryIndex;
 }

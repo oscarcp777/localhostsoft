@@ -36,7 +36,9 @@ void IndexBSharp::initContainerDataBlock(const std::string& nameFile,
 	this->containerInsertDataBlock->setSizeBlockData(sizeBlock);
 }
 IndexBSharp::IndexBSharp(const std::string& nameFile, unsigned int sizeBlock,
+
 		int typeElement) {
+	this->containerInsertDataBlock = NULL;
 	this->sizeBlock = sizeBlock;
 	this->typeElement = typeElement;
 	this->binaryFile = new BinaryFile();
@@ -77,7 +79,8 @@ IndexBSharp::~IndexBSharp() {
 	this->binaryFile->close();
 	delete this->buffer;
 	delete this->bufferRoot;
-	delete this->containerInsertDataBlock;
+	if(this->containerInsertDataBlock != NULL)
+		delete this->containerInsertDataBlock;
 	delete this->freeBlockController;
 	delete this->binaryFile;
 	delete this->rootNode;
@@ -1209,13 +1212,16 @@ void IndexBSharp::printRecursive(Node* currentNode, std::ostream& outStream,
 void IndexBSharp::printRegistry(Registry* registry, std::ostream& outStream) throw () {
 	registry->print(outStream);
 }
-
+int IndexBSharp::getLongBytes(){
+    return 10000;
+}
 IteratorBSharp* IndexBSharp::getIterator() throw(){
 	int firstNode = getFirstNode();
 	return new IteratorBSharp(firstNode, this->typeElement, this->binaryFile, this->sizeBlock, this->containerInsertDataBlock);
 }
 
 int IndexBSharp::getFirstNode() throw(){
+	this->rootNode->print(cout);
 	if (this->rootNode->isLeaf()) {
 		return 0;
 	}else{

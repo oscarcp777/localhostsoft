@@ -11,6 +11,7 @@
 #include "../src.datos.models/RegPrimary.h"
 #include "../src.datos.models/RegClassification.h"
 #include "../src.datos.models/KeyInteger.h"
+#include "../src.datos.models/RegSelection.h"
 #include "../src.datos.models/KeyString.h"
 #include <cstdlib>
 #include<sstream>
@@ -233,12 +234,28 @@ void TestBSharp::testsearchRegClassification(){
 }
 
 void TestBSharp::testIterator(){
-	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTree.dat",BLOCK_SIZE,TYPE_REG_PRIMARY);
-	indexBSharp->print(std::cout);
+	IndexBSharp* indexBSharp = new IndexBSharp("Datos.2c2010.IndSecundario.Seleccion.From.asyura.from@gmail.com",BLOCK_SIZE,TYPE_REG_KEY_SELECTION);
 	IteratorBSharp* it = indexBSharp->getIterator();
 	while (it->hasNext())
-		it->next();
+		(it->next())->print(std::cout);
 
 	delete indexBSharp;
 
+}
+void TestBSharp::testInsertRegSelection(){
+	IndexBSharp* indexBSharp = new IndexBSharp("BTreeRegSelection.dat",BLOCK_SIZE,TYPE_REG_SELECTION);
+
+
+	for (int var = 0; var < 100; ++var) {
+		RegSelection* regSelection = new RegSelection();
+		KeyInteger* key= new KeyInteger(var);
+		regSelection->setKey(key);
+		cout<<" Inserto el : ";
+		regSelection->print(cout);
+		indexBSharp->addRegistry(regSelection);
+
+	}
+
+	indexBSharp->print(std::cout);
+	delete indexBSharp;
 }

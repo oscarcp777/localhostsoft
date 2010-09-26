@@ -11,6 +11,7 @@
 #include "RegKeyPrimary.h"
 #include "KeyInteger.h"
 #include "RegClassification.h"
+#include "RegSelection.h"
 #include "RegKeyClassification.h"
 #include "../src.datos.utils/Define.h"
 
@@ -36,6 +37,8 @@ Registry* FactoryOfRegistry::createRegistry(int type){
 			break;
 	case TYPE_MAIL: return new Mail();
 		break;
+	case TYPE_REG_SELECTION: return new RegSelection();
+			break;
 
 	default: return NULL;
 	}

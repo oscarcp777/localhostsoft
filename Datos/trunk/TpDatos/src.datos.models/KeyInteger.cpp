@@ -35,6 +35,7 @@ int  KeyInteger::print(std::ostream& outStream){
 	outStream<<"Clave : ";
 	outStream<<this->value;
 	outStream<<" ";
+	outStream<<endl;
      return 1;
 }
 int  KeyInteger::getValue(){

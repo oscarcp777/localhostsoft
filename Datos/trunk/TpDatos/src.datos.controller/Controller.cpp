@@ -11,6 +11,7 @@
 Controller::Controller() {
 	this->programFile = new TextFile();
 	this->loadIndexNames();
+	this->primaryTree = NULL;
 
 }
 
@@ -109,12 +110,13 @@ void Controller::addIndexToFile(IndexConfig* index){
 	this->programFile->close();
 
 }
-void Controller::addSecondIndex(IndexBSharp* indexPrimary,IndexConfig* index) {
+void Controller::addSecondIndex(IndexConfig* indexConfig) {
 	//crea un archivo del indice secundario vacio, agrega en la lista de indices y genera un boton por el indice
 	IndexController* indexController = new IndexController();
 	indexController->generateSecondaryIndex(this->primaryTree,indexConfig);
 	this->addIndexToFile(indexConfig);
 	this->indexes.push_back(indexConfig);
+
 	//creoelIndice
 
 }
@@ -123,13 +125,18 @@ int Controller::createPrimaryIndex() {
 	StorageController* storage = new StorageController();
 	IndexConfig* configIndex = new IndexConfig();
 	this->primaryTree = storage->generatePrimaryIndex((char*)this->strEmail.c_str(),(char*)this->strPass.c_str(),configIndex);
+	this->primaryTree->print(cout);
 	this->addIndexToFile(configIndex);
 	this->indexes.push_back(configIndex);
-	delete storage;
+
 	return 0;
 }
 int Controller::loadSecondIndex(IndexConfig* indexConfig){
 	Classification* classification = new Classification();
+	if(this->primaryTree == NULL)
+		this->createPrimaryIndex();
+    this->primaryTree->print(cout);
+
 	classification->loadSecondaryIndex(indexConfig,this->primaryTree->getIterator());
 
 	return 0;

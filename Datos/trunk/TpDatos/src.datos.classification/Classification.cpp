@@ -70,6 +70,7 @@ void Classification::loadSelectionIndex(IndexConfig* indexConfig,IteratorBSharp*
 			secondaryIndex->addRegistry(regSelection);
 		}
 	}
+	secondaryIndex->print(std::cout);
 	delete secondaryIndex;
 	delete it;
 }

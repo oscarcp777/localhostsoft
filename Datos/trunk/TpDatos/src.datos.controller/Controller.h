@@ -37,8 +37,8 @@ private:
 public:
 	Controller();
 	virtual ~Controller();
-	void addSecondIndex(IndexBSharp* indexPrimary, IndexConfig* index);
-	int loadSecondIndex(std::string indexName);
+	void addSecondIndex(IndexConfig* indexConfig);
+	int loadSecondIndex(IndexConfig* indexConfig);
 	void addIndexToFile(IndexConfig* index);
 	int searchMails(std::string strSearch);
 	Search* parseStrSearch(std::string strSearch);

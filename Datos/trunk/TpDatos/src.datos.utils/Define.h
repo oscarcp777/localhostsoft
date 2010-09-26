@@ -24,7 +24,7 @@
 #define TYPE_REG_KEY_SELECTION 6
 #define TYPE_MAIL 7
 #define TYPE_INTEGER 8
-#define TYPE_INTEGER 8
+
 
 #define DATA 1
 #define INSERTION_OK 0

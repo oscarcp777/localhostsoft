@@ -19,6 +19,7 @@ public:
 	void testsearchRegClassification();
 	void testInsertMails();
 	void testIterator();
+	void testInsertRegSelection();
 };
 
 #endif /* TESTBSHARP_H_ */
