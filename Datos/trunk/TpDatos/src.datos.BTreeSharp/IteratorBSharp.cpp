@@ -79,7 +79,7 @@ Registry* IteratorBSharp::next() throw(){
 			RegPrimary* reg=(RegPrimary*)*this->currentRegistry;
 			reg->setMail((Mail*)*this->currentDataRegistry);
 		}
-		(*this->currentRegistry)->print(std::cout);
+		//(*this->currentRegistry)->print(std::cout);
 		return (*this->currentRegistry);
 	}
 
@@ -91,7 +91,7 @@ Registry* IteratorBSharp::next() throw(){
 		if (++this->currentDataRegistry != endData){
 			RegPrimary* reg=(RegPrimary*)*this->currentRegistry;
 			reg->setMail((Mail*)*this->currentDataRegistry);
-			(*this->currentRegistry)->print(std::cout);
+			//(*this->currentRegistry)->print(std::cout);
 			return (*this->currentRegistry);
 		}
 	}
@@ -111,7 +111,7 @@ Registry* IteratorBSharp::next() throw(){
 		reg->setMail((Mail*)*this->currentDataRegistry);
 	}
 
-	(*this->currentRegistry)->print(std::cout);
+	//(*this->currentRegistry)->print(std::cout);
 	return (*this->currentRegistry);
 
 }
