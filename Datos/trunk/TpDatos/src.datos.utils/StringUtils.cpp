@@ -275,3 +275,19 @@ string StringUtils::convertConditionIntToString(int condition){
 	}
 	return cond;
 }
+int StringUtils::convertConditionStringToInt(string cond){
+
+	if(cond.compare((char*)"From")==0)
+		return FROM;
+
+	else if(cond.compare((char*)"To")==0)
+		return TO;
+
+	else if(cond.compare((char*)"Subject")==0)
+			return SUBJECT;
+
+	else if(cond.compare((char*)"Date")==0)
+			return DATE;
+
+	return 0;
+}

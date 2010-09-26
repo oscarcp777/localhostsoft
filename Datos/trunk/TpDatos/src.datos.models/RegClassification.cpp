@@ -21,7 +21,6 @@ RegClassification::~RegClassification() {
 Registry* RegClassification::clone(){
 	RegClassification* regClone = new RegClassification();
 	regClone->setKey((Key*)this->getKey()->clone());
-	regClone->setAttribute(this->attribute);
 	return regClone;
 }
 bool RegClassification::equals(Registry* registry){
@@ -30,16 +29,14 @@ bool RegClassification::equals(Registry* registry){
 }
 void RegClassification::pack(Buffer* buffer){
 	this->getKey()->pack(buffer);
-	int size = this->attribute.size();
-	buffer->packField(&size, sizeof(size));
-	buffer->packField(this->attribute.c_str(),size);
+	buffer->packField(&this->numBlock,sizeof(this->numBlock));
+
+
 }
 void RegClassification::unPack(Buffer* buffer){
 	this->setKey(new KeyString(""));
 	this->getKey()->unPack(buffer);
-	int size;
-	buffer->unPackField(&size, sizeof(size));
-	buffer->unPackFieldString(this->attribute,size);
+	buffer->unPackField(&this->numBlock,sizeof(this->numBlock));
 }
 int RegClassification::compareTo(Registry* registry){
 	Key* key=(Key*)registry->getKey();
@@ -76,9 +73,9 @@ int RegClassification::getNumBlock() const
     return numBlock;
 }
 
-void RegClassification::addIuc(unsigned int iuc)
+void RegClassification::addIuc(KeyInteger* keyIuc)
 {
-	this->listIuc.push_back(iuc);
+	this->listIuc.push_back(keyIuc);
 }
 
 void RegClassification::setNumBlock(int numBlock)

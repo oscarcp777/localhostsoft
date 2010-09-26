@@ -9,6 +9,7 @@
 #define REGCLASSIFICATION_H_
 
 #include "Registry.h"
+#include "KeyInteger.h"
 #include <list>
 using namespace std;
 
@@ -27,11 +28,11 @@ public:
 	int print(std::ostream& outStream);
 	std::string getAttribute() ;
 	void setAttribute(std::string atribute);
-	void addIuc(unsigned int iuc);
+	void addIuc(KeyInteger* keyIuc);
     int getNumBlock() const;
     void setNumBlock(int numBlock);
 private:
-	list<int > listIuc;
+	list<KeyInteger* > listIuc;
 	std::string attribute;
 	int numBlock;
 };

@@ -37,6 +37,7 @@ public:
 	Registry* cloneRegKey();
 	void parseMail(char* text);
 	int getIuc();
+	bool containCondition(int condition,string value);
 private:
 	string from;
 	string to;

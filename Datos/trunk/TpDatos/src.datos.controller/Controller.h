@@ -35,7 +35,7 @@ public:
 	Controller();
 	virtual ~Controller();
 	void addSecondIndex(IndexConfig* index);
-	int loadSecondIndex(std::string indexName);
+	int loadSecondIndex(IndexConfig* indexConfig);
 	void addIndexToFile(IndexConfig* index);
 	int searchMails(std::string strSearch);
 	int parseStrSearch(std::string atrSearch);

@@ -6,7 +6,7 @@
  */
 
 #include "Controller.h"
-
+#include "../src.datos.classification/Classification.h"
 
 Controller::Controller() {
 	this->programFile = new TextFile();
@@ -129,7 +129,10 @@ int Controller::createPrimaryIndex() {
 	delete storage;
 	return 0;
 }
-int Controller::loadSecondIndex(std::string indexName){
+int Controller::loadSecondIndex(IndexConfig* indexConfig){
+	Classification* classification = new Classification();
+	classification->loadSecondaryIndex(indexConfig,this->primaryTree->getIterator());
+
 	return 0;
 }
 int Controller::parseStrSearch(std::string strSearch){

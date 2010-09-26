@@ -42,5 +42,6 @@ public:
 
 	static string joinStringCmdLine(int argc, char* const argv[]);
 	static string convertConditionIntToString(int condition);
+	static int convertConditionStringToInt(string cond);
 };
 #endif

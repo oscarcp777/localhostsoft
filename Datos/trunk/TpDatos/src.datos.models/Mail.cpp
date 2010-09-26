@@ -204,3 +204,28 @@ void Mail::parseMail(char* text){
 int Mail::getIuc(){
 	return ((KeyInteger*)this->getKey())->getValue();
 }
+bool Mail::containCondition(int condition,string value){
+	switch(condition){
+	case FROM:
+		if(this->getFrom().compare(value.c_str()) == 0)
+			return true;
+
+	case TO:
+		if(this->getTo().compare(value.c_str()) == 0)
+			return true;
+
+	case SUBJECT:
+		if(this->getSubject().compare(value.c_str()) == 0)
+			return true;
+
+	case DATE:
+
+		if(this->getDate().compare(value.c_str()) == 0)
+			return true;
+
+	default:
+		return false;
+		}
+
+		return false;
+}
