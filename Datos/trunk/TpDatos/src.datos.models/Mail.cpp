@@ -15,6 +15,7 @@ Mail::Mail() {
 
 Mail::~Mail() {
 	// TODO Auto-generated destructor stub
+
 }
 
 string Mail::getDate()
@@ -164,9 +165,11 @@ void Mail::parseMail(char* text){
 	string to = "To:";
 	string from = "From:";
 	string subject = "Subject:";
-	string message = "Content-Type: text";
+	string message = "Content-Type: text/plain";
 	string messageId = "Message-Id:";
 	string endLine = "\n";
+	string delim = "--";
+	string end = "=";
 
 
 	posInitial = textMail.find(date.c_str(),0);
@@ -190,8 +193,9 @@ void Mail::parseMail(char* text){
 	this->setSubject(aux);
 
 	posInitial = textMail.find(message.c_str(),posFinal);
-	posFinal = textMail.find(endLine.c_str(),posInitial);
-	aux = textMail.substr(posInitial+message.size(),posFinal-(posInitial+message.size()));
+	posInitial = textMail.find(endLine.c_str(),posInitial);
+	posFinal = textMail.find(end.c_str(),posInitial);
+	aux = textMail.substr(posInitial+1,posFinal-posInitial);
 	this->setMessage(aux);
 
 }

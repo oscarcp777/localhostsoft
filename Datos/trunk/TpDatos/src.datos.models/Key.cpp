@@ -11,5 +11,6 @@ Key::Key() {
 	this->key=NULL;
 }
 Key::~Key() {
+
 	// TODO Auto-generated destructor stub
 }

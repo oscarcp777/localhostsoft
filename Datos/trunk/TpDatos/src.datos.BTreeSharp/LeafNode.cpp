@@ -131,6 +131,18 @@ Registry* LeafNode::searchBlockRegClassification(Registry* registry,ContainerIns
 
 	return NULL;//registry;
 }
+void LeafNode::printMails(std::ostream& outStream,Registry* reg, ContainerInsertDataBlock* container){
+	list<Registry*>::iterator iterRegistry;
+		Block* blockMails;
+		RegPrimary* regPrevious=(RegPrimary*)reg;
+		blockMails=this->readBlockData(regPrevious->getNumberBlock(),container);
+		for(iterRegistry = blockMails->iteratorBegin(); iterRegistry != blockMails->iteratorEnd(); iterRegistry++){
+			reg=*iterRegistry;
+			((RegPrimary*)reg)->print(std::cout);
+
+		}
+
+}
 Registry* LeafNode::searchBlockMails(Registry* registry,ContainerInsertDataBlock* container){
 	list<Registry*>::iterator iterRegistry;
 	Registry* reg=registry;
@@ -210,5 +222,6 @@ int LeafNode::unPackMetadata(Buffer* buffer){
 	this->setNextBlock(nextNode);
 	return numElements;
 }
+
 
 

@@ -13,6 +13,7 @@ Registry::Registry() {
 }
 
 Registry::~Registry() {
+
 	if(this->key!=NULL)
 	delete this->key;
 }

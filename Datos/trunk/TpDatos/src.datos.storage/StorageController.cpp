@@ -28,6 +28,8 @@ void StorageController::addMail(char* message){
 	regPrimary->setMail(mail);
 	this->primaryIndex->addRegistry(regPrimary);
 
+
+
 }
 Mail* StorageController::generateMail(char* message){
 	Mail* mail = new Mail();

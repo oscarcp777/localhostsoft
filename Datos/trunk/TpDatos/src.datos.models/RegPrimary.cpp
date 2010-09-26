@@ -15,7 +15,7 @@ RegPrimary::RegPrimary() {
 }
 
 RegPrimary::~RegPrimary() {
-	// TODO Auto-generated destructor stub
+
 }
 Registry* RegPrimary::clone(){
 	RegPrimary* regPrimary = new RegPrimary();

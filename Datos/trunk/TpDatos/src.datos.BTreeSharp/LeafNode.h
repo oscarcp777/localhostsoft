@@ -37,6 +37,7 @@ public:
 	Registry* insertBlockData(Registry* registry,ContainerInsertDataBlock* container);
 	 bool posibleToAgregateComponent(Registry* registry)throw();
 	 Registry* searchRegistryBlockData(Registry* registry,ContainerInsertDataBlock* container);
+	 void printMails(std::ostream& outStream,Registry* reg,ContainerInsertDataBlock* container);
 private:
 	 void writeBlockData(Block* block ,unsigned int numBlock,ContainerInsertDataBlock* container);
 	 Block* readBlockData(unsigned int numBlock,ContainerInsertDataBlock* container);

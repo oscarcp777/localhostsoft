@@ -28,12 +28,13 @@ void TestStorageController::testConnectAndCreatePrimaryIndex(){
 void TestStorageController::testPrintPrimaryIndex(){
 	IndexBSharp* index = new IndexBSharp("Datos.2c2010.IndPrimario",BLOCK_SIZE,TYPE_REG_PRIMARY);
 	index->print(std::cout);
+	delete index;
 }
 
 void TestStorageController::testSearchPrimaryIndex(){
 	IndexBSharp* index = new IndexBSharp("Datos.2c2010.IndPrimario",BLOCK_SIZE,TYPE_REG_PRIMARY);
 	RegPrimary* regPrimary = new RegPrimary();
-	KeyInteger* key= new KeyInteger(100);
+	KeyInteger* key= new KeyInteger(330);
 	regPrimary->setKey(key);
 	regPrimary = (RegPrimary*)index->searchRegistry(regPrimary);
 
@@ -41,6 +42,7 @@ void TestStorageController::testSearchPrimaryIndex(){
 		cout<<"CLAVE NO ENCONTRADA"<<endl;
 	else
 		regPrimary->print(std::cout);
+
 	delete index;
 }
 
