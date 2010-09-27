@@ -78,7 +78,8 @@ IndexBSharp::~IndexBSharp() {
 }
 
 void IndexBSharp::addRegistry(Registry* registry) throw(){
-	//	if(this->searchRegistry(registry) == NULL){
+	if (registry->getLongBytes() >= (0,5*this->sizeBlock))
+		throw eNotSpace("Registro demasiado grande!!");
 	ContainerInsertion* containerInsertion=new ContainerInsertion();
 	int answer = INSERTION_OK;
 	if (this->rootNode->isLeaf()){
@@ -651,12 +652,12 @@ void IndexBSharp::insertLeafNodeFull(LeafNode* leafNode, LeafNode* brotherNode,	
 	     cout<<" CANTIDAD DE registros INSERTADoS "<<cont<<endl;
 		  cout<<" CANTIDAD DE registros "<<listRegistry.size()<<endl;
 	}
-		  if(cont!=listRegistry.size()){
-		   cout<<"###########################################################"<<endl;
-	     cout<<"############# DANGER SE PERDIO UN registro    ##############"<<endl;
-	     cout<<"###########################################################"<<endl;
-	     throw eNotSpace("ERROR EN EL SPLIT SE PÉRDIERON registros !!!!!!");
-	    }
+	if(cont!=listRegistry.size()){
+		cout<<"###########################################################"<<endl;
+		cout<<"############# DANGER SE PERDIO UN registro    ##############"<<endl;
+		cout<<"###########################################################"<<endl;
+		throw eNotSpace("ERROR EN EL SPLIT SE PÉRDIERON registros !!!!!!");
+	}
 	newLeafNode->setNextBlock(rightNode->getNextBlock());
 	rightNode->setNextBlock(newLeafNode->getNumBlock());
 
