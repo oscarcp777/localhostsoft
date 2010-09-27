@@ -38,6 +38,7 @@ public:
 	void parseMail(char* text);
 	int getIuc();
 	bool containCondition(int condition,string value);
+	string getCondition(int condition);
 private:
 	string from;
 	string to;

@@ -37,19 +37,16 @@ void Classification::loadClassificationIndex(IndexConfig* indexConfig,IteratorBS
 	RegClassification* regClassification;
 	KeyString* key;
 	int condition = indexConfig->getCondition();
-	string value = indexConfig->getValue();
-
-
 
 	while (it->hasNext()){
 		regPrimary = (RegPrimary*)it->next();
-		if(regPrimary->getMail()->containCondition(condition,value)){
-			regClassification = new RegClassification();
-			key = new KeyString(value);
-			regClassification->setKey(key);
-			regClassification->addIuc((KeyInteger*)regPrimary->getMail()->getKey()->clone());
-			secondaryIndex->addRegistry(regClassification);
-		}
+		regClassification = new RegClassification();
+		regPrimary->getMail()->print(cout);
+		key = new KeyString(regPrimary->getMail()->getCondition(condition));
+		regClassification->setKey(key);
+		regClassification->addIuc((KeyInteger*)regPrimary->getMail()->getKey()->clone());
+		secondaryIndex->addRegistry(regClassification);
+
 	}
 	delete secondaryIndex;
 	delete it;

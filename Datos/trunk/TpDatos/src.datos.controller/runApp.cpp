@@ -11,7 +11,7 @@
 using namespace std;
 
 
-int main_old(int argc, char** ) {
+int main(int argc, char** ) {
 	std::string strEmail;
 	std::string strPass;
 	Controller* control= new Controller();
@@ -29,9 +29,9 @@ int main_old(int argc, char** ) {
 	IndexConfig* config = new IndexConfig();
 	config->setUserName(strEmail);
 	config->setTypeIndex(TYPE_SECONDARY);
-	config->setTypeSecundaryIndex(TYPE_SELECTION);
+	config->setTypeSecundaryIndex(TYPE_CLASSIFICATION);
 	config->setCondition(FROM);
-	config->setValue("asyura.from@gmail.com");
+//	config->setValue("asyura.from@gmail.com");
 	config->setFilterName("Clasificacion 1");
 	control->addSecondIndex(config);
 

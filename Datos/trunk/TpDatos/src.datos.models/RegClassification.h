@@ -27,6 +27,7 @@ public:
 	unsigned int getSize();
 	int print(std::ostream& outStream);
 	void addIuc(KeyInteger* keyIuc);
+	KeyInteger* getIuc() const;
     int getNumBlock() const;
     void setNumBlock(int numBlock);
 private:

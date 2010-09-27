@@ -233,3 +233,25 @@ bool Mail::containCondition(int condition,string value){
 
 		return false;
 }
+
+
+string Mail::getCondition(int condition){
+	switch(condition){
+	case FROM:
+		return this->getFrom();
+
+	case TO:
+		return this->getTo();
+
+	case SUBJECT:
+		return this->getSubject();
+
+	case DATE:
+		return this->getDate();
+
+	default:
+		return NULL;
+		}
+
+		return NULL;
+}

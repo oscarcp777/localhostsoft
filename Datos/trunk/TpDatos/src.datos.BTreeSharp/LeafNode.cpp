@@ -6,7 +6,6 @@
  */
 
 #include "LeafNode.h"
-#include "../src.datos.models/RegPrimary.h"
 
 LeafNode::LeafNode(int typeElement,unsigned int maxLong, unsigned int numBlock, unsigned int level) throw():Node(maxLong,numBlock,level){
     this->nextNode=-1;
@@ -67,15 +66,26 @@ void LeafNode::writeBlockData(Block* block ,unsigned int numBlock,ContainerInser
      delete block;
      delete buffer;
 }
+
 Registry* LeafNode::insertMailBlockNew(Registry* registry,ContainerInsertDataBlock* container){
 	unsigned int numblock=container->getFreeBlockController()->searchFreeBlock();
-			Block* blockMailsNew= new Block(container->getSizeBlockData(),container->getTypeElementData(),container->getIndexed());
-			blockMailsNew->addReg(((RegPrimary*)registry)->getMail());
-			((RegPrimary*)registry)->setNumberBlock(numblock);
-			this->writeBlockData(blockMailsNew,numblock,container);
-			((RegPrimary*)registry)->setMail(NULL);
-			return registry;
+	Block* blockMailsNew= new Block(container->getSizeBlockData(),container->getTypeElementData(),container->getIndexed());
+	blockMailsNew->addReg(((RegPrimary*)registry)->getMail());
+	((RegPrimary*)registry)->setNumberBlock(numblock);
+	this->writeBlockData(blockMailsNew,numblock,container);
+	((RegPrimary*)registry)->setMail(NULL);
+	return registry;
 }
+
+Registry* LeafNode::insertIucBlockNew(Registry* registry,ContainerInsertDataBlock* container){
+	unsigned int numblock=container->getFreeBlockController()->searchFreeBlock();
+	Block* blockIucNew= new Block(container->getSizeBlockData(),container->getTypeElementData(),container->getIndexed());
+	blockIucNew->addReg(((RegClassification*)registry)->getIuc());
+	((RegClassification*)registry)->setNumBlock(numblock);
+	this->writeBlockData(blockIucNew,numblock,container);
+	return registry;
+}
+
 Registry* LeafNode::insertBlockMails(Registry* registry,ContainerInsertDataBlock* container){
 	list<Registry*>::iterator iterRegistry;
 	Registry* reg=registry;
@@ -106,15 +116,28 @@ Registry* LeafNode::insertBlockMails(Registry* registry,ContainerInsertDataBlock
 	return NULL;
 }
 Registry* LeafNode::insertBlockRegClassification(Registry* registry,ContainerInsertDataBlock* container){
-	   list<Registry*>::iterator iterRegistry;
-	     Registry* reg;
-		for ( iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
-			reg=*iterRegistry;
-			if(registry->equals(reg)){
-              break;
-			}
+	list<Registry*>::iterator iterRegistry;
+	Registry* reg;
+	Block* blockIucs;
+	bool find = false;
+	for ( iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
+		reg=*iterRegistry;
+		if(registry->equals(reg)){
+			find = true;
+			break;
 		}
-//		RegClassification* regPrevious=(RegClassification*)reg;
+	}
+	if(find == true){
+		RegClassification* regClass=(RegClassification*)reg;
+		blockIucs=this->readBlockData(regClass->getNumBlock(),container);
+		blockIucs->addReg(((RegClassification*)registry)->getIuc());
+		this->writeBlockData(blockIucs,regClass->getNumBlock(),container);
+		delete registry;
+		return NULL;
+	}else{
+		return this->insertIucBlockNew(registry,container);
+	}
+	return NULL;
 
 
 return registry;
