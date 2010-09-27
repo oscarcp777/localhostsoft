@@ -719,6 +719,7 @@ bool IndexBSharp::balanceInternalNode(InternalNode* internalNode, InternalNode* 
     this->printBranch(cout,this->branchList.begin(),this->branchList.end());
 
 	this->listRegistry.push_back(fatherReg);
+	this->listRegistry.sort(comparatorRegistry);
 	unsigned int positionInsert = searchPositionInsertInternalNode(regKey,
 			this->listRegistry.begin(), this->listRegistry.end());
 	this->listRegistry.push_back(regKey);
