@@ -19,7 +19,8 @@ int main(int argc,char** argv) {
 	TestBSharp* test = new TestBSharp();
 //	test->testInsert();
 //	test->testsearch();
-	test->testInsertRegClassification();
+	test->testInsertAndSearch();
+//	test->testInsertRegClassification();
 //	test->testsearchRegClassification();
 //	delete test;
 /*

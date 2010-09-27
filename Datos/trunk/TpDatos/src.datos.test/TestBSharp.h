@@ -14,6 +14,7 @@ public:
 	TestBSharp();
 	virtual ~TestBSharp();
 	void testInsert();
+	void testInsertAndSearch();
 	void testsearch();
 	void testInsertRegClassification();
 	void testsearchRegClassification();

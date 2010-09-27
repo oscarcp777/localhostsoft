@@ -44,9 +44,43 @@ void TestBSharp::testInsert(){
 
 }
 
+void TestBSharp::testInsertAndSearch(){
+	int cantidadAInsertar = 10000;
+	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTreeInsertandSearch.dat",BLOCK_SIZE,TYPE_REG_PRIMARY);
+	indexBSharp->print(std::cout);
+	int vecInserts[cantidadAInsertar];
+	int j=0;
+	for (int var =0; var < cantidadAInsertar; ++var) {
+		RegPrimary* regPrimary = new RegPrimary();
+		int keyInt=rand()%1000000;
+		KeyInteger* key= new KeyInteger(keyInt);
+		regPrimary->setKey(key);
+		regPrimary->setNumberBlock(var);
+		indexBSharp->addRegistry(regPrimary);
+		vecInserts[var]=keyInt;
+	}
+	for (int var =0; var < cantidadAInsertar; ++var) {
+		RegPrimary* regPrimary = new RegPrimary();
+		KeyInteger* key= new KeyInteger(vecInserts[var]);
+		regPrimary->setKey(key);
+		regPrimary = (RegPrimary*)indexBSharp->searchRegistry(regPrimary);
+		if(regPrimary == NULL)
+			cout<<"CLAVE: "<<key->getValue()<<" NO ENCONTRADA"<<endl;
+		else{
+			cout<<"SE ENCONTRO : ";
+			regPrimary->print(std::cout);
+			j++;
+		}
+	}
+	cout<<" Se encontraron "<< j << " registros!" <<endl;
+	delete indexBSharp;
+}
+
+
 void TestBSharp::testsearch(){
-	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTree.dat",BLOCK_SIZE,TYPE_REG_PRIMARY);
-	for (int var =0; var < 10000; ++var) {
+	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTreeInsertandSearch.dat",BLOCK_SIZE,TYPE_REG_PRIMARY);
+	int j=0;
+	for (int var =0; var < 1000; ++var) {
 		RegPrimary* regPrimary = new RegPrimary();
 		int keyInt=rand()%1000000;
 		KeyInteger* key= new KeyInteger(keyInt);
@@ -57,9 +91,10 @@ void TestBSharp::testsearch(){
 		else{
 			cout<<"SE ENCONTRO : ";
 			regPrimary->print(std::cout);
+			j++;
 		}
 	}
-	cout<<" esto es una manteca bambino!!!"<<endl;
+	cout<<" Se encontraron "<< j << " registros!" <<endl;
 	delete indexBSharp;
 
 }void TestBSharp::testInsertMails(){
