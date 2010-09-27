@@ -8,9 +8,8 @@
 #ifndef ITERATORBSHARP_H_
 #define ITERATORBSHARP_H_
 #include "LeafNode.h"
-#include "../src.datos.models/Registry.h"
-#include "../src.datos.models/Block.h"
 #include "../src.datos.models/RegPrimary.h"
+#include "../src.datos.models/RegClassification.h"
 
 class IteratorBSharp {
 public:

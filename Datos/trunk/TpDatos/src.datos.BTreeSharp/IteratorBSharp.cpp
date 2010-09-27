@@ -52,7 +52,7 @@ bool IteratorBSharp::hasNext() throw(){
 			return false;
 	}
 
-	if (this->typeElement == TYPE_REG_PRIMARY){
+	if (this->typeElement == TYPE_REG_PRIMARY || this->typeElement == TYPE_REG_CLASSIFICATION){
 		list<Registry*>::iterator endData = this->dataBlock->iteratorEnd();
 		list<Registry*>::iterator itData = this->currentDataRegistry;
 		itData++;
@@ -79,6 +79,10 @@ Registry* IteratorBSharp::next() throw(){
 			RegPrimary* reg=(RegPrimary*)*this->currentRegistry;
 			reg->setMail((Mail*)*this->currentDataRegistry);
 		}
+		if (this->typeElement == TYPE_REG_CLASSIFICATION){
+			RegClassification* reg=(RegClassification*)*this->currentRegistry;
+			reg->addIuc((KeyInteger*)*this->currentDataRegistry);
+		}
 		//(*this->currentRegistry)->print(std::cout);
 		return (*this->currentRegistry);
 	}
@@ -91,6 +95,17 @@ Registry* IteratorBSharp::next() throw(){
 		if (++this->currentDataRegistry != endData){
 			RegPrimary* reg=(RegPrimary*)*this->currentRegistry;
 			reg->setMail((Mail*)*this->currentDataRegistry);
+			//(*this->currentRegistry)->print(std::cout);
+			return (*this->currentRegistry);
+		}
+	}
+
+	// Si es registro de clasificacion primero intento incrementar en el archivo de datos
+	if (this->typeElement == TYPE_REG_CLASSIFICATION){
+		list<Registry*>::iterator endData = this->dataBlock->iteratorEnd();
+		if (++this->currentDataRegistry != endData){
+			RegClassification* reg=(RegClassification*)*this->currentRegistry;
+			reg->addIuc((KeyInteger*)*this->currentDataRegistry);
 			//(*this->currentRegistry)->print(std::cout);
 			return (*this->currentRegistry);
 		}
@@ -109,6 +124,14 @@ Registry* IteratorBSharp::next() throw(){
 		this->dataBlock = this->readBlockData(reg->getNumberBlock());
 		this->currentDataRegistry = this->dataBlock->iteratorBegin();
 		reg->setMail((Mail*)*this->currentDataRegistry);
+	}
+
+	if (this->typeElement == TYPE_REG_CLASSIFICATION){
+		RegClassification* reg=(RegClassification*)*this->currentRegistry;
+		delete this->dataBlock;
+		this->dataBlock = this->readBlockData(reg->getNumBlock());
+		this->currentDataRegistry = this->dataBlock->iteratorBegin();
+		reg->addIuc((KeyInteger*)*this->currentDataRegistry);
 	}
 
 	//(*this->currentRegistry)->print(std::cout);
