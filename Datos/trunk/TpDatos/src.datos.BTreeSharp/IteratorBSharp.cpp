@@ -143,7 +143,7 @@ LeafNode* IteratorBSharp::readNodeBytes(Buffer* buffer, int sizeBlock) throw(){
 		buffer->init();
 		return readLeafNodeBytes(buffer, sizeBlock);
 	}
-
+    return NULL;
 }
 
 LeafNode* IteratorBSharp::readLeafNodeBytes(Buffer* buffer, int sizeBlock) throw(){

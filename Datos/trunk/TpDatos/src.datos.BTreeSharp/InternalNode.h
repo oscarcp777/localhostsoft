@@ -33,7 +33,7 @@ public:
 		/**
 		 * Devuelve si hay subflujo o no
 		 */
-		bool isUnderflow()throw();
+		bool isUnderflow(unsigned int sizeMinumum)throw();
 	/**
 	 * Agrega una rama al bloque interno b sharp.
 	 */
@@ -84,6 +84,7 @@ public:
 	 */
 	 unsigned int getOcupedLong() throw();
 	 bool posibleToAgregateComponent(Registry* registry) throw();
+	 unsigned int getMetadata();
 
 private:
 	std::vector<int> branchList;

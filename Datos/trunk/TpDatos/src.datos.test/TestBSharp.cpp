@@ -24,26 +24,45 @@ TestBSharp::~TestBSharp() {
 	// TODO Auto-generated destructor stub
 }
 void TestBSharp::testInsert(){
+	 /* initialize random seed: */
 	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTree.dat",BLOCK_SIZE,TYPE_REG_PRIMARY);
-	for (int var =0; var < 500; ++var) {
+	for (int var =0; var < 10000; ++var) {
 		RegPrimary* regPrimary = new RegPrimary();
-		int keyInt= rand()%100000;
+		int keyInt=rand()%1000000;
 		KeyInteger* key= new KeyInteger(keyInt);
 		regPrimary->setKey(key);
 		regPrimary->setNumberBlock(var);
-//		cout<<"###########################################################"<<endl;
 //		cout<<" Inserto el : ";
 //		regPrimary->print(cout);
 		indexBSharp->addRegistry(regPrimary);
-
+//		indexBSharp->print(std::cout);
 	}
-
 	indexBSharp->print(std::cout);
+	delete indexBSharp;
+	cout<<" esto es una manteca bambino!!!"<<endl;
+
+
+}
+
+void TestBSharp::testsearch(){
+	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTree.dat",BLOCK_SIZE,TYPE_REG_PRIMARY);
+	for (int var =0; var < 10000; ++var) {
+		RegPrimary* regPrimary = new RegPrimary();
+		int keyInt=rand()%1000000;
+		KeyInteger* key= new KeyInteger(keyInt);
+		regPrimary->setKey(key);
+		regPrimary = (RegPrimary*)indexBSharp->searchRegistry(regPrimary);
+		if(regPrimary == NULL)
+			cout<<"CLAVE: "<<key->getValue()<<" NO ENCONTRADA"<<endl;
+		else{
+			cout<<"SE ENCONTRO : ";
+			regPrimary->print(std::cout);
+		}
+	}
 	cout<<" esto es una manteca bambino!!!"<<endl;
 	delete indexBSharp;
 
-}
-void TestBSharp::testInsertMails(){
+}void TestBSharp::testInsertMails(){
 	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTreeMails.dat",BLOCK_SIZE,TYPE_REG_PRIMARY);
 	Mail* mail1 = new Mail();
 	Mail* mail2= new Mail();
@@ -168,47 +187,31 @@ void TestBSharp::testInsertMails(){
 	delete indexBSharp;
 
 }
-void TestBSharp::testsearch(){
-	IndexBSharp* indexBSharp = new IndexBSharp("BTree.dat",BLOCK_SIZE,TYPE_REG_PRIMARY);
-	RegPrimary* regPrimary = new RegPrimary();
-	KeyInteger* key= new KeyInteger(113);
-	regPrimary->setKey(key);
-	regPrimary = (RegPrimary*)indexBSharp->searchRegistry(regPrimary);
-	if(regPrimary == NULL)
-		cout<<"CLAVE: "<<key->getValue()<<" NO ENCONTRADA"<<endl;
-	else
-		regPrimary->print(std::cout);
-	delete indexBSharp;
 
-}
 
 
 void TestBSharp::testInsertRegClassification(){
 	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTreeRegClassifi.dat",BLOCK_SIZE,TYPE_REG_CLASSIFICATION);
-
+	 /* initialize random seed: */
+	  srand ( time(NULL) );
 
 	for (int var = 0; var < 100; ++var) {
-		if(var==16)
+		if(var==36)
 			cout<<"";
 		std::stringstream stream;
-		std::stringstream attribute;
-		attribute<<" attributo ";
+
+		stream<<var;// rand()%10000;//rand()%n los numeros van de 0 a n-1
+//		stream << string(rand()%10, '_');
 		RegClassification* regClassif = new RegClassification();
-		stream<< rand()%1000;//rand()%n los numeros van de 0 a n-1
-		// 	     stream<< var;
-		stream << "_numero";
 		string keyString=stream.str();
 		KeyString* key= new KeyString(keyString);
 		regClassif->setKey(key);
-		attribute<<var*2+10;
-		regClassif->setAttribute(attribute.str());
-		//    		 cout<<"###########################################################"<<endl;
+		regClassif->setNumBlock(var);
 		cout<<" Inserto el : ";
 		regClassif->print(cout);
 		indexBSharp->addRegistry(regClassif);
-		//cout<<endl;
+		cout<<endl;
 		stream.clear();
-		attribute.clear();
 		indexBSharp->print(std::cout);
 	}
 
@@ -234,7 +237,7 @@ void TestBSharp::testsearchRegClassification(){
 }
 
 void TestBSharp::testIterator(){
-	IndexBSharp* indexBSharp = new IndexBSharp("Datos.2c2010.IndSecundario.Seleccion.From. asyura.from@gmail.com",BLOCK_SIZE,TYPE_REG_KEY_SELECTION);
+	IndexBSharp* indexBSharp = new IndexBSharp("Datos.2c2010.IndSecundario.Seleccion.From.asyura.from@gmail.com",BLOCK_SIZE,TYPE_REG_SELECTION);
 	IteratorBSharp* it = indexBSharp->getIterator();
 	RegSelection* reg;
 	while (it->hasNext()){

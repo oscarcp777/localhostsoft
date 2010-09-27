@@ -66,10 +66,15 @@ public:
     bool getIndexed() const;
     void setIndexed(bool indexed);
 protected:
+    /**
+     * metodo que dice cual es el tipo de clave que usa el registro
+     */
+	int getTipeKey(int typeElement);
     list<Registry*> regList;
 	int nextNode;
 	int typeElement;
 private:
+
     bool indexed;
     unsigned int freeSize;
     unsigned int numBlock;

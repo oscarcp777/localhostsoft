@@ -25,8 +25,11 @@ LeafNode::~LeafNode()throw() {
 
 unsigned int LeafNode::getOcupedLong() throw(){
 	unsigned int sizeBusy=Block::getSizeRegistry();
-	sizeBusy += sizeof(unsigned int)*4;
+	sizeBusy += this->getMetadata();
 	return sizeBusy;
+}
+unsigned int LeafNode::getMetadata(){
+     return sizeof(unsigned int)*4;
 }
 Registry* LeafNode::insertBlockData(Registry* registry,ContainerInsertDataBlock* container){
 
@@ -173,13 +176,10 @@ Registry* LeafNode::searchBlockMails(Registry* registry,ContainerInsertDataBlock
 bool LeafNode::isLeaf() const throw(){
 	return true;
 }
-bool LeafNode::isUnderflow()throw() {
-//	unsigned int sizeBusy=Block::getSizeRegistry();
-//	std::cout << "Bloque: " << this->getNumBlock() <<" Espacio Ocupado: "<<sizeBusy<<" peso promedio : " << this->getAverageWeight() << std::endl;
-    unsigned int percentUnderflow = (2*this->getLongBytes()/3)-(0.5*this->getAverageWeight());
-//	std::cout << "Limite Subflujo: " <<  percentUnderflow << std::endl;
-	return (this->getOcupedLong()< percentUnderflow);
-
+bool LeafNode::isUnderflow(unsigned int sizeMinumum)throw() {
+    unsigned int percentUnderflow = sizeMinumum;
+    percentUnderflow = (sizeMinumum-(0.5*this->getAverageWeight()))+getMetadata();
+    return (this->getOcupedLong()< percentUnderflow);
 }
 
 bool LeafNode::posibleToAgregateComponent(Registry* registry) throw(){

@@ -9,10 +9,10 @@
 
 using namespace std;
 InternalNode::InternalNode(unsigned int typeElement,unsigned int maxLong, unsigned int numBlock, unsigned int level) throw():Node(maxLong,numBlock,level){
-	this->typeElement = typeElement+1;
+	this->typeElement = Block::getTipeKey(typeElement);
 }
 InternalNode::InternalNode(unsigned int maxLong,unsigned int typeElement) {
-	this->typeElement= typeElement+1;
+	this->typeElement = Block::getTipeKey(typeElement);
 	unsigned int sizeBusy=sizeof(int)*4+this->branchList.size();
 	this->setSizeFree(maxLong- sizeBusy);
 	this->setMaxLong(maxLong);
@@ -25,7 +25,7 @@ InternalNode::~InternalNode() throw(){
 }
 unsigned int InternalNode::getOcupedLong() throw(){
 	unsigned int sizeBusy=Block::getSizeRegistry();
-	sizeBusy += sizeof(unsigned int)*4;
+	sizeBusy += this->getMetadata();
 	sizeBusy += this->branchList.size()*4;
 	return sizeBusy;
 }
@@ -33,15 +33,14 @@ bool InternalNode::isLeaf() const throw(){
 	return false;
 }
 
-bool InternalNode::isUnderflow()throw() {
-//	unsigned int sizeBusy=Block::getSizeRegistry();
-//	std::cout << "Bloque: " << this->getNumBlock() <<" Espacio Ocupado: "<<sizeBusy<<" peso promedio : " << this->getAverageWeight() << std::endl;
-    unsigned int percentUnderflow = (2*this->getLongBytes()/3)-(0.5*this->getAverageWeight());
-//	std::cout << "Limite Subflujo: " <<  percentUnderflow << std::endl;
-	return (this->getOcupedLong()< percentUnderflow);
-
+bool InternalNode::isUnderflow(unsigned int sizeMinumum)throw() {
+    unsigned int percentUnderflow = sizeMinumum;
+    percentUnderflow = (sizeMinumum-(0.5*this->getAverageWeight()))+getMetadata();
+    return (this->getOcupedLong()< percentUnderflow);
 }
-
+unsigned int InternalNode::getMetadata(){
+     return sizeof(unsigned int)*4;
+}
 bool InternalNode::posibleToAgregateComponent(Registry* registry) throw(){
 	 unsigned int ocupedLong=this->getOcupedLong();
 	 unsigned int longBytes=registry->getLongBytes();

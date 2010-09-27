@@ -9,10 +9,10 @@
 
 KeyString::KeyString(string value) {
 	this->value=value;
-
+	this->key=NULL;
 }
 KeyString::KeyString(){
-
+	this->key=NULL;
 }
 KeyString::~KeyString() {
 	// TODO Auto-generated destructor stub
@@ -38,7 +38,7 @@ void KeyString::unPack(Buffer* buffer){
 	buffer->unPackFieldString(this->value,size);
 }
 int  KeyString::print(std::ostream& outStream){
-	outStream<<"Clave : "<<this->value;
+	outStream<<" Clave : "<<this->value;
      return 1;
 }
 int KeyString::getLongBytes(){
@@ -60,5 +60,5 @@ int KeyString::compareTo(Registry* registry){
 	return this->value.compare(key->getValue());
 }
 Registry* KeyString::cloneRegKey(){
-	return NULL;
+	return this->clone();
 }

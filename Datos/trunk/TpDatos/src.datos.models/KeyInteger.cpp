@@ -9,12 +9,14 @@
 
 KeyInteger::KeyInteger(int value) {
 this->value=value;
+this->key=NULL;
 
 }
 KeyInteger::KeyInteger() {
+	this->key=NULL;
 }
 Registry* KeyInteger::cloneRegKey(){
-  return NULL;
+  return this->clone();
 }
 KeyInteger::~KeyInteger() {
 	// TODO Auto-generated destructor stub
@@ -32,10 +34,8 @@ int KeyInteger::getLongBytes(){
 	return this->getSize();
 }
 int  KeyInteger::print(std::ostream& outStream){
-	outStream<<"Clave : ";
+	outStream<<" Clave : ";
 	outStream<<this->value;
-	outStream<<" ";
-	outStream<<endl;
      return 1;
 }
 int  KeyInteger::getValue(){

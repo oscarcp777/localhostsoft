@@ -8,11 +8,10 @@
 #include "FactoryOfRegistry.h"
 #include "Mail.h"
 #include "RegPrimary.h"
-#include "RegKeyPrimary.h"
+#include "KeyString.h"
 #include "KeyInteger.h"
 #include "RegClassification.h"
 #include "RegSelection.h"
-#include "RegKeyClassification.h"
 #include "../src.datos.utils/Define.h"
 
 FactoryOfRegistry::FactoryOfRegistry() {
@@ -29,19 +28,16 @@ Registry* FactoryOfRegistry::createRegistry(int type){
 
 	case TYPE_REG_PRIMARY: return new RegPrimary();
 		break;
-	case TYPE_REG_KEY_PRIMARY: return new RegKeyPrimary();
-		break;
 	case TYPE_REG_CLASSIFICATION: return new RegClassification();
-			break;
-	case TYPE_REG_KEY_CLASSIF_INDEX: return new RegKeyClassification();
 			break;
 	case TYPE_MAIL: return new Mail();
 		break;
 	case TYPE_REG_SELECTION: return new RegSelection();
 			break;
-	case TYPE_REG_KEY_SELECTION: return new RegSelection();
+	case TYPE_KEY_INTEGER: return new KeyInteger(-1);
 				break;
-
+	case TYPE_KEY_STRING: return new KeyString("");
+					break;
 	default: return NULL;
 	}
 }

@@ -35,7 +35,7 @@ void IndexController::generateSelectionIndex(IndexConfig* indexConfig){
 	cout<<"PASAAAAA 2 "<<endl;
 	string fileName = indexConfig->getUserName();
 	fileName += ".IndSecundario.Seleccion."+StringUtils::convertConditionIntToString(indexConfig->getCondition())+"."+indexConfig->getValue();
-	IndexBSharp* primaryIndex = new IndexBSharp(fileName,BLOCK_SIZE,TYPE_REG_KEY_SELECTION);
+	IndexBSharp* primaryIndex = new IndexBSharp(fileName,BLOCK_SIZE,TYPE_REG_SELECTION);
 	indexConfig->setBlockSize(BLOCK_SIZE);
 	indexConfig->setFileName(fileName);
 	delete primaryIndex;

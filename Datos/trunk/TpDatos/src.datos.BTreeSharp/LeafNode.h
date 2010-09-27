@@ -29,13 +29,14 @@ public:
 	/**
 	 * Devuelve si hay subflujo o no
 	 */
-	bool isUnderflow()throw();
+	bool isUnderflow(unsigned int sizeMinumum)throw();
   /**
    * inserta el mail el bloque de datos
    * y devuelve el registro para insertarlo en el arbol si es necesario
    */
 	Registry* insertBlockData(Registry* registry,ContainerInsertDataBlock* container);
 	 bool posibleToAgregateComponent(Registry* registry)throw();
+	 unsigned int getMetadata();
 	 Registry* searchRegistryBlockData(Registry* registry,ContainerInsertDataBlock* container);
 	 void printMails(std::ostream& outStream,Registry* reg,ContainerInsertDataBlock* container);
 private:

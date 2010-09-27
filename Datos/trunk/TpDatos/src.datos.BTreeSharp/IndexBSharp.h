@@ -175,8 +175,9 @@ private:
 		bool balanceLeafNode(Registry* reg, LeafNode* actualNode, LeafNode* brotherNode,ContainerInsertion* container)throw();
 		int searchBranchSister(InternalNode* internalNode , Registry* registry) throw();
 		bool balanceInternalNode(InternalNode* internalNode, InternalNode* brotherNode, ContainerInsertion* container, Registry* fatherReg) throw();
-
-
+		void printBranch(std::ostream& outStream,vector<int>::iterator begin, vector<int>::iterator end);
+		void printListReg(std::ostream& outStream,list<Registry*>::iterator begin, list<Registry*>::iterator end);
+		unsigned int getSizeMinumumNode(unsigned int averageEstimate,unsigned int countReg);
 		/**
 		 * Obtiene el primer nodo hoja del arbol
 		 */

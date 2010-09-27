@@ -26,14 +26,11 @@ public:
 	int compareTo(Registry* registry);
 	unsigned int getSize();
 	int print(std::ostream& outStream);
-	std::string getAttribute() ;
-	void setAttribute(std::string atribute);
 	void addIuc(KeyInteger* keyIuc);
     int getNumBlock() const;
     void setNumBlock(int numBlock);
 private:
 	list<KeyInteger* > listIuc;
-	std::string attribute;
 	int numBlock;
 };
 

@@ -11,7 +11,7 @@
 using namespace std;
 
 
-int main(int argc, char** ) {
+int main_old(int argc, char** ) {
 	std::string strEmail;
 	std::string strPass;
 	Controller* control= new Controller();

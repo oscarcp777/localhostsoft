@@ -24,7 +24,8 @@ public:
 	/**
 	 * Devuelve si hay subflujo o no
 	 */
-	virtual bool isUnderflow() throw() = 0;
+	virtual bool isUnderflow(unsigned int sizeMinumum) throw() = 0;
+	virtual unsigned int getMetadata() = 0;
 
 };
 

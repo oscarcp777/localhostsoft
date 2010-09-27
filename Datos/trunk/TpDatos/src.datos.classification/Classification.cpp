@@ -55,7 +55,7 @@ void Classification::loadClassificationIndex(IndexConfig* indexConfig,IteratorBS
 	delete it;
 }
 void Classification::loadSelectionIndex(IndexConfig* indexConfig,IteratorBSharp* it){
-	IndexBSharp* secondaryIndex = new IndexBSharp(indexConfig->getFileName(),indexConfig->getBlockSize(),TYPE_REG_KEY_SELECTION);
+	IndexBSharp* secondaryIndex = new IndexBSharp(indexConfig->getFileName(),indexConfig->getBlockSize(),TYPE_REG_SELECTION);
 	RegPrimary* regPrimary;
 	RegSelection* regSelection;
 	int condition = indexConfig->getCondition();

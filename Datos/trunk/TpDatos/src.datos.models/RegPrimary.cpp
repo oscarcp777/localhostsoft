@@ -8,7 +8,6 @@
 #include "RegPrimary.h"
 #include "Key.h"
 #include "KeyInteger.h"
-#include "RegKeyPrimary.h"
 
 RegPrimary::RegPrimary() {
 	this->mail = NULL;
@@ -24,9 +23,7 @@ Registry* RegPrimary::clone(){
 	return regPrimary;
 }
 Registry* RegPrimary::cloneRegKey(){
-	RegKeyPrimary* regKeyPrimary = new RegKeyPrimary();
-	regKeyPrimary->setKey((KeyInteger*)this->getKey()->clone());
-	return regKeyPrimary;
+	return this->getKey()->clone();
 }
 bool RegPrimary::equals(Registry* registry){
 	KeyInteger* key=(KeyInteger*)registry->getKey();
@@ -42,11 +39,18 @@ void RegPrimary::unPack(Buffer* buffer){
 	buffer->unPackField(&this->numberBlock,sizeof(this->numberBlock));
 }
 int RegPrimary::compareTo(Registry* registry){
-	KeyInteger* key=(KeyInteger*)registry->getKey();
+	KeyInteger* key=NULL;
+	if(registry->getKey()==NULL){
+		key=(KeyInteger*)registry;
+	}
+	else{
+        key=(KeyInteger*)registry->getKey();
+	}
   return this->getKey()->compareTo(key);
 }
 unsigned int RegPrimary::getSize(){
-    return NUM_FIELDS_REG_PRIMARY*sizeof(int);
+	int size=this->getKey()->getSize()+sizeof(this->numberBlock);
+    return size;
 }
 int RegPrimary::print(std::ostream& outStream){
 	this->getKey()->print(outStream);

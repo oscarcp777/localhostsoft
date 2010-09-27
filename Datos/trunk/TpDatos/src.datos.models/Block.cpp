@@ -246,5 +246,11 @@ void Block::setIndexed(bool indexed)
 {
     this->indexed = indexed;
 }
-
+int Block::getTipeKey(int typeElement){
+    if(TYPE_REG_PRIMARY==typeElement)
+    	return TYPE_KEY_INTEGER;
+    if(TYPE_REG_CLASSIFICATION==typeElement)
+        	return TYPE_KEY_STRING;
+    return typeElement;
+}
 

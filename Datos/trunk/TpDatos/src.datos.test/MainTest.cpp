@@ -14,13 +14,12 @@
 
 using namespace std;
 
-int main325(int argc,char** argv) {
+int main(int argc,char** argv) {
 
 	TestBSharp* test = new TestBSharp();
-	test->testIterator();
-	//	test->testInsertRegSelection();
+//	test->testInsert();
 //	test->testsearch();
-//	test->testInsertRegClassification();
+	test->testInsertRegClassification();
 //	test->testsearchRegClassification();
 //	delete test;
 /*

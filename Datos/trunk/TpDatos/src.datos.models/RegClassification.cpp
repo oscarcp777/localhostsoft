@@ -7,10 +7,9 @@
 
 #include "RegClassification.h"
 #include "KeyString.h"
-#include "RegKeyClassification.h"
 
 RegClassification::RegClassification() {
-	// TODO Auto-generated constructor stub
+	this->numBlock=-1;
 
 }
 
@@ -20,18 +19,17 @@ RegClassification::~RegClassification() {
 
 Registry* RegClassification::clone(){
 	RegClassification* regClone = new RegClassification();
-	regClone->setKey((Key*)this->getKey()->clone());
+	regClone->setKey((KeyString*)this->getKey()->clone());
+	regClone->setNumBlock(this->numBlock);
 	return regClone;
 }
 bool RegClassification::equals(Registry* registry){
-	Key* key=(Key*)registry->getKey();
+	KeyString* key=(KeyString*)registry->getKey();
 	return this->getKey()->equals(key) ;
 }
 void RegClassification::pack(Buffer* buffer){
 	this->getKey()->pack(buffer);
 	buffer->packField(&this->numBlock,sizeof(this->numBlock));
-
-
 }
 void RegClassification::unPack(Buffer* buffer){
 	this->setKey(new KeyString(""));
@@ -39,17 +37,23 @@ void RegClassification::unPack(Buffer* buffer){
 	buffer->unPackField(&this->numBlock,sizeof(this->numBlock));
 }
 int RegClassification::compareTo(Registry* registry){
-	Key* key=(Key*)registry->getKey();
-	return this->getKey()->compareTo(key);
+	KeyString* key=NULL;
+	if(registry->getKey()==NULL){
+		key=(KeyString*)registry;
+	}
+	else{
+        key=(KeyString*)registry->getKey();
+	}
+	  return this->getKey()->compareTo(key);
 }
 unsigned int RegClassification::getSize(){
-	Key* key=(Key*)this->getKey();
-	return key->getSize()+sizeof(int)+this->attribute.size();
+	KeyString* key=(KeyString*)this->getKey();
+	return key->getSize()+sizeof(this->numBlock);
 }
 int RegClassification::print(std::ostream& outStream){
 	this->getKey()->print(outStream);
 		outStream<<" | ";
-		outStream<<this->attribute;
+		outStream<<this->numBlock;
 		outStream<<endl;
 	return 1;
 }
@@ -57,15 +61,7 @@ int RegClassification::getLongBytes(){
 	return this->getSize();
 }
 Registry* RegClassification::cloneRegKey(){
-	RegKeyClassification* regKeyClassification=new RegKeyClassification();
-	regKeyClassification->setKey(this->getKey());
-	return regKeyClassification;
-}
-std::string RegClassification::getAttribute() {
-	return this->attribute;
-}
-void RegClassification::setAttribute(std::string atribute){
-	this->attribute = atribute;
+	return this->getKey()->clone();
 }
 
 int RegClassification::getNumBlock() const
