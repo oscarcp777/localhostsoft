@@ -6,7 +6,8 @@
  */
 
 #include "Controller.h"
-
+#include "../src.datos.consultations/Consultation.h"
+#include "../src.datos.utils/Define.h"
 
 Controller::Controller() {
 	this->programFile = new TextFile();
@@ -163,11 +164,12 @@ Search* Controller::parseStrSearch(std::string strSearch){
 	return search;
 }
 int Controller::searchMails(std::string strSearch){
+	Consultation* consultation = new Consultation();
 	this->strSearch = strSearch;
 	this->search = this->parseStrSearch(strSearch);
 	std::string index;
 	std::string auxIndex;
-	int result;
+	int result = -1;
 	int cant = this->search->sizeOfListIndex();// tamaño de la lista de indices a buscar
 		for (int i = 0; i < cant; ++i) {
 			auxIndex = this->search->getIndex();
@@ -176,17 +178,27 @@ int Controller::searchMails(std::string strSearch){
 			//imprimo los IUCS DE ESOS INDICEs terminar
 			list<IndexConfig*>::iterator current = this->indexes.begin();
 
-				while((current != this->indexes.end())&& result < 0){
+				while((current != this->indexes.end())&& result != 0){
 					index = (*current)->getFilterName();
 					result =auxIndex.compare(index);
 					if (result == 0){
-						//funCion de RICHY BUSCAR!!
+						if((*current)->getTypeIndex().compare((char*)TYPE_PRIMARY) == 0)
+							consultation->consultPrimaryIndex(*current,search->getListOfIucs(),&this->listOfMails);
+						else
+							consultation->consultSecondaryIndex(*current,&this->listOfIucs);
 					}
 					current++;
 					}
 		}
 
 	return 0;
+}
+
+list<int>::iterator Controller::iteratorBeginListOfIucs(){
+	return this->listOfIucs.begin();
+}
+list<int>::iterator Controller::iteratorEndListOfIucs(){
+	return this->listOfIucs.end();
 }
 
 

@@ -31,6 +31,8 @@ private:
 	std::string strSearch;
 	Search* search;
 	list<IndexConfig*> indexes;
+	list<int> listOfIucs;
+	list<Mail*> listOfMails;
 	IndexBSharp* primaryTree;
 	void loadIndexNames();
 	void loadInfoIndex(std::string linea, IndexConfig* index);
@@ -47,6 +49,8 @@ public:
 	void addPass(std::string pass);
 	void printIndexNames();
 	int createPrimaryIndex();
+	list<int>::iterator iteratorBeginListOfIucs();
+	list<int>::iterator iteratorEndListOfIucs();
 
 };
 

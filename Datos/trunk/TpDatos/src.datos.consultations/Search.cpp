@@ -30,12 +30,13 @@ std::string Search::getIndex(){
 void Search::printIndexNames(){
 	list<string>::iterator current = this->listOfIndex.begin();
 	while(current != this->listOfIndex.end()){
-		std::cout<<(*current)<<std::endl;
 		current++;
 		}
 
 }
-
+list<int> Search::getListOfIucs(){
+	return this->listOfIucs;
+}
 Search::Search() {
 	// TODO Auto-generated constructor stub
 

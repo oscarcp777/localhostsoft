@@ -22,9 +22,11 @@ public:
 	void printIndexNames();
 	Search();
 	virtual ~Search();
+	list<int> getListOfIucs();
 private:
 	std::string strSearch;
 	list<string> listOfIndex;
+	list<int> listOfIucs;
 };
 
 #endif /* SEARCH_H_ */
