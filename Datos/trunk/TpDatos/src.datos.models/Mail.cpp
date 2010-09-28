@@ -173,6 +173,8 @@ void Mail::parseMail(char* text){
 	string endLine = "\n";
 	string delim = "--";
 	string end = "=";
+	string beginMail = "<";
+	string endMail = ">";
 
 
 	posInitial = textMail.find(date.c_str(),0);
@@ -190,6 +192,13 @@ void Mail::parseMail(char* text){
 	posInitial = textMail.find(from.c_str(),0);
 	posFinal = textMail.find(endLine.c_str(),posInitial);
 	aux = textMail.substr(posInitial+from.size()+1,posFinal-(posInitial+from.size()+2));
+	//busco si el mail tiene <> porque si es un contacto figura como "nombreContacto <contacto@gmail.com>
+	posInitial = aux.find(beginMail.c_str(),0);
+
+	if(posInitial >= 0){
+		posFinal = aux.find(endMail.c_str(),posInitial);
+		aux= aux.substr(posInitial+1,posFinal-(posInitial+1));
+	}
 	//cout<<"*************"<<aux<<"***********"<<endl;
 	this->setFrom(aux);
 
@@ -202,7 +211,7 @@ void Mail::parseMail(char* text){
 	posInitial = textMail.find(message.c_str(),posFinal);
 	posInitial = textMail.find(endLine.c_str(),posInitial);
 	posFinal = textMail.find(end.c_str(),posInitial);
-	aux = textMail.substr(posInitial+1,posFinal-posInitial);
+	aux = textMail.substr(posInitial+1,posFinal-(posInitial+1));
 	this->setMessage(aux);
 
 }
