@@ -128,6 +128,8 @@ int Controller::createPrimaryIndex() {
 	this->addIndexToFile(configIndex);
 	this->indexes.push_back(configIndex);
 
+
+
 	return 0;
 }
 int Controller::loadSecondIndex(IndexConfig* indexConfig){
