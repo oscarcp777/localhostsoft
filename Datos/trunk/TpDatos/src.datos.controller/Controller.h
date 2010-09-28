@@ -15,6 +15,7 @@
 #include "../src.datos.consultations/Search.h"
 #include "../src.datos.storage/StorageController.h"
 #include "../src.datos.models/IndexController.h"
+#include "../src.datos.classification/Classification.h"
 
 #include <vector>
 #include <stdlib.h>

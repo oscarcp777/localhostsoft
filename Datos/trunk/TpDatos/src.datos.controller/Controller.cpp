@@ -6,7 +6,7 @@
  */
 
 #include "Controller.h"
-#include "../src.datos.classification/Classification.h"
+
 
 Controller::Controller() {
 	this->programFile = new TextFile();

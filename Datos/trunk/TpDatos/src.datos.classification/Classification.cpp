@@ -48,6 +48,7 @@ void Classification::loadClassificationIndex(IndexConfig* indexConfig,IteratorBS
 		secondaryIndex->addRegistry(regClassification);
 
 	}
+	secondaryIndex->print(cout);
 	delete secondaryIndex;
 	delete it;
 }
