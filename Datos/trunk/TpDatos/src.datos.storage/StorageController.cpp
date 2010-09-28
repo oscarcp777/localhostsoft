@@ -25,6 +25,7 @@ void StorageController::addMail(char* message){
 	RegPrimary* regPrimary = new RegPrimary();
 	regPrimary->setKey((KeyInteger*)mail->getKey()->clone());
 	regPrimary->setMail(mail);
+	mail->print(cout);
 	this->primaryIndex->addRegistry(regPrimary);
 
 }
