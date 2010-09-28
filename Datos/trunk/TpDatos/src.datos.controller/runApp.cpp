@@ -11,7 +11,10 @@
 using namespace std;
 
 
-int mainOLD(int argc, char** ) {
+int main(int argc, char** ) {
+
+
+//*****SE CONECTA Y CREA INDICE PRIMARIO***
 	std::string strEmail;
 	std::string strPass;
 	Controller* control= new Controller();
@@ -23,18 +26,30 @@ int mainOLD(int argc, char** ) {
 	std::cin >> strPass;
 	control->addPass(strPass);
 	control->createPrimaryIndex();
+//****************************************
 
+//*****CREA INDICE DE CLASIFICACION***
+/*	IndexConfig* configOne = new IndexConfig();
+	configOne->setUserName(strEmail);
+	configOne->setTypeIndex(TYPE_SECONDARY);
+	configOne->setTypeSecundaryIndex(TYPE_CLASSIFICATION);
+	configOne->setCondition(FROM);
+	configOne->setValue("asyura.from@gmail.com");
+	configOne->setFilterName("Clasificacion 1");
+	control->addSecondIndex(configOne);
+	control->loadSecondIndex(configOne);*/
+//***********************************
 
-
-	IndexConfig* config = new IndexConfig();
-	config->setUserName(strEmail);
-	config->setTypeIndex(TYPE_SECONDARY);
-	config->setTypeSecundaryIndex(TYPE_CLASSIFICATION);
-	config->setCondition(FROM);
-//	config->setValue("asyura.from@gmail.com");
-	config->setFilterName("Clasificacion 1");
-	control->addSecondIndex(config);
-
-	control->loadSecondIndex(config);
+//*******CREA INDICE DE SELECCION*******
+	IndexConfig* configTwo = new IndexConfig();
+	configTwo->setUserName(strEmail);
+	configTwo->setTypeIndex(TYPE_SECONDARY);
+	configTwo->setTypeSecundaryIndex(TYPE_SELECTION);
+	configTwo->setCondition(FROM);
+	configTwo->setValue("asyura.from@gmail.com");
+	configTwo->setFilterName("Seleccion 1");
+	control->addSecondIndex(configTwo);
+	control->loadSecondIndex(configTwo);
+//***********************************
 	return 0;
 }

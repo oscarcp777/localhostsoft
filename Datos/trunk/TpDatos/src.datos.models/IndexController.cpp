@@ -32,7 +32,6 @@ void IndexController::generateClassificationIndex(IndexConfig* indexConfig){
 }
 void IndexController::generateSelectionIndex(IndexConfig* indexConfig){
 	//existen menos q en el primario.......tengo q saber atributo y valor, (CONSTANTE,VALOR)
-	cout<<"PASAAAAA 2 "<<endl;
 	string fileName = indexConfig->getUserName();
 	fileName += ".IndSecundario.Seleccion."+StringUtils::convertConditionIntToString(indexConfig->getCondition())+"."+indexConfig->getValue();
 	IndexBSharp* primaryIndex = new IndexBSharp(fileName,BLOCK_SIZE,TYPE_REG_SELECTION);

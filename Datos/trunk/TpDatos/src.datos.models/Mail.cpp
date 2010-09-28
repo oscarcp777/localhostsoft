@@ -177,25 +177,26 @@ void Mail::parseMail(char* text){
 
 	posInitial = textMail.find(date.c_str(),0);
 	posFinal = textMail.find(endLine.c_str(),posInitial);
-	aux = textMail.substr(posInitial+date.size(),posFinal-(posInitial+date.size()));
-	this->setDate(StringUtils::trim(aux));
+	aux = textMail.substr(posInitial+date.size()+1,posFinal-(posInitial+date.size()+2));
+	//cout<<"*************"<<aux<<"***********"<<endl;
+	this->setDate(aux);
 
 	posInitial = textMail.find(to.c_str(),0);
 	posFinal = textMail.find(endLine.c_str(),posInitial);
-	aux = textMail.substr(posInitial+to.size(),posFinal-(posInitial+to.size()));
-	this->setTo(StringUtils::trim(aux));
+	aux = textMail.substr(posInitial+to.size()+1,posFinal-(posInitial+to.size()+2));
+	//cout<<"*************"<<aux<<"***********"<<endl;
+	this->setTo(aux);
 
 	posInitial = textMail.find(from.c_str(),0);
 	posFinal = textMail.find(endLine.c_str(),posInitial);
-	aux = textMail.substr(posInitial+from.size(),posFinal-(posInitial+from.size()));
-	string aux2 = "";
-	aux2 = StringUtils::trim(aux);
-	cout<<"*************"<<aux2<<"***********"<<endl;
-	this->setFrom(aux2);
+	aux = textMail.substr(posInitial+from.size()+1,posFinal-(posInitial+from.size()+2));
+	//cout<<"*************"<<aux<<"***********"<<endl;
+	this->setFrom(aux);
 
 	posInitial = textMail.find(subject.c_str(),0);
 	posFinal = textMail.find(endLine.c_str(),posInitial);
-	aux = textMail.substr(posInitial+subject.size(),posFinal-(posInitial+subject.size()));
+	aux = textMail.substr(posInitial+subject.size()+1,posFinal-(posInitial+subject.size()+2));
+	//cout<<"*************"<<aux<<"***********"<<endl;
 	this->setSubject(aux);
 
 	posInitial = textMail.find(message.c_str(),posFinal);
