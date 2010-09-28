@@ -56,6 +56,7 @@ int main(int argc, char** ) {
 //***********BUSQUEDA SOBRE SECUNDARIO SELECCION********
 	Controller* control= new Controller();
 	control->searchMails("[Seleccion1= ]");
+
 	list<int>::iterator it;
 	for(it= control->iteratorBeginListOfIucs(); it != control->iteratorEndListOfIucs(); it++){
 		cout<<"IUC: "<<*it<<endl;
