@@ -28,9 +28,9 @@ bool KeyString::equals(Registry* comp){
 	return((this->value.compare(key->getValue())==0));
 }
 void KeyString::pack(Buffer* buffer){
-	    int size=this->getSize();
+	    int size=this->value.size();
 		buffer->packField(&size, sizeof(size));
-		buffer->packField(this->value.c_str(),this->getSize());
+		buffer->packField(this->value.c_str(),size);
 }
 void KeyString::unPack(Buffer* buffer){
 	int size;
@@ -49,15 +49,17 @@ void KeyString::setValue(string value){
 }
 
 Registry* KeyString::clone(){
-	KeyString* cloneKeyString = new KeyString();
-	string copy = this->getValue();
-	cloneKeyString->setValue(copy);
-	return cloneKeyString;
+	return  new KeyString(this->getValue());
 }
 
 int KeyString::compareTo(Registry* registry){
 	KeyString* key=(KeyString*)registry;
-	return this->value.compare(key->getValue());
+	int result=this->value.compare(key->getValue());
+	if(result < 0)
+		return 1;
+	else if(result > 0)
+		return -1;
+	else return 0;
 }
 Registry* KeyString::cloneRegKey(){
 	return this->clone();
