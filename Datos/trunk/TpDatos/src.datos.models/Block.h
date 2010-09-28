@@ -50,7 +50,6 @@ public:
     void setLevel(unsigned int level) throw ();
     virtual bool isLeaf() const throw ();
     void addComponent(Registry *registry) throw ();
-    void addComponent(Registry *registry, list<Registry*>::iterator it, int pos) throw ();
     virtual unsigned int getOcupedLong() throw ();
     unsigned int getMaxLong() const throw ();
     void setMaxLong(unsigned int maxLong) throw ();

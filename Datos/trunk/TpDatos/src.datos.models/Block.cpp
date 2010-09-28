@@ -175,19 +175,8 @@ bool Block::isLeaf() const throw(){
 }
 
 void Block::addComponent(Registry* registry) throw(){
-
-	if (this->posibleToAgregateComponent(registry)){
 		this->addReg(registry);
-	}
-}
 
-void Block::addComponent(Registry* registry,list<Registry*>::iterator it,int pos) throw() {
-	if (this->posibleToAgregateComponent(registry)) {
-		for (int var = 0; var <pos; var++) {
-			it++;
-		}
-		this->regList.insert(it,registry);
-	}
 }
 unsigned int Block::getOcupedLong() throw() {
 	unsigned int sizeBusy=Block::getSizeRegistry();

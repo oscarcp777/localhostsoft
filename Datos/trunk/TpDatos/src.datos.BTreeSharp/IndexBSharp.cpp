@@ -78,7 +78,8 @@ IndexBSharp::~IndexBSharp() {
 }
 
 void IndexBSharp::addRegistry(Registry* registry) throw(){
-	if (registry->getLongBytes() >= (0,5*this->sizeBlock))
+	int sizeMedium=0.5*this->sizeBlock;
+	if (registry->getLongBytes() >= sizeMedium)
 		throw eNotSpace("Registro demasiado grande!!");
 	ContainerInsertion* containerInsertion=new ContainerInsertion();
 	int answer = INSERTION_OK;
@@ -254,14 +255,15 @@ void IndexBSharp::splitLeafRoot(ContainerInsertion* container,	Registry* registr
 		cont++;
 	}
 	if(DEBUG){
-	  cout<<" CANTIDAD DE registros INSERTADoS "<<cont<<endl;
-	  cout<<" CANTIDAD DE registros "<<listRegistry.size()<<endl;
+	  cout<<" CANTIDAD DE REGISTROS INSERTADoS "<<cont<<endl;
+	  cout<<" CANTIDAD DE REGISTROS "<<listRegistry.size()<<endl;
 	}
+
      if(cont!=listRegistry.size()){
 	   cout<<"###########################################################"<<endl;
-     cout<<"############# DANGER SE PERDIO UN registro    ##############"<<endl;
+     cout<<"############# DANGER SE PERDIO UN REGISTRO    ##############"<<endl;
      cout<<"###########################################################"<<endl;
-     throw eNotSpace("ERROR EN EL SPLIT SE PÉRDIERON registros !!!!!!");
+     throw eNotSpace("ERROR EN EL SPLIT SE PÉRDIERON REGISTROS !!!!!!");
     }
 	newLeftNode->setNextBlock(newCenterNode->getNumBlock());
 	newCenterNode->setNextBlock(newRightNode->getNumBlock());
@@ -386,7 +388,8 @@ void IndexBSharp::splitInternalRoot(ContainerInsertion* container) throw () {
 	}
 	if(DEBUG){
 	  cout<<" CANTIDAD DE RAMAS INSERTADAS "<<cont<<endl;
-	  cout<<" CANTIDAD DE RAMAS "<<branchList.size()<<endl;}
+	  cout<<" CANTIDAD DE RAMAS "<<branchList.size()<<endl;
+	}
    if(cont!=branchList.size()){
 	   cout<<"###########################################################"<<endl;
        cout<<"############# DANGER SE PERDIO UN BLOQUE    ##############"<<endl;
@@ -481,11 +484,10 @@ void IndexBSharp::mergeBranchList(std::vector<int> &listBranch,
 
 }
 
-bool IndexBSharp::balanceLeafNode(Registry* reg, LeafNode* actualNode,
-		LeafNode* brotherNode, ContainerInsertion* container) throw () {
+bool IndexBSharp::balanceLeafNode(Registry* reg, LeafNode* actualNode,LeafNode* brotherNode, ContainerInsertion* container) throw () {
 	if (brotherNode == NULL)
 		return false;
-
+    unsigned int cont=0;
 	Registry* actualReg = *(actualNode->iteratorBegin());
 	Registry* brotherReg = *(brotherNode->iteratorBegin());
 
@@ -511,22 +513,32 @@ bool IndexBSharp::balanceLeafNode(Registry* reg, LeafNode* actualNode,
 
 	this->listRegistry.push_back(reg);
 	this->listRegistry.sort(comparatorRegistry);
-
+	printListReg(cout,this->listRegistry.begin(),this->listRegistry.end());
 	list<Registry*>::iterator itListRegistry = this->listRegistry.begin();
 	while (leftNode->posibleToAgregateComponent(*itListRegistry)) {
-		leftNode->addComponent(*itListRegistry);
+		Registry* reg=(Registry*)*itListRegistry;
+		if(DEBUG)reg->print(cout);
+		leftNode->addComponent(reg);
 		itListRegistry++;
+		cont++;
 	}
 	Registry* copy = container->getRegMidleKey();
 	container->setRegMidleKey(this->extractKey(*itListRegistry));
 
 	while (itListRegistry != this->listRegistry.end()) {
-		if (rightNode->posibleToAgregateComponent(*itListRegistry))
-			rightNode->addComponent(*itListRegistry);
-		else
+		if (rightNode->posibleToAgregateComponent(*itListRegistry)){
+			Registry* reg=(Registry*)*itListRegistry;
+			if(DEBUG)reg->print(cout);
+			rightNode->addComponent(reg);
+		}else
 			break;
 		itListRegistry++;
+		cont++;
 	}
+
+
+
+
 
 	if (itListRegistry != this->listRegistry.end()) {
 		leftNode->clearListRegistry();
@@ -546,6 +558,13 @@ bool IndexBSharp::balanceLeafNode(Registry* reg, LeafNode* actualNode,
 		listRegRightNode.clear();
 		return false;
 	} else {
+
+	     if(cont!=listRegistry.size()){
+		   cout<<"###########################################################"<<endl;
+	     cout<<"############# DANGER SE PERDIO UN REGISTRO    ##############"<<endl;
+	     cout<<"###########################################################"<<endl;
+	     throw eNotSpace("ERROR EN EL BALANCELEAFNODE SE PÉRDIERON REGISTROS !!!!!!");
+	    }
 		this->writeBlock(leftNode, leftNode->getNumBlock());
 		this->writeBlock(rightNode, rightNode->getNumBlock());
 		return true;
@@ -675,7 +694,7 @@ void IndexBSharp::insertLeafNodeFull(LeafNode* leafNode, LeafNode* brotherNode,	
 bool IndexBSharp::balanceInternalNode(InternalNode* internalNode, InternalNode* brotherNode, ContainerInsertion* container, Registry* fatherReg) throw(){
 	//SE BALANCEA POR TAMAÑO
 	//SE LLENA EL BLOQUE DE LA IZQUIERDA LO MAS POSIBLE, LUEGO SE INTENTA LLENAR EL DE LA DERECHA
-
+	 unsigned int cont=0;
 	if (brotherNode == NULL)
 		return false;
 
@@ -717,51 +736,65 @@ bool IndexBSharp::balanceInternalNode(InternalNode* internalNode, InternalNode* 
 
 	this->mergeComponentList(this->listRegistry,listRegLeftNode,listRegRightNode);
 	this->mergeBranchList(this->branchList,listBranchLeftNode,listBranchRightNode);
-    this->printBranch(cout,this->branchList.begin(),this->branchList.end());
 
 	this->listRegistry.push_back(fatherReg);
 	this->listRegistry.sort(comparatorRegistry);
-	unsigned int positionInsert = searchPositionInsertInternalNode(regKey,
-			this->listRegistry.begin(), this->listRegistry.end());
+	unsigned int positionInsert = searchPositionInsertInternalNode(regKey,this->listRegistry.begin(), this->listRegistry.end());
 	this->listRegistry.push_back(regKey);
 	this->listRegistry.sort(comparatorRegistry);
-
+	printListReg(cout,this->listRegistry.begin(),this->listRegistry.end());
 	//adelanto el puntero
 	std::vector<int>::iterator itListBranchs = this->branchList.begin();
 	this->advanceVectorPointer(itListBranchs, positionInsert + 1);
 	// Inserta la rama
 	branchList.insert(itListBranchs, numRightNode);
-
+	this->printBranch(cout,this->branchList.begin(),this->branchList.end());
 	list<Registry*>::iterator itFinalListRegistry = this->listRegistry.begin();
 	std::vector<int>::iterator itFinalListBranchs = this->branchList.begin();
 
 	leftNode->addBranch(*itFinalListBranchs);
 	itFinalListBranchs++;
-
+	if(DEBUG)std::cout<<"  RAMA:B1 "<<*itFinalListBranchs<<" - "<<std::endl;
 	while (leftNode->posibleToAgregateComponent(*itFinalListRegistry)) {
 		leftNode->addBranch(*itFinalListBranchs);
-		leftNode->addComponent(*itFinalListRegistry);
+		if(DEBUG)std::cout<<"  RAMA:B1 "<<*itFinalListBranchs<<" - "<<std::endl;
+		Registry* reg=(Registry*)*itFinalListRegistry;
+		if(DEBUG)reg->print(cout);
+		leftNode->addComponent(reg);
 		itFinalListRegistry++;
 		itFinalListBranchs++;
+		cont++;
 	}
 
 	rightNode->addBranch(*itFinalListBranchs);
 	itFinalListBranchs++;
-
+	if(DEBUG)std::cout<<"  RAMA:B2 "<<*itFinalListBranchs<<" - "<<std::endl;
 	// Establece el elemento medio a subir en el resultado de insercion
 	Registry* copy = container->getRegMidleKey();
 	Registry* regMidleKey = (Registry*) *itFinalListRegistry;
 	container->setRegMidleKey(regMidleKey->cloneRegKey());
 	itFinalListRegistry++;
+	cont++;
 	while (itFinalListRegistry != this->listRegistry.end()) {
 		if (rightNode->posibleToAgregateComponent(*itFinalListRegistry)) {
 			rightNode->addBranch(*itFinalListBranchs);
-			rightNode->addComponent(*itFinalListRegistry);
+			if(DEBUG)std::cout<<"  RAMA:B2 "<<*itFinalListBranchs<<" - "<<std::endl;
+			Registry* reg=(Registry*)*itFinalListRegistry;
+		    if(DEBUG)reg->print(cout);
+			rightNode->addComponent(reg);
 		} else
 			break;
 		itFinalListRegistry++;
 		itFinalListBranchs++;
+		cont++;
 	}
+
+
+
+
+
+
+
 
 	if (itFinalListRegistry != this->listRegistry.end()) {
 		leftNode->clearListRegistry();
@@ -797,7 +830,13 @@ bool IndexBSharp::balanceInternalNode(InternalNode* internalNode, InternalNode* 
 
 		container->setRegMidleKey(copy);
 		return false;
-	} else {
+	}else {
+		if(cont!=listRegistry.size()){
+				   cout<<"###########################################################"<<endl;
+			     cout<<"############# DANGER SE PERDIO UN REGISTRO    ##############"<<endl;
+			     cout<<"###########################################################"<<endl;
+			     throw eNotSpace("ERROR EN EL BALANCELEAFNODE SE PÉRDIERON REGISTROS !!!!!!");
+}
 		// Escribe bloque izquierdo
 		this->writeBlock(leftNode, leftNode->getNumBlock());
 		// Escribe bloque derecho
@@ -1059,6 +1098,7 @@ bool IndexBSharp::insertInternalNodeFull(InternalNode* internalNode,InternalNode
 	     cout<<" CANTIDAD DE RAMAS INSERTADAS "<<cont<<endl;
 		  cout<<" CANTIDAD DE RAMAS "<<branchList.size()<<endl;
 	    }
+
 	   if(cont!=branchList.size()){
 		   cout<<"###########################################################"<<endl;
 	       cout<<"############# DANGER SE PERDIO UN BLOQUE    ##############"<<endl;
@@ -1112,10 +1152,8 @@ unsigned int IndexBSharp::searchPositionInsertInternalNode(Registry* registry,
 	return insertPos;
 }
 int IndexBSharp::searchBranch(InternalNode* internalNode, Registry* registry) throw () {
-	std::list<Registry*>::const_iterator actualComponent =
-			internalNode->iteratorBegin();
-	std::list<Registry*>::const_iterator endComponent =
-			internalNode->iteratorEnd();
+	std::list<Registry*>::iterator actualComponent =internalNode->iteratorBegin();
+	std::list<Registry*>::iterator endComponent =	internalNode->iteratorEnd();
 	unsigned int branchPos = 0;
 	while (actualComponent != endComponent) {
 		Registry* actual = *actualComponent;
@@ -1297,21 +1335,35 @@ int IndexBSharp::getFirstNode() throw(){
 	}
 }
 void IndexBSharp::printBranch(std::ostream& outStream,vector<int>::iterator begin, vector<int>::iterator end) {
-//	std::cout << " RAMAS(";
-//	while (begin != end) {
-//		outStream << " " << *begin;
-//		++begin;
-//	}
-//	outStream << " ) ";
-//	outStream <<endl;
+	if(DEBUG){
+	int count=0;
+	std::cout << " RAMAS(";
+	while (begin != end) {
+		outStream << " " << *begin;
+		++begin;
+		count++;
+	}
+	outStream << " ) ";
+	outStream << "son :";
+	outStream <<count;
+	outStream << " ";
+	outStream <<endl;
+	}
 }
 void IndexBSharp::printListReg(std::ostream& outStream,list<Registry*>::iterator begin, list<Registry*>::iterator end) {
-//	std::cout << " registros(";
-//	while (begin != end) {
-//		Registry* reg=(Registry*)*begin;
-//		reg->print(outStream);
-//		++begin;
-//	}
-//	outStream << " ) ";
-//	outStream <<endl;
+	if(DEBUG){
+	int count=0;
+	std::cout << " registros(";
+	while (begin != end) {
+		Registry* reg=(Registry*)*begin;
+		reg->print(outStream);
+		++begin;
+		count++;
+	}
+	outStream << " ) ";
+	outStream << "son :";
+	outStream <<count;
+	outStream << " ";
+	outStream <<endl;
+	}
 }

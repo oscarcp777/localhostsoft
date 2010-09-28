@@ -8,6 +8,7 @@
 #include "TestBSharp.h"
 #include "../src.datos.BTreeSharp/IndexBSharp.h"
 #include "../src.datos.utils/Define.h"
+#include "../src.datos.utils/StringUtils.h"
 #include "../src.datos.models/RegPrimary.h"
 #include "../src.datos.models/RegClassification.h"
 #include "../src.datos.models/KeyInteger.h"
@@ -75,7 +76,60 @@ void TestBSharp::testInsertAndSearch(){
 	cout<<" Se encontraron "<< j << " registros!" <<endl;
 	delete indexBSharp;
 }
+void TestBSharp::testInsertAndSearchRegClassification(){
+	int cantidadAInsertar = 2000;
+	vector<string> vec;
+	int j=0;
+	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTreeRegClassifi.dat",BLOCK_SIZE,TYPE_REG_CLASSIFICATION);
+		for (int var = 0; var < cantidadAInsertar; ++var) {
+			std::stringstream stream;
+			stream <<var;
+//			stream << string(rand()%10, '_');
+			RegClassification* regClassif = new RegClassification();
+			string keyString=stream.str();
+			vec.push_back(keyString);
+			KeyString* key= new KeyString(keyString);
+			regClassif->setKey(key);
+			regClassif->setNumBlock(var);
+			indexBSharp->addRegistry(regClassif);
+			stream.clear();
+		}
 
+		indexBSharp->print(std::cout);
+
+	for (std::vector<string>::iterator it=vec.begin(); it!=vec.end(); ++it) {
+		RegClassification* regClassif = new RegClassification();
+		KeyString* key= new KeyString(*it);
+		regClassif->setKey(key);
+		regClassif = (RegClassification*)indexBSharp->searchRegistry(regClassif);
+		if(regClassif == NULL){
+			cout<<"CLAVE: "<<key->getValue()<<" NO ENCONTRADA"<<endl;
+			j++;
+		}
+//		else{
+//			cout<<"SE ENCONTRO : ";
+//			regClassif->print(std::cout);
+//			j++;
+//		}
+	}
+	cout<<"No Se encontraron "<< j << " registros!" <<endl;
+	delete indexBSharp;
+}
+void TestBSharp::testsearchRegClassification(){
+	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTreeRegClassifi.dat",BLOCK_SIZE,TYPE_REG_CLASSIFICATION);
+	RegClassification* regClassif = new RegClassification();
+	KeyString* key= new KeyString("1774");
+	regClassif->setKey(key);
+	RegClassification* regFind = (RegClassification*)indexBSharp->searchRegistry(regClassif);
+	if(regFind == NULL)
+		cout<<"CLAVE: "<<key->getValue()<<" NO ENCONTRADA"<<endl;
+	else
+		regFind->print(std::cout);
+	delete regClassif;
+	delete regFind;
+	delete indexBSharp;
+
+}
 
 void TestBSharp::testsearch(){
 	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTreeInsertandSearch.dat",BLOCK_SIZE,TYPE_REG_PRIMARY);
@@ -227,18 +281,15 @@ void TestBSharp::testsearch(){
 
 void TestBSharp::testInsertRegClassification(){
 	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTreeRegClassifi.dat",BLOCK_SIZE,TYPE_REG_CLASSIFICATION);
-	 /* initialize random seed: */
-	  srand ( time(NULL) );
 
-	for (int var = 0; var < 100; ++var) {
-		if(var==36)
+	for (int var = 0; var < 1000; ++var) {
+		if(var==414)
 			cout<<"";
-		std::stringstream stream;
 
-		stream<<var;// rand()%10000;//rand()%n los numeros van de 0 a n-1
+		// rand()%10000;//rand()%n los numeros van de 0 a n-1
 //		stream << string(rand()%10, '_');
 		RegClassification* regClassif = new RegClassification();
-		string keyString=stream.str();
+		string keyString=StringUtils::convertirAString(var);
 		KeyString* key= new KeyString(keyString);
 		regClassif->setKey(key);
 		regClassif->setNumBlock(var);
@@ -246,7 +297,6 @@ void TestBSharp::testInsertRegClassification(){
 		regClassif->print(cout);
 		indexBSharp->addRegistry(regClassif);
 		cout<<endl;
-		stream.clear();
 		indexBSharp->print(std::cout);
 	}
 
@@ -255,21 +305,7 @@ void TestBSharp::testInsertRegClassification(){
 	delete indexBSharp;
 }
 
-void TestBSharp::testsearchRegClassification(){
-	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTreeRegClassifi.dat",BLOCK_SIZE,TYPE_REG_CLASSIFICATION);
-	RegClassification* regClassif = new RegClassification();
-	KeyString* key= new KeyString("29_numero");
-	regClassif->setKey(key);
-	RegClassification* regFind = (RegClassification*)indexBSharp->searchRegistry(regClassif);
-	if(regFind == NULL)
-		cout<<"CLAVE: "<<key->getValue()<<" NO ENCONTRADA"<<endl;
-	else
-		regFind->print(std::cout);
-	delete regClassif;
-	delete regFind;
-	delete indexBSharp;
 
-}
 
 void TestBSharp::testIterator(){
 	IndexBSharp* indexBSharp = new IndexBSharp("Datos.2c2010.IndSecundario.Seleccion.From.asyura.from@gmail.com",BLOCK_SIZE,TYPE_REG_SELECTION);

@@ -14,15 +14,16 @@
 
 using namespace std;
 
-int mainOLD(int argc,char** argv) {
+int main_old(int argc,char** argv) {
 
 	TestBSharp* test = new TestBSharp();
 //	test->testInsert();
 //	test->testsearch();
-	test->testInsertAndSearch();
+//	test->testInsertAndSearch();
 //	test->testInsertRegClassification();
-//	test->testsearchRegClassification();
-//	delete test;
+	test->testsearchRegClassification();
+//	test->testInsertAndSearchRegClassification();
+	delete test;
 /*
 	//TEST STORAGE
    TestStorage* teststorage = new TestStorage();

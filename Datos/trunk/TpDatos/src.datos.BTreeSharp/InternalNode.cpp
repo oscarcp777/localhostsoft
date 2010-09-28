@@ -6,7 +6,8 @@
  */
 
 #include "InternalNode.h"
-
+#include "../src.datos.exception/eNotSpace.h"
+#include "../src.datos.utils/StringUtils.h"
 using namespace std;
 InternalNode::InternalNode(unsigned int typeElement,unsigned int maxLong, unsigned int numBlock, unsigned int level) throw():Node(maxLong,numBlock,level){
 	this->typeElement = Block::getTipeKey(typeElement);
@@ -140,10 +141,14 @@ int InternalNode::unPackMetadata(Buffer* buffer){
 	return numElements;
 }
 void InternalNode::pack(Buffer* buffer){
+	if(((int)this->branchList.size())!=(this->getNumElements()+1))
+		throw eNotSpace("ERROR pack  hay mas ramas que registros!! "+StringUtils::convertirAString(this->getNumBlock()));
 	this->packMetadata(buffer);
 	this->packListRegistry(buffer);
 }
 void InternalNode::unPack(Buffer* buffer){
 	int numElements = this->unPackMetadata(buffer);
 	this->unPackListRegistry(buffer,numElements,this->typeElement);
+	if(((int)this->branchList.size())!=(this->getNumElements()+1))
+			throw eNotSpace("ERROR unPack  hay mas ramas que registros!! "+StringUtils::convertirAString(this->getNumBlock()));
 }
