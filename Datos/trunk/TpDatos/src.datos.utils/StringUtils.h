@@ -19,6 +19,7 @@ public:
 	* de una cadena de caracteres
 	*
 	*/
+	 static string getPassword(int cant);
     static std::string getValorTag(std::string nombretag,vector<string>& tokens);
     static string trim(std::string cadena);
     static string trimPorTag(std::string cadena);

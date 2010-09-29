@@ -208,7 +208,8 @@ bool LeafNode::isUnderflow(unsigned int sizeMinumum)throw() {
 bool LeafNode::posibleToAgregateComponent(Registry* registry) throw(){
    unsigned int ocupedLong=this->getOcupedLong();
    unsigned int longBytes=registry->getLongBytes();
-	return (( ocupedLong+longBytes)  <= this->getMaxLong());
+   unsigned int maxLong=this->getMaxLong()-SPACE_PROTECTION;
+	return (( ocupedLong+longBytes)  <= (maxLong));
 
 }
 

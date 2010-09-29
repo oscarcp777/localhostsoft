@@ -1,11 +1,25 @@
 
 #include "StringUtils.h"
 #include "Define.h"
-
+#include <cstdlib>
+#include<sstream>
+#include <time.h>
 
 
  StringUtils::StringUtils(){
 }
+
+string StringUtils::getPassword(int cant) {
+    string ramdom = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+    string password;
+
+    for(int i=0; i<cant; i++) {
+    	password+=ramdom.at(rand()%((int)ramdom.size()));
+    }
+    return password;
+
+}
+
  bool compare(int i,int j) { return (i<j); }
 
  void StringUtils::sortVector(vector<int> &vector){

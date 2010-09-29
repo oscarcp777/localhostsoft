@@ -77,22 +77,24 @@ void TestBSharp::testInsertAndSearch(){
 	delete indexBSharp;
 }
 void TestBSharp::testInsertAndSearchRegClassification(){
-	int cantidadAInsertar = 2000;
+	int cantidadAInsertar = 20000;
 	vector<string> vec;
+//	 srand(time(NULL));
 	int j=0;
 	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTreeRegClassifi.dat",BLOCK_SIZE,TYPE_REG_CLASSIFICATION);
 		for (int var = 0; var < cantidadAInsertar; ++var) {
-			std::stringstream stream;
-			stream <<var;
-//			stream << string(rand()%10, '_');
+			if(3252==var)
+				cout<<"";
 			RegClassification* regClassif = new RegClassification();
-			string keyString=stream.str();
+			string keyString=StringUtils::getPassword(6);
 			vec.push_back(keyString);
 			KeyString* key= new KeyString(keyString);
 			regClassif->setKey(key);
 			regClassif->setNumBlock(var);
+//			cout<<"########################################################## \n  Inserto el : ";
+//			regClassif->print(cout);
 			indexBSharp->addRegistry(regClassif);
-			stream.clear();
+//			indexBSharp->print(std::cout);
 		}
 
 		indexBSharp->print(std::cout);
@@ -117,8 +119,9 @@ void TestBSharp::testInsertAndSearchRegClassification(){
 }
 void TestBSharp::testsearchRegClassification(){
 	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTreeRegClassifi.dat",BLOCK_SIZE,TYPE_REG_CLASSIFICATION);
+	indexBSharp->print(cout);
 	RegClassification* regClassif = new RegClassification();
-	KeyString* key= new KeyString("1774");
+	KeyString* key= new KeyString("479");
 	regClassif->setKey(key);
 	RegClassification* regFind = (RegClassification*)indexBSharp->searchRegistry(regClassif);
 	if(regFind == NULL)

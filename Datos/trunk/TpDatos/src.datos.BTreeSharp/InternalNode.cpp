@@ -45,8 +45,9 @@ unsigned int InternalNode::getMetadata(){
 bool InternalNode::posibleToAgregateComponent(Registry* registry) throw(){
 	 unsigned int ocupedLong=this->getOcupedLong();
 	 unsigned int longBytes=registry->getLongBytes();
+	 unsigned int maxLong=this->getMaxLong()-SPACE_PROTECTION;
 	   // se le agrega la longitud de una rama para ver si puede agrarse otro elemento
-		return (( ocupedLong+longBytes+sizeof(int))  <= this->getMaxLong());
+		return (( ocupedLong+longBytes+sizeof(int))  <= maxLong);
 
 }
 void InternalNode::addBranch(int branch) throw(){

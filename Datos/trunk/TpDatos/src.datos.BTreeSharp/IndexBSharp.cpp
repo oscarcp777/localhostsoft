@@ -375,10 +375,10 @@ void IndexBSharp::splitInternalRoot(ContainerInsertion* container) throw () {
 
 	while (itListRegistry != this->listRegistry.end()) {
 		if (newRightNode->posibleToAgregateComponent(*itListRegistry)) {
-			newRightNode->addBranch(*itListBranchs);
 			Registry* reg=(Registry*)*itListRegistry;
 			if(DEBUG)reg->print(cout);
 			newRightNode->addComponent(reg);
+			newRightNode->addBranch(*itListBranchs);
 			if(DEBUG)std::cout<<"  RAMA:B3 "<<*itListBranchs<<" - "<<std::endl;
 		} else
 			break;
@@ -530,6 +530,7 @@ bool IndexBSharp::balanceLeafNode(Registry* reg, LeafNode* actualNode,LeafNode* 
 			Registry* reg=(Registry*)*itListRegistry;
 			if(DEBUG)reg->print(cout);
 			rightNode->addComponent(reg);
+
 		}else
 			break;
 		itListRegistry++;
@@ -695,6 +696,7 @@ bool IndexBSharp::balanceInternalNode(InternalNode* internalNode, InternalNode* 
 	//SE BALANCEA POR TAMAÑO
 	//SE LLENA EL BLOQUE DE LA IZQUIERDA LO MAS POSIBLE, LUEGO SE INTENTA LLENAR EL DE LA DERECHA
 	 unsigned int cont=0;
+	 unsigned int contBranch=0;
 	if (brotherNode == NULL)
 		return false;
 
@@ -753,22 +755,25 @@ bool IndexBSharp::balanceInternalNode(InternalNode* internalNode, InternalNode* 
 	std::vector<int>::iterator itFinalListBranchs = this->branchList.begin();
 
 	leftNode->addBranch(*itFinalListBranchs);
+	if(DEBUG)std::cout<<"  RAMA:B1 balanceInternalNode "<<*itFinalListBranchs<<" - "<<std::endl;
 	itFinalListBranchs++;
-	if(DEBUG)std::cout<<"  RAMA:B1 "<<*itFinalListBranchs<<" - "<<std::endl;
+	contBranch++;
 	while (leftNode->posibleToAgregateComponent(*itFinalListRegistry)) {
-		leftNode->addBranch(*itFinalListBranchs);
 		if(DEBUG)std::cout<<"  RAMA:B1 "<<*itFinalListBranchs<<" - "<<std::endl;
 		Registry* reg=(Registry*)*itFinalListRegistry;
-		if(DEBUG)reg->print(cout);
+		if(DEBUG){reg->print(cout);cout<<endl;}
 		leftNode->addComponent(reg);
+		leftNode->addBranch(*itFinalListBranchs);
 		itFinalListRegistry++;
 		itFinalListBranchs++;
 		cont++;
+		contBranch++;
 	}
 
 	rightNode->addBranch(*itFinalListBranchs);
-	itFinalListBranchs++;
 	if(DEBUG)std::cout<<"  RAMA:B2 "<<*itFinalListBranchs<<" - "<<std::endl;
+	itFinalListBranchs++;
+	contBranch++;
 	// Establece el elemento medio a subir en el resultado de insercion
 	Registry* copy = container->getRegMidleKey();
 	Registry* regMidleKey = (Registry*) *itFinalListRegistry;
@@ -777,16 +782,17 @@ bool IndexBSharp::balanceInternalNode(InternalNode* internalNode, InternalNode* 
 	cont++;
 	while (itFinalListRegistry != this->listRegistry.end()) {
 		if (rightNode->posibleToAgregateComponent(*itFinalListRegistry)) {
-			rightNode->addBranch(*itFinalListBranchs);
 			if(DEBUG)std::cout<<"  RAMA:B2 "<<*itFinalListBranchs<<" - "<<std::endl;
 			Registry* reg=(Registry*)*itFinalListRegistry;
-		    if(DEBUG)reg->print(cout);
+		    if(DEBUG){reg->print(cout);cout<<endl;}
 			rightNode->addComponent(reg);
+			rightNode->addBranch(*itFinalListBranchs);
 		} else
 			break;
 		itFinalListRegistry++;
 		itFinalListBranchs++;
 		cont++;
+		contBranch++;
 	}
 
 
@@ -831,11 +837,11 @@ bool IndexBSharp::balanceInternalNode(InternalNode* internalNode, InternalNode* 
 		container->setRegMidleKey(copy);
 		return false;
 	}else {
-		if(cont!=listRegistry.size()){
+		if(cont!=listRegistry.size()&&contBranch==branchList.size()){
 				   cout<<"###########################################################"<<endl;
-			     cout<<"############# DANGER SE PERDIO UN REGISTRO    ##############"<<endl;
+			     cout<<"############# DANGER SE PERDIO UN REGISTRO  O UNA RAMA  ##############"<<endl;
 			     cout<<"###########################################################"<<endl;
-			     throw eNotSpace("ERROR EN EL BALANCELEAFNODE SE PÉRDIERON REGISTROS !!!!!!");
+			     throw eNotSpace("ERROR EN EL BALANCELEAFNODE SE PÉRDIERON REGISTROS O RAMAS !!!!!!");
 }
 		// Escribe bloque izquierdo
 		this->writeBlock(leftNode, leftNode->getNumBlock());
@@ -1085,8 +1091,9 @@ bool IndexBSharp::insertInternalNodeFull(InternalNode* internalNode,InternalNode
 			if(DEBUG)	std::cout<<"  RAMA:B3 "<<*iteratorBranchsFinal<<" - "<<std::endl;
 			Registry* reg=(Registry*)*iteratorListRegFinal;
 			if(DEBUG)reg->print(cout);
-			newInternalNode->addBranch(*iteratorBranchsFinal);
 			newInternalNode->addComponent(reg);
+			newInternalNode->addBranch(*iteratorBranchsFinal);
+
 		}
 		else
 			break;
@@ -1157,6 +1164,8 @@ int IndexBSharp::searchBranch(InternalNode* internalNode, Registry* registry) th
 	unsigned int branchPos = 0;
 	while (actualComponent != endComponent) {
 		Registry* actual = *actualComponent;
+		if(DEBUG)actual->print(cout);
+		if(DEBUG)registry->print(cout);
 		if (registry->compareTo(actual) < 0) {
 			break;
 		}
@@ -1225,21 +1234,20 @@ Registry* IndexBSharp::searchLeafNode(LeafNode* leafNode, Registry* registry) th
 
 	return findRegistry;
 }
-Registry* IndexBSharp::searchInternalNode(InternalNode* internalNode,
-		Registry* registry) throw () {
+Registry* IndexBSharp::searchInternalNode(InternalNode* internalNode,Registry* registry) throw () {
 
 	Registry* findRegistry = NULL;
 	if (internalNode != NULL) {
-		int searchBranch = this->searchBranch(internalNode, registry);
-		Node* readNode = this->readNode(searchBranch);
+		int numBranch = this->searchBranch(internalNode, registry);
+		if(DEBUG)cout<<"Rama a buscar"<<numBranch<<endl;
+		Node* readNode = this->readNode(numBranch);
 		if (readNode != NULL) {
 			if (readNode->isLeaf()) {
 				LeafNode* leafNodeRead = (LeafNode*) readNode;
 				findRegistry = this->searchLeafNode(leafNodeRead, registry);
 			} else {
 				InternalNode* internalNodeRead = (InternalNode*) readNode;
-				findRegistry = this->searchInternalNode(internalNodeRead,
-						registry);
+				findRegistry = this->searchInternalNode(internalNodeRead,registry);
 			}
 		}
 		delete readNode;
