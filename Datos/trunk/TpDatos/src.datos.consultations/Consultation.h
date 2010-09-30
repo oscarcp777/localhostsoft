@@ -9,12 +9,13 @@
 #define CONSULTATION_H_
 #include "../src.datos.models/Mail.h"
 #include "../src.datos.models/IndexConfig.h"
+#include "../src.datos.models/RegPrimary.h"
 #include <list>
 class Consultation {
 public:
 	Consultation();
 	virtual ~Consultation();
-	void consultPrimaryIndex(IndexConfig* indexConfig,list<int> IucList,list<Mail*>* listOfMails);
+	void consultPrimaryIndex(IndexConfig* indexConfig,RegPrimary* regPrimary);
 	void consultSecondaryIndex(IndexConfig* indexConfig,list<int>* listOfIucs, string filterValue);
 };
 

@@ -196,12 +196,21 @@ int Controller::searchMails(std::string strSearch){
 		for (int i = 0; i < cant; ++i) {
 			auxIndex = this->search->getIndex();
 			list<IndexConfig*>::iterator current = this->indexes.begin();
-				while((current != this->indexes.end())&& result != 0){//recorro la lista de todos lo indices que tiene el programa
+
+			while((current != this->indexes.end())&& result != 0){//recorro la lista de todos lo indices que tiene el programa
 					index = (*current)->getFilterName();
 					result =auxIndex.compare(index);
 					if (result == 0){
-						if((*current)->getTypeIndex().compare((char*)TYPE_PRIMARY) == 0)
-							consultation->consultPrimaryIndex(*current,search->getListOfIucs(),&this->listOfMails);
+						if((*current)->getTypeIndex().compare((char*)TYPE_PRIMARY) == 0){
+							//TODO falta devolverlo en algun lado y si son muchos iuc buscar muchos registros
+							//como me pasa facu el iuc para seterle la clave al regPrimary???
+							RegPrimary* regPrimary = new RegPrimary;
+							regPrimary->setKey(new KeyInteger(25/*aca va el iuc*/));
+							consultation->consultPrimaryIndex(*current,regPrimary);
+							if(regPrimary->getMail() != NULL)
+								this->listOfMails.push_back(regPrimary->getMail());
+
+						}
 						else
 							consultation->consultSecondaryIndex(*current,&this->listOfIucs, this->search->getStrSearch());
 					}
@@ -217,7 +226,12 @@ list<int>::iterator Controller::iteratorBeginListOfIucs(){
 list<int>::iterator Controller::iteratorEndListOfIucs(){
 	return this->listOfIucs.end();
 }
-
+list<Mail*>::iterator Controller::iteratorBeginListOfMails(){
+	return this->listOfMails.begin();
+}
+list<Mail*>::iterator Controller::iteratorEndListOfMails(){
+	return this->listOfMails.end();
+}
 //////////////////////////////////////////////////////
 bool Controller::searchIndex(std::string index){
 

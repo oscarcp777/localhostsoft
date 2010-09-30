@@ -15,7 +15,7 @@ int main(int argc, char** ) {
 
 
 //*****SE CONECTA Y CREA INDICE PRIMARIO***
-	std::string strEmail;
+/*	std::string strEmail;
 	std::string strPass;
 	Controller* control= new Controller();
 	std::cout << "INGRESE SU DIRECCION DE E-MAIL: ";
@@ -25,18 +25,18 @@ int main(int argc, char** ) {
 	std::cout << "INGRESE SU PASSWORD: ";
 	std::cin >> strPass;
 	control->addPass(strPass);
-	control->createPrimaryIndex();
+	control->createPrimaryIndex();*/
 //****************************************
 
 //*****CREA INDICE DE CLASIFICACION***
-	IndexConfig* configOne = new IndexConfig();
+/*	IndexConfig* configOne = new IndexConfig();
 	configOne->setUserName(strEmail);
 	configOne->setTypeIndex(TYPE_SECONDARY);
 	configOne->setTypeSecundaryIndex(TYPE_CLASSIFICATION);
 	configOne->setCondition(FROM);
 	configOne->setFilterName("Clasificacion1");
 	control->addSecondIndex(configOne);
-	control->loadSecondIndex(configOne);
+	control->loadSecondIndex(configOne);*/
 //***********************************
 
 //*******CREA INDICE DE SELECCION*******
@@ -50,6 +50,16 @@ int main(int argc, char** ) {
 	control->addSecondIndex(configTwo);
 	control->loadSecondIndex(configTwo);*/
 //***********************************
+
+//***********BUSQUEDA SOBRE PRIMARIO********
+	Controller* control= new Controller();
+	control->searchMails("[PrimarioDatos.2c2010= ]");
+	list<Mail*>::iterator it;
+	for(it= control->iteratorBeginListOfMails(); it != control->iteratorEndListOfMails(); it++){
+			(*it)->print(cout);
+	}
+//
+//******************************************************
 
 
 //***********BUSQUEDA SOBRE SECUNDARIO SELECCION********

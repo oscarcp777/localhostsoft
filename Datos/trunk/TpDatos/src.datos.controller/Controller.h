@@ -54,6 +54,8 @@ public:
 	int createPrimaryIndex();
 	list<int>::iterator iteratorBeginListOfIucs();
 	list<int>::iterator iteratorEndListOfIucs();
+	list<Mail*>::iterator iteratorBeginListOfMails();
+	list<Mail*>::iterator iteratorEndListOfMails();
 	bool searchIndex(std::string index);
 
 };

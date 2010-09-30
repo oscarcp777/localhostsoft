@@ -21,21 +21,15 @@ Consultation::Consultation() {
 Consultation::~Consultation() {
 	// TODO Auto-generated destructor stub
 }
-void Consultation::consultPrimaryIndex(IndexConfig* indexConfig,list<int> IucList,list<Mail*>* listOfMails){
+void Consultation::consultPrimaryIndex(IndexConfig* indexConfig,RegPrimary* regPrimary){
 	IndexBSharp* primaryIndex = new IndexBSharp(indexConfig->getFileName(),indexConfig->getBlockSize(),TYPE_REG_PRIMARY);
-	IteratorBSharp* iter = primaryIndex->getIterator();
-
-	while(iter->hasNext())
-		(*listOfMails).push_back((Mail*)(iter->next()));
-
-	delete primaryIndex;
+	regPrimary = (RegPrimary*) primaryIndex->searchRegistry(regPrimary);
 
 }
 
 void Consultation::consultSecondaryIndex(IndexConfig* indexConfig,list<int>* listOfIucs, string filterValue){
 	IteratorBSharp* iter;
 	IndexBSharp* secondaryIndex;
-	RegClassification* regClassification;
 	RegSelection* regSelection;
 
 	if(indexConfig->getTypeSecundaryIndex().compare((char*)TYPE_SELECTION) == 0){
@@ -74,5 +68,6 @@ void Consultation::consultSecondaryIndex(IndexConfig* indexConfig,list<int>* lis
 	}
 
 	delete secondaryIndex;
+	
 
 }
