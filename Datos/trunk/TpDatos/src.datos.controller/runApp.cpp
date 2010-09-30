@@ -35,7 +35,7 @@ int main(int argc, char** ) {
 	configOne->setTypeSecundaryIndex(TYPE_CLASSIFICATION);
 	configOne->setCondition(FROM);
 	configOne->setValue("asyura.from@gmail.com");
-	configOne->setFilterName("Clasificacion 1");
+	configOne->setFilterName("Clasificacion1");
 	control->addSecondIndex(configOne);
 	control->loadSecondIndex(configOne);*/
 //***********************************
@@ -63,6 +63,7 @@ int main(int argc, char** ) {
 	}
 
 //******************************************************
+
 
 
 

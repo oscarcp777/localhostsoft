@@ -23,31 +23,34 @@ void Controller::loadInfoIndex(std::string linea,IndexConfig* index){
 
 	vector<string> tokens;
 
-	StringUtils::Tokenize(linea, tokens," ");
+	StringUtils::Tokenize(linea, tokens,"|");
 
 	int size=tokens.size();
-	if (size == 4){
-		index->setFilterName(tokens.at(0));
-		index->setFileName(tokens.at(1));
-		index->setUserName(tokens.at(2));
-		index->setTypeIndex(tokens.at(3));
-	}
-	if (size == 6){
-		index->setFilterName(tokens.at(0));
-		index->setFileName(tokens.at(1));
-		index->setUserName(tokens.at(2));
-		index->setTypeIndex(tokens.at(3));
-		index->setTypeSecundaryIndex(tokens.at(4));
-		index->setCondition(atoi(tokens.at(5).c_str()));
+	if (size == 5){
+		index->setBlockSize(atoi(tokens.at(0).c_str()));
+		index->setFilterName(tokens.at(1));
+		index->setFileName(tokens.at(2));
+		index->setUserName(tokens.at(3));
+		index->setTypeIndex(tokens.at(4));
 	}
 	if (size == 7){
-		index->setFilterName(tokens.at(0));
-		index->setFileName(tokens.at(1));
-		index->setUserName(tokens.at(2));
-		index->setTypeIndex(tokens.at(3));
-		index->setTypeSecundaryIndex(tokens.at(4));
-		index->setCondition(atoi(tokens.at(5).c_str()));
-		index->setValue(tokens.at(6));
+		index->setBlockSize(atoi(tokens.at(0).c_str()));
+		index->setFilterName(tokens.at(1));
+		index->setFileName(tokens.at(2));
+		index->setUserName(tokens.at(3));
+		index->setTypeIndex(tokens.at(4));
+		index->setTypeSecundaryIndex(tokens.at(5));
+		index->setCondition(atoi(tokens.at(6).c_str()));
+	}
+	if (size == 8){
+		index->setBlockSize(atoi(tokens.at(0).c_str()));
+		index->setFilterName(tokens.at(1));
+		index->setFileName(tokens.at(2));
+		index->setUserName(tokens.at(3));
+		index->setTypeIndex(tokens.at(4));
+		index->setTypeSecundaryIndex(tokens.at(5));
+		index->setCondition(atoi(tokens.at(6).c_str()));
+		index->setValue(tokens.at(7));
 	}
 
 }
@@ -94,18 +97,24 @@ void Controller::addEmail(std::string email) {
 void Controller::addPass(std::string pass) {
 	this->strPass = pass;
 }
+Search* Controller::getSearch(){
+	return this->search;
+}
+void Controller::setSearch(Search* search){
+	this->search = search;
+}
 void Controller::addIndexToFile(IndexConfig* index){
 
 	this->programFile->open("archivo.dat");
-	std::string aux= index->getFilterName()+" "+ index->getFileName()+" "+index->getUserName() + " "+index->getTypeIndex();
+	std::string aux= index->getBlockSize()+"|"+ index->getFilterName()+"|"+ index->getFileName()+"|"+index->getUserName() + "|"+index->getTypeIndex();
 	if(index->getTypeSecundaryIndex() != "")
-		aux = aux +" "+index->getTypeSecundaryIndex();
+		aux = aux +"|"+index->getTypeSecundaryIndex();
 	if( index->getCondition() != 0){
 		std::string valor = StringUtils::convertirAString(index->getCondition());
-		aux = aux +" "+valor;
+		aux = aux +"|"+valor;
 	}
 	if( index->getValue() != "")
-				aux = aux +" "+index->getValue();
+				aux = aux +"|"+index->getValue();
 	this->programFile->end();
 	this->programFile->write(aux);
 	this->programFile->close();
@@ -139,6 +148,16 @@ int Controller::loadSecondIndex(IndexConfig* indexConfig){
 
 	return 0;
 }
+void Controller::convertStringToListOfInt(Search* search,std::string str){
+
+	vector<string> tokens;
+	StringUtils::Tokenize(str, tokens,",");
+	int size=tokens.size();
+	for (int i = 0; i < size; ++i) {
+		search->setIuc(atoi(tokens.at(i).c_str()));
+	}
+
+}
 Search* Controller::parseStrSearch(std::string strSearch){
 	std::string aux;
 	std::string filterName;
@@ -153,6 +172,7 @@ Search* Controller::parseStrSearch(std::string strSearch){
 			pos = aux.find("=",0);
 			filterName = aux.substr(0,pos);
 			filterValue = aux.substr(pos+1,(aux.length()-1)- pos);
+			this->convertStringToListOfInt(search,filterValue);
 			search->setStrSearch(filterValue);
 			search->setIndex(filterName);
 			std::cout<<filterName<<std::endl;
@@ -173,12 +193,8 @@ int Controller::searchMails(std::string strSearch){
 	int cant = this->search->sizeOfListIndex();// tamaño de la lista de indices a buscar
 		for (int i = 0; i < cant; ++i) {
 			auxIndex = this->search->getIndex();
-
-			//tengo q buscar auxIndex en la lista de indices, en el caso que hayan IUCS fijarse en this->search->strSearch
-			//imprimo los IUCS DE ESOS INDICEs terminar
 			list<IndexConfig*>::iterator current = this->indexes.begin();
-
-				while((current != this->indexes.end())&& result != 0){
+				while((current != this->indexes.end())&& result != 0){//recorro la lista de todos lo indices que tiene el programa
 					index = (*current)->getFilterName();
 					result =auxIndex.compare(index);
 					if (result == 0){
@@ -190,7 +206,6 @@ int Controller::searchMails(std::string strSearch){
 					current++;
 					}
 		}
-
 	return 0;
 }
 

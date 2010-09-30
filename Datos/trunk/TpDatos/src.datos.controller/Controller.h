@@ -40,10 +40,13 @@ private:
 public:
 	Controller();
 	virtual ~Controller();
+	Search* getSearch();
+	void setSearch(Search* search);
 	void addSecondIndex(IndexConfig* indexConfig);
 	int loadSecondIndex(IndexConfig* indexConfig);
 	void addIndexToFile(IndexConfig* index);
 	int searchMails(std::string strSearch);
+	void convertStringToListOfInt(Search* search,std::string str);
 	Search* parseStrSearch(std::string strSearch);
 	void addEmail(std::string email);
 	void addPass(std::string pass);
