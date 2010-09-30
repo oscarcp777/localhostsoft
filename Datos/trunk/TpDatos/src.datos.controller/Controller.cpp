@@ -177,8 +177,8 @@ Search* Controller::parseStrSearch(std::string strSearch){
 			this->convertStringToListOfInt(search,filterValue);
 			search->setStrSearch(filterValue);
 			search->setIndex(filterName);
-			std::cout<<filterName<<std::endl;
-			std::cout<<filterValue<<std::endl;
+			//std::cout<<filterName<<std::endl;
+			//std::cout<<filterValue<<std::endl;
 		posInitial = strSearch.find("[",posFinal)+1;
 		posFinal = strSearch.find("]",posInitial);
 	}
@@ -204,12 +204,16 @@ int Controller::searchMails(std::string strSearch){
 						if((*current)->getTypeIndex().compare((char*)TYPE_PRIMARY) == 0){
 							//TODO falta devolverlo en algun lado y si son muchos iuc buscar muchos registros
 							//como me pasa facu el iuc para seterle la clave al regPrimary???
-							RegPrimary* regPrimary = new RegPrimary;
-							regPrimary->setKey(new KeyInteger(25/*aca va el iuc*/));
-							consultation->consultPrimaryIndex(*current,regPrimary);
-							if(regPrimary->getMail() != NULL)
-								this->listOfMails.push_back(regPrimary->getMail());
-
+							list<int>::iterator it = this->search->getIteratorBeginListOfIucs();
+							while(it != this->search->getIteratorEndListOfIucs()){
+								RegPrimary* regPrimary = new RegPrimary;
+								regPrimary->setKey(new KeyInteger((int)*it));
+								consultation->consultPrimaryIndex(*current,regPrimary);
+								if(regPrimary->getMail() != NULL)
+									this->listOfMails.push_back(regPrimary->getMail());
+								it++;
+							}
+							cout<<"SALE"<<endl;
 						}
 						else
 							consultation->consultSecondaryIndex(*current,&this->listOfIucs, this->search->getStrSearch());

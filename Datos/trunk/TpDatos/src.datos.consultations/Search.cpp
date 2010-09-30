@@ -40,6 +40,12 @@ void Search::printIndexNames(){
 list<int> Search::getListOfIucs(){
 	return this->listOfIucs;
 }
+list<int>::iterator Search::getIteratorBeginListOfIucs(){
+	return this->listOfIucs.begin();
+}
+list<int>::iterator Search::getIteratorEndListOfIucs(){
+	return this->listOfIucs.end();
+}
 Search::Search() {
 	// TODO Auto-generated constructor stub
 

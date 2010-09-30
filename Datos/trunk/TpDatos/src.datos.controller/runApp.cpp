@@ -52,13 +52,13 @@ int main(int argc, char** ) {
 //***********************************
 
 //***********BUSQUEDA SOBRE PRIMARIO********
-	Controller* control= new Controller();
-	control->searchMails("[PrimarioDatos.2c2010= ]");
+/*	Controller* control= new Controller();
+	control->searchMails("[PrimarioDatos.2c2010=1,4,6,8,22,30,7,171,200,98,276]");
 	list<Mail*>::iterator it;
 	for(it= control->iteratorBeginListOfMails(); it != control->iteratorEndListOfMails(); it++){
 			(*it)->print(cout);
 	}
-//
+//*/
 //******************************************************
 
 

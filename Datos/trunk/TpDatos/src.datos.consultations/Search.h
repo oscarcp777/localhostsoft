@@ -24,6 +24,8 @@ public:
 	Search();
 	virtual ~Search();
 	list<int> getListOfIucs();
+	list<int>::iterator getIteratorBeginListOfIucs();
+	list<int>::iterator getIteratorEndListOfIucs();
 private:
 	std::string strSearch;
 	list<string> listOfIndex;
