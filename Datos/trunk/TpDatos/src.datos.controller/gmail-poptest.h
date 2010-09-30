@@ -7,7 +7,7 @@
 
 #ifndef GMAILPOPTEST_H_
 #define GMAILPOPTEST_H_
-#include "../src.datos.controller/StorageController.h"
+#include "StorageController.h"
 
 int connection(char* username,char* password, StorageController* storageController);
 
