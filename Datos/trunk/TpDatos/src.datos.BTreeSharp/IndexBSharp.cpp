@@ -507,6 +507,9 @@ bool IndexBSharp::balanceLeafNode(Registry* reg, LeafNode* actualNode,LeafNode* 
 		leftNode = brotherNode;
 		rightNode = actualNode;
 	}
+
+	//El primer elemento del bloque derecho es la clave padre de ambos bloques
+	Registry* oldMiddleKey = listRegLeftNode.begin();
 	this->listRegistry.clear();
 	this->mergeComponentList(this->listRegistry, listRegLeftNode,
 			listRegRightNode);
@@ -538,10 +541,9 @@ bool IndexBSharp::balanceLeafNode(Registry* reg, LeafNode* actualNode,LeafNode* 
 	}
 
 
-
-
-
-	if (itListRegistry != this->listRegistry.end()) {
+	int sizeOldMiddleKey = oldMiddleKey->getLongBytes();
+	int sizeNewMiddleKey = container->getRegMidleKey()->getLongBytes();
+	if (itListRegistry != this->listRegistry.end()  || sizeOldMiddleKey < sizeNewMiddleKey) {
 		leftNode->clearListRegistry();
 		list<Registry*>::iterator itListReg = listRegLeftNode.begin();
 		while (itListReg != listRegLeftNode.end()) {
@@ -795,14 +797,9 @@ bool IndexBSharp::balanceInternalNode(InternalNode* internalNode, InternalNode* 
 		contBranch++;
 	}
 
-
-
-
-
-
-
-
-	if (itFinalListRegistry != this->listRegistry.end()) {
+	int sizeOldMiddleKey = fatherReg->getLongBytes();
+	int sizeNewMiddleKey = container->getRegMidleKey()->getLongBytes();
+	if (itFinalListRegistry != this->listRegistry.end() || sizeOldMiddleKey < sizeNewMiddleKey) {
 		leftNode->clearListRegistry();
 		list<Registry*>::iterator registryList = listRegLeftNode.begin();
 		while (registryList != listRegLeftNode.end()) {
