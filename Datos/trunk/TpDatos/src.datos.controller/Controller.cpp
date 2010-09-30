@@ -106,7 +106,8 @@ void Controller::setSearch(Search* search){
 void Controller::addIndexToFile(IndexConfig* index){
 
 	this->programFile->open("archivo.dat");
-	std::string aux= index->getBlockSize()+"|"+ index->getFilterName()+"|"+ index->getFileName()+"|"+index->getUserName() + "|"+index->getTypeIndex();
+	std::string sizeBlock = StringUtils::convertirAString(index->getBlockSize());
+	std::string aux= sizeBlock+"|"+ index->getFilterName()+"|"+ index->getFileName()+"|"+index->getUserName() + "|"+index->getTypeIndex();
 	if(index->getTypeSecundaryIndex() != "")
 		aux = aux +"|"+index->getTypeSecundaryIndex();
 	if( index->getCondition() != 0){

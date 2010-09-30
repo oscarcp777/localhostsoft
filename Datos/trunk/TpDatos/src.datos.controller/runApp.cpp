@@ -15,7 +15,7 @@ int main(int argc, char** ) {
 
 
 //*****SE CONECTA Y CREA INDICE PRIMARIO***
-/*	std::string strEmail;
+	std::string strEmail;
 	std::string strPass;
 	Controller* control= new Controller();
 	std::cout << "INGRESE SU DIRECCION DE E-MAIL: ";
@@ -25,7 +25,7 @@ int main(int argc, char** ) {
 	std::cout << "INGRESE SU PASSWORD: ";
 	std::cin >> strPass;
 	control->addPass(strPass);
-	control->createPrimaryIndex();*/
+	control->createPrimaryIndex();
 //****************************************
 
 //*****CREA INDICE DE CLASIFICACION***
@@ -54,13 +54,13 @@ int main(int argc, char** ) {
 
 
 //***********BUSQUEDA SOBRE SECUNDARIO SELECCION********
-	Controller* control= new Controller();
-	control->searchMails("[Seleccion1= ]");
-
-	list<int>::iterator it;
-	for(it= control->iteratorBeginListOfIucs(); it != control->iteratorEndListOfIucs(); it++){
-		cout<<"IUC: "<<*it<<endl;
-	}
+//	Controller* control= new Controller();
+//	control->searchMails("[Seleccion1= ]");
+//
+//	list<int>::iterator it;
+//	for(it= control->iteratorBeginListOfIucs(); it != control->iteratorEndListOfIucs(); it++){
+//		cout<<"IUC: "<<*it<<endl;
+//	}
 
 //******************************************************
 
