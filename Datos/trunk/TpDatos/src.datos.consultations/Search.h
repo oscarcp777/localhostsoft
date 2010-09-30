@@ -19,6 +19,7 @@ public:
 	std::string getStrSearch();
 	void setIndex(std::string index);
 	std::string getIndex();
+	void setIuc(int iuc);
 	void printIndexNames();
 	Search();
 	virtual ~Search();

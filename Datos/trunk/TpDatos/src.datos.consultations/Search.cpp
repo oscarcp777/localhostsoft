@@ -26,6 +26,9 @@ std::string Search::getIndex(){
 	this->listOfIndex.pop_front();
 	return aux;
 }
+void Search::setIuc(int iuc){
+	this->listOfIucs.push_back(iuc);
+}
 
 void Search::printIndexNames(){
 	list<string>::iterator current = this->listOfIndex.begin();
