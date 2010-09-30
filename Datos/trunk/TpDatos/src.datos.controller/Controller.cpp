@@ -105,21 +105,22 @@ void Controller::setSearch(Search* search){
 }
 void Controller::addIndexToFile(IndexConfig* index){
 
-	this->programFile->open("archivo.dat");
-	std::string sizeBlock = StringUtils::convertirAString(index->getBlockSize());
-	std::string aux= sizeBlock+"|"+ index->getFilterName()+"|"+ index->getFileName()+"|"+index->getUserName() + "|"+index->getTypeIndex();
-	if(index->getTypeSecundaryIndex() != "")
-		aux = aux +"|"+index->getTypeSecundaryIndex();
-	if( index->getCondition() != 0){
-		std::string valor = StringUtils::convertirAString(index->getCondition());
-		aux = aux +"|"+valor;
+	if(!searchIndex(index->getFilterName())){
+		this->programFile->open("archivo.dat");
+		std::string sizeBlock = StringUtils::convertirAString(index->getBlockSize());
+		std::string aux= sizeBlock+"|"+ index->getFilterName()+"|"+ index->getFileName()+"|"+index->getUserName() + "|"+index->getTypeIndex();
+		if(index->getTypeSecundaryIndex() != "")
+			aux = aux +"|"+index->getTypeSecundaryIndex();
+		if( index->getCondition() != 0){
+			std::string valor = StringUtils::convertirAString(index->getCondition());
+			aux = aux +"|"+valor;
+		}
+		if( index->getValue() != "")
+					aux = aux +"|"+index->getValue();
+		this->programFile->end();
+		this->programFile->write(aux);
+		this->programFile->close();
 	}
-	if( index->getValue() != "")
-				aux = aux +"|"+index->getValue();
-	this->programFile->end();
-	this->programFile->write(aux);
-	this->programFile->close();
-
 }
 void Controller::addSecondIndex(IndexConfig* indexConfig) {
 	//crea un archivo del indice secundario vacio, agrega en la lista de indices y genera un boton por el indice
@@ -217,7 +218,22 @@ list<int>::iterator Controller::iteratorEndListOfIucs(){
 	return this->listOfIucs.end();
 }
 
+//////////////////////////////////////////////////////
+bool Controller::searchIndex(std::string index){
 
+	std::string auxIndex;
+	int result = -1;
+	list<IndexConfig*>::iterator current = this->indexes.begin();
+	while((current != this->indexes.end())&& result != 0){//recorro la lista de todos lo indices que tiene el programa
+		index = (*current)->getFilterName();
+		result =auxIndex.compare(index);
+			if (result == 0){
+				return true;
+			}
+		current++;
+	}
+	return false;
+}
 
 
 

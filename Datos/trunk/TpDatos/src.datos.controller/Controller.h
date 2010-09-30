@@ -54,6 +54,7 @@ public:
 	int createPrimaryIndex();
 	list<int>::iterator iteratorBeginListOfIucs();
 	list<int>::iterator iteratorEndListOfIucs();
+	bool searchIndex(std::string index);
 
 };
 
