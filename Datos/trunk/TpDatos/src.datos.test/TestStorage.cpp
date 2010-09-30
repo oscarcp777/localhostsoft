@@ -6,6 +6,7 @@
  */
 
 #include "TestStorage.h"
+#include "../src.datos.models/Block.h"
 
 TestStorage::TestStorage() {
 	// TODO Auto-generated constructor stub

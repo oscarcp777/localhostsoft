@@ -13,7 +13,7 @@
 #include <fstream>
 #include <sstream>
 #include "../src.datos.utils/Define.h"
-#include "../src.datos.models/Block.h"
+
 using namespace std;
 
 class File{

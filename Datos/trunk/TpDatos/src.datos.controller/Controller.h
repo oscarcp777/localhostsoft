@@ -13,8 +13,8 @@
 #include "../src.datos.BTreeSharp/IndexBSharp.h"
 #include "../src.datos.utils/StringUtils.h"
 #include "../src.datos.consultations/Search.h"
-#include "../src.datos.storage/StorageController.h"
-#include "../src.datos.models/IndexController.h"
+#include "StorageController.h"
+#include "IndexController.h"
 #include "../src.datos.classification/Classification.h"
 
 #include <vector>

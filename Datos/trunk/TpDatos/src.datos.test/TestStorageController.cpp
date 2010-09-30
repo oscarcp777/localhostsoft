@@ -8,7 +8,7 @@
 #include "TestStorageController.h"
 #include "../src.datos.models/RegPrimary.h"
 #include "../src.datos.models/KeyInteger.h"
-#include "../src.datos.storage/StorageController.h"
+#include "../src.datos.controller/StorageController.h"
 
 TestStorageController::TestStorageController() {
 	// TODO Auto-generated constructor stub
