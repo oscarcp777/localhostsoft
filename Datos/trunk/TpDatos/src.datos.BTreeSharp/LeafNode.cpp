@@ -143,18 +143,27 @@ Registry* LeafNode::insertBlockRegClassification(Registry* registry,ContainerIns
 return registry;
 }
 Registry* LeafNode::searchBlockRegClassification(Registry* registry,ContainerInsertDataBlock* container){
-//	list<Registry*>::iterator iterRegistry;
-//	Registry* reg;
-//	for ( iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
-//		reg=*iterRegistry;
-//		if(registry->equals(reg)){
-//			break;
-//		}
-//	}
-	//		RegClassification* regPrevious=(RegClassification*)reg;
-
-
-	return NULL;//registry;
+	list<Registry*>::iterator iterRegistry;
+	Registry* reg;
+	Block* blockIucs;
+	bool find = false;
+	for ( iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
+		reg=*iterRegistry;
+		if(registry->equals(reg)){
+			find = true;
+			break;
+		}
+	}
+	if (find == true){
+		RegClassification* regClas=(RegClassification*)reg;
+		blockIucs=this->readBlockData(regClas->getNumBlock(),container);
+		for(iterRegistry = blockIucs->iteratorBegin(); iterRegistry != blockIucs->iteratorEnd(); iterRegistry++){
+			reg=*iterRegistry;
+			((RegClassification*)registry)->addIuc((KeyInteger*)reg);
+		}
+		return registry;
+	}else
+		return NULL;
 }
 void LeafNode::printMails(std::ostream& outStream,Registry* reg, ContainerInsertDataBlock* container){
 	list<Registry*>::iterator iterRegistry;
@@ -208,8 +217,7 @@ bool LeafNode::isUnderflow(unsigned int sizeMinumum)throw() {
 bool LeafNode::posibleToAgregateComponent(Registry* registry) throw(){
    unsigned int ocupedLong=this->getOcupedLong();
    unsigned int longBytes=registry->getLongBytes();
-   unsigned int maxLong=this->getMaxLong()-SPACE_PROTECTION;
-	return (( ocupedLong+longBytes)  <= (maxLong));
+	return (( ocupedLong+longBytes)  <= this->getMaxLong());
 
 }
 

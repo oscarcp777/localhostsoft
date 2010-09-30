@@ -203,7 +203,7 @@ int Controller::searchMails(std::string strSearch){
 						if((*current)->getTypeIndex().compare((char*)TYPE_PRIMARY) == 0)
 							consultation->consultPrimaryIndex(*current,search->getListOfIucs(),&this->listOfMails);
 						else
-							consultation->consultSecondaryIndex(*current,&this->listOfIucs);
+							consultation->consultSecondaryIndex(*current,&this->listOfIucs, this->search->getStrSearch());
 					}
 					current++;
 					}

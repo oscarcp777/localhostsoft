@@ -29,15 +29,14 @@ int main(int argc, char** ) {
 //****************************************
 
 //*****CREA INDICE DE CLASIFICACION***
-/*	IndexConfig* configOne = new IndexConfig();
+	IndexConfig* configOne = new IndexConfig();
 	configOne->setUserName(strEmail);
 	configOne->setTypeIndex(TYPE_SECONDARY);
 	configOne->setTypeSecundaryIndex(TYPE_CLASSIFICATION);
 	configOne->setCondition(FROM);
-	configOne->setValue("asyura.from@gmail.com");
 	configOne->setFilterName("Clasificacion1");
 	control->addSecondIndex(configOne);
-	control->loadSecondIndex(configOne);*/
+	control->loadSecondIndex(configOne);
 //***********************************
 
 //*******CREA INDICE DE SELECCION*******
@@ -64,6 +63,15 @@ int main(int argc, char** ) {
 
 //******************************************************
 
+//***********BUSQUEDA SOBRE SECUNDARIO CLASIFICACION********
+//	Controller* control= new Controller();
+//	control->searchMails("[Clasificacion1=santiagodonikian@gmail.com]");
+//
+//	list<int>::iterator it;
+//	for(it= control->iteratorBeginListOfIucs(); it != control->iteratorEndListOfIucs(); it++){
+//		cout<<"IUC: "<<*it<<endl;
+//	}
+//******************************************************
 
 
 

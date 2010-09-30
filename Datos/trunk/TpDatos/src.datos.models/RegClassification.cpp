@@ -79,6 +79,11 @@ KeyInteger* RegClassification::getIuc() const
 	return (KeyInteger*)this->listIuc.back();
 }
 
+list<KeyInteger* > RegClassification::getIucs() const
+{
+	return this->listIuc;
+}
+
 void RegClassification::setNumBlock(int numBlock)
 {
     this->numBlock = numBlock;

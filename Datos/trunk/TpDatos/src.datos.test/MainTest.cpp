@@ -14,7 +14,7 @@
 
 using namespace std;
 
-int main(int argc,char** argv) {
+int mainOLD(int argc,char** argv) {
 
 	TestBSharp* test = new TestBSharp();
 //	test->testInsert();

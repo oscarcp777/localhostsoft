@@ -32,7 +32,7 @@ void Consultation::consultPrimaryIndex(IndexConfig* indexConfig,list<int> IucLis
 
 }
 
-void Consultation::consultSecondaryIndex(IndexConfig* indexConfig,list<int>* listOfIucs){
+void Consultation::consultSecondaryIndex(IndexConfig* indexConfig,list<int>* listOfIucs, string filterValue){
 	IteratorBSharp* iter;
 	IndexBSharp* secondaryIndex;
 	RegClassification* regClassification;
@@ -45,18 +45,34 @@ void Consultation::consultSecondaryIndex(IndexConfig* indexConfig,list<int>* lis
 			regSelection = 	(RegSelection*) iter->next();
 			(*listOfIucs).push_back(((KeyInteger*)(regSelection->getKey()))->getValue());
 		}
+		delete iter;
 
 	}
 	else{
 		secondaryIndex = new IndexBSharp(indexConfig->getFileName(),BLOCK_SIZE/*TODO indexConfig->getBlockSize()*/,TYPE_REG_CLASSIFICATION);
-		iter = secondaryIndex->getIterator();
-		while(iter->hasNext()){
-			regClassification = (RegClassification*)iter->next();
-			(*listOfIucs).push_back(regClassification->getIuc()->getValue());
+		RegClassification* searchReg = new RegClassification();
+		searchReg->setKey(new KeyString(filterValue));
+		searchReg = (RegClassification*)secondaryIndex->searchRegistry(searchReg);
+		list<KeyInteger* > auxList = searchReg->getIucs();
+		list<KeyInteger*>::iterator actual;
+		for (actual = auxList.begin(); actual	!= auxList.end(); ++actual){
+			(*listOfIucs).push_back((*actual)->getValue());
 		}
+
+
+		//Esto es para chequear el arbol (print arbol de clasif.pero algo no anda)
+//		iter = secondaryIndex->getIterator();
+//		while(iter->hasNext()){
+//			RegClassification* regC =(RegClassification*) iter->next();
+//			regC->print(cout);
+//			for (actual = regC->getIucs().begin(); actual	!= regC->getIucs().end(); ++actual){
+//						std::cout << "IUC: "<<(*actual)->getValue();
+//			}
+//			std::cout<<std::endl;
+//		}
+//		delete iter;
 	}
 
 	delete secondaryIndex;
-	delete iter;
 
 }

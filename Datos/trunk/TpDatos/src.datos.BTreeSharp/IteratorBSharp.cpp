@@ -30,6 +30,15 @@ IteratorBSharp::IteratorBSharp(unsigned int firstNode, int typeElement, BinaryFi
 		}
 	}
 
+	if (this->typeElement == TYPE_REG_CLASSIFICATION){
+		// Si el nodo no esta vacio
+		if (this->currentRegistry != this->currentNode->iteratorEnd()){
+			RegClassification* reg=(RegClassification*)*this->currentRegistry;
+			this->dataBlock = this->readBlockData(reg->getNumBlock());
+			this->currentDataRegistry = this->dataBlock->iteratorBegin();
+		}
+	}
+
 
 }
 

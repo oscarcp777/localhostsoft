@@ -837,7 +837,7 @@ bool IndexBSharp::balanceInternalNode(InternalNode* internalNode, InternalNode* 
 		container->setRegMidleKey(copy);
 		return false;
 	}else {
-		if(cont!=listRegistry.size()&&contBranch==branchList.size()){
+		if(cont!=listRegistry.size()&&contBranch!=branchList.size()){
 				   cout<<"###########################################################"<<endl;
 			     cout<<"############# DANGER SE PERDIO UN REGISTRO  O UNA RAMA  ##############"<<endl;
 			     cout<<"###########################################################"<<endl;

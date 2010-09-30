@@ -15,7 +15,7 @@ public:
 	Consultation();
 	virtual ~Consultation();
 	void consultPrimaryIndex(IndexConfig* indexConfig,list<int> IucList,list<Mail*>* listOfMails);
-	void consultSecondaryIndex(IndexConfig* indexConfig,list<int>* listOfIucs);
+	void consultSecondaryIndex(IndexConfig* indexConfig,list<int>* listOfIucs, string filterValue);
 };
 
 #endif /* CONSULTATION_H_ */
