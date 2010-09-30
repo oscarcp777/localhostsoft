@@ -140,7 +140,7 @@ void IndexBSharp::writeBlockRoot() throw(){
 void IndexBSharp::writeBlock(Node* node, int numBlock) throw () {
 	this->buffer->clear();
 	node->pack(this->buffer);
-	this->binaryFile->write(this->buffer->getData(),this->buffer->getMaxBytes(),numBlock*this->sizeBlock);
+	this->binaryFile->write(this->buffer->getData(),this->buffer->getMaxBytes(),numBlock*this->buffer->getMaxBytes());
 	//	cout<<"escribe bloque "<< node->getNumBlock()<<endl;
 	//			buffer->init();
 	//			int var2=this->sizeBlock/4;
@@ -153,8 +153,7 @@ void IndexBSharp::writeBlock(Node* node, int numBlock) throw () {
 }
 Node* IndexBSharp::readNode(unsigned int numBlock) throw () {
 	this->buffer->clear();
-	if (this->binaryFile->read(buffer->getData(), this->sizeBlock,
-			this->sizeBlock * numBlock)) {
+	if (this->binaryFile->read(buffer->getData(),this->buffer->getMaxBytes(),this->buffer->getMaxBytes()* numBlock)) {
 		Node* node = readNodeBytes(buffer);
 		//		cout<<"lee bloque "<< node->getNumBlock()<<endl;
 		//		buffer->init();
@@ -509,7 +508,7 @@ bool IndexBSharp::balanceLeafNode(Registry* reg, LeafNode* actualNode,LeafNode* 
 	}
 
 	//El primer elemento del bloque derecho es la clave padre de ambos bloques
-	Registry* oldMiddleKey = listRegLeftNode.begin();
+	Registry* oldMiddleKey = *(listRegLeftNode.begin());
 	this->listRegistry.clear();
 	this->mergeComponentList(this->listRegistry, listRegLeftNode,
 			listRegRightNode);
@@ -897,6 +896,10 @@ int IndexBSharp::insertInternalNode(InternalNode* internalNode,
 		if (childAnswer == BALANCE){
 			// Agrego componente
 			Registry* replaceReg = (Registry*)(*actualRegistry);
+			cout<<"reemplazo es te por este :";
+			replaceReg->print(cout);
+			container->getRegMidleKey()->print(cout);
+			cout<<"####################"<<endl;;
 			internalNode->replaceRegistry(replaceReg, container->getRegMidleKey());
 
 			// Escribo bloque
