@@ -48,8 +48,8 @@ int connection(char* username,char* password, StorageController* storageControll
 //	strcpy(password,argv[2]);
 //	strncpy(argv[2], "****************", strlen(argv[2]));
 
-	strcpy(myservername, "pop.gmail.com");
-	nport=995;
+	strcpy(myservername,"pop.mail.yahoo.com" /*"pop.gmail.com"*/);
+	nport=110;//995;
 
 	libspopc_init();
 
@@ -90,7 +90,7 @@ int connection(char* username,char* password, StorageController* storageControll
 	}
 	i--;/* i is the number of messages */
 	free(mylist);mylist=NULL;
-
+/*
 	printf("\n---\nTEST TOP\n\n");
 	srvdata=pop3_top(mysock,i,0);
 	mymessage=retr2msg(srvdata);
@@ -98,9 +98,9 @@ int connection(char* username,char* password, StorageController* storageControll
 	printf("%s",mymessage);
 	free(mymessage);
 	free(srvdata);
-
+*/
 	printf("\n---\nTEST RETR\n\n");
-	i = 20;//numberOfMails;
+	i = numberOfMails;
 	while(i){
 		srvdata=pop3_retr(mysock,i);
 		mymessage=retr2msg(srvdata);

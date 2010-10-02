@@ -164,10 +164,10 @@ void Mail::parseMail(char* text){
 	int posFinal = 0;
 	string aux;
 	string textMail = text;
-	string date = "Date:";
-	string to = "To:";
-	string from = "From:";
-	string subject = "Subject:";
+	string date = "\nDate: ";
+	string to = "\nTo: ";
+	string from = "\nFrom: ";
+	string subject = "\nSubject: ";
 	string message = "Content-Type: text/plain";
 	string messageId = "Message-Id:";
 	string endLine = "\n";
@@ -175,28 +175,32 @@ void Mail::parseMail(char* text){
 	string end = "=";
 	string beginMail = "<";
 	string endMail = ">";
-
-
+	string space = " ";
+//	cout<<"*******************************************************************"<<endl;
+//	cout<<text<<endl;
+//	cout<<"*******************************************************************"<<endl;
 	posInitial = textMail.find(date.c_str(),0);
-	posFinal = textMail.find(endLine.c_str(),posInitial);
+	posFinal = textMail.find(endLine.c_str(),posInitial+date.size());
+
 	if(posInitial >= 0 && posFinal>=0 ){
-		aux = textMail.substr(posInitial+date.size()+1,posFinal-(posInitial+date.size()+2));
+		aux = textMail.substr(posInitial+date.size(),posFinal-(posInitial+date.size()+1));
 		//cout<<"*************"<<aux<<"***********"<<endl;
 		this->setDate(aux);
 	}
 
 	posInitial = textMail.find(to.c_str(),0);
-	posFinal = textMail.find(endLine.c_str(),posInitial);
+	posFinal = textMail.find(endLine.c_str(),posInitial+to.size());
+
 	if(posInitial >= 0 && posFinal>=0 ){
-		aux = textMail.substr(posInitial+to.size()+1,posFinal-(posInitial+to.size()+2));
+		aux = textMail.substr(posInitial+to.size(),posFinal-(posInitial+to.size()+1));
 		//cout<<"*************"<<aux<<"***********"<<endl;
 		this->setTo(aux);
 	}
 
 	posInitial = textMail.find(from.c_str(),0);
-	posFinal = textMail.find(endLine.c_str(),posInitial);
+	posFinal = textMail.find(endLine.c_str(),posInitial+from.size());
 	if(posInitial >= 0 && posFinal>=0 ){
-		aux = textMail.substr(posInitial+from.size()+1,posFinal-(posInitial+from.size()+2));
+		aux = textMail.substr(posInitial+from.size(),posFinal-(posInitial+from.size()+1));
 		//busco si el mail tiene <> porque si es un contacto figura como "nombreContacto <contacto@gmail.com>
 		posInitial = aux.find(beginMail.c_str(),0);
 
@@ -209,9 +213,9 @@ void Mail::parseMail(char* text){
 	}
 
 	posInitial = textMail.find(subject.c_str(),0);
-	posFinal = textMail.find(endLine.c_str(),posInitial);
+	posFinal = textMail.find(endLine.c_str(),posInitial+subject.size());
 	if(posInitial >= 0 && posFinal>=0 ){
-		aux = textMail.substr(posInitial+subject.size()+1,posFinal-(posInitial+subject.size()+2));
+		aux = textMail.substr(posInitial+subject.size(),posFinal-(posInitial+subject.size()+1));
 		//cout<<"*************"<<aux<<"***********"<<endl;
 		this->setSubject(aux);
 	}
