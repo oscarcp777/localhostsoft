@@ -65,8 +65,8 @@ void BlockDataManager::loadListIucBlockData(RegClassification* regClas,unsigned 
 		while(blockIucs->getNextBlock()!=-1){
 			Block* block=this->readBlockData(blockIucs->getNextBlock(),container);
 			loadListRegistry(listIucs,blockIucs->iteratorBegin(),blockIucs->iteratorEnd());
-			blockIucs->clearListRegistry();
-			delete blockIucs;
+			block->clearListRegistry();
+			delete block;
 		}
 
 	regClas->setListIuc(listIucs);

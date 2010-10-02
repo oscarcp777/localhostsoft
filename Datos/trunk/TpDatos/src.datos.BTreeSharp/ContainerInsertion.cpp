@@ -8,12 +8,18 @@
 #include "ContainerInsertion.h"
 
 ContainerInsertion::ContainerInsertion() {
-	// TODO Auto-generated constructor stub
-
+    this->leftRegKey=NULL;
+    this->rightRegKey=NULL;
+    this->midleRegKey=NULL;
 }
 
 ContainerInsertion::~ContainerInsertion() {
-	// TODO Auto-generated destructor stub
+//	if(this->leftRegKey!=NULL)
+//	delete this->leftRegKey;
+//	if(this->rightRegKey!=NULL)
+//	delete this->rightRegKey;
+//	if(this->midleRegKey!=NULL)
+//	delete this->midleRegKey;
 }
 Registry* ContainerInsertion::getRegMidleKey()throw() {
 	return this->midleRegKey;

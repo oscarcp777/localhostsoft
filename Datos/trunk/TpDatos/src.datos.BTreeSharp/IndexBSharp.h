@@ -228,6 +228,7 @@ private:
 		 * contenedor de las inserciones de registros en los boques de datos
 		 */
 		ContainerInsertDataBlock* containerInsertDataBlock;
+		ContainerInsertion* containerInsertion;
 };
 
 #endif /* INDEXBSHARP_H_ */

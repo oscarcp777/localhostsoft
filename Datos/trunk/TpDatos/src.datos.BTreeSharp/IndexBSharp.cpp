@@ -34,6 +34,7 @@ IndexBSharp::IndexBSharp(const std::string& nameFile, unsigned int sizeBlock,
 
 		int typeElement) {
 	this->containerInsertDataBlock = NULL;
+	containerInsertion=new ContainerInsertion();
 	this->sizeBlock = sizeBlock;
 	this->typeElement = typeElement;
 	this->binaryFile = new BinaryFile();
@@ -75,13 +76,13 @@ IndexBSharp::~IndexBSharp() {
 	delete this->freeBlockController;
 	delete this->binaryFile;
 	delete this->rootNode;
+	delete containerInsertion;
 }
 
 void IndexBSharp::addRegistry(Registry* registry) throw(){
 	int sizeMedium=0.5*this->sizeBlock;
 	if (registry->getLongBytes() >= sizeMedium)
 		throw eNotSpace("Registro demasiado grande!!");
-	ContainerInsertion* containerInsertion=new ContainerInsertion();
 	int answer = INSERTION_OK;
 	if (this->rootNode->isLeaf()){
 		LeafNode* leafNode = static_cast<LeafNode*>(this->rootNode);
@@ -98,7 +99,7 @@ void IndexBSharp::addRegistry(Registry* registry) throw(){
 		else
 			this->splitInternalRoot(containerInsertion);
 	}
-	delete containerInsertion;
+
 }
 //}
 
@@ -128,7 +129,6 @@ void IndexBSharp::readBlockRoot() throw(){
 	this->bufferRoot->clear();
 	if(this->binaryFile->read(this->bufferRoot->getData(),this->bufferRoot->getMaxBytes(),0)){
 		this->rootNode = readNodeBytes(this->bufferRoot);
-		this->rootNode->print(cout);
 	} else {
 		this->createBlockRoot();
 	}
@@ -894,11 +894,11 @@ int IndexBSharp::insertInternalNode(InternalNode* internalNode,
 		if (childAnswer == BALANCE){
 			// Agrego componente
 			Registry* replaceReg = (Registry*)(*actualRegistry);
-			cout<<"reemplazo este:";
-			replaceReg->print(cout);
-			cout<<"|por este :";
-			container->getRegMidleKey()->print(cout);
-			cout<<"|"<<endl;;
+			if(DEBUG)cout<<"reemplazo este:";
+			if(DEBUG)replaceReg->print(cout);
+			if(DEBUG)cout<<"|por este :";
+			if(DEBUG)container->getRegMidleKey()->print(cout);
+			if(DEBUG)cout<<"|"<<endl;;
 			internalNode->replaceRegistry(replaceReg, container->getRegMidleKey());
 
 			// Escribo bloque
