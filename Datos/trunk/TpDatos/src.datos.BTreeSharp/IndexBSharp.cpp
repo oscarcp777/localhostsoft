@@ -1330,13 +1330,16 @@ int IndexBSharp::getFirstNode() throw(){
 		return 0;
 	}else{
 		InternalNode* internalNode = static_cast<InternalNode*> (this->rootNode);
-		int branch = internalNode->getBranch(0);
-		while(internalNode->getLevel()!=1){
-			if (internalNode->getNumBlock()!=0)
-				delete internalNode;
+		int branch;
+		int level;
+		level = internalNode->getLevel();
+		branch = internalNode->getBranch(0);
+		while(level!=1){
 			Node* node = this->readNode(branch);
-			InternalNode* internalNode = static_cast<InternalNode*> (node);
+			internalNode = static_cast<InternalNode*> (node);
 			branch = internalNode->getBranch(0);
+			level = internalNode->getLevel();
+			delete internalNode;
 		}
 		return branch;
 	}
