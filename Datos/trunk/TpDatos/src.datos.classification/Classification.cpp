@@ -25,11 +25,14 @@ Classification::~Classification() {
 	// TODO Auto-generated destructor stub
 }
 void Classification::loadSecondaryIndex(IndexConfig* indexConfig, IteratorBSharp* it){
+
 	if(indexConfig->getTypeSecundaryIndex().compare((char*)TYPE_CLASSIFICATION) == 0)
 				this->loadClassificationIndex(indexConfig,it);
 
-			else if(indexConfig->getTypeSecundaryIndex().compare((char*)TYPE_SELECTION) == 0)
+			else if(indexConfig->getTypeSecundaryIndex().compare((char*)TYPE_SELECTION) == 0){
+				cout<< "entro al if de seleccion dentro de loadSecondaryIndex "<<endl;
 				this->loadSelectionIndex(indexConfig,it);
+			}
 }
 void Classification::loadClassificationIndex(IndexConfig* indexConfig,IteratorBSharp* it){
 	IndexBSharp* secondaryIndex = new IndexBSharp(indexConfig->getFileName(),indexConfig->getBlockSize(),TYPE_REG_CLASSIFICATION);
@@ -59,9 +62,10 @@ void Classification::loadSelectionIndex(IndexConfig* indexConfig,IteratorBSharp*
 	int condition = indexConfig->getCondition();
 	string value = indexConfig->getValue();
 	cout<<"condition: "<<condition<<endl;
-	cout<<"value: "<<value<<endl;
+	cout<<"value: "<<value<<endl;//////////////////////////////////////////////////////////////////////////////
 
 	while (it->hasNext()){
+		cout<<"entro al while de loadSelctionIndex"<<endl;
 		regPrimary = (RegPrimary*)it->next();
 		if(regPrimary->getMail()->containCondition(condition,value)){
 			regSelection = new RegSelection();
@@ -69,6 +73,7 @@ void Classification::loadSelectionIndex(IndexConfig* indexConfig,IteratorBSharp*
 			secondaryIndex->addRegistry(regSelection);
 		}
 	}
+	cout<<"antes de imprimir el secondary index en loadSelectionIndex"<<endl;
 	secondaryIndex->print(std::cout);
 	delete secondaryIndex;
 	delete it;

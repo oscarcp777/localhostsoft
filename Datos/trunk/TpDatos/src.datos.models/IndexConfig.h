@@ -8,7 +8,7 @@
 #ifndef INDEXCONFIG_H_
 #define INDEXCONFIG_H_
 #include <string>
-
+#include <iostream>
 using namespace std;
 class IndexConfig {
 public:
@@ -30,6 +30,7 @@ public:
     string getValue() const;
     void setCondition(int condition);
     void setValue(string value);
+    void print();
 
 private:
     string filterName;

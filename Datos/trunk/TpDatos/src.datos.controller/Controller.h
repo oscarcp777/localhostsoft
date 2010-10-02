@@ -56,7 +56,11 @@ public:
 	list<int>::iterator iteratorEndListOfIucs();
 	list<Mail*>::iterator iteratorBeginListOfMails();
 	list<Mail*>::iterator iteratorEndListOfMails();
+	list<int> getListOfIUCS();
+	list<Mail*> getListOfMails();
 	bool searchIndex(std::string index);
+	IndexConfig* loadIndexConfig(std::string index);
+
 
 };
 

@@ -15,17 +15,17 @@ int main(int argc, char** ) {
 
 
 //*****SE CONECTA Y CREA INDICE PRIMARIO***
-/*	std::string strEmail;
-	std::string strPass;
+	std::string strEmail = "Datos.2c2010";
+	std::string strPass = "75067506";
 	Controller* control= new Controller();
-	std::cout << "INGRESE SU DIRECCION DE E-MAIL: ";
-	std::cin >> strEmail;
-
-	control->addEmail(strEmail);
-	std::cout << "INGRESE SU PASSWORD: ";
-	std::cin >> strPass;
-	control->addPass(strPass);
-	control->createPrimaryIndex();*/
+//	std::cout << "INGRESE SU DIRECCION DE E-MAIL: ";
+//	std::cin >> strEmail;
+//
+//	control->addEmail(strEmail);
+//	std::cout << "INGRESE SU PASSWORD: ";
+//	std::cin >> strPass;
+//	control->addPass(strPass);
+//	control->createPrimaryIndex();
 //****************************************
 
 //*****CREA INDICE DE CLASIFICACION***
@@ -40,15 +40,18 @@ int main(int argc, char** ) {
 //***********************************
 
 //*******CREA INDICE DE SELECCION*******
-/*	IndexConfig* configTwo = new IndexConfig();
-	configTwo->setUserName(strEmail);
-	configTwo->setTypeIndex(TYPE_SECONDARY);
-	configTwo->setTypeSecundaryIndex(TYPE_SELECTION);
-	configTwo->setCondition(FROM);
-	configTwo->setValue("asyura.from@gmail.com");
-	configTwo->setFilterName("Seleccion1");
-	control->addSecondIndex(configTwo);
-	control->loadSecondIndex(configTwo);*/
+//	IndexConfig* configTwo = new IndexConfig();
+//	configTwo->setUserName(strEmail);
+//	configTwo->setTypeIndex(TYPE_SECONDARY);
+//	configTwo->setTypeSecundaryIndex(TYPE_SELECTION);
+//	configTwo->setCondition(FROM);
+//	configTwo->setValue("asyura.from@gmail.com");
+//	configTwo->setFilterName("Seleccion1");
+//	control->addSecondIndex(configTwo);
+//	IndexConfig* configOne = new IndexConfig();
+//	configOne = control->loadIndexConfig("Seleccion1");
+//	control->loadSecondIndex(configOne);
+
 //***********************************
 
 //***********BUSQUEDA SOBRE PRIMARIO********
@@ -63,14 +66,15 @@ int main(int argc, char** ) {
 
 
 //***********BUSQUEDA SOBRE SECUNDARIO SELECCION********
-//	Controller* control= new Controller();
-//	control->searchMails("[Seleccion1= ]");
-//
-//	list<int>::iterator it;
-//	for(it= control->iteratorBeginListOfIucs(); it != control->iteratorEndListOfIucs(); it++){
-//		cout<<"IUC: "<<*it<<endl;
-//	}
+	//Controller* control= new Controller();
+	cout<<"------------------------------------------------------------------------------------------"<<endl;
+	control->searchMails("[Seleccion1= ]");
 
+	list<int>::iterator it;
+	for(it= control->iteratorBeginListOfIucs(); it != control->iteratorEndListOfIucs(); it++){
+		cout<<"IUC: "<<*it<<endl;
+	}
+cout<<"salio con cantidad de resultados: "<< control->getListOfIUCS().size() <<endl;
 //******************************************************
 
 //***********BUSQUEDA SOBRE SECUNDARIO CLASIFICACION********
@@ -83,9 +87,6 @@ int main(int argc, char** ) {
 //	}
 //******************************************************
 
-
-
-
-
+	delete control;
 	return 0;
 }

@@ -94,4 +94,13 @@ void IndexConfig::setValue(string value)
 {
     this->value = value;
 }
+void IndexConfig::print(){
+	cout<<"File Name: " << this->getFileName() << endl ;
+	cout<<"User Name: " << this->getUserName() << endl ;
+	cout<<"Filter Name: " << this->getFilterName()<< endl;
+	cout<<"Type Index: " << this->getTypeIndex()<< endl;
+	cout<<"Type Secondary: " << this->getTypeSecundaryIndex()<< endl;
+	cout<<"Condition: " << this->getCondition()<< endl;
+	cout<<"Value: " << this->getValue() << endl;
+}
 

@@ -36,7 +36,7 @@
 #define SUBJECT 3
 #define DATE 4
 
-#define TYPE_SECONDARY "Secunadrio"
+#define TYPE_SECONDARY "Secundario"
 #define TYPE_PRIMARY "Primario"
 #define TYPE_CLASSIFICATION "Clasificacion"
 #define TYPE_SELECTION "Seleccion"

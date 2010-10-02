@@ -128,6 +128,7 @@ void IndexBSharp::readBlockRoot() throw(){
 	this->bufferRoot->clear();
 	if(this->binaryFile->read(this->bufferRoot->getData(),this->bufferRoot->getMaxBytes(),0)){
 		this->rootNode = readNodeBytes(this->bufferRoot);
+		this->rootNode->print(cout);
 	} else {
 		this->createBlockRoot();
 	}
@@ -911,11 +912,6 @@ int IndexBSharp::insertInternalNode(InternalNode* internalNode,
 		if (childAnswer == OVERFLOW) {
 			// Verifico si puedo agregar en el bloque interno
 			Registry* replaceReg = (Registry*)(*actualRegistry);
-			cout<<"OVERFLOW reemplazo este:";
-			replaceReg->print(cout);
-			cout<<"|por este :";
-			container->getLeftRegKey()->print(cout);
-			cout<<"|"<<endl;;
 			internalNode->replaceRegistry(replaceReg, container->getLeftRegKey());
 
 			if (internalNode->posibleToAgregateComponent(container->getRightRegKey())){

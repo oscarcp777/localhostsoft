@@ -38,6 +38,7 @@ void Consultation::consultSecondaryIndex(IndexConfig* indexConfig,list<int>* lis
 		while(iter->hasNext()){
 			regSelection = 	(RegSelection*) iter->next();
 			(*listOfIucs).push_back(((KeyInteger*)(regSelection->getKey()))->getValue());
+			cout<<"entro al while con tamaños de listaOIucs : "<< listOfIucs->size()<< endl;
 		}
 		delete iter;
 

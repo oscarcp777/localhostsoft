@@ -12,12 +12,12 @@
 Controller::Controller() {
 	this->programFile = new TextFile();
 	this->loadIndexNames();
-	this->primaryTree = NULL;
-
 }
 
 Controller::~Controller() {
-	// TODO Auto-generated destructor stub
+	delete this->programFile;
+	delete this->primaryTree;
+//	delete this->indexes;
 }
 void Controller::loadInfoIndex(std::string linea,IndexConfig* index){
 
@@ -59,13 +59,19 @@ void Controller::loadIndexNames(){
 	this->programFile->open("archivo.dat");
 	std::string linea = "";
 	this->programFile->read(linea);
-
-	while( linea.compare("\0") != 0) {
+	int i=0;
+	while(linea.compare("\0") != 0) {
 		//procesar linea
 		IndexConfig* index = new IndexConfig();
 		this->loadInfoIndex(linea, index);
+		cout<<linea<<endl;
+		if(index->getTypeIndex().compare("Primario") == 0){
+			index->print();
+			this->primaryTree = new IndexBSharp(index->getFileName(),index->getBlockSize(),TYPE_REG_PRIMARY);
+		}
 		this->indexes.push_back(index);//en realidad tengo que meter los registros
 		this->programFile->read(linea);
+		i++;
 	}
 	this->programFile->close();
 }
@@ -129,7 +135,7 @@ void Controller::addSecondIndex(IndexConfig* indexConfig) {
 	this->addIndexToFile(indexConfig);
 	this->indexes.push_back(indexConfig);
 
-	//creoelIndice
+	delete indexController;
 
 }
 
@@ -140,6 +146,7 @@ int Controller::createPrimaryIndex() {
 	this->addIndexToFile(configIndex);
 	this->indexes.push_back(configIndex);
 
+	delete storage;
 	return 0;
 }
 int Controller::loadSecondIndex(IndexConfig* indexConfig){
@@ -148,6 +155,7 @@ int Controller::loadSecondIndex(IndexConfig* indexConfig){
 		this->createPrimaryIndex();
  	classification->loadSecondaryIndex(indexConfig,this->primaryTree->getIterator());
 
+ 	delete classification;
 	return 0;
 }
 void Controller::convertStringToListOfInt(Search* search,std::string str){
@@ -213,7 +221,7 @@ int Controller::searchMails(std::string strSearch){
 									this->listOfMails.push_back(regPrimary->getMail());
 								it++;
 							}
-							cout<<"SALE"<<endl;
+
 						}
 						else
 							consultation->consultSecondaryIndex(*current,&this->listOfIucs, this->search->getStrSearch());
@@ -236,14 +244,14 @@ list<Mail*>::iterator Controller::iteratorBeginListOfMails(){
 list<Mail*>::iterator Controller::iteratorEndListOfMails(){
 	return this->listOfMails.end();
 }
-//////////////////////////////////////////////////////
+
 bool Controller::searchIndex(std::string index){
 
 	std::string auxIndex;
 	int result = -1;
 	list<IndexConfig*>::iterator current = this->indexes.begin();
 	while((current != this->indexes.end())&& result != 0){//recorro la lista de todos lo indices que tiene el programa
-		index = (*current)->getFilterName();
+		auxIndex = (*current)->getFilterName();
 		result =auxIndex.compare(index);
 			if (result == 0){
 				return true;
@@ -253,6 +261,27 @@ bool Controller::searchIndex(std::string index){
 	return false;
 }
 
+IndexConfig* Controller::loadIndexConfig(std::string index){
+
+	std::string auxIndex;
+	int result = -1;
+	list<IndexConfig*>::iterator current = this->indexes.begin();
+	while((current != this->indexes.end())&& result != 0){//recorro la lista de todos lo indices que tiene el programa
+		auxIndex = (*current)->getFilterName();
+		result =auxIndex.compare(index);
+			if (result == 0){
+				return *current;
+			}
+		current++;
+	}
+	return NULL;
+}
+list<int> Controller::getListOfIUCS(){
+	return this->listOfIucs;
+}
+list<Mail*> Controller::getListOfMails(){
+	return this->listOfMails;
+}
 
 
 
