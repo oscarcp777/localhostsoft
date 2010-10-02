@@ -77,11 +77,14 @@ int main (int argc,char** argv){
 
 		}else {
 				puts("Argumentos invalidos");
+			delete control;
 			return EXIT_SUCCESS;
 		}
 		cout<<"Salida exitosa"<<endl;
+		delete control;
 		return EXIT_SUCCESS;
 	}
+		delete control;
 		return 0;
 
 
