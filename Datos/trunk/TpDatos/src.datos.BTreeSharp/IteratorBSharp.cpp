@@ -20,25 +20,26 @@ IteratorBSharp::IteratorBSharp(unsigned int firstNode, int typeElement, BinaryFi
 	// Me paro en la primer clave del nodo
 	this->currentRegistry = this->currentNode->iteratorBegin();
 
-	// Si es registro primario leo su bloque de datos y obtengo el primer dato
-	if (this->typeElement == TYPE_REG_PRIMARY){
-		// Si el nodo no esta vacio
-		if (this->currentRegistry != this->currentNode->iteratorEnd()){
-			RegPrimary* reg=(RegPrimary*)*this->currentRegistry;
-			this->dataBlock = this->readBlockData(reg->getNumberBlock());
-			this->currentDataRegistry = this->dataBlock->iteratorBegin();
+	if (DATA==1){
+		// Si es registro primario leo su bloque de datos y obtengo el primer dato
+		if (this->typeElement == TYPE_REG_PRIMARY){
+			// Si el nodo no esta vacio
+			if (this->currentRegistry != this->currentNode->iteratorEnd()){
+				RegPrimary* reg=(RegPrimary*)*this->currentRegistry;
+				this->dataBlock = this->readBlockData(reg->getNumberBlock());
+				this->currentDataRegistry = this->dataBlock->iteratorBegin();
+			}
+		}
+
+		if (this->typeElement == TYPE_REG_CLASSIFICATION){
+			// Si el nodo no esta vacio
+			if (this->currentRegistry != this->currentNode->iteratorEnd()){
+				RegClassification* reg=(RegClassification*)*this->currentRegistry;
+				this->dataBlock = this->readBlockData(reg->getNumBlock());
+				this->currentDataRegistry = this->dataBlock->iteratorBegin();
+			}
 		}
 	}
-
-	if (this->typeElement == TYPE_REG_CLASSIFICATION){
-		// Si el nodo no esta vacio
-		if (this->currentRegistry != this->currentNode->iteratorEnd()){
-			RegClassification* reg=(RegClassification*)*this->currentRegistry;
-			this->dataBlock = this->readBlockData(reg->getNumBlock());
-			this->currentDataRegistry = this->dataBlock->iteratorBegin();
-		}
-	}
-
 
 }
 
@@ -61,13 +62,16 @@ bool IteratorBSharp::hasNext() throw(){
 			return false;
 	}
 
-	if (this->typeElement == TYPE_REG_PRIMARY || this->typeElement == TYPE_REG_CLASSIFICATION){
-		list<Registry*>::iterator endData = this->dataBlock->iteratorEnd();
-		list<Registry*>::iterator itData = this->currentDataRegistry;
-		itData++;
-		if (itData != endData)
-			return true;
+	if (DATA==1){
+		if (this->typeElement == TYPE_REG_PRIMARY || this->typeElement == TYPE_REG_CLASSIFICATION){
+			list<Registry*>::iterator endData = this->dataBlock->iteratorEnd();
+			list<Registry*>::iterator itData = this->currentDataRegistry;
+			itData++;
+			if (itData != endData)
+				return true;
+		}
 	}
+
 	aux++;
 	if (aux != endComp) {
 		return true;
@@ -83,40 +87,43 @@ Registry* IteratorBSharp::next() throw(){
 	// Si es la primer iteracion no incremento nada devuelvo el registro actual
 	if (firstIteration == true){
 		firstIteration = false;
-		// Si es registro primario le seteo el valor
-		if (this->typeElement == TYPE_REG_PRIMARY){
-			RegPrimary* reg=(RegPrimary*)*this->currentRegistry;
-			reg->setMail((Mail*)*this->currentDataRegistry);
-		}
-		if (this->typeElement == TYPE_REG_CLASSIFICATION){
-			RegClassification* reg=(RegClassification*)*this->currentRegistry;
-			reg->addIuc((KeyInteger*)*this->currentDataRegistry);
+		if (DATA==1){
+			// Si es registro primario le seteo el valor
+			if (this->typeElement == TYPE_REG_PRIMARY){
+				RegPrimary* reg=(RegPrimary*)*this->currentRegistry;
+				reg->setMail((Mail*)*this->currentDataRegistry);
+			}
+			if (this->typeElement == TYPE_REG_CLASSIFICATION){
+				RegClassification* reg=(RegClassification*)*this->currentRegistry;
+				reg->addIuc((KeyInteger*)*this->currentDataRegistry);
+			}
 		}
 		//(*this->currentRegistry)->print(std::cout);
 		return (*this->currentRegistry);
 	}
 
-
-	// Busco el siguiente registro
-	// Si es registro primario primero intento incrementar en el archivo de datos
-	if (this->typeElement == TYPE_REG_PRIMARY){
-		list<Registry*>::iterator endData = this->dataBlock->iteratorEnd();
-		if (++this->currentDataRegistry != endData){
-			RegPrimary* reg=(RegPrimary*)*this->currentRegistry;
-			reg->setMail((Mail*)*this->currentDataRegistry);
-			//(*this->currentRegistry)->print(std::cout);
-			return (*this->currentRegistry);
+	if (DATA==1){
+		// Busco el siguiente registro
+		// Si es registro primario primero intento incrementar en el archivo de datos
+		if (this->typeElement == TYPE_REG_PRIMARY){
+			list<Registry*>::iterator endData = this->dataBlock->iteratorEnd();
+			if (++this->currentDataRegistry != endData){
+				RegPrimary* reg=(RegPrimary*)*this->currentRegistry;
+				reg->setMail((Mail*)*this->currentDataRegistry);
+				//(*this->currentRegistry)->print(std::cout);
+				return (*this->currentRegistry);
+			}
 		}
-	}
 
-	// Si es registro de clasificacion primero intento incrementar en el archivo de datos
-	if (this->typeElement == TYPE_REG_CLASSIFICATION){
-		list<Registry*>::iterator endData = this->dataBlock->iteratorEnd();
-		if (++this->currentDataRegistry != endData){
-			RegClassification* reg=(RegClassification*)*this->currentRegistry;
-			reg->addIuc((KeyInteger*)*this->currentDataRegistry);
-			//(*this->currentRegistry)->print(std::cout);
-			return (*this->currentRegistry);
+		// Si es registro de clasificacion primero intento incrementar en el archivo de datos
+		if (this->typeElement == TYPE_REG_CLASSIFICATION){
+			list<Registry*>::iterator endData = this->dataBlock->iteratorEnd();
+			if (++this->currentDataRegistry != endData){
+				RegClassification* reg=(RegClassification*)*this->currentRegistry;
+				reg->addIuc((KeyInteger*)*this->currentDataRegistry);
+				//(*this->currentRegistry)->print(std::cout);
+				return (*this->currentRegistry);
+			}
 		}
 	}
 
@@ -127,22 +134,23 @@ Registry* IteratorBSharp::next() throw(){
 		this->currentRegistry = this->currentNode->iteratorBegin();
 	}
 
-	if (this->typeElement == TYPE_REG_PRIMARY){
-		RegPrimary* reg=(RegPrimary*)*this->currentRegistry;
-		delete this->dataBlock;
-		this->dataBlock = this->readBlockData(reg->getNumberBlock());
-		this->currentDataRegistry = this->dataBlock->iteratorBegin();
-		reg->setMail((Mail*)*this->currentDataRegistry);
-	}
+	if (DATA==1){
+		if (this->typeElement == TYPE_REG_PRIMARY){
+			RegPrimary* reg=(RegPrimary*)*this->currentRegistry;
+			delete this->dataBlock;
+			this->dataBlock = this->readBlockData(reg->getNumberBlock());
+			this->currentDataRegistry = this->dataBlock->iteratorBegin();
+			reg->setMail((Mail*)*this->currentDataRegistry);
+		}
 
-	if (this->typeElement == TYPE_REG_CLASSIFICATION){
-		RegClassification* reg=(RegClassification*)*this->currentRegistry;
-		delete this->dataBlock;
-		this->dataBlock = this->readBlockData(reg->getNumBlock());
-		this->currentDataRegistry = this->dataBlock->iteratorBegin();
-		reg->addIuc((KeyInteger*)*this->currentDataRegistry);
+		if (this->typeElement == TYPE_REG_CLASSIFICATION){
+			RegClassification* reg=(RegClassification*)*this->currentRegistry;
+			delete this->dataBlock;
+			this->dataBlock = this->readBlockData(reg->getNumBlock());
+			this->currentDataRegistry = this->dataBlock->iteratorBegin();
+			reg->addIuc((KeyInteger*)*this->currentDataRegistry);
+		}
 	}
-
 	//(*this->currentRegistry)->print(std::cout);
 	return (*this->currentRegistry);
 

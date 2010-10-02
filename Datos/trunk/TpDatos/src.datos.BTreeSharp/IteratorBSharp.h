@@ -10,6 +10,7 @@
 #include "LeafNode.h"
 #include "../src.datos.models/RegPrimary.h"
 #include "../src.datos.models/RegClassification.h"
+#include "../src.datos.utils/Define.h"
 
 class IteratorBSharp {
 public:
