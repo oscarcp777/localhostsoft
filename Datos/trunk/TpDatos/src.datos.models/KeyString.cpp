@@ -15,7 +15,6 @@ KeyString::KeyString(){
 	this->key=NULL;
 }
 KeyString::~KeyString() {
-	// TODO Auto-generated destructor stub
 }
 string KeyString::getValue(){
 	return this->value;

@@ -13,9 +13,9 @@ Registry::Registry() {
 }
 
 Registry::~Registry() {
-
 	if(this->key!=NULL)
-	delete this->key;
+		delete this->key;
+	this->key=NULL;
 }
 Key* Registry::getKey(){
 	return this->key;

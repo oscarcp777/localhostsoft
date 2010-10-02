@@ -47,6 +47,7 @@ Block::~Block() throw(){
 	for (iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
 		reg=*iterRegistry;
 		delete reg;
+		reg=NULL;
 	}
 	if(this->factory!=NULL)
 	 delete this->factory;

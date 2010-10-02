@@ -14,12 +14,9 @@ ContainerInsertion::ContainerInsertion() {
 }
 
 ContainerInsertion::~ContainerInsertion() {
-//	if(this->leftRegKey!=NULL)
-//	delete this->leftRegKey;
-//	if(this->rightRegKey!=NULL)
-//	delete this->rightRegKey;
-//	if(this->midleRegKey!=NULL)
-//	delete this->midleRegKey;
+	this->leftRegKey=NULL;
+	this->rightRegKey=NULL;
+	this->midleRegKey=NULL;
 }
 Registry* ContainerInsertion::getRegMidleKey()throw() {
 	return this->midleRegKey;

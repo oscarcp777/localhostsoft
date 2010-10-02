@@ -352,7 +352,7 @@ void IndexBSharp::splitInternalRoot(ContainerInsertion* container) throw () {
 	itListBranchs++;
 	cont++;
 	Registry* leftRegistryKey=(Registry*)*itListRegistry;
-	container->setLeftRegKey(leftRegistryKey->cloneRegKey());
+	container->setLeftRegKey(leftRegistryKey);
 	itListRegistry++;
 	while (newCenterNode->isUnderflow(getSizeMinumumNode(averageEstimate,listRegistry.size()))) {
 		newCenterNode->addBranch(*itListBranchs);
@@ -370,7 +370,7 @@ void IndexBSharp::splitInternalRoot(ContainerInsertion* container) throw () {
 	itListBranchs++;
 	cont++;
 	Registry* reg = (Registry*) *itListRegistry;
-	container->setRightRegKey(reg->cloneRegKey());
+	container->setRightRegKey(reg);
 	itListRegistry++;
 
 	while (itListRegistry != this->listRegistry.end()) {
@@ -404,6 +404,7 @@ void IndexBSharp::splitInternalRoot(ContainerInsertion* container) throw () {
 	newRoot->addComponent(container->getLeftRegKey());
 	newRoot->addComponent(container->getRightRegKey());
 	// Escribe el bloque raiz
+	delete this->rootNode;
 	this->rootNode = newRoot;
 	this->writeBlockRoot();
 
@@ -557,6 +558,7 @@ bool IndexBSharp::balanceLeafNode(Registry* reg, LeafNode* actualNode,LeafNode* 
 		}
 		listRegLeftNode.clear();
 		listRegRightNode.clear();
+		delete container->getRegMidleKey();
 		return false;
 	} else {
 
@@ -568,6 +570,7 @@ bool IndexBSharp::balanceLeafNode(Registry* reg, LeafNode* actualNode,LeafNode* 
 	    }
 		this->writeBlock(leftNode, leftNode->getNumBlock());
 		this->writeBlock(rightNode, rightNode->getNumBlock());
+		cout<<"SE BALANCEO HOJA"<<endl;
 		return true;
 	}
 
@@ -776,7 +779,7 @@ bool IndexBSharp::balanceInternalNode(InternalNode* internalNode, InternalNode* 
 	contBranch++;
 	// Establece el elemento medio a subir en el resultado de insercion
 	Registry* regMidleKey = (Registry*) *itFinalListRegistry;
-	container->setRegMidleKey(regMidleKey->cloneRegKey());
+	container->setRegMidleKey(regMidleKey);
 	itFinalListRegistry++;
 	cont++;
 	while (itFinalListRegistry != this->listRegistry.end()) {
@@ -840,6 +843,7 @@ bool IndexBSharp::balanceInternalNode(InternalNode* internalNode, InternalNode* 
 		this->writeBlock(leftNode, leftNode->getNumBlock());
 		// Escribe bloque derecho
 		this->writeBlock(rightNode, rightNode->getNumBlock());
+		fatherReg = NULL;
 		return true;
 	}
 
@@ -887,7 +891,7 @@ int IndexBSharp::insertInternalNode(InternalNode* internalNode,
 			Registry* regFatherSon = this->extractKey((Registry*)(*actualRegistry));
 			// Inserto en el bloque interno hijo
 			childAnswer = this->insertInternalNode(internalInsertNode, registryKey, container, sisterBranch, regFatherSon);
-//			delete regFatherSon;
+
 		}
 
 		//Se actualiza la clave cuando hay balanceo en el hijo
@@ -900,7 +904,7 @@ int IndexBSharp::insertInternalNode(InternalNode* internalNode,
 			if(DEBUG)container->getRegMidleKey()->print(cout);
 			if(DEBUG)cout<<"|"<<endl;;
 			internalNode->replaceRegistry(replaceReg, container->getRegMidleKey());
-
+			delete replaceReg;
 			// Escribo bloque
 			this->writeBlock(internalNode,internalNode->getNumBlock());
 		}
@@ -922,7 +926,8 @@ int IndexBSharp::insertInternalNode(InternalNode* internalNode,
 
 				if (brotherBlock != 0)
 					branchSisterNode = (InternalNode*)this->readNode(brotherBlock);
-				else
+
+				}else
 					branchSisterNode = NULL;
 
 				// BALANCEO
@@ -1064,7 +1069,7 @@ bool IndexBSharp::insertInternalNodeFull(InternalNode* internalNode,InternalNode
 	if(DEBUG)std::cout<<"  RAMA:B2 "<<*iteratorBranchsFinal<<" - "<<std::endl;
 	// Establece el elemento izquierdo a subir en el resultado de insercion
 	Registry* leftRegKey =(Registry*)*iteratorListRegFinal;
-	container->setLeftRegKey(leftRegKey->cloneRegKey());
+	container->setLeftRegKey(leftRegKey);
 	iteratorListRegFinal++;
 	while (rightNode->isUnderflow(getSizeMinumumNode(averageEstimate,listRegistry.size()))){
 		rightNode->addBranch(*iteratorBranchsFinal);
@@ -1083,7 +1088,7 @@ bool IndexBSharp::insertInternalNodeFull(InternalNode* internalNode,InternalNode
 	cont++;
 	// Establece el elemento derecho a subir en el resultado de insercion
 	Registry* rightRegKey =(Registry*)*iteratorListRegFinal;
-	container->setRightRegKey(rightRegKey->cloneRegKey());
+	container->setRightRegKey(rightRegKey);
 	iteratorListRegFinal++;
 	while (iteratorListRegFinal != listRegistry.end()){
 		if (newInternalNode->posibleToAgregateComponent(*iteratorListRegFinal)){
@@ -1126,6 +1131,7 @@ bool IndexBSharp::insertInternalNodeFull(InternalNode* internalNode,InternalNode
 	container->setRightBlock(newInternalNode->getNumBlock());
 	container->setMediumBlock(rightNode->getNumBlock());
 	delete newInternalNode;
+	registryFather=NULL;
 	return true;
 }
 
