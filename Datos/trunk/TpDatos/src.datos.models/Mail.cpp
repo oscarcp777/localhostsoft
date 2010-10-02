@@ -176,6 +176,7 @@ void Mail::parseMail(char* text){
 	string beginMail = "<";
 	string endMail = ">";
 	string space = " ";
+	string caracter = " =?";
 //	cout<<"*******************************************************************"<<endl;
 //	cout<<text<<endl;
 //	cout<<"*******************************************************************"<<endl;
@@ -216,6 +217,12 @@ void Mail::parseMail(char* text){
 	posFinal = textMail.find(endLine.c_str(),posInitial+subject.size());
 	if(posInitial >= 0 && posFinal>=0 ){
 		aux = textMail.substr(posInitial+subject.size(),posFinal-(posInitial+subject.size()+1));
+
+		posInitial = aux.find(caracter.c_str(),0);
+		if(posInitial >= 0){
+			aux= aux.substr(0,posInitial);
+		}
+
 		//cout<<"*************"<<aux<<"***********"<<endl;
 		this->setSubject(aux);
 	}
