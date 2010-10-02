@@ -11,6 +11,8 @@
 
 using namespace std;
 
+
+
 void printResult(Controller* control){
 
 		list<int>::iterator it;
