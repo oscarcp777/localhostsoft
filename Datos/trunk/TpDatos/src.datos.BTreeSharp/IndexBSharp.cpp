@@ -924,9 +924,8 @@ int IndexBSharp::insertInternalNode(InternalNode* internalNode,
 				// LEO BLOQUE DE LA DIR DEL HERMANO
 				InternalNode* branchSisterNode=NULL;
 
-				if (brotherBlock != 0)
+				if (brotherBlock != 0){
 					branchSisterNode = (InternalNode*)this->readNode(brotherBlock);
-
 				}else
 					branchSisterNode = NULL;
 
