@@ -11,6 +11,7 @@
 /*
  *
  */
+#define BOUNDARYMAIL **********
 #define DEBUG 0
 #define NUM_FIELDS_MAILS 6
 #define NUM_FIELDS_REG_PRIMARY 2
