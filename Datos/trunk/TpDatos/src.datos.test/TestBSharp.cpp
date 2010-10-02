@@ -77,24 +77,21 @@ void TestBSharp::testInsertAndSearch(){
 	delete indexBSharp;
 }
 void TestBSharp::testInsertAndSearchRegClassification(){
-	int cantidadAInsertar = 3753;
+	int cantidadAInsertar = 50000;
 	vector<string> vec;
-	//	 srand(time(NULL));
+	srand(time(NULL));
 	int j=0;
 	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTreeRegClassifi.dat",BLOCK_SIZE,TYPE_REG_CLASSIFICATION);
 	for (int var = 0; var < cantidadAInsertar; ++var) {
-		if(2307==var)
-			cout<<"";
 		RegClassification* regClassif = new RegClassification();
 		string keyString=StringUtils::getPassword(15);
 		vec.push_back(keyString);
 		KeyString* key= new KeyString(keyString);
 		regClassif->setKey(key);
 		regClassif->setNumBlock(var);
-		//			cout<<"########################################################## \n  Inserto el : ";
+		cout<<"\n  Inserto el : "<<var<<" ";
 		//					regClassif->print(cout);
 		indexBSharp->addRegistry(regClassif);
-		if(2307==var)			indexBSharp->print(std::cout);
 	}
 	indexBSharp->print(std::cout);
 
