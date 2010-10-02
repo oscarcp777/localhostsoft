@@ -24,14 +24,13 @@ bool File::read(std::string& datos){
 	if (this->file.is_open()) {
 		/* lee del file una linea */
 		getline(this->file, datos);
-		return true;
 		/* chequea si se ha producido un error */
 		if (this->file.fail()){
-			/* arroja una excepción ante la imposibilidad de leer un reg */
-			return false;
-			throw string("Read line error");
-
+			/* el archivo esta vacio */
+			this->file.clear();
 		}
+		return true;
+
 	}
 	else {
 		/* arroja una excepción porque el file no está abierto */
@@ -39,6 +38,7 @@ bool File::read(std::string& datos){
 		throw string("File not open");
 
 	}
+
 }
 
 
@@ -126,7 +126,8 @@ void File::writeInteger(int* num, int pos){
 }
 void File::close(){
 	this->file.close();
-
+	if (this->file.fail())
+		throw string("File not close");
 }
 
 

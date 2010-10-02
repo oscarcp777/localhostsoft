@@ -18,7 +18,6 @@ StorageController::StorageController() {
 }
 
 StorageController::~StorageController() {
-	delete this->primaryIndex;
 }
 void StorageController::addMail(char* message){
 	Mail* mail = this->generateMail(message);

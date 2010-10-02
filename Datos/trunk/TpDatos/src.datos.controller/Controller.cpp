@@ -11,12 +11,14 @@
 
 Controller::Controller() {
 	this->programFile = new TextFile();
+	this->primaryTree = NULL;
 	this->loadIndexNames();
 }
 
 Controller::~Controller() {
 	delete this->programFile;
-	delete this->primaryTree;
+	if(this->primaryTree != NULL)
+		delete this->primaryTree;
 
 	list<IndexConfig*>::iterator itIndex;
 	IndexConfig* indexConfig;

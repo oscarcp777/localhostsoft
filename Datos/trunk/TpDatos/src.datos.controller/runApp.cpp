@@ -84,6 +84,7 @@ int main (int argc,char** argv){
 		delete control;
 		return EXIT_SUCCESS;
 	}
+
 		delete control;
 		return 0;
 
@@ -137,7 +138,6 @@ int main (int argc,char** argv){
 			}
 		//*/
 		//******************************************************
-
 
 		//***********BUSQUEDA SOBRE SECUNDARIO SELECCION********
 		/*	//Controller* control= new Controller();
