@@ -525,7 +525,6 @@ bool IndexBSharp::balanceLeafNode(Registry* reg, LeafNode* actualNode,LeafNode* 
 		itListRegistry++;
 		cont++;
 	}
-	Registry* copy = container->getRegMidleKey();
 	container->setRegMidleKey(this->extractKey(*itListRegistry));
 
 	while (itListRegistry != this->listRegistry.end()) {
@@ -556,7 +555,6 @@ bool IndexBSharp::balanceLeafNode(Registry* reg, LeafNode* actualNode,LeafNode* 
 			rightNode->addComponent(*itListReg);
 			itListReg++;
 		}
-		container->setRegMidleKey(copy);
 		listRegLeftNode.clear();
 		listRegRightNode.clear();
 		return false;
@@ -777,7 +775,6 @@ bool IndexBSharp::balanceInternalNode(InternalNode* internalNode, InternalNode* 
 	itFinalListBranchs++;
 	contBranch++;
 	// Establece el elemento medio a subir en el resultado de insercion
-	Registry* copy = container->getRegMidleKey();
 	Registry* regMidleKey = (Registry*) *itFinalListRegistry;
 	container->setRegMidleKey(regMidleKey->cloneRegKey());
 	itFinalListRegistry++;
@@ -831,7 +828,6 @@ bool IndexBSharp::balanceInternalNode(InternalNode* internalNode, InternalNode* 
 		listBranchLeftNode.clear();
 		listBranchRightNode.clear();
 
-		container->setRegMidleKey(copy);
 		return false;
 	}else {
 		if(cont!=listRegistry.size()&&contBranch!=branchList.size()){
@@ -888,9 +884,10 @@ int IndexBSharp::insertInternalNode(InternalNode* internalNode,
 			childAnswer = this->insertLeafNode(leafInsertNode, registryKey, container, sisterBranch);
 		} else {
 			InternalNode* internalInsertNode = (InternalNode*)nodeInsertBranch;
-			Registry* regFatherSon = (Registry*)(*actualRegistry);
+			Registry* regFatherSon = this->extractKey((Registry*)(*actualRegistry));
 			// Inserto en el bloque interno hijo
 			childAnswer = this->insertInternalNode(internalInsertNode, registryKey, container, sisterBranch, regFatherSon);
+//			delete regFatherSon;
 		}
 
 		//Se actualiza la clave cuando hay balanceo en el hijo
