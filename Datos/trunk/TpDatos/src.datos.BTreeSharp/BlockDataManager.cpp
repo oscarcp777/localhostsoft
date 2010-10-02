@@ -58,15 +58,17 @@ void  BlockDataManager::loadListRegistry(list<KeyInteger*> &listRegistry, list<R
 void BlockDataManager::loadListIucBlockData(RegClassification* regClas,unsigned  int numBlock,ContainerInsertDataBlock* container){
 	list<KeyInteger*> listIucs;
 	Block* blockIucs;
+	int newNumBlock=0;
 	blockIucs=this->readBlockData(numBlock,container);
 	loadListRegistry(listIucs,blockIucs->iteratorBegin(),blockIucs->iteratorEnd());
 	blockIucs->clearListRegistry();
-	delete blockIucs;
-		while(blockIucs->getNextBlock()!=-1){
-			Block* block=this->readBlockData(blockIucs->getNextBlock(),container);
+	newNumBlock=blockIucs->getNextBlock();
+		while(newNumBlock!=-1){
+			delete blockIucs;
+			blockIucs=this->readBlockData(newNumBlock,container);
 			loadListRegistry(listIucs,blockIucs->iteratorBegin(),blockIucs->iteratorEnd());
-			block->clearListRegistry();
-			delete block;
+			blockIucs->clearListRegistry();
+			newNumBlock=blockIucs->getNextBlock();
 		}
 
 	regClas->setListIuc(listIucs);
