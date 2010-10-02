@@ -179,40 +179,49 @@ void Mail::parseMail(char* text){
 
 	posInitial = textMail.find(date.c_str(),0);
 	posFinal = textMail.find(endLine.c_str(),posInitial);
-	aux = textMail.substr(posInitial+date.size()+1,posFinal-(posInitial+date.size()+2));
-	//cout<<"*************"<<aux<<"***********"<<endl;
-	this->setDate(aux);
+	if(posInitial >= 0 && posFinal>=0 ){
+		aux = textMail.substr(posInitial+date.size()+1,posFinal-(posInitial+date.size()+2));
+		//cout<<"*************"<<aux<<"***********"<<endl;
+		this->setDate(aux);
+	}
 
 	posInitial = textMail.find(to.c_str(),0);
 	posFinal = textMail.find(endLine.c_str(),posInitial);
-	aux = textMail.substr(posInitial+to.size()+1,posFinal-(posInitial+to.size()+2));
-	//cout<<"*************"<<aux<<"***********"<<endl;
-	this->setTo(aux);
+	if(posInitial >= 0 && posFinal>=0 ){
+		aux = textMail.substr(posInitial+to.size()+1,posFinal-(posInitial+to.size()+2));
+		//cout<<"*************"<<aux<<"***********"<<endl;
+		this->setTo(aux);
+	}
 
 	posInitial = textMail.find(from.c_str(),0);
 	posFinal = textMail.find(endLine.c_str(),posInitial);
-	aux = textMail.substr(posInitial+from.size()+1,posFinal-(posInitial+from.size()+2));
-	//busco si el mail tiene <> porque si es un contacto figura como "nombreContacto <contacto@gmail.com>
-	posInitial = aux.find(beginMail.c_str(),0);
+	if(posInitial >= 0 && posFinal>=0 ){
+		aux = textMail.substr(posInitial+from.size()+1,posFinal-(posInitial+from.size()+2));
+		//busco si el mail tiene <> porque si es un contacto figura como "nombreContacto <contacto@gmail.com>
+		posInitial = aux.find(beginMail.c_str(),0);
 
-	if(posInitial >= 0){
-		posFinal = aux.find(endMail.c_str(),posInitial);
-		aux= aux.substr(posInitial+1,posFinal-(posInitial+1));
+		if(posInitial >= 0){
+			posFinal = aux.find(endMail.c_str(),posInitial);
+			aux= aux.substr(posInitial+1,posFinal-(posInitial+1));
+		}
+		//cout<<"*************"<<aux<<"***********"<<endl;
+		this->setFrom(aux);
 	}
-	//cout<<"*************"<<aux<<"***********"<<endl;
-	this->setFrom(aux);
 
 	posInitial = textMail.find(subject.c_str(),0);
 	posFinal = textMail.find(endLine.c_str(),posInitial);
-	aux = textMail.substr(posInitial+subject.size()+1,posFinal-(posInitial+subject.size()+2));
-	//cout<<"*************"<<aux<<"***********"<<endl;
-	this->setSubject(aux);
-
+	if(posInitial >= 0 && posFinal>=0 ){
+		aux = textMail.substr(posInitial+subject.size()+1,posFinal-(posInitial+subject.size()+2));
+		//cout<<"*************"<<aux<<"***********"<<endl;
+		this->setSubject(aux);
+	}
 	posInitial = textMail.find(message.c_str(),posFinal);
 	posInitial = textMail.find(endLine.c_str(),posInitial);
-	posFinal = textMail.find(end.c_str(),posInitial);
-	aux = textMail.substr(posInitial+1,posFinal-(posInitial+1));
-	this->setMessage(aux);
+	if(posInitial >= 0 && posFinal>=0 ){
+		posFinal = textMail.find(end.c_str(),posInitial);
+		aux = textMail.substr(posInitial+1,posFinal-(posInitial+1));
+		this->setMessage(aux);
+	}
 
 }
 int Mail::getIuc(){
