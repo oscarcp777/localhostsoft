@@ -126,7 +126,8 @@ void Mail::unPack(Buffer* buffer){
 	buffer->unPackFieldString(message,size);
 
 	buffer->unPackField(&size,sizeof(size));
-	buffer->unPackFieldString(date,size);
+	date="22_05-2010";
+//	buffer->unPackFieldString(date,size);
 
 
 

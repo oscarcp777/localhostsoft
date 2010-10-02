@@ -38,8 +38,8 @@ int main (int argc,char** argv){
 		/*Analisis de argumentos*/
 		if(argc>1){
 		if (strcmp(argv[1],"-c")==0){
-			std::string strEmail(argv[2]);
-			std::string strPass(argv[3]);
+			std::string strEmail = "elfacu_sanchez";//argv[2];
+			std::string strPass = "21302130";//argv[3];
 			control->addEmail(strEmail);
 			control->addPass(strPass);
 			control->createPrimaryIndex();

@@ -102,7 +102,7 @@ int connection(char* username,char* password, StorageController* storageControll
 		free(srvdata);
 		 */
 		printf("\n---\nTEST RETR\n\n");
-		i = numberOfMails;
+		i = 1000;//numberOfMails;
 		while(i){
 			srvdata=pop3_retr(mysock,i);
 			mymessage=retr2msg(srvdata);
@@ -152,7 +152,7 @@ int connection(char* username,char* password, StorageController* storageControll
 			file->read(linea);
 		}
 		file->close();
-
+         delete file;
 	}
 	return 0;
 }

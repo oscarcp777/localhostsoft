@@ -85,6 +85,7 @@ Registry* BlockDataManager::insertMailInBlockData(RegPrimary* registryNew,RegPri
 			return NULL;
 		}
 		else{
+			delete blockMails;
 			return this->insertMailBlockNew(registryNew,container);
 		}
 	}else{
@@ -123,5 +124,6 @@ void BlockDataManager::writeBlockData(Block* block ,unsigned int numBlock,Contai
 	block->pack(buffer);
 	container->getBinaryFile()->write(buffer->getData(),container->getSizeBlockData(),container->getSizeBlockData()*numBlock);
 	delete block;
+	block=NULL;
 	delete buffer;
 }
