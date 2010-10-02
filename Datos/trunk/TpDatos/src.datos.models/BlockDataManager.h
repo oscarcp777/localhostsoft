@@ -1,0 +1,35 @@
+/*
+ * BlockDataManager.h
+ *
+ *  Created on: 30/09/2010
+ *      Author: oscar
+ */
+
+#ifndef BLOCKDATAMANAGER_H_
+#define BLOCKDATAMANAGER_H_
+#include "Block.h"
+#include "../src.datos.BTreeSharp/ContainerInsertDataBlock.h"
+#include "Registry.h"
+#include "RegClassification.h"
+#include "RegPrimary.h"
+class BlockDataManager {
+public:
+	BlockDataManager();
+	virtual ~BlockDataManager();
+	 /**
+	  *  Escribe un bloque de datos externo al arbol con los valores determinados por el container
+	  */
+	 void writeBlockData(Block* block ,unsigned int numBlock,ContainerInsertDataBlock* container);
+	 /**
+	  *  Lee un bloque de datos externo al arbol con los valores determinados por el container
+	  */
+	 void loadListIucBlockData(RegClassification* regClas,unsigned  int numBlock,ContainerInsertDataBlock* container);
+	 Block* readBlockData(unsigned int numBlock,ContainerInsertDataBlock* container);
+	 Registry* insertMailBlockNew(RegPrimary* registry,ContainerInsertDataBlock* container);
+	 Registry* insertIucBlockNew(RegClassification* registry,ContainerInsertDataBlock* container);
+	 Registry* insertMailInBlockData(RegPrimary* registryNew,RegPrimary* registryFind,ContainerInsertDataBlock* container);
+	 Registry* insertIucInBlockData(RegClassification* registryNew,RegClassification* registryFind,ContainerInsertDataBlock* container);
+	 void      loadListRegistry(list<KeyInteger*> &listRegistry, list<Registry*>::iterator itBegin,list<Registry*>::iterator itEnd);
+};
+
+#endif /* BLOCKDATAMANAGER_H_ */

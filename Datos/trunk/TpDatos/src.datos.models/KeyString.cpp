@@ -38,7 +38,7 @@ void KeyString::unPack(Buffer* buffer){
 	buffer->unPackFieldString(this->value,size);
 }
 int  KeyString::print(std::ostream& outStream){
-	outStream<<" Clave : "<<this->value;
+	outStream<<"|"<<this->value;
      return 1;
 }
 int KeyString::getLongBytes(){

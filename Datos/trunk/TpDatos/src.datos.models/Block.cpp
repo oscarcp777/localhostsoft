@@ -18,12 +18,14 @@ Block::Block(unsigned int maxLong, unsigned int numBlock, unsigned int level) th
 	this->numBlock=numBlock;
 	this->level= level;
 	this->factory= new FactoryOfRegistry();
+	this->nextNode=-1;
 }
 Block::Block(unsigned int sizeBlock,int typeElement,bool indexed){
 	this->maxLong=sizeBlock;
 	this->indexed=indexed;
 	this->typeElement=typeElement;
 	this->factory= new FactoryOfRegistry();
+	this->nextNode=-1;
 }
 Block::Block(){
 	this->factory= new FactoryOfRegistry();
@@ -180,6 +182,8 @@ void Block::addComponent(Registry* registry) throw(){
 }
 unsigned int Block::getOcupedLong() throw() {
 	unsigned int sizeBusy=Block::getSizeRegistry();
+	sizeBusy += sizeof(unsigned int);
+	if(this->indexed)
 	sizeBusy += sizeof(unsigned int);
 	return sizeBusy;
 }

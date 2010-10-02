@@ -540,7 +540,7 @@ bool IndexBSharp::balanceLeafNode(Registry* reg, LeafNode* actualNode,LeafNode* 
 	}
 
 
-	int sizeOldMiddleKey = oldMiddleKey->getLongBytes();
+	int sizeOldMiddleKey = oldMiddleKey->getKey()->getLongBytes();
 	int sizeNewMiddleKey = container->getRegMidleKey()->getLongBytes();
 	if (itListRegistry != this->listRegistry.end()  || sizeOldMiddleKey < sizeNewMiddleKey) {
 		leftNode->clearListRegistry();
@@ -896,10 +896,11 @@ int IndexBSharp::insertInternalNode(InternalNode* internalNode,
 		if (childAnswer == BALANCE){
 			// Agrego componente
 			Registry* replaceReg = (Registry*)(*actualRegistry);
-			cout<<"reemplazo es te por este :";
+			cout<<"reemplazo este:";
 			replaceReg->print(cout);
+			cout<<"|por este :";
 			container->getRegMidleKey()->print(cout);
-			cout<<"####################"<<endl;;
+			cout<<"|"<<endl;;
 			internalNode->replaceRegistry(replaceReg, container->getRegMidleKey());
 
 			// Escribo bloque
@@ -910,6 +911,11 @@ int IndexBSharp::insertInternalNode(InternalNode* internalNode,
 		if (childAnswer == OVERFLOW) {
 			// Verifico si puedo agregar en el bloque interno
 			Registry* replaceReg = (Registry*)(*actualRegistry);
+			cout<<"OVERFLOW reemplazo este:";
+			replaceReg->print(cout);
+			cout<<"|por este :";
+			container->getLeftRegKey()->print(cout);
+			cout<<"|"<<endl;;
 			internalNode->replaceRegistry(replaceReg, container->getLeftRegKey());
 
 			if (internalNode->posibleToAgregateComponent(container->getRightRegKey())){

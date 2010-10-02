@@ -11,11 +11,17 @@
 
 string StringUtils::getPassword(int cant) {
     string ramdom = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-    string password;
+    string passwordAux,password;
 
     for(int i=0; i<cant; i++) {
-    	password+=ramdom.at(rand()%((int)ramdom.size()));
+    	passwordAux+=ramdom.at(rand()%((int)ramdom.size()));
     }
+    int cantChar=rand()%cant;
+    if(cantChar<3)
+    	cantChar=3;
+    for(int i=0; i<cantChar; i++) {
+        	password+=passwordAux.at(i);
+        }
     return password;
 
 }

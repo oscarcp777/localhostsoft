@@ -13,13 +13,15 @@ LeafNode::LeafNode(int typeElement,unsigned int maxLong, unsigned int numBlock, 
    this->setMaxLong(maxLong);
    this->setNumBlock(numBlock);
    this->setLevel(level);
+   this->blockDataManager= new BlockDataManager();
 }
 LeafNode::LeafNode(int typeElement,unsigned int maxLong){
 	this->typeElement=typeElement;
 	this->setMaxLong(maxLong);
+	this->blockDataManager= new BlockDataManager();
 }
 LeafNode::~LeafNode()throw() {
-	// TODO Auto-generated destructor stub
+  delete this->blockDataManager;
 }
 
 unsigned int LeafNode::getOcupedLong() throw(){
@@ -51,48 +53,15 @@ Registry* LeafNode::searchRegistryBlockData(Registry* registry,ContainerInsertDa
 
 	return registry;
 }
-Block* LeafNode::readBlockData(unsigned int numBlock,ContainerInsertDataBlock* container){
-       Buffer* buffer= new Buffer(container->getSizeBlockData());
-       container->getBinaryFile()->read(buffer->getData(),container->getSizeBlockData(),container->getSizeBlockData()*numBlock);
-       Block* block = new Block(container->getSizeBlockData(),container->getTypeElementData(),container->getIndexed());
-       		block->unPack(buffer);
-       		delete buffer;
-       return block;
-}
-void LeafNode::writeBlockData(Block* block ,unsigned int numBlock,ContainerInsertDataBlock* container){
-	 Buffer* buffer= new Buffer(container->getSizeBlockData());
-	 block->pack(buffer);
-     container->getBinaryFile()->write(buffer->getData(),container->getSizeBlockData(),container->getSizeBlockData()*numBlock);
-     delete block;
-     delete buffer;
-}
 
-Registry* LeafNode::insertMailBlockNew(Registry* registry,ContainerInsertDataBlock* container){
-	unsigned int numblock=container->getFreeBlockController()->searchFreeBlock();
-	Block* blockMailsNew= new Block(container->getSizeBlockData(),container->getTypeElementData(),container->getIndexed());
-	blockMailsNew->addReg(((RegPrimary*)registry)->getMail());
-	((RegPrimary*)registry)->setNumberBlock(numblock);
-	this->writeBlockData(blockMailsNew,numblock,container);
-	((RegPrimary*)registry)->setMail(NULL);
-	return registry;
-}
 
-Registry* LeafNode::insertIucBlockNew(Registry* registry,ContainerInsertDataBlock* container){
-	unsigned int numblock=container->getFreeBlockController()->searchFreeBlock();
-	Block* blockIucNew= new Block(container->getSizeBlockData(),container->getTypeElementData(),container->getIndexed());
-	blockIucNew->addReg(((RegClassification*)registry)->getIuc());
-	((RegClassification*)registry)->setNumBlock(numblock);
-	this->writeBlockData(blockIucNew,numblock,container);
-	return registry;
-}
+
+
+
 
 Registry* LeafNode::insertBlockMails(Registry* registry,ContainerInsertDataBlock* container){
 	list<Registry*>::iterator iterRegistry;
-	Registry* reg=registry;
-	Block* blockMails;
-	if(this->regList.size()==0){
-		return this->insertMailBlockNew(registry,container);
-	}
+	Registry* reg=NULL;
 	for ( iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
 		reg=*iterRegistry;
 		if(registry->compareTo(reg)<0){
@@ -102,50 +71,25 @@ Registry* LeafNode::insertBlockMails(Registry* registry,ContainerInsertDataBlock
 			break;
 		}
 	}
-	RegPrimary* regPrevious=(RegPrimary*)reg;
-	blockMails=this->readBlockData(regPrevious->getNumberBlock(),container);
+	return this->blockDataManager->insertMailInBlockData((RegPrimary*)registry,(RegPrimary*)reg,container);
 
-	if(blockMails->posibleToAgregateComponent(((RegPrimary*)registry)->getMail())){
-		blockMails->addReg(((RegPrimary*)registry)->getMail());
-		this->writeBlockData(blockMails,regPrevious->getNumberBlock(),container);
-		delete registry;
-		return NULL;
-	}else{
-		return this->insertMailBlockNew(registry,container);
-	}
-	return NULL;
 }
 Registry* LeafNode::insertBlockRegClassification(Registry* registry,ContainerInsertDataBlock* container){
 	list<Registry*>::iterator iterRegistry;
-	Registry* reg;
-	Block* blockIucs;
-	bool find = false;
+	Registry* registryFind=NULL;
 	for ( iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
-		reg=*iterRegistry;
-		if(registry->equals(reg)){
-			find = true;
+		registryFind=*iterRegistry;
+		if(registry->equals(registryFind))
 			break;
-		}
+		else
+			registryFind=NULL;
 	}
-	if(find == true){
-		RegClassification* regClass=(RegClassification*)reg;
-		blockIucs=this->readBlockData(regClass->getNumBlock(),container);
-		blockIucs->addReg(((RegClassification*)registry)->getIuc());
-		this->writeBlockData(blockIucs,regClass->getNumBlock(),container);
-		delete registry;
-		return NULL;
-	}else{
-		return this->insertIucBlockNew(registry,container);
-	}
-	return NULL;
 
-
-return registry;
+return this->blockDataManager->insertIucInBlockData((RegClassification*)registry,(RegClassification*)registryFind,container);
 }
 Registry* LeafNode::searchBlockRegClassification(Registry* registry,ContainerInsertDataBlock* container){
 	list<Registry*>::iterator iterRegistry;
 	Registry* reg;
-	Block* blockIucs;
 	bool find = false;
 	for ( iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
 		reg=*iterRegistry;
@@ -156,11 +100,7 @@ Registry* LeafNode::searchBlockRegClassification(Registry* registry,ContainerIns
 	}
 	if (find == true){
 		RegClassification* regClas=(RegClassification*)reg;
-		blockIucs=this->readBlockData(regClas->getNumBlock(),container);
-		for(iterRegistry = blockIucs->iteratorBegin(); iterRegistry != blockIucs->iteratorEnd(); iterRegistry++){
-			reg=*iterRegistry;
-			((RegClassification*)registry)->addIuc((KeyInteger*)reg);
-		}
+		this->blockDataManager->loadListIucBlockData((RegClassification*)registry,regClas->getNumBlock(),container);
 		return registry;
 	}else
 		return NULL;
@@ -169,7 +109,7 @@ void LeafNode::printMails(std::ostream& outStream,Registry* reg, ContainerInsert
 	list<Registry*>::iterator iterRegistry;
 		Block* blockMails;
 		RegPrimary* regPrevious=(RegPrimary*)reg;
-		blockMails=this->readBlockData(regPrevious->getNumberBlock(),container);
+		blockMails=this->blockDataManager->readBlockData(regPrevious->getNumberBlock(),container);
 		for(iterRegistry = blockMails->iteratorBegin(); iterRegistry != blockMails->iteratorEnd(); iterRegistry++){
 			reg=*iterRegistry;
 			((RegPrimary*)reg)->print(std::cout);
@@ -194,7 +134,7 @@ Registry* LeafNode::searchBlockMails(Registry* registry,ContainerInsertDataBlock
 		}
 	}
 	RegPrimary* regPrevious=(RegPrimary*)reg;
-	blockMails=this->readBlockData(regPrevious->getNumberBlock(),container);
+	blockMails=this->blockDataManager->readBlockData(regPrevious->getNumberBlock(),container);
 	for(iterRegistry = blockMails->iteratorBegin(); iterRegistry != blockMails->iteratorEnd(); iterRegistry++){
 		reg=*iterRegistry;
 		if(registry->compareTo(reg) == 0){

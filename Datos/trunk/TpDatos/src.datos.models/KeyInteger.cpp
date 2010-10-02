@@ -34,7 +34,7 @@ int KeyInteger::getLongBytes(){
 	return this->getSize();
 }
 int  KeyInteger::print(std::ostream& outStream){
-	outStream<<" Clave : ";
+	outStream<<"|";
 	outStream<<this->value;
      return 1;
 }

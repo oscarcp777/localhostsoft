@@ -12,6 +12,7 @@
 #include "ContainerInsertDataBlock.h"
 #include "../src.datos.models/RegPrimary.h"
 #include "../src.datos.models/RegClassification.h"
+#include "../src.datos.models/BlockDataManager.h"
 
 class LeafNode: public Node {
 public:
@@ -42,18 +43,11 @@ public:
 	 Registry* searchRegistryBlockData(Registry* registry,ContainerInsertDataBlock* container);
 	 void printMails(std::ostream& outStream,Registry* reg,ContainerInsertDataBlock* container);
 private:
-
+      BlockDataManager*  blockDataManager;
 	 // Los metodos siguientes fueron agregados al BSharp para darle la funcionalidad de un secuence set
 	 // segun se necesite
 
-	 /**
-	  *  Escribe un bloque de datos externo al arbol con los valores determinados por el container
-	  */
-	 void writeBlockData(Block* block ,unsigned int numBlock,ContainerInsertDataBlock* container);
-	 /**
-	  *  Lee un bloque de datos externo al arbol con los valores determinados por el container
-	  */
-	 Block* readBlockData(unsigned int numBlock,ContainerInsertDataBlock* container);
+
 	 /**
 	  *  Inserta un Mail en un bloque de datos, el bloque puede ser uno existe o uno nuevo
 	  */

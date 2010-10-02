@@ -31,6 +31,8 @@ public:
 	list<KeyInteger* > getIucs() const;
     int getNumBlock() const;
     void setNumBlock(int numBlock);
+    void setListIuc(list<KeyInteger*> &listIucNew);
+    void clearListIuc();
 private:
 	list<KeyInteger* > listIuc;
 	int numBlock;

@@ -25,7 +25,7 @@ TestBSharp::~TestBSharp() {
 	// TODO Auto-generated destructor stub
 }
 void TestBSharp::testInsert(){
-	 /* initialize random seed: */
+	/* initialize random seed: */
 	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTree.dat",BLOCK_SIZE,TYPE_REG_PRIMARY);
 	for (int var =0; var < 10000; ++var) {
 		RegPrimary* regPrimary = new RegPrimary();
@@ -33,10 +33,10 @@ void TestBSharp::testInsert(){
 		KeyInteger* key= new KeyInteger(keyInt);
 		regPrimary->setKey(key);
 		regPrimary->setNumberBlock(var);
-//		cout<<" Inserto el : ";
-//		regPrimary->print(cout);
+		//		cout<<" Inserto el : ";
+		//		regPrimary->print(cout);
 		indexBSharp->addRegistry(regPrimary);
-//		indexBSharp->print(std::cout);
+		//		indexBSharp->print(std::cout);
 	}
 	indexBSharp->print(std::cout);
 	delete indexBSharp;
@@ -77,42 +77,39 @@ void TestBSharp::testInsertAndSearch(){
 	delete indexBSharp;
 }
 void TestBSharp::testInsertAndSearchRegClassification(){
-	int cantidadAInsertar = 20000;
+	int cantidadAInsertar = 3753;
 	vector<string> vec;
-//	 srand(time(NULL));
+	//	 srand(time(NULL));
 	int j=0;
 	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTreeRegClassifi.dat",BLOCK_SIZE,TYPE_REG_CLASSIFICATION);
-		for (int var = 0; var < cantidadAInsertar; ++var) {
-			if(3252==var)
-				cout<<"";
-			RegClassification* regClassif = new RegClassification();
-			string keyString=StringUtils::getPassword(6);
-			vec.push_back(keyString);
-			KeyString* key= new KeyString(keyString);
-			regClassif->setKey(key);
-			regClassif->setNumBlock(var);
-//			cout<<"########################################################## \n  Inserto el : ";
-//			regClassif->print(cout);
-			indexBSharp->addRegistry(regClassif);
-//			indexBSharp->print(std::cout);
-		}
-
-		indexBSharp->print(std::cout);
+	for (int var = 0; var < cantidadAInsertar; ++var) {
+		if(2307==var)
+			cout<<"";
+		RegClassification* regClassif = new RegClassification();
+		string keyString=StringUtils::getPassword(15);
+		vec.push_back(keyString);
+		KeyString* key= new KeyString(keyString);
+		regClassif->setKey(key);
+		regClassif->setNumBlock(var);
+		//			cout<<"########################################################## \n  Inserto el : ";
+		//					regClassif->print(cout);
+		indexBSharp->addRegistry(regClassif);
+		if(2307==var)			indexBSharp->print(std::cout);
+	}
+	indexBSharp->print(std::cout);
 
 	for (std::vector<string>::iterator it=vec.begin(); it!=vec.end(); ++it) {
 		RegClassification* regClassif = new RegClassification();
 		KeyString* key= new KeyString(*it);
 		regClassif->setKey(key);
-		regClassif = (RegClassification*)indexBSharp->searchRegistry(regClassif);
+		RegClassification* regClassifind= (RegClassification*)indexBSharp->searchRegistry(regClassif);
 		if(regClassif == NULL){
 			cout<<"CLAVE: "<<key->getValue()<<" NO ENCONTRADA"<<endl;
 			j++;
 		}
-//		else{
-//			cout<<"SE ENCONTRO : ";
-//			regClassif->print(std::cout);
-//			j++;
-//		}
+
+		delete regClassif;
+		delete regClassifind;
 	}
 	cout<<"No Se encontraron "<< j << " registros!" <<endl;
 	delete indexBSharp;
@@ -121,7 +118,7 @@ void TestBSharp::testsearchRegClassification(){
 	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTreeRegClassifi.dat",BLOCK_SIZE,TYPE_REG_CLASSIFICATION);
 	indexBSharp->print(cout);
 	RegClassification* regClassif = new RegClassification();
-	KeyString* key= new KeyString("479");
+	KeyString* key= new KeyString("caceres.oscar7@gmail.com");
 	regClassif->setKey(key);
 	RegClassification* regFind = (RegClassification*)indexBSharp->searchRegistry(regClassif);
 	if(regFind == NULL)
@@ -156,6 +153,12 @@ void TestBSharp::testsearch(){
 
 }void TestBSharp::testInsertMails(){
 	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTreeMails.dat",BLOCK_SIZE,TYPE_REG_PRIMARY);
+	RegPrimary* regPrimary = new RegPrimary();
+	KeyInteger* key= new KeyInteger(1);
+	regPrimary->setKey(key);
+	indexBSharp->searchRegistry(regPrimary);
+	regPrimary->print(cout);
+	return;
 	Mail* mail1 = new Mail();
 	Mail* mail2= new Mail();
 	Mail* mail3= new Mail();
@@ -285,27 +288,57 @@ void TestBSharp::testsearch(){
 void TestBSharp::testInsertRegClassification(){
 	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTreeRegClassifi.dat",BLOCK_SIZE,TYPE_REG_CLASSIFICATION);
 
-	for (int var = 0; var < 1000; ++var) {
-		if(var==414)
-			cout<<"";
-
-		// rand()%10000;//rand()%n los numeros van de 0 a n-1
-//		stream << string(rand()%10, '_');
+	for (int var = 0; var < 300; ++var) {
 		RegClassification* regClassif = new RegClassification();
-		string keyString=StringUtils::convertirAString(var);
+		string keyString="caceres.oscar7@gmail.com";
+		if(var>50)
+			keyString="santiagoDonikian@gmail.com";
+		if(var>100)
+			keyString="r_dubini@gmail.com";
+		if(var>150)
+			keyString="facundosaravia@gmail.com";
+		if(var>250)
+			keyString="santiagoRocha@gmail.com";
 		KeyString* key= new KeyString(keyString);
 		regClassif->setKey(key);
-		regClassif->setNumBlock(var);
-		cout<<" Inserto el : ";
-		regClassif->print(cout);
+		regClassif->addIuc(new KeyInteger(var));
 		indexBSharp->addRegistry(regClassif);
-		cout<<endl;
-		indexBSharp->print(std::cout);
 	}
-
 	indexBSharp->print(std::cout);
+	RegClassification* regFind1=new RegClassification();
+	KeyString* key= new KeyString("caceres.oscar7@gmail.com");
+	regFind1->setKey(key);
+	regFind1=(RegClassification*)indexBSharp->searchRegistry(regFind1);
+	regFind1->print(cout);
+	RegClassification* regFind2=new RegClassification();
+	 key= new KeyString("santiagoDonikian@gmail.com");
+	regFind2->setKey(key);
+	regFind2=(RegClassification*)indexBSharp->searchRegistry(regFind2);
+	regFind2->print(cout);
+	RegClassification* regFind3=new RegClassification();
+    key= new KeyString("r_dubini@gmail.com");
+	regFind3->setKey(key);
+	regFind3=(RegClassification*)indexBSharp->searchRegistry(regFind3);
+	regFind3->print(cout);
+	RegClassification* regFind4=new RegClassification();
+    key= new KeyString("facundosaravia@gmail.com");
+	regFind4->setKey(key);
+	regFind4=(RegClassification*)indexBSharp->searchRegistry(regFind4);
+	regFind4->print(cout);
+	RegClassification* regFind5=new RegClassification();
+	 key= new KeyString("santiagoRocha@gmail.com");
+	regFind5->setKey(key);
+	regFind5=(RegClassification*)indexBSharp->searchRegistry(regFind5);
+	regFind5->print(cout);
+
 	cout<<" esto es una manteca bambino!!!"<<endl;
+	delete regFind1;
+	delete regFind2;
+	delete regFind3;
+	delete regFind4;
+	delete regFind5;
 	delete indexBSharp;
+
 }
 
 
