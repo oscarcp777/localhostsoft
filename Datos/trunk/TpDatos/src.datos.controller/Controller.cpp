@@ -17,7 +17,20 @@ Controller::Controller() {
 Controller::~Controller() {
 	delete this->programFile;
 	delete this->primaryTree;
-//	delete this->indexes;
+
+	list<IndexConfig*>::iterator itIndex;
+	IndexConfig* indexConfig;
+	for(itIndex = this->indexes.begin(); itIndex != this->indexes.end(); itIndex++){
+		indexConfig = *itIndex;
+		delete indexConfig;
+	}
+
+	list<Mail*>::iterator itMails;
+	Mail* mail;
+	for (itMails=this->listOfMails.begin(); itMails!=this->listOfMails.end(); itMails++){
+			mail=*itMails;
+			delete mail;
+		}
 }
 void Controller::loadInfoIndex(std::string linea,IndexConfig* index){
 

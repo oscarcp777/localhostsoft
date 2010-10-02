@@ -16,7 +16,7 @@ IndexConfig::IndexConfig() {
 }
 
 IndexConfig::~IndexConfig() {
-	// TODO Auto-generated destructor stub
+
 }
 int IndexConfig::getBlockSize() const
 {

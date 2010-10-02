@@ -11,7 +11,7 @@
 using namespace std;
 
 
-int main(int argc, char** ) {
+int main123(int argc, char** ) {
 
 
 //*****SE CONECTA Y CREA INDICE PRIMARIO***
