@@ -11,7 +11,7 @@
 
 using namespace std;
 
-void printResult(Controller* control){
+void printResult245(Controller* control){
 
 		list<int>::iterator it;
 		for(it= control->iteratorBeginListOfIucs(); it != control->iteratorEndListOfIucs(); it++){
@@ -25,7 +25,7 @@ void printResult(Controller* control){
 
 }
 
-int main (int argc,char** argv){
+int main123(int argc,char** argv){
 
 	//----- ./Aplicacion -c email pass
 	//----- ./Aplicacion -f stringAbuscar
@@ -45,7 +45,7 @@ int main (int argc,char** argv){
 		}else if (strcmp(argv[1],"-f")==0){
 			std::string strSearch(argv[2]);
 			control->searchMails(strSearch);
-			printResult(control);
+			printResult245(control);
 		}else if (strcmp(argv[1],"-si")==0){
 			IndexConfig* configOne = new IndexConfig();
 			std::string strEmail(argv[2]);

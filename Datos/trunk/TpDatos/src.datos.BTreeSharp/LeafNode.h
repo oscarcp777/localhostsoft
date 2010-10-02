@@ -12,7 +12,7 @@
 #include "ContainerInsertDataBlock.h"
 #include "../src.datos.models/RegPrimary.h"
 #include "../src.datos.models/RegClassification.h"
-#include "../src.datos.models/BlockDataManager.h"
+#include "BlockDataManager.h"
 
 class LeafNode: public Node {
 public:

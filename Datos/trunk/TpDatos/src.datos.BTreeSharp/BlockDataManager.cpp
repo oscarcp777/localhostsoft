@@ -6,7 +6,7 @@
  */
 
 #include "BlockDataManager.h"
-#include "KeyInteger.h"
+#include "../src.datos.models/KeyInteger.h"
 
 BlockDataManager::BlockDataManager() {
 	// TODO Auto-generated constructor stub

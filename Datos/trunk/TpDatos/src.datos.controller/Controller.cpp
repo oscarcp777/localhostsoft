@@ -77,7 +77,6 @@ void Controller::loadIndexNames(){
 		//procesar linea
 		IndexConfig* index = new IndexConfig();
 		this->loadInfoIndex(linea, index);
-		cout<<linea<<endl;
 		if(index->getTypeIndex().compare("Primario") == 0){
 			index->print();
 			this->primaryTree = new IndexBSharp(index->getFileName(),index->getBlockSize(),TYPE_REG_PRIMARY);

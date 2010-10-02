@@ -7,11 +7,11 @@
 
 #ifndef BLOCKDATAMANAGER_H_
 #define BLOCKDATAMANAGER_H_
-#include "Block.h"
-#include "../src.datos.BTreeSharp/ContainerInsertDataBlock.h"
-#include "Registry.h"
-#include "RegClassification.h"
-#include "RegPrimary.h"
+#include "../src.datos.models/Block.h"
+#include "ContainerInsertDataBlock.h"
+#include "../src.datos.models/Registry.h"
+#include "../src.datos.models/RegClassification.h"
+#include "../src.datos.models/RegPrimary.h"
 class BlockDataManager {
 public:
 	BlockDataManager();
