@@ -24,7 +24,6 @@ void StorageController::addMail(char* message){
 	RegPrimary* regPrimary = new RegPrimary();
 	regPrimary->setKey((KeyInteger*)mail->getKey()->clone());
 	regPrimary->setMail(mail);
-	mail->print(cout);
 	this->primaryIndex->addRegistry(regPrimary);
 
 }
@@ -33,6 +32,7 @@ Mail* StorageController::generateMail(char* message){
 	mail->parseMail(message);
 	KeyInteger* key = new KeyInteger(this->numberOfIuc);
 	mail->setKey(key);
+	cout<<"IUC: "<<this->numberOfIuc<<endl;
 	this->numberOfIuc++;
 	return mail;
 }
