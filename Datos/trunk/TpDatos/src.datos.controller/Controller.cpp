@@ -80,7 +80,7 @@ void Controller::loadIndexNames(){
 		IndexConfig* index = new IndexConfig();
 		this->loadInfoIndex(linea, index);
 		if(index->getTypeIndex().compare("Primario") == 0){
-			index->print();
+			//index->print();
 			this->primaryTree = new IndexBSharp(index->getFileName(),index->getBlockSize(),TYPE_REG_PRIMARY);
 		}
 		this->indexes.push_back(index);//en realidad tengo que meter los registros

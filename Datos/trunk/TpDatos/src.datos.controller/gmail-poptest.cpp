@@ -22,36 +22,22 @@
 void pop3_cert_setup(const char *certfile);
 
 int connection(char* username,char* password, StorageController* storageController){
+
 	if(CONNECT == 1){
 		pop3sock_t mysock;
 		char myservername[64];
-		//	char username[64];
-		//	char password[64];
 
 		struct hostent myserver;
 		struct sockaddr_in myconnection;
 
 		char* srvdata=NULL;
 		char* mymessage=NULL;
-		int* mylist;
 		int nport;
-		int i=0, last; /* 'i'ndex, 'last' cell of an array */
-
-		/* Controlo que se especifiquen todos los atributos necesarios */
-		//	if(argc<3){
-		//		printf("Usage: %s username password [ssl-cert]\n",argv[0]);
-		//		exit(0);
-		//	}
+		int i=0;
 
 
-		/* Conexi�n */
-		//	strcpy(username,argv[1]);
-		//	strncpy(argv[1], "****************", strlen(argv[1]));
-		//	strcpy(password,argv[2]);
-		//	strncpy(argv[2], "****************", strlen(argv[2]));
-
-		strcpy(myservername,"pop.mail.yahoo.com" /*"pop.gmail.com"*/);
-		nport=110;//995;
+		strcpy(myservername,SERVER);
+		nport=PORT;
 
 		libspopc_init();
 
@@ -73,61 +59,22 @@ int connection(char* username,char* password, StorageController* storageControll
 		/* Fin Conexi�n */
 
 		/* Inicio de Test */
-		printf("\n---\nTEST STAT\n\n");
+		printf("DESCARGANDO MAILS DE LA CUENTA\n");
 		srvdata=pop3_stat(mysock);
 		int numberOfMails = stat2num(srvdata);
 		printf("stat: %d mail(s)\n",numberOfMails);
 		printf("stat: %d bytes\n",stat2bytes(srvdata));
 		free(srvdata);
 
-		printf("\n---\nTEST LIST\n\n");
-		srvdata=pop3_list(mysock,0);
-		mylist=list2array(srvdata);
-		free(srvdata);
-		printf("list:\n");
-		last=mylist?mylist[0]:0;
-		last=5; /* Solo tomo 5 mensajes */
-		for(i=1;i<=last;i++){
-			printf(" %d: %d bytes\n",i,mylist?mylist[i]:0);
-		}
-		i--;/* i is the number of messages */
-		free(mylist);mylist=NULL;
-		/*
-		printf("\n---\nTEST TOP\n\n");
-		srvdata=pop3_top(mysock,i,0);
-		mymessage=retr2msg(srvdata);
-		printf("last email's header is;\n");
-		printf("%s",mymessage);
-		free(mymessage);
-		free(srvdata);
-		 */
-		printf("\n---\nTEST RETR\n\n");
-		i = 1000;//numberOfMails;
+		i = numberOfMails;
 		while(i){
 			srvdata=pop3_retr(mysock,i);
 			mymessage=retr2msg(srvdata);
 			free(srvdata);
-			//printf("mail is %d:\n",i);
-			//printf("%s",mymessage);
 			storageController->addMail(mymessage);
 			free(mymessage);mymessage=NULL;
 			i--;
 		}
-
-		/* Comento la funci�n de borrado de mails
-		printf("\n---TEST DELE\n\n");
-		for(i=1; i<=last; i++){
-			srvdata=pop3_dele(mysock, i);
-			printf("deleted %d: %s\n",i,srvdata);
-			free(srvdata);srvdata=NULL;
-		}
-
-		Comento la funci�n de RESET
-		printf("\n---TEST RSET\n\n");
-		srvdata=pop3_rset(mysock);
-		printf("canceled deletion: %s\n", srvdata);
-		free(srvdata);srvdata=NULL;
-		 */
 
 		srvdata=pop3_quit(mysock);
 		free(srvdata); srvdata=NULL;
@@ -135,7 +82,7 @@ int connection(char* username,char* password, StorageController* storageControll
 		libspopc_clean();
 	}
 	else{
-		cout<<"BAJANDO MAILS DE ARCHIVOS"<<endl;
+		cout<<"DESCARGANDO MAILS DE ARCHIVOS"<<endl;
 		TextFile* file = new TextFile();
 		file->open(MAILSFILE);
 		std::string linea = "";
