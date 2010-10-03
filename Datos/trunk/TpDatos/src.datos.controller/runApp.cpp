@@ -27,6 +27,7 @@ void printResult(Controller* control){
 
 }
 
+
 int main(int argc,char** argv){
 
 	//----- ./Aplicacion -c email pass
@@ -76,7 +77,9 @@ int main(int argc,char** argv){
 			control->loadSecondIndex(configOne);
 
 
-		}else {
+		}else if(strcmp(argv[1],"-t")==0){
+			cout <<"test"<<endl;
+		}else{
 				puts("Argumentos invalidos");
 			delete control;
 			return EXIT_SUCCESS;

@@ -196,13 +196,14 @@ Search* Controller::parseStrSearch(std::string strSearch){
 	std::string aux;
 	std::string filterName;
 	std::string filterValue;
-	Search* search =new Search();
-	int posInitial =1;
-	int posFinal=1;
-	int pos;
-	posFinal = strSearch.find("]",posInitial);
-	while((posInitial > 0) && (posFinal > 0)){
-		aux = strSearch.substr(posInitial,posFinal-posInitial);
+	int result = this->strSearchValidation(strSearch);
+	if (result == 0){
+		Search* search =new Search();
+		int posInitial = strSearch.find("[",0);
+		int posFinal=strSearch.find("]",posInitial);
+		int pos;
+		while((posInitial >= 0) && (posFinal > 0)){
+			aux = strSearch.substr(posInitial,posFinal-posInitial);
 			pos = aux.find("=",0);
 			filterName = aux.substr(0,pos);
 			filterValue = aux.substr(pos+1,(aux.length()-1)- pos);
@@ -211,11 +212,12 @@ Search* Controller::parseStrSearch(std::string strSearch){
 			search->setIndex(filterName);
 			//std::cout<<filterName<<std::endl;
 			//std::cout<<filterValue<<std::endl;
-		posInitial = strSearch.find("[",posFinal)+1;
-		posFinal = strSearch.find("]",posInitial);
-	}
+			posInitial = strSearch.find("[",posFinal)+1;
+			posFinal = strSearch.find("]",posInitial);
+		}
 
-	return search;
+		return search;
+	} else return NULL;
 }
 int Controller::searchMails(std::string strSearch){
 	Consultation* consultation = new Consultation();
@@ -310,6 +312,50 @@ list<Mail*> Controller::getListOfMails(){
 	return this->listOfMails;
 }
 
+
+int Controller::strSearchValidation(std::string strSearch){
+	std::string aux;
+	std::string filterName;
+	std::string filterValue;
+	int result=0;
+	int pos;
+	int posAux;
+	int posInitial = strSearch.find("[",0);
+	int posFinal = strSearch.find("]",posInitial);
+	if ((posInitial == -1) && (posFinal == -1)){
+		std::cout<<"Error en el string de busqueda, no se encuentran los parametros [ ] "<<std::endl;
+		return 1;
+	}
+	while((posInitial >= 0) && (posFinal > 0)){
+		if(posFinal>posInitial){
+			aux = strSearch.substr(posInitial,posFinal-posInitial);
+			pos = aux.find("=",0);
+			if(pos==-1){
+				std::cout<<"Error en el string de busqueda, no se encuentra el parametro = "<<std::endl;
+			}
+			posAux = aux.find("=",0);
+			if(posAux > -1){
+				std::cout<<"Error en el string de busqueda, existe mas de un signo = "<<std::endl;
+			}
+			filterName = aux.substr(0,pos);
+			//validar que exista el indice
+			if (!searchIndex(filterName)){
+				std::cout<<"Error en el string de busqueda, no existe el nombre de indice: "<< filterName <<std::endl;
+				result = 1;
+			}
+
+			filterValue = aux.substr(pos+1,(aux.length()-1)- pos);
+
+			posInitial = strSearch.find("[",posFinal)+1;
+			posFinal = strSearch.find("]",posInitial);
+		}else{
+			std::cout<<" Error en el string de busqueda, incorrecta ubicacion de corchetes [ ] "<<std::endl;
+		}
+	}
+
+
+	return result;
+}
 
 
 
