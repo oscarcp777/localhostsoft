@@ -13,7 +13,7 @@
  */
 #define MAILSFILE "./files/mailsGigante"
 #define BOUNDARYMAIL "**********"
-#define CONNECT 1 // 1 se conecta a la cuenta, 0 baja de un archivo
+#define CONNECT 0 // 1 se conecta a la cuenta, 0 baja de un archivo
 #define DEBUG 0
 #define NUM_FIELDS_MAILS 6
 #define NUM_FIELDS_REG_PRIMARY 2

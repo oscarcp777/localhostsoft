@@ -71,7 +71,7 @@ void Mail::setTo(string to)
 }
 unsigned int Mail::getSize(){
 	return from.length()+to.length()+subject.length()+message.length()+date.length()
-		+NUM_FIELDS_MAILS*sizeof(int)/*+this->getKey()->getSize()*/;
+		+NUM_FIELDS_MAILS*sizeof(int)+this->getKey()->getSize();
 }
 int Mail::getLongBytes(){
 	return getSize();
@@ -126,8 +126,7 @@ void Mail::unPack(Buffer* buffer){
 	buffer->unPackFieldString(message,size);
 
 	buffer->unPackField(&size,sizeof(size));
-	date="22_05-2010";
-//	buffer->unPackFieldString(date,size);
+	buffer->unPackFieldString(date,size);
 
 
 

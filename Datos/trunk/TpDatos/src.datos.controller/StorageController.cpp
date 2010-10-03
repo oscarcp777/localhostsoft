@@ -38,6 +38,7 @@ Mail* StorageController::generateMail(char* message){
 }
 IndexBSharp* StorageController::generatePrimaryIndex(char* userName, char* password,IndexConfig* configIndex){
 	string user = userName;
+	string pass = password;
 	string fileName = userName;
 	fileName += ".IndPrimario";
 	this->primaryIndex = new IndexBSharp(fileName,BLOCK_SIZE,TYPE_REG_PRIMARY);
@@ -46,6 +47,6 @@ IndexBSharp* StorageController::generatePrimaryIndex(char* userName, char* passw
 	configIndex->setTypeIndex(TYPE_PRIMARY);
 	configIndex->setUserName(user);
 	configIndex->setFilterName(TYPE_PRIMARY+user);
-	connection(userName,password,this);
+	connection((char*)user.c_str(),(char*)pass.c_str(),this);
 	return this->primaryIndex;
 }
