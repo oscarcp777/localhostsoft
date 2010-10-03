@@ -77,8 +77,23 @@ void BlockDataManager::loadListIucBlockData(RegClassification* regClas,unsigned 
 	delete blockIucs;
 
 }
+Mail* BlockDataManager::validedSizeMail(Mail* mail,ContainerInsertDataBlock* container){
+
+	if(mail->getSize()>container->getSizeBlockData()){
+		string messsage=mail->getMessage();
+		cout<<mail->getSize()<<endl;
+		cout<<messsage.size()<<endl;
+		unsigned int sizeMaxMessage =container->getSizeBlockData()-((mail->getSize()-messsage.size())+sizeof(unsigned int));
+		messsage=messsage.substr(0,sizeMaxMessage);
+		mail->setMessage(messsage);
+	}
+	return mail;
+
+}
 Registry* BlockDataManager::insertMailInBlockData(RegPrimary* registryNew,RegPrimary* registryFind,ContainerInsertDataBlock* container){
 
+	registryNew->setMail(validedSizeMail(registryNew->getMail(),container));
+	registryNew->getMail();
 	if(registryFind!=NULL){
 		Block* blockMails=this->readBlockData(registryFind->getNumberBlock(),container);
 		if(blockMails->posibleToAgregateComponent(registryNew->getMail())){

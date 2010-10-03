@@ -12,6 +12,7 @@
 #include "../src.datos.models/Registry.h"
 #include "../src.datos.models/RegClassification.h"
 #include "../src.datos.models/RegPrimary.h"
+#include "../src.datos.models/Mail.h"
 class BlockDataManager {
 public:
 	BlockDataManager();
@@ -30,6 +31,8 @@ public:
 	 Registry* insertMailInBlockData(RegPrimary* registryNew,RegPrimary* registryFind,ContainerInsertDataBlock* container);
 	 Registry* insertIucInBlockData(RegClassification* registryNew,RegClassification* registryFind,ContainerInsertDataBlock* container);
 	 void      loadListRegistry(list<KeyInteger*> &listRegistry, list<Registry*>::iterator itBegin,list<Registry*>::iterator itEnd);
+private:
+	 Mail*  validedSizeMail(Mail* mail,ContainerInsertDataBlock* container);
 };
 
 #endif /* BLOCKDATAMANAGER_H_ */
