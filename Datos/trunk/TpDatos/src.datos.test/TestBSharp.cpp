@@ -368,3 +368,8 @@ void TestBSharp::testInsertRegSelection(){
 	indexBSharp->print(std::cout);
 	delete indexBSharp;
 }
+void TestBSharp::testPrint(){
+	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/elfacu_sanchez.IndPrimario",BLOCK_SIZE,TYPE_REG_PRIMARY);
+	indexBSharp->print(std::cout);
+	delete indexBSharp;
+}

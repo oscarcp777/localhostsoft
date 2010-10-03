@@ -22,6 +22,7 @@ public:
 	void testIterator();
 	void testInsertRegSelection();
 	void testInsertAndSearchRegClassification();
+	void testPrint();
 };
 
 #endif /* TESTBSHARP_H_ */

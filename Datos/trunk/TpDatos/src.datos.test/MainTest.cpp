@@ -20,10 +20,11 @@ int mainOLD(int argc,char** argv) {
 //	test->testInsert();
 //	test->testsearch();
 //	test->testInsertAndSearch();
-	test->testInsertRegClassification();
+//	test->testInsertRegClassification();
 //	test->testsearchRegClassification();
 //	test->testInsertAndSearchRegClassification();
 //	test->testInsertMails();
+	test->testPrint();
 	delete test;
 /*
 	//TEST STORAGE

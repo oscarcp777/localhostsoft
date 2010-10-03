@@ -66,7 +66,7 @@ int connection(char* username,char* password, StorageController* storageControll
 		printf("stat: %d bytes\n",stat2bytes(srvdata));
 		free(srvdata);
 
-		i = numberOfMails;
+		i = 5;//numberOfMails;
 		while(i){
 			srvdata=pop3_retr(mysock,i);
 			mymessage=retr2msg(srvdata);
@@ -95,6 +95,7 @@ int connection(char* username,char* password, StorageController* storageControll
 				mail+=linea+"\n";
 				file->read(linea);
 			}
+			mail+="¡¡END MAIL!!";
 			storageController->addMail((char*)mail.c_str());
 			file->read(linea);
 		}

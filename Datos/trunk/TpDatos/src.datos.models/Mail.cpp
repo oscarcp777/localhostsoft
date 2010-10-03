@@ -248,7 +248,7 @@ void Mail::parseMail(char* text){
 				messageId = "Message-Id:";
 				endLine = "\n";
 				delim = "--";
-				end = "=";
+				end = "¡¡END MAIL!!";
 				beginMail = "<";
 				endMail = ">";
 				space = " ";
@@ -305,13 +305,13 @@ void Mail::parseMail(char* text){
 					//cout<<"*************"<<aux<<"***********"<<endl;
 					this->setSubject(aux);
 				}
-//				posInitial = textMail.find(message.c_str(),posFinal);
-//				posInitial = textMail.find(endLine.c_str(),posInitial);
-//				if(posInitial >= 0 && posFinal>=0 ){
-//					posFinal = textMail.find(end.c_str(),posInitial);
-//					aux = textMail.substr(posInitial+1,posFinal-(posInitial+1));
-					this->setMessage("MENSAJE"/*aux*/);
-//				}
+				posInitial = textMail.find(message.c_str(),posFinal);
+				posInitial = textMail.find(endLine.c_str(),posInitial);
+				if(posInitial >= 0 && posFinal>=0 ){
+					posFinal = textMail.find(end.c_str(),posInitial);
+					aux = textMail.substr(posInitial+1,posFinal-(posInitial+1));
+					this->setMessage(aux);
+				}
 	}
 }
 int Mail::getIuc(){
