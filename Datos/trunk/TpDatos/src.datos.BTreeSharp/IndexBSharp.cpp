@@ -836,7 +836,7 @@ bool IndexBSharp::balanceInternalNode(InternalNode* internalNode, InternalNode* 
 			     cout<<"############# DANGER SE PERDIO UN REGISTRO  O UNA RAMA  ##############"<<endl;
 			     cout<<"###########################################################"<<endl;
 			     throw eNotSpace("ERROR EN EL BALANCELEAFNODE SE PÉRDIERON REGISTROS O RAMAS !!!!!!");
-}
+		}
 		// Escribe bloque izquierdo
 		this->writeBlock(leftNode, leftNode->getNumBlock());
 		// Escribe bloque derecho
@@ -889,7 +889,11 @@ int IndexBSharp::insertInternalNode(InternalNode* internalNode,
 			Registry* regFatherSon = this->extractKey((Registry*)(*actualRegistry));
 			// Inserto en el bloque interno hijo
 			childAnswer = this->insertInternalNode(internalInsertNode, registryKey, container, sisterBranch, regFatherSon);
-
+		}
+		//Se actualiza la clave cuando hay balanceo en el hijo
+		if (childAnswer == INSERTION_OK){
+			if (fatherRegistry != NULL)
+				delete fatherRegistry;
 		}
 
 		//Se actualiza la clave cuando hay balanceo en el hijo
@@ -905,6 +909,9 @@ int IndexBSharp::insertInternalNode(InternalNode* internalNode,
 			delete replaceReg;
 			// Escribo bloque
 			this->writeBlock(internalNode,internalNode->getNumBlock());
+			if (fatherRegistry != NULL)
+				delete fatherRegistry;
+
 		}
 
 		// Verifico si hubo sobrelujo al insertar en el bloque hijo
@@ -912,10 +919,12 @@ int IndexBSharp::insertInternalNode(InternalNode* internalNode,
 			// Verifico si puedo agregar en el bloque interno
 			Registry* replaceReg = (Registry*)(*actualRegistry);
 			internalNode->replaceRegistry(replaceReg, container->getLeftRegKey());
-            delete replaceReg;
+			delete replaceReg;
 			if (internalNode->posibleToAgregateComponent(container->getRightRegKey())){
 				// Inserto en el bloque interno no lleno
 				this->insertInternalNodeNotFull(internalNode, container->getRightRegKey(),container->getRightBlock());
+				if (fatherRegistry != NULL)
+					delete fatherRegistry;
 
 			} else {
 
