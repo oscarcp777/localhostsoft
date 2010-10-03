@@ -178,11 +178,12 @@ void Mail::parseMail(char* text){
 	string endMail = ">";
 	string space = " ";
 	string caracter = " =?";
-	cout<<"*******************************************************************"<<endl;
-	cout<<text<<endl;
-	cout<<"*******************************************************************"<<endl;
 
 	if(CONNECT == 1){
+//		cout<<"*******************************************************************"<<endl;
+//		cout<<text<<endl;
+//		cout<<"*******************************************************************"<<endl;
+
 		posInitial = textMail.find(date.c_str(),0);
 		posFinal = textMail.find(endLine.c_str(),posInitial+date.size());
 
@@ -304,13 +305,13 @@ void Mail::parseMail(char* text){
 					//cout<<"*************"<<aux<<"***********"<<endl;
 					this->setSubject(aux);
 				}
-				posInitial = textMail.find(message.c_str(),posFinal);
-				posInitial = textMail.find(endLine.c_str(),posInitial);
-				if(posInitial >= 0 && posFinal>=0 ){
-					posFinal = textMail.find(end.c_str(),posInitial);
-					aux = textMail.substr(posInitial+1,posFinal-(posInitial+1));
-					this->setMessage(aux);
-				}
+//				posInitial = textMail.find(message.c_str(),posFinal);
+//				posInitial = textMail.find(endLine.c_str(),posInitial);
+//				if(posInitial >= 0 && posFinal>=0 ){
+//					posFinal = textMail.find(end.c_str(),posInitial);
+//					aux = textMail.substr(posInitial+1,posFinal-(posInitial+1));
+					this->setMessage("MENSAJE"/*aux*/);
+//				}
 	}
 }
 int Mail::getIuc(){

@@ -1,0 +1,2224 @@
+From: Michael Richters <michael.richters@gmail.com>
+To: bicyclelifestyle@googlegroups.com
+Subject: Re: {BL} Re: Shimano Roller brake
+Date: Fri Sep 03 14:42:41 ART 2010
+Content-Type: text/plain; charset=ISO-8859-1
+There are more than two versions of the Shimano Rollerbrake.  See the
+following for some insight into the differences:
+
+http://www.bakfiets-en-meer.nl/2009/08/19/around-the-world-2-sage-co-are-somewhere-else-on-workcycles-bikes/
+
+  --Mike
+
+On Fri, Sep 3, 2010 at 10:14 AM, Russel <russelhaynes@hotmail.com> wrote:
+> I think there are two grades of the roller brakes.  One of them has a
+> big cooling disc with slits in it and the other doesn't.  I think
+> you'll see both of them at this Universal Cycles link.
+>
+> http://www.universalcycles.com/search.php?q=roller+brake
+>
+> One costs twice as much as the other and I'm guessing that's the one
+> that gets installed on cargo bikes.  My wife's bike has the cheaper
+> ones, I think, and it seems to stop fine with her, a kid, and some
+> cargo.  The whole setup is probably close to 200 pounds with
+> everything (bike included).
+>
+> Russel
+
+-- 
+You received this message because you are subscribed to the Google Groups "Bicycle Lifestyle" group.
+To post to this group, send email to bicyclelifestyle@googlegroups.com.
+To unsubscribe from this group, send email to bicyclelifestyle+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/bicyclelifestyle?hl=en.
+
+
+**********
+From: chromium@googlecode.com
+To: datos.2c2010@gmail.com
+Subject: Re: Issue 38642 in chromium: official build startup gets profile directory wrong for some checks
+Date: Fri Sep 03 15:10:26 ART 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed; delsp=yes
+
+Comment #12 on issue 38642 by bugdroid1@chromium.org: official build  
+startup gets profile directory wrong for some checks
+http://code.google.com/p/chromium/issues/detail?id=38642
+
+The following revision refers to this bug:
+     http://src.chromium.org/viewvc/chrome?view=rev&revision=58479
+
+------------------------------------------------------------------------
+r58479 | mnissler@chromium.org | 2010-09-03 04:44:32 -0700 (Fri, 03 Sep  
+2010) | 6 lines
+Changed paths:
+    M  
+http://src.chromium.org/viewvc/chrome/trunk/src/chrome/app/chrome_dll_main.cc?r1=58479&r2=58478
+
+Set --user-data-dir override earlier, so breakpad gets the right path.
+
+BUG=38642
+TEST=Using an official build, check whether the crash reporter respects the  
+prefs checkbox when using --user-data_dir
+
+Review URL: http://codereview.chromium.org/3356004
+------------------------------------------------------------------------
+
+
+-- 
+You received this message because you starred the issue.
+You may adjust your notification preferences at:
+https://code.google.com/hosting/settings
+
+Reply to this email to add a comment.
+
+**********
+From: heinrich schulz <tractrix1@gmail.com>
+To: Bicycle Lifestyle <bicyclelifestyle@googlegroups.com>
+Subject: {BL} Re: Shimano Roller brake
+Date: Fri Sep 03 15:26:11 ART 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Hmmm? Are you speaking from personal experience with the Sturmey
+Archer front drum( i.e. the new ones made in the east-from aluminum)
+or hearsay. How about a 260lb loaded bike travelling across the
+Pyrenees stopping better with the new front SA than any other rim
+brake come sun or rain [joke]. and it usually rains in the mountains.
+The Arai drum may not be available, which can take more heat than a
+disc brake (ask Peter), but the front drum SA is.
+
+On Aug 30, 6:53 pm, Taylor Winfield <taylorwinfi...@ymail.com> wrote:
+> I have an Asama folding bike with a Nexus 3 speed hub and a Shimano roller brake on the rear.
+>  
+> Like the Sturmey Archer drum brakes, the Shimano roller is adequate for city use and low speeds but I don't feel it has much to offer as a stopper on a loaded touring bike.
+>
+> John Alldredge
+
+-- 
+You received this message because you are subscribed to the Google Groups "Bicycle Lifestyle" group.
+To post to this group, send email to bicyclelifestyle@googlegroups.com.
+To unsubscribe from this group, send email to bicyclelifestyle+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/bicyclelifestyle?hl=en.
+
+
+**********
+From: msrw <msrw08@gmail.com>
+To: Bicycle Lifestyle <bicyclelifestyle@googlegroups.com>
+Subject: {BL} Re: Shimano Roller brake
+Date: Fri Sep 03 15:57:54 ART 2010
+Content-Type: text/plain; charset=ISO-8859-1
+One thing to keep in mind with roller and drum brakes......
+
+How much stopping power is really necessary?  It is absolutely not the
+case that these brakes are "suicidal" when used in anything other than
+flat terrain.  They don't have the stopping power of 203mm disks, but
+the relatively more modest stopping power simply means that rider
+technique needs to take that into account.  20 years ago, the
+benchmarks for stopping power with brakes were less than they are now,
+and most everyone seems to do fine.
+
+On the plus side, hub brakes work better than rim brakes in the rain,
+require almost no maintenance (especially drums), and if used in
+accordance with their performance characteristics and limits, are fine
+in hilly, even mountainous areas.    As mentione earlier in this
+thread, my wife and I used these brakes for years in the mountains of
+northern New Mexico.  We NEVER faced a situation where the brakes
+faded to the point of failure.
+
+-- 
+You received this message because you are subscribed to the Google Groups "Bicycle Lifestyle" group.
+To post to this group, send email to bicyclelifestyle@googlegroups.com.
+To unsubscribe from this group, send email to bicyclelifestyle+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/bicyclelifestyle?hl=en.
+
+
+**********
+From: Taylor Winfield <taylorwinfield@ymail.com>
+To: bicyclelifestyle@googlegroups.com
+Subject: Re: {BL} Re: Shimano Roller brake
+Date: Fri Sep 03 17:58:35 ART 2010
+Content-Type: multipart/alternative; 
+	boundary="0-496055146-1283547515=:80100"
+"Hmmm? Are you speaking from personal experience with the Sturmey
+Archer front drum( i.e. the new ones made in the east-from aluminum)
+or hearsay"
+ 
+Heinrich,
+ 
+Regarding the Sturmey-Archer drum brake, I was referring to comments made earlier in another thread. I have no experience with S-A drums whatsoever and should have not made that comment, which was merely echoing the consensus of others.
+ 
+I stand by my opinion of the Shimano roller brake, though.
+
+John Alldredge
+
+--- On Fri, 9/3/10, heinrich schulz <tractrix1@gmail.com> wrote:
+
+
+From: heinrich schulz <tractrix1@gmail.com>
+Subject: {BL} Re: Shimano Roller brake
+To: "Bicycle Lifestyle" <bicyclelifestyle@googlegroups.com>
+Date: Friday, September 3, 2010, 6:26 PM
+
+
+Hmmm? Are you speaking from personal experience with the Sturmey
+Archer front drum( i.e. the new ones made in the east-from aluminum)
+or hearsay. How about a 260lb loaded bike travelling across the
+Pyrenees stopping better with the new front SA than any other rim
+brake come sun or rain [joke]. and it usually rains in the mountains.
+The Arai drum may not be available, which can take more heat than a
+disc brake (ask Peter), but the front drum SA is.
+
+On Aug 30, 6:53 pm, Taylor Winfield <taylorwinfi...@ymail.com> wrote:
+> I have an Asama folding bike with a Nexus 3 speed hub and a Shimano roller brake on the rear.
+>  
+> Like the Sturmey Archer drum brakes, the Shimano roller is adequate for city use and low speeds but I don't feel it has much to offer as a stopper on a loaded touring bike.
+>
+> John Alldredge
+
+-- 
+You received this message because you are subscribed to the Google Groups "Bicycle Lifestyle" group.
+To post to this group, send email to bicyclelifestyle@googlegroups.com.
+To unsubscribe from this group, send email to bicyclelifestyle+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/bicyclelifestyle?hl=en.
+
+
+
+
+      
+
+-- 
+You received this message because you are subscribed to the Google Groups "Bicycle Lifestyle" group.
+To post to this group, send email to bicyclelifestyle@googlegroups.com.
+To unsubscribe from this group, send email to bicyclelifestyle+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/bicyclelifestyle?hl=en.
+
+
+<table cellspacing="0" cellpadding="0" border="0" ><tr><td valign="top" style="font: inherit;"><DIV>"Hmmm? Are you speaking from personal experience with the Sturmey<BR>Archer front drum( i.e. the new ones made in the east-from aluminum)<BR>or hearsay"</DIV>
+<DIV>&nbsp;</DIV>
+<DIV>Heinrich,</DIV>
+<DIV>&nbsp;</DIV>
+<DIV>Regarding the Sturmey-Archer drum brake, I was referring to comments made earlier in another thread. I have no experience with S-A drums whatsoever and should have not made that comment, which was merely echoing the consensus of others.</DIV>
+<DIV>&nbsp;</DIV>
+<DIV>I stand by my opinion of the Shimano roller brake, though.<BR><BR>John Alldredge<BR><BR>--- On <B>Fri, 9/3/10, heinrich schulz <I>&lt;tractrix1@gmail.com&gt;</I></B> wrote:<BR></DIV>
+<BLOCKQUOTE style="BORDER-LEFT: rgb(16,16,255) 2px solid; PADDING-LEFT: 5px; MARGIN-LEFT: 5px"><BR>From: heinrich schulz &lt;tractrix1@gmail.com&gt;<BR>Subject: {BL} Re: Shimano Roller brake<BR>To: "Bicycle Lifestyle" &lt;bicyclelifestyle@googlegroups.com&gt;<BR>Date: Friday, September 3, 2010, 6:26 PM<BR><BR>
+<DIV class=plainMail>Hmmm? Are you speaking from personal experience with the Sturmey<BR>Archer front drum( i.e. the new ones made in the east-from aluminum)<BR>or hearsay. How about a 260lb loaded bike travelling across the<BR>Pyrenees stopping better with the new front SA than any other rim<BR>brake come sun or rain [joke]. and it usually rains in the mountains.<BR>The Arai drum may not be available, which can take more heat than a<BR>disc brake (ask Peter), but the front drum SA is.<BR><BR>On Aug 30, 6:53&nbsp;pm, Taylor Winfield &lt;<A href="http://us.mc1111.mail.yahoo.com/mc/compose?to=taylorwinfi...@ymail.com" ymailto="mailto:taylorwinfi...@ymail.com">taylorwinfi...@ymail.com</A>&gt; wrote:<BR>&gt; I have an Asama folding bike with a Nexus 3 speed hub and a Shimano roller brake on the rear.<BR>&gt; &nbsp;<BR>&gt; Like the Sturmey Archer drum brakes, the Shimano roller is adequate for city use and low speeds but I don't feel it has much to offer as
+ a stopper on a loaded touring bike.<BR>&gt;<BR>&gt; John Alldredge<BR><BR>-- <BR>You received this message because you are subscribed to the Google Groups "Bicycle Lifestyle" group.<BR>To post to this group, send email to <A href="http://us.mc1111.mail.yahoo.com/mc/compose?to=bicyclelifestyle@googlegroups.com" ymailto="mailto:bicyclelifestyle@googlegroups.com">bicyclelifestyle@googlegroups.com</A>.<BR>To unsubscribe from this group, send email to bicyclelifestyle+<A href="http://us.mc1111.mail.yahoo.com/mc/compose?to=unsubscribe@googlegroups.com" ymailto="mailto:unsubscribe@googlegroups.com">unsubscribe@googlegroups.com</A>.<BR>For more options, visit this group at <A href="http://groups.google.com/group/bicyclelifestyle?hl=en" target=_blank>http://groups.google.com/group/bicyclelifestyle?hl=en</A>.<BR><BR></DIV></BLOCKQUOTE></td></tr></table><br>
+
+
+
+
+
+
+
+      
+
+<p></p>
+
+-- <br />
+You received this message because you are subscribed to the Google Groups "Bicycle Lifestyle" group.<br />
+To post to this group, send email to bicyclelifestyle@googlegroups.com.<br />
+To unsubscribe from this group, send email to bicyclelifestyle+unsubscribe@googlegroups.com.<br />
+
+For more options, visit this group at http://groups.google.com/group/bicyclelifestyle?hl=en.<br />
+
+
+
+**********
+From: heinrich schulz <tractrix1@gmail.com>
+To: Bicycle Lifestyle <bicyclelifestyle@googlegroups.com>
+Subject: {BL} Re: Shimano Roller brake
+Date: Fri Sep 03 18:02:26 ART 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Here is a FORTUNATE difference of opinions\experiences with msrw and
+myself using drum brakes most successfully and Willem J and Taylor
+Windfield not having good experiences. It would be nice to figure this
+out because good stopping power in rain or shine with little pad wear
+and low maintenance would be a great objective end point for touring
+or city riding. It would seem that one of the differences could be
+that both msrw and myself  used at least one of our drum  brakes on
+the front wheel. And of course the front brake is the one with the
+most stopping power. I'm not sure if Wlllem J or Taylor Windfield used
+a front drum in their set ups.  Another difference could be in the set-
+up adjustment and or ones hand strength. It is important to get enough
+leverage for ones grip strength. Having experimented with different
+brake levers myself it can make quite a difference to the
+effectiveness of the drum brake. Another possibility would be the
+materials (+\- grease) from which the brake is made. My understanding
+(total hearsay) is that the aluminum drums stop better than the old
+steel ones. However I do use a 50 year old steel shimano coaster brake
+in the city in the winter quite successfully but as Willem J said , I
+wouldn't even try it for touring.
+
+On Sep 3, 2:57 pm, msrw <msr...@gmail.com> wrote:
+> One thing to keep in mind with roller and drum brakes......
+>
+> How much stopping power is really necessary?  It is absolutely not the
+> case that these brakes are "suicidal" when used in anything other than
+> flat terrain.  They don't have the stopping power of 203mm disks, but
+> the relatively more modest stopping power simply means that rider
+> technique needs to take that into account.  20 years ago, the
+> benchmarks for stopping power with brakes were less than they are now,
+> and most everyone seems to do fine.
+>
+> On the plus side, hub brakes work better than rim brakes in the rain,
+> require almost no maintenance (especially drums), and if used in
+> accordance with their performance characteristics and limits, are fine
+> in hilly, even mountainous areas.    As mentione earlier in this
+> thread, my wife and I used these brakes for years in the mountains of
+> northern New Mexico.  We NEVER faced a situation where the brakes
+> faded to the point of failure.
+
+-- 
+You received this message because you are subscribed to the Google Groups "Bicycle Lifestyle" group.
+To post to this group, send email to bicyclelifestyle@googlegroups.com.
+To unsubscribe from this group, send email to bicyclelifestyle+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/bicyclelifestyle?hl=en.
+
+
+**********
+From: Taylor Winfield <taylorwinfield@ymail.com>
+To: bicyclelifestyle@googlegroups.com
+Subject: Re: {BL} Re: Shimano Roller brake
+Date: Fri Sep 03 18:29:39 ART 2010
+Content-Type: multipart/alternative; 
+	boundary="0-867006782-1283549379=:19372"
+Heinrich,
+ 
+The only Shimano roller brake I own is on the rear only of a simple 3 speed Nexus hub gear folding bike with 16" wheels. The roller brake is more than adequate in this application. My original conjecture was that this little roller brake would not be my first choice for a primary stopper on a loaded touring bike in the mountains. Some others concurred.
+ 
+Since I have read about the more advanced Shimano Roller brakes thanks to posts on this thread, I might accept that those better brakes are up to the task of heavy duty touring. They do surely have the advantages of low maintenance and wet weather effectiveness.
+ 
+In my own (limited) touring experience (no mountains), I have found cantilever brakes to be up to the task. If I were building a bike just for touring, I would strongly consider discs, based on my current level of knowledge. My current "touring" bike, a very high mileage Miyata 610 from 1984 has cantis with red Scott-Matthausen pads and these brakes have given me no problems whatsoever in the 12 years I have owned the bike. I have only replaced the cables once in that time and adjusted the straddle cable a few times.
+
+John Alldredge
+
+--- On Fri, 9/3/10, heinrich schulz <tractrix1@gmail.com> wrote:
+
+
+From: heinrich schulz <tractrix1@gmail.com>
+Subject: {BL} Re: Shimano Roller brake
+To: "Bicycle Lifestyle" <bicyclelifestyle@googlegroups.com>
+Date: Friday, September 3, 2010, 9:02 PM
+
+
+Here is a FORTUNATE difference of opinions\experiences with msrw and
+myself using drum brakes most successfully and Willem J and Taylor
+Windfield not having good experiences. It would be nice to figure this
+out because good stopping power in rain or shine with little pad wear
+and low maintenance would be a great objective end point for touring
+or city riding. It would seem that one of the differences could be
+that both msrw and myself  used at least one of our drum  brakes on
+the front wheel. And of course the front brake is the one with the
+most stopping power. I'm not sure if Wlllem J or Taylor Windfield used
+a front drum in their set ups.  Another difference could be in the set-
+up adjustment and or ones hand strength. It is important to get enough
+leverage for ones grip strength. Having experimented with different
+brake levers myself it can make quite a difference to the
+effectiveness of the drum brake. Another possibility would be the
+materials (+\- grease) from which the brake is made. My understanding
+(total hearsay) is that the aluminum drums stop better than the old
+steel ones. However I do use a 50 year old steel shimano coaster brake
+in the city in the winter quite successfully but as Willem J said , I
+wouldn't even try it for touring.
+
+On Sep 3, 2:57 pm, msrw <msr...@gmail.com> wrote:
+> One thing to keep in mind with roller and drum brakes......
+>
+> How much stopping power is really necessary?  It is absolutely not the
+> case that these brakes are "suicidal" when used in anything other than
+> flat terrain.  They don't have the stopping power of 203mm disks, but
+> the relatively more modest stopping power simply means that rider
+> technique needs to take that into account.  20 years ago, the
+> benchmarks for stopping power with brakes were less than they are now,
+> and most everyone seems to do fine.
+>
+> On the plus side, hub brakes work better than rim brakes in the rain,
+> require almost no maintenance (especially drums), and if used in
+> accordance with their performance characteristics and limits, are fine
+> in hilly, even mountainous areas.    As mentione earlier in this
+> thread, my wife and I used these brakes for years in the mountains of
+> northern New Mexico.  We NEVER faced a situation where the brakes
+> faded to the point of failure.
+
+-- 
+You received this message because you are subscribed to the Google Groups "Bicycle Lifestyle" group.
+To post to this group, send email to bicyclelifestyle@googlegroups.com.
+To unsubscribe from this group, send email to bicyclelifestyle+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/bicyclelifestyle?hl=en.
+
+
+
+
+      
+
+-- 
+You received this message because you are subscribed to the Google Groups "Bicycle Lifestyle" group.
+To post to this group, send email to bicyclelifestyle@googlegroups.com.
+To unsubscribe from this group, send email to bicyclelifestyle+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/bicyclelifestyle?hl=en.
+
+
+<table cellspacing="0" cellpadding="0" border="0" ><tr><td valign="top" style="font: inherit;"><DIV>Heinrich,</DIV>
+<DIV>&nbsp;</DIV>
+<DIV>The only&nbsp;Shimano roller brake I own&nbsp;is on the rear only of a simple 3 speed Nexus hub gear folding bike with 16" wheels. The roller brake is more than adequate in this application. My original conjecture was that&nbsp;this little roller brake would not be my first choice for a primary stopper on a loaded touring bike in the mountains. Some others concurred.</DIV>
+<DIV>&nbsp;</DIV>
+<DIV>Since I have read about the more advanced Shimano Roller brakes thanks to posts on this thread, I might accept that those better brakes are up to the task of heavy duty touring. They do surely have the advantages of low maintenance and wet weather effectiveness.</DIV>
+<DIV>&nbsp;</DIV>
+<DIV>In my own (limited) touring experience (no mountains), I have found cantilever brakes to be up to the task. If I were building a bike just for touring, I would strongly&nbsp;consider discs, based on my current level of knowledge. My current "touring" bike, a very high mileage Miyata 610 from 1984 has cantis with red&nbsp;Scott-Matthausen pads and these brakes have given me no problems whatsoever in the 12 years I have owned the bike. I have only replaced the cables once in that time and adjusted the straddle cable a few times.<BR><BR>John Alldredge<BR><BR>--- On <B>Fri, 9/3/10, heinrich schulz <I>&lt;tractrix1@gmail.com&gt;</I></B> wrote:<BR></DIV>
+<BLOCKQUOTE style="BORDER-LEFT: rgb(16,16,255) 2px solid; PADDING-LEFT: 5px; MARGIN-LEFT: 5px"><BR>From: heinrich schulz &lt;tractrix1@gmail.com&gt;<BR>Subject: {BL} Re: Shimano Roller brake<BR>To: "Bicycle Lifestyle" &lt;bicyclelifestyle@googlegroups.com&gt;<BR>Date: Friday, September 3, 2010, 9:02 PM<BR><BR>
+<DIV class=plainMail>Here is a FORTUNATE difference of opinions\experiences with msrw and<BR>myself using drum brakes most successfully and Willem J and Taylor<BR>Windfield not having good experiences. It would be nice to figure this<BR>out because good stopping power in rain or shine with little pad wear<BR>and low maintenance would be a great objective end point for touring<BR>or city riding. It would seem that one of the differences could be<BR>that both msrw and myself&nbsp; used at least one of our drum&nbsp; brakes on<BR>the front wheel. And of course the front brake is the one with the<BR>most stopping power. I'm not sure if Wlllem J or Taylor Windfield used<BR>a front drum in their set ups.&nbsp; Another difference could be in the set-<BR>up adjustment and or ones hand strength. It is important to get enough<BR>leverage for ones grip strength. Having experimented with different<BR>brake levers myself it can make quite a difference to
+ the<BR>effectiveness of the drum brake. Another possibility would be the<BR>materials (+\- grease) from which the brake is made. My understanding<BR>(total hearsay) is that the aluminum drums stop better than the old<BR>steel ones. However I do use a 50 year old steel shimano coaster brake<BR>in the city in the winter quite successfully but as Willem J said , I<BR>wouldn't even try it for touring.<BR><BR>On Sep 3, 2:57&nbsp;pm, msrw &lt;<A href="http://us.mc1111.mail.yahoo.com/mc/compose?to=msr...@gmail.com" ymailto="mailto:msr...@gmail.com">msr...@gmail.com</A>&gt; wrote:<BR>&gt; One thing to keep in mind with roller and drum brakes......<BR>&gt;<BR>&gt; How much stopping power is really necessary? &nbsp;It is absolutely not the<BR>&gt; case that these brakes are "suicidal" when used in anything other than<BR>&gt; flat terrain. &nbsp;They don't have the stopping power of 203mm disks, but<BR>&gt; the relatively more modest stopping power simply means
+ that rider<BR>&gt; technique needs to take that into account. &nbsp;20 years ago, the<BR>&gt; benchmarks for stopping power with brakes were less than they are now,<BR>&gt; and most everyone seems to do fine.<BR>&gt;<BR>&gt; On the plus side, hub brakes work better than rim brakes in the rain,<BR>&gt; require almost no maintenance (especially drums), and if used in<BR>&gt; accordance with their performance characteristics and limits, are fine<BR>&gt; in hilly, even mountainous areas. &nbsp; &nbsp;As mentione earlier in this<BR>&gt; thread, my wife and I used these brakes for years in the mountains of<BR>&gt; northern New Mexico. &nbsp;We NEVER faced a situation where the brakes<BR>&gt; faded to the point of failure.<BR><BR>-- <BR>You received this message because you are subscribed to the Google Groups "Bicycle Lifestyle" group.<BR>To post to this group, send email to <A
+ href="http://us.mc1111.mail.yahoo.com/mc/compose?to=bicyclelifestyle@googlegroups.com" ymailto="mailto:bicyclelifestyle@googlegroups.com">bicyclelifestyle@googlegroups.com</A>.<BR>To unsubscribe from this group, send email to bicyclelifestyle+<A href="http://us.mc1111.mail.yahoo.com/mc/compose?to=unsubscribe@googlegroups.com" ymailto="mailto:unsubscribe@googlegroups.com">unsubscribe@googlegroups.com</A>.<BR>For more options, visit this group at <A href="http://groups.google.com/group/bicyclelifestyle?hl=en" target=_blank>http://groups.google.com/group/bicyclelifestyle?hl=en</A>.<BR><BR></DIV></BLOCKQUOTE></td></tr></table><br>
+
+
+
+
+
+
+
+      
+
+<p></p>
+
+-- <br />
+You received this message because you are subscribed to the Google Groups "Bicycle Lifestyle" group.<br />
+To post to this group, send email to bicyclelifestyle@googlegroups.com.<br />
+To unsubscribe from this group, send email to bicyclelifestyle+unsubscribe@googlegroups.com.<br />
+
+For more options, visit this group at http://groups.google.com/group/bicyclelifestyle?hl=en.<br />
+
+
+
+**********
+From: Bone Killian <vitki@bonius.com>
+To: Bicycle Lifestyle <bicyclelifestyle@googlegroups.com>
+Subject: Re: {BL} Re: Shimano Roller brake
+Date: Sat Sep 04 11:15:23 ART 2010
+Content-Type: text/plain; charset=ISO-8859-1
+
+
+On Sep 3, 4:58 pm, Taylor Winfield <taylorwinfi...@ymail.com> wrote:
+> "Hmmm? Are you speaking from personal experience with the Sturmey
+> Archer front drum( i.e. the new ones made in the east-from aluminum)
+> or hearsay"
+>  
+
+I have an Eastman Roadster setup with the new 90mm Sturmey-Archer drum
+brakes front and rear.  They stop a lot better than I expected them
+to.  Not as good as cantis when it's dry, but probably better than
+cantis in the wet.  I weigh 300 pounds, and the Roadster probably
+weighs another 50, so I'm probably subjecting them to more strain than
+a normal person with a touring load.
+
+You have to apply them a bit earlier than you would with cantis, but
+not significantly sooner, I'd say they're maybe 75% as good (totally
+non scientific-guesstimate).
+
+I don't have any really long descents on my commute, so I don't know
+how much they fade when they get hot.   I don't think I'd want to go
+touring in the Alps with them or anything, but they're adequate for my
+somewhat hilly commute.
+
+-- 
+You received this message because you are subscribed to the Google Groups "Bicycle Lifestyle" group.
+To post to this group, send email to bicyclelifestyle@googlegroups.com.
+To unsubscribe from this group, send email to bicyclelifestyle+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/bicyclelifestyle?hl=en.
+
+
+**********
+From: WillemJ <willem.jongman@gmail.com>
+To: Bicycle Lifestyle <bicyclelifestyle@googlegroups.com>
+Subject: Re: {BL} Re: Shimano Roller brake
+Date: Sat Sep 04 12:07:52 ART 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Of course I have used them with front and rear brake. Just to repeat
+myself, they are fine for commuter and city use, and if they are not
+braking well on any specific bike, they are not functioning as they
+should. However, their braking power is only adequate, they do fade on
+long descents, and also, their life expectancy is limited. They are
+low end stuff. If you want really excellent braking on a loaded
+touring bike (or a commuter) in dry and wet conditions, ultra low
+maintenance and a long life even under harsh conditions, get Magura
+hydraulic rim brakes. They brake phenominally well, with excellent
+modulation. Replacing pads cannot be easier. Only xtr v brakes come
+near.
+Willem
+
+On Sep 4, 4:15 pm, Bone Killian <vi...@bonius.com> wrote:
+> On Sep 3, 4:58 pm, Taylor Winfield <taylorwinfi...@ymail.com> wrote:
+>
+> > "Hmmm? Are you speaking from personal experience with the Sturmey
+> > Archer front drum( i.e. the new ones made in the east-from aluminum)
+> > or hearsay"
+> >  
+>
+> I have an Eastman Roadster setup with the new 90mm Sturmey-Archer drum
+> brakes front and rear.  They stop a lot better than I expected them
+> to.  Not as good as cantis when it's dry, but probably better than
+> cantis in the wet.  I weigh 300 pounds, and the Roadster probably
+> weighs another 50, so I'm probably subjecting them to more strain than
+> a normal person with a touring load.
+>
+> You have to apply them a bit earlier than you would with cantis, but
+> not significantly sooner, I'd say they're maybe 75% as good (totally
+> non scientific-guesstimate).
+>
+> I don't have any really long descents on my commute, so I don't know
+> how much they fade when they get hot.   I don't think I'd want to go
+> touring in the Alps with them or anything, but they're adequate for my
+> somewhat hilly commute.
+
+-- 
+You received this message because you are subscribed to the Google Groups "Bicycle Lifestyle" group.
+To post to this group, send email to bicyclelifestyle@googlegroups.com.
+To unsubscribe from this group, send email to bicyclelifestyle+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/bicyclelifestyle?hl=en.
+
+
+**********
+From: msrw <msrw08@gmail.com>
+To: Bicycle Lifestyle <bicyclelifestyle@googlegroups.com>
+Subject: Re: {BL} Re: Shimano Roller brake
+Date: Sun Sep 05 00:56:06 ART 2010
+Content-Type: text/plain; charset=ISO-8859-1
+On Sep 4, 9:07 am, WillemJ <willem.jong...@gmail.com> wrote:
+, and also, their life expectancy is limited. They are
+> low end stuff. If you want really excellent braking on a loaded
+> touring bike (or a commuter) in dry and wet conditions, ultra low
+> maintenance and a long life even under harsh conditions, get Magura
+> hydraulic rim brakes. They brake phenominally well, with excellent
+> modulation. Replacing pads cannot be easier. Only xtr v brakes come
+> near.
+> Willem
+
+Willem, drum brakes have limited life expectancy?  They last forever.
+
+As for Magura hydraulic rim brakes, I had a set on a mountain bike for
+awhile.  They are overly heavy, MUCH more complicated than cable
+actuated brakes, and in my view, a solution in search of a problem.
+They have been described as all the complexity of disks with all of
+the limits of rim brakes.  In my experience, they don't work any
+bettter than, say, Paul Motolite linear pull brakes and are less
+reliable.
+
+-- 
+You received this message because you are subscribed to the Google Groups "Bicycle Lifestyle" group.
+To post to this group, send email to bicyclelifestyle@googlegroups.com.
+To unsubscribe from this group, send email to bicyclelifestyle+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/bicyclelifestyle?hl=en.
+
+
+**********
+From: WillemJ <willem.jongman@gmail.com>
+To: Bicycle Lifestyle <bicyclelifestyle@googlegroups.com>
+Subject: Re: {BL} Re: Shimano Roller brake
+Date: Sun Sep 05 05:10:08 ART 2010
+Content-Type: text/plain; charset=ISO-8859-1
+I strongly disagree on both counts, and it is not from lack of
+familiarity: there are millions of commuter bikes in Holland, and
+nearly all of them have roller brakes or back pedalling coaster brakes
+(and usually also crappy Shimano 7 speed hub gears, and now
+increasingly also the cheap Shimano hub generators with roller
+brakes). Traditional drum brakes lasted a long time, but the roller
+brakes do not (nor do the Shimano hub gears or cheaper hub
+generators). As for Magura HS 33 (and the HS 66 on my drop bar
+tourer), there is absolutely nothing complex about them. They are fit
+and forget stuff. Even the pads last longer than those on v brakes,
+and as I said, those are dead easy to replace. I think there are now
+very few high end touring bikes here that do not have them. I am a
+member of the Dutch Assoiation of World Cyclists, and on our Norway
+trip a month ago, I think 60% had Magura's, including every single
+recently built bike (all of them also had Rohloff hubs). I would not
+fit them on an ultralight rando bike (v brakes with tektro drop bar v
+brake levers or canti's there), and on a seriously off road loaded
+tourer I might fit discs, particularly if the terrain is muddy. For
+every other bike it is Magura's for me. We have a couple of bikes with
+Magura's in the family, and they have been zero maintenance.
+Willem
+
+On Sep 5, 5:56 am, msrw <msr...@gmail.com> wrote:
+> On Sep 4, 9:07 am, WillemJ <willem.jong...@gmail.com> wrote:
+> , and also, their life expectancy is limited. They are
+>
+> > low end stuff. If you want really excellent braking on a loaded
+> > touring bike (or a commuter) in dry and wet conditions, ultra low
+> > maintenance and a long life even under harsh conditions, get Magura
+> > hydraulic rim brakes. They brake phenominally well, with excellent
+> > modulation. Replacing pads cannot be easier. Only xtr v brakes come
+> > near.
+> > Willem
+>
+> Willem, drum brakes have limited life expectancy?  They last forever.
+>
+> As for Magura hydraulic rim brakes, I had a set on a mountain bike for
+> awhile.  They are overly heavy, MUCH more complicated than cable
+> actuated brakes, and in my view, a solution in search of a problem.
+> They have been described as all the complexity of disks with all of
+> the limits of rim brakes.  In my experience, they don't work any
+> bettter than, say, Paul Motolite linear pull brakes and are less
+> reliable.
+
+-- 
+You received this message because you are subscribed to the Google Groups "Bicycle Lifestyle" group.
+To post to this group, send email to bicyclelifestyle@googlegroups.com.
+To unsubscribe from this group, send email to bicyclelifestyle+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/bicyclelifestyle?hl=en.
+
+
+**********
+From: msrw <msrw08@gmail.com>
+To: Bicycle Lifestyle <bicyclelifestyle@googlegroups.com>
+Subject: Re: {BL} Re: Shimano Roller brake
+Date: Sun Sep 05 15:37:10 ART 2010
+Content-Type: text/plain; charset=ISO-8859-1
+
+
+On Sep 5, 2:10 am, WillemJ <willem.jong...@gmail.com> wrote:
+Traditional drum brakes lasted a long time, but the roller
+> brakes do not.....
+
+Willem,
+
+I would defer to you re roller brake longevity.  I only have direct
+experience with roller brakes on one bicycle.
+
+Re the Magura's, both of my Magura rim brakes lost pressure once when
+I took the bike from a warm interior to a very cold exterior.  The
+brakes needed to be rebled.
+
+But that was a few years back.  The design may have been improved
+since then.  Is Magura no longer suggesting that the brakes should be
+bled on an annual basis?  Do the seals no longer fail and/or need to
+be replaced on a medium length schedule?  Are the brakes no longer
+about three times heavier than a good set of linear pull brakes?  Even
+if all of these are no longer issues with Magura rim brakes, since
+they don't have superior braking to Paul Motolites, I don't really get
+the attraction--it does seem to be the case that European riders are
+enamoured with Maguras.
+
+
+
+
+
+
+As for Magura HS 33 (and the HS 66 on my drop bar
+> tourer), there is absolutely nothing complex about them. They are fit
+> and forget stuff. Even the pads last longer than those on v brakes,
+> and as I said, those are dead easy to replace. I think there are now
+> very few high end touring bikes here that do not have them. I am a
+> member of the Dutch Assoiation of World Cyclists, and on our Norway
+> trip a month ago, I think 60% had Magura's, including every single
+> recently built bike (all of them also had Rohloff hubs). I would not
+> fit them on an ultralight rando bike (v brakes with tektro drop bar v
+> brake levers or canti's there), and on a seriously off road loaded
+> tourer I might fit discs, particularly if the terrain is muddy. For
+> every other bike it is Magura's for me. We have a couple of bikes with
+> Magura's in the family, and they have been zero maintenance.
+> Willem
+>
+> On Sep 5, 5:56 am, msrw <msr...@gmail.com> wrote:
+>
+>
+>
+> > On Sep 4, 9:07 am, WillemJ <willem.jong...@gmail.com> wrote:
+> > , and also, their life expectancy is limited. They are
+>
+> > > low end stuff. If you want really excellent braking on a loaded
+> > > touring bike (or a commuter) in dry and wet conditions, ultra low
+> > > maintenance and a long life even under harsh conditions, get Magura
+> > > hydraulic rim brakes. They brake phenominally well, with excellent
+> > > modulation. Replacing pads cannot be easier. Only xtr v brakes come
+> > > near.
+> > > Willem
+>
+> > Willem, drum brakes have limited life expectancy?  They last forever.
+>
+> > As for Magura hydraulic rim brakes, I had a set on a mountain bike for
+> > awhile.  They are overly heavy, MUCH more complicated than cable
+> > actuated brakes, and in my view, a solution in search of a problem.
+> > They have been described as all the complexity of disks with all of
+> > the limits of rim brakes.  In my experience, they don't work any
+> > bettter than, say, Paul Motolite linear pull brakes and are less
+> > reliable.- Hide quoted text -
+>
+> - Show quoted text -
+
+-- 
+You received this message because you are subscribed to the Google Groups "Bicycle Lifestyle" group.
+To post to this group, send email to bicyclelifestyle@googlegroups.com.
+To unsubscribe from this group, send email to bicyclelifestyle+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/bicyclelifestyle?hl=en.
+
+
+**********
+From: WillemJ <willem.jongman@gmail.com>
+To: Bicycle Lifestyle <bicyclelifestyle@googlegroups.com>
+Subject: Re: {BL} Re: Shimano Roller brake
+Date: Sun Sep 05 16:39:03 ART 2010
+Content-Type: text/plain; charset=windows-1252
+From the manual, and this has not changed:
+MAGURA brakes do not need any special maintenance after correct
+installation.
+Regular bleeding is absolutely not necessary, because the MAGURA Blood
+mineral oil
+does not contract water like DOT brake liquid used in cars, on
+motorcycles and competitors’
+products.
+
+The rest of the recent manual is here:
+http://www.magura.com/uploads/media/downloads/WSFelgenbremsen_2010E.pdf
+An older manual with essentially the same message is here:
+http://www.magura.com/uploads/media/downloads/Felgen_05_E.pdf
+
+I decided to check my memory, and got out on two of our bikes, one
+with XT V brakes, and one with the Magura HS 33. When I used the XT V
+brakes (with Koolstop Salmon cartridge pads), I once again thought how
+good they were. But then I got on the HS 33 bike (again, salmon
+compound). It was a different world.
+
+Willem
+
+
+
+On Sep 5, 8:37 pm, msrw <msr...@gmail.com> wrote:
+> On Sep 5, 2:10 am, WillemJ <willem.jong...@gmail.com> wrote:
+> Traditional drum brakes lasted a long time, but the roller
+>
+> > brakes do not.....
+>
+> Willem,
+>
+> I would defer to you re roller brake longevity.  I only have direct
+> experience with roller brakes on one bicycle.
+>
+> Re the Magura's, both of my Magura rim brakes lost pressure once when
+> I took the bike from a warm interior to a very cold exterior.  The
+> brakes needed to be rebled.
+>
+> But that was a few years back.  The design may have been improved
+> since then.  Is Magura no longer suggesting that the brakes should be
+> bled on an annual basis?  Do the seals no longer fail and/or need to
+> be replaced on a medium length schedule?  Are the brakes no longer
+> about three times heavier than a good set of linear pull brakes?  Even
+> if all of these are no longer issues with Magura rim brakes, since
+> they don't have superior braking to Paul Motolites, I don't really get
+> the attraction--it does seem to be the case that European riders are
+> enamoured with Maguras.
+>
+> As for Magura HS 33 (and the HS 66 on my drop bar
+>
+> > tourer), there is absolutely nothing complex about them. They are fit
+> > and forget stuff. Even the pads last longer than those on v brakes,
+> > and as I said, those are dead easy to replace. I think there are now
+> > very few high end touring bikes here that do not have them. I am a
+> > member of the Dutch Assoiation of World Cyclists, and on our Norway
+> > trip a month ago, I think 60% had Magura's, including every single
+> > recently built bike (all of them also had Rohloff hubs). I would not
+> > fit them on an ultralight rando bike (v brakes with tektro drop bar v
+> > brake levers or canti's there), and on a seriously off road loaded
+> > tourer I might fit discs, particularly if the terrain is muddy. For
+> > every other bike it is Magura's for me. We have a couple of bikes with
+> > Magura's in the family, and they have been zero maintenance.
+> > Willem
+>
+> > On Sep 5, 5:56 am, msrw <msr...@gmail.com> wrote:
+>
+> > > On Sep 4, 9:07 am, WillemJ <willem.jong...@gmail.com> wrote:
+> > > , and also, their life expectancy is limited. They are
+>
+> > > > low end stuff. If you want really excellent braking on a loaded
+> > > > touring bike (or a commuter) in dry and wet conditions, ultra low
+> > > > maintenance and a long life even under harsh conditions, get Magura
+> > > > hydraulic rim brakes. They brake phenominally well, with excellent
+> > > > modulation. Replacing pads cannot be easier. Only xtr v brakes come
+> > > > near.
+> > > > Willem
+>
+> > > Willem, drum brakes have limited life expectancy?  They last forever.
+>
+> > > As for Magura hydraulic rim brakes, I had a set on a mountain bike for
+> > > awhile.  They are overly heavy, MUCH more complicated than cable
+> > > actuated brakes, and in my view, a solution in search of a problem.
+> > > They have been described as all the complexity of disks with all of
+> > > the limits of rim brakes.  In my experience, they don't work any
+> > > bettter than, say, Paul Motolite linear pull brakes and are less
+> > > reliable.- Hide quoted text -
+>
+> > - Show quoted text -
+
+-- 
+You received this message because you are subscribed to the Google Groups "Bicycle Lifestyle" group.
+To post to this group, send email to bicyclelifestyle@googlegroups.com.
+To unsubscribe from this group, send email to bicyclelifestyle+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/bicyclelifestyle?hl=en.
+
+
+**********
+From: Mafe <mftl68@yahoo.com>
+To: Grupo Amigos <Grupo_amigos_amigas@yahoogroups.com>
+Subject: [Grupo_amigos_amigas] EL ABRAZO!!!!
+Date: Mon Sep 06 23:56:41 ART 2010
+Content-Type: multipart/alternative; 
+	boundary="0-1704985081-1283828201=:18569"
+
+
+
+
+Se ha comprobado que todos necesitamos contacto físico para sentirnos bien, y 
+una de las formas más importantes de contacto físico es el abrazo.
+Cuando nos tocamos y nos abrazamos con espíritu solidario y alegre, llevamos 
+vida a nuestros sentidos y reafirmamos la confianza en nuestros propios 
+sentimientos.
+Algunas veces no encontramos las palabras adecuadas para expresar lo que 
+sentimos. 
+
+Otras veces, simplemente no nos atrevemos a decirlas, ya sea por timidez o 
+porque los sentimientos nos abruman, en esos casos se puede contar con el idioma 
+no verbal de los abrazos.
+No solo debemos utilizar el lenguaje también debemos utilizar la sabiduría 
+intuitiva, sin palabras y escuchar con el corazón. Así percibiremos el 
+significado más profundo del misterio al que llamamos amor.
+Los abrazos, además de hacernos sentir bien, se emplean para aliviar el dolor, 
+la depresión y la ansiedad. Provocan alteraciones fisiológicas positivas en 
+quien toca y en quien es tocado.
+Acrecienta la voluntad de vivir a los enfermos. Es de todos bien sabido que 
+cuatro abrazos al día son necesarios para sobrevivir, ocho para mantenerse y 
+doce para crecer como personas.
+¿Que nos brinda un abrazo?
+Seguridad: No importa cuál sea nuestra edad ni nuestra posición en la vida, 
+todos necesitamos sentirnos seguros. Si no lo conseguimos actuamos de forma 
+ineficiente y nuestras relaciones interpersonales declinan.
+Protección: El sentirnos protegidos es importante para todos, pero lo es más 
+para los niños y los ancianos quienes dependen el amor de quienes los rodean.
+Confianza: La obtendremos de la sensación de seguridad y protección que 
+recibimos. La confianza nos puede hacer avanzar cuando el miedo se impone a 
+nuestro deseo de participar con entusiasmo en algún desafío de la vida.
+Fortaleza: Quizá pensamos que la fortaleza es una energía desarrollada gracias a 
+la decisión de un individuo pero siempre podemos transmitir nuestra fuerza 
+interior convirtiéndola en un don para el prójimo para confirmar y aumentar la 
+energía ajena. Cuando transferimos nuestra energía con un abrazo, aumentan 
+nuestras propias fuerzas.
+Sanación: Nuestra fortaleza se convierte en poderosa energía curativa cuando la 
+transmitimos por medio del abrazo. El contacto físico y el abrazo imparten una 
+energía vital capaz de sanar o aliviar dolencias menores.
+Autovaloración: El reconocimiento de que valemos es la base de toda satisfacción 
+y todo éxito en nuestra vida. Mediante el abrazo podemos transmitir el mensaje 
+de reconocimiento al valor y excelencia de cada individuo.
+Un abrazo para tí
+
+Ha llegado el momento de resurgir de sus propias cenizas.
+Lo que haya sucedido importa poco.
+Levántese, proclame su liberación plena y festeje su nueva vida.
+Recuerde que usted es mucho más grande que sus problemas.
+Muchas veces no son más que una tempestad en un vaso de agua. 
+Pero, aunque hayan sido muy graves, ya forman parte del pasado.
+
+La vida es aquí y ahora 
+La causa de su depresión pertenece al pasado; por eso, deshágase de lo que no 
+existe y empiece a vivir lo mejor de usted mismo y de sus deseos.
+Alegría, alegría, que hoy es otro día.
+Resurgir es necesario.
+Abrace a sus familiares, sonría desde el amanecer y juegue a ser feliz.
+Esta es su hora: salga de su cuarto, vístase como para una fiesta y empiece a 
+festejar.
+
+Por favor, cambie esa expresión, péinese a la moda, esboce su mejor sonrisa y 
+salga al mundo.Todos bendecirán su presencia.
+
+
+      
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+</head>
+
+
+
+
+
+
+
+<body style="background-color: #fff;">
+<span style="display:none">&nbsp;</span>
+
+<!--~-|**|PrettyHtmlStartT|**|-~-->
+<div id="ygrp-mlmsg" style="position:relative;">
+  <div id="ygrp-msg" style="z-index: 1;">
+<!--~-|**|PrettyHtmlEndT|**|-~-->
+
+    <div id="ygrp-text" >
+      
+      
+      <p><div style="font-family:verdana, helvetica, sans-serif;font-size:10pt;"><DIV></DIV>
+<DIV><BR>
+
+</DIV>
+<DIV style="FONT-FAMILY: verdana, helvetica, sans-serif;FONT-SIZE: 10pt;">
+<DIV style="FONT-FAMILY: times new roman, new york, times, serif;FONT-SIZE: 12pt;">
+<DIV style="FONT-FAMILY: arial, helvetica, sans-serif;FONT-SIZE: 12pt;">
+<DIV style="FONT-FAMILY: arial, helvetica, sans-serif;FONT-SIZE: 12pt;">
+<DIV style="FONT-FAMILY: times new roman, new york, times, serif;FONT-SIZE: 12pt;">
+<DIV><FONT color="#800080" face="Comic Sans MS">
+<DIV><BR></DIV>
+<P style="FONT-FAMILY: arial black, sans-serif;">Se ha comprobado que todos necesitamos contacto físico para sentirnos bien, y una de las formas más importantes de contacto físico es el abrazo.</P>
+<P style="FONT-FAMILY: arial black, sans-serif;">Cuando nos tocamos y nos abrazamos con espíritu solidario y alegre, llevamos vida a nuestros sentidos y reafirmamos la confianza en nuestros propios sentimientos.</P>
+<P style="FONT-FAMILY: arial black, sans-serif;">Algunas veces no encontramos las palabras adecuadas para expresar lo que sentimos. </P>
+<P style="FONT-FAMILY: arial black, sans-serif;">Otras veces, simplemente no nos atrevemos a decirlas, ya sea por timidez o porque los sentimientos nos abruman, en esos casos se puede contar con el idioma no verbal de los abrazos.</P>
+<P style="FONT-FAMILY: arial black, sans-serif;"><U>No solo debemos utilizar el lenguaje también debemos utilizar la sabiduría intuitiva, sin palabras y escuchar con el corazón. Así percibiremos el significado más profundo del misterio al que llamamos amor.</U></P>
+<P style="FONT-FAMILY: arial black, sans-serif;">Los abrazos, además de hacernos sentir bien, se emplean para aliviar el dolor, la depresión y la ansiedad. Provocan alteraciones fisiológicas positivas en quien toca y en quien es tocado.</P>
+<P style="FONT-FAMILY: arial black, sans-serif;">Acrecienta la voluntad de vivir a los enfermos. Es de todos bien sabido que cuatro abrazos al día son necesarios para sobrevivir, ocho para mantenerse y doce para crecer como personas.</P>
+<P style="FONT-FAMILY: arial black, sans-serif;"><FONT size="5"><STRONG><U>¿Que nos brinda un abrazo?</U></STRONG></FONT></P>
+<P style="FONT-FAMILY: arial black, sans-serif;">Seguridad: No importa cuál sea nuestra edad ni nuestra posición en la vida, todos necesitamos sentirnos seguros. Si no lo conseguimos actuamos de forma ineficiente y nuestras relaciones interpersonales declinan.</P>
+<P style="FONT-FAMILY: arial black, sans-serif;">Protección: El sentirnos protegidos es importante para todos, pero lo es más para los niños y los ancianos quienes dependen el amor de quienes los rodean.</P>
+<P style="FONT-FAMILY: arial black, sans-serif;">Confianza: La obtendremos de la sensación de seguridad y protección que recibimos. La confianza nos puede hacer avanzar cuando el miedo se impone a nuestro deseo de participar con entusiasmo en algún desafío de la vida.</P>
+<P style="FONT-FAMILY: arial black, sans-serif;">Fortaleza: Quizá pensamos que la fortaleza es una energía desarrollada gracias a la decisión de un individuo pero siempre podemos transmitir nuestra fuerza interior convirtiéndola en un don para el prójimo para confirmar y aumentar la energía ajena. Cuando transferimos nuestra energía con un abrazo, aumentan nuestras propias fuerzas.</P>
+<P style="FONT-FAMILY: arial black, sans-serif;">Sanación: Nuestra fortaleza se convierte en poderosa energía curativa cuando la transmitimos por medio del abrazo. El contacto físico y el abrazo imparten una energía vital capaz de sanar o aliviar dolencias menores.</P>
+<P style="FONT-FAMILY: arial black, sans-serif;">Autovaloración: El reconocimiento de que valemos es la base de toda satisfacción y todo éxito en nuestra vida. Mediante el abrazo podemos transmitir el mensaje de reconocimiento al valor y excelencia de cada individuo.</P>
+<P style="FONT-FAMILY: arial black, sans-serif;">Un abrazo para tí</P><FONT style="FONT-FAMILY: arial black, sans-serif;">
+<DIV><BR><BR>Ha llegado el momento de resurgir de sus propias cenizas.</DIV>
+<DIV>Lo que haya sucedido importa poco.</DIV>
+<DIV>Levántese, proclame su liberación plena y festeje su nueva vida.</DIV>
+<DIV>Recuerde que usted es mucho más grande que sus problemas.</DIV>
+<DIV>Muchas veces no son más que una tempestad en un vaso de agua. </DIV>
+<DIV>Pero, aunque hayan sido muy graves, ya forman parte del pasado.</DIV>
+<DIV>&nbsp;</DIV>
+<DIV>La vida es aquí y ahora </DIV>
+<DIV>La causa de su depresión pertenece al pasado; por eso, deshágase de lo que no existe y empiece a vivir lo mejor de usted mismo y de sus deseos.</DIV>
+<DIV>Alegría, alegría, que hoy es otro día.</DIV>
+<DIV>Resurgir es necesario.</DIV>
+<DIV>Abrace a sus familiares, sonría desde el amanecer y juegue a ser feliz.</DIV>
+<DIV>Esta es su hora: salga de su cuarto, vístase como para una fiesta y empiece a festejar.</DIV>
+<DIV>&nbsp;</DIV>
+<DIV>Por favor, cambie esa expresión, péinese a la moda, esboce su mejor sonrisa y salga al mundo.Todos bendecirán su presencia.</DIV></FONT></FONT></DIV></DIV></DIV></DIV><BR>&nbsp;</DIV></DIV></div><br>
+
+
+
+
+      &nbsp;</p>
+
+    </div>
+     
+
+    <!--~-|**|PrettyHtmlStart|**|-~-->
+    <div style="color: #fff; height: 0;">__._,_.___</div>
+
+        
+  
+   
+    <div id="ygrp-actbar" style="clear: both; margin-bottom: 10px; white-space: nowrap; color: #666; padding-top: 15px;">
+      <div>
+        <a href="mailto:mftl68@yahoo.com?subject=EL ABRAZO!!!!" style="margin-right: 0; padding-right: 0;">
+	  Responder a <span style="font-weight: 700;">remitente</span></a> |
+        <a href="mailto:Grupo_amigos_amigas@yahoogroups.com?subject=EL ABRAZO!!!!">
+	  Responder a <span style="font-weight: 700;">grupo</span></a> |
+        	  <a href="http://es.groups.yahoo.com/group/Grupo_amigos_amigas/post;_ylc=X3oDMTJxYThubDY3BF9TAzk3NDkwNDYzBGdycElkAzYyOTA2MzcEZ3Jwc3BJZAMxNjYwMzk3ODEyBG1zZ0lkAzMzMDgzBHNlYwNmdHIEc2xrA3JwbHkEc3RpbWUDMTI4MzgyODIxMA--?act=reply&messageNum=33083">Responder <span style="font-weight: 700;">mediante la Web</span></a> |
+            	<a href="http://es.groups.yahoo.com/group/Grupo_amigos_amigas/post;_ylc=X3oDMTJlM2FwZGc2BF9TAzk3NDkwNDYzBGdycElkAzYyOTA2MzcEZ3Jwc3BJZAMxNjYwMzk3ODEyBHNlYwNmdHIEc2xrA250cGMEc3RpbWUDMTI4MzgyODIxMA--" style="font-weight: 700;">Crear un tema nuevo</a>
+      </div>
+
+                <a href="http://es.groups.yahoo.com/group/Grupo_amigos_amigas/message/33083;_ylc=X3oDMTM2YjFrOGZiBF9TAzk3NDkwNDYzBGdycElkAzYyOTA2MzcEZ3Jwc3BJZAMxNjYwMzk3ODEyBG1zZ0lkAzMzMDgzBHNlYwNmdHIEc2xrA3Z0cGMEc3RpbWUDMTI4MzgyODIxMAR0cGNJZAMzMzA4Mw--">Mensajes con este tema</a>
+          (<span style="font-weight: 700;">1</span>)
+          </div> 
+<!------- Start Nav Bar ------>
+<!-- |**|begin egp html banner|**| -->
+<!-- |**|end egp html banner|**| -->
+
+<!-- |**|begin egp html banner|**| -->
+<div id="ygrp-vital" style="background-color: #e0ecee; font-family: Verdana; font-size: 10px; margin-bottom: 10px; padding: 10px;">
+      <span id="vithd" style="font-weight: bold; color: #333; text-transform: uppercase; ">Actividad reciente:</span>
+
+    <ul style="list-style-type: none; margin: 0; padding: 0; display: inline;">
+            <li style="border-right: 1px solid #000; font-weight: 700; display: inline; padding: 0 5px; margin-left: 0;">
+      <span class="cat"><a href="http://es.groups.yahoo.com/group/Grupo_amigos_amigas/members;_ylc=X3oDMTJmcXRjbjBmBF9TAzk3NDkwNDYzBGdycElkAzYyOTA2MzcEZ3Jwc3BJZAMxNjYwMzk3ODEyBHNlYwN2dGwEc2xrA3ZtYnJzBHN0aW1lAzEyODM4MjgyMTA-?o=6" style="text-decoration: none;">Miembros nuevos</a></span>
+      <span class="ct" style="color: #ff7900;">10</span>
+    </li>
+                                              </ul>
+    
+  <div style="clear: both; padding-top: 2px; color: #1e66ae;">
+    <a href="http://es.groups.yahoo.com/group/Grupo_amigos_amigas;_ylc=X3oDMTJlNXF2Mmo2BF9TAzk3NDkwNDYzBGdycElkAzYyOTA2MzcEZ3Jwc3BJZAMxNjYwMzk3ODEyBHNlYwN2dGwEc2xrA3ZnaHAEc3RpbWUDMTI4MzgyODIxMA--" style="text-decoration: none;">Visita tu grupo</a>
+  </div>
+</div>
+
+      <div id="ygrp-grfd" style="font-family: Verdana; font-size: 12px; padding: 15px 0;">
+      
+<!-- |**|begin egp html banner|**| -->
+
+      Para cancelar su suscripción a este grupo, envíe un mensaje de correo-e a:<BR>
+amigosamigas2-unsubscribe@yahoogroups.com<BR>
+<BR>
+      
+<!-- |**|end egp html banner|**| -->
+
+    </div>
+  
+<div id="ft" style="font-family: Arial; font-size: 11px; margin-top: 5px; padding: 0 2px 0 0; clear: both;">
+  <a href="http://es.groups.yahoo.com/;_ylc=X3oDMTJkMWYzMHU4BF9TAzk3NDkwNDYxBGdycElkAzYyOTA2MzcEZ3Jwc3BJZAMxNjYwMzk3ODEyBHNlYwNmdHIEc2xrA2dmcARzdGltZQMxMjgzODI4MjEw" style="float: left;"><img src="http://l.yimg.com/a/i/us/yg/logo/es.gif" height="19" width="141" alt="Yahoo! Grupos" style="border: 0;"/></a>
+  <div style="color: #747575; float: right;">Cambiar a: <a href="mailto:Grupo_amigos_amigas-traditional@yahoogroups.com?subject=Cambiar Formato de EnvÃ­o: Tradicional" style="text-decoration: none;">Solo Texto</a>, <a href="mailto:Grupo_amigos_amigas-digest@yahoogroups.com?subject=EnvÃ­o de Correo: ReseÃ±a" class="margin-rt" style="text-decoration: none;">Rese\xc3\xb1a Diaria</a> &bull; <a href="mailto:Grupo_amigos_amigas-unsubscribe@yahoogroups.com?subject=Cancelar suscripción" style="text-decoration: none;">Cancelar suscripción</a> &bull; <a href="http://es.docs.yahoo.com/info/utos.html" style="text-decoration: none;">Condiciones de uso</a></div>
+</div>
+
+<!-- |**|end egp html banner|**| -->
+
+  </div> <!-- ygrp-msg -->
+
+  <!-- Sponsor -->
+  <!-- |**|begin egp html banner|**| -->
+  <div id="ygrp-sponsor" style="width:160px; float:right; clear:none; margin:0 0 25px 0; background: #fff;">
+
+<!-- Start Recommendations -->
+<div id="ygrp-reco">
+     </div>
+<!-- End Recommendations -->
+
+
+
+  </div>   <!-- |**|end egp html banner|**| -->
+
+  <div style="clear:both; color: #FFF; font-size:1px;">.</div>
+</div>
+
+  <img src="http://geo.yahoo.com/serv?s=97490463/grpId=6290637/grpspId=1660397812/msgId=33083/stime=1283828210/nc1=1/nc2=2/nc3=3" width="1" height="1"> <br>
+
+<div style="color: #fff; height: 0;">__,_._,___</div>
+<!--~-|**|PrettyHtmlEnd|**|-~-->
+
+</body>
+
+<!--~-|**|PrettyHtmlStart|**|-~-->
+<head>
+  <style type="text/css">
+  <!--
+  #ygrp-mkp {
+  border: 1px solid #d8d8d8;
+  font-family: Arial;
+  margin: 10px 0;
+  padding: 0 10px;
+}
+
+#ygrp-mkp hr {
+  border: 1px solid #d8d8d8;
+}
+
+#ygrp-mkp #hd {
+  color: #628c2a;
+  font-size: 85%;
+  font-weight: 700;
+  line-height: 122%;
+  margin: 10px 0;
+}
+
+#ygrp-mkp #ads {
+  margin-bottom: 10px;
+}
+
+#ygrp-mkp .ad {
+  padding: 0 0;
+}
+
+#ygrp-mkp .ad p {
+  margin: 0;
+}
+
+#ygrp-mkp .ad a {
+  color: #0000ff;
+  text-decoration: none;
+}
+  #ygrp-sponsor #ygrp-lc {
+  font-family: Arial;
+}
+
+#ygrp-sponsor #ygrp-lc #hd {
+  margin: 10px 0px;
+  font-weight: 700;
+  font-size: 78%;
+  line-height: 122%;
+}
+
+#ygrp-sponsor #ygrp-lc .ad {
+  margin-bottom: 10px;
+  padding: 0 0;
+}
+
+  a {
+    color: #1e66ae;
+  }
+
+  #actions {
+    font-family: Verdana;
+    font-size: 11px;
+    padding: 10px 0;
+  }
+
+  #activity {
+    background-color: #e0ecee;
+    float: left;
+    font-family: Verdana;
+    font-size: 10px;
+    padding: 10px;
+  }
+
+  #activity span {
+    font-weight: 700;
+  }
+
+  #activity span:first-child {
+    text-transform: uppercase;
+  }
+
+  #activity span a {
+    color: #5085b6;
+    text-decoration: none;
+  }
+
+  #activity span span {
+    color: #ff7900;
+  }
+
+  #activity span .underline {
+    text-decoration: underline;
+  }
+
+  .attach {
+    clear: both;
+    display: table;
+    font-family: Arial;
+    font-size: 12px;
+    padding: 10px 0;
+    width: 400px;
+  }
+
+  .attach div a {
+    text-decoration: none;
+  }
+
+  .attach img {
+    border: none;
+    padding-right: 5px;
+  }
+
+  .attach label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .attach label a {
+    text-decoration: none;
+  }
+  
+  blockquote {
+    margin: 0 0 0 4px;
+  }
+
+  .bold {
+    font-family: Arial;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .bold a {
+    text-decoration: none;
+  }
+
+  dd.last p a {
+    font-family: Verdana;
+    font-weight: 700;
+  }
+
+  dd.last p span {
+    margin-right: 10px;
+    font-family: Verdana;
+    font-weight: 700;
+  }
+
+  dd.last p span.yshortcuts {
+    margin-right: 0;
+  }
+
+  div.attach-table div div a {
+    text-decoration: none;
+  }
+
+  div.attach-table {
+    width: 400px;
+  }
+
+  div.file-title a, div.file-title a:active, div.file-title a:hover, div.file-title a:visited {
+    text-decoration: none;
+  }
+
+  div.photo-title a, div.photo-title a:active, div.photo-title a:hover, div.photo-title a:visited {
+    text-decoration: none;
+  }
+
+  div#ygrp-mlmsg #ygrp-msg p a span.yshortcuts {
+    font-family: Verdana;
+    font-size: 10px;
+    font-weight: normal;
+  }
+
+  .green {
+    color: #628c2a;
+  }
+
+  .MsoNormal {
+    margin: 0 0 0 0;
+  }
+
+  o {
+    font-size: 0;
+  }
+
+  #photos div {
+    float: left;
+    width: 72px;
+  }
+
+  #photos div div {
+    border: 1px solid #666666;
+    height: 62px;
+    overflow: hidden;
+    width: 62px;
+  }
+
+  #photos div label {
+    color: #666666;
+    font-size: 10px;
+    overflow: hidden;
+    text-align: center;
+    white-space: nowrap;
+    width: 64px;
+  }
+
+  #reco-category {
+    font-size: 77%;
+  }
+
+  #reco-desc {
+    font-size: 77%;
+  }
+
+  .replbq {
+    margin: 4px;
+  }
+
+  #ygrp-actbar div a:first-child {
+   /* border-right: 0px solid #000;*/
+    margin-right: 2px;
+    padding-right: 5px;
+  }
+
+  #ygrp-mlmsg {
+    font-size: 13px;
+    font-family: Arial, helvetica,clean, sans-serif;
+    *font-size: small;
+    *font: x-small;
+  }
+
+  #ygrp-mlmsg table {
+    font-size: inherit;
+    font: 100%;
+  }
+
+  #ygrp-mlmsg select, input, textarea {
+    font: 99% Arial, Helvetica, clean, sans-serif;
+  }
+
+  #ygrp-mlmsg pre, code {
+    font:115% monospace;
+    *font-size:100%;
+  }
+
+  #ygrp-mlmsg * {
+    line-height: 1.22em;
+  }
+
+  #ygrp-mlmsg #logo {
+    padding-bottom: 10px;
+  }
+
+  #ygrp-mlmsg a {
+    color: #1E66AE;
+  }
+
+  #ygrp-msg p a {
+    font-family: Verdana;
+  }
+
+  #ygrp-msg p#attach-count span {
+    color: #1E66AE;
+    font-weight: 700;
+  }
+
+  #ygrp-reco #reco-head {
+    color: #ff7900;
+    font-weight: 700;
+  }
+
+  #ygrp-reco {
+    margin-bottom: 20px;
+    padding: 0px;
+  }
+
+  #ygrp-sponsor #ov li a {
+    font-size: 130%;
+    text-decoration: none;
+  }
+
+  #ygrp-sponsor #ov li {
+    font-size: 77%;
+    list-style-type: square;
+    padding: 6px 0;
+  } 
+
+  #ygrp-sponsor #ov ul {
+    margin: 0;
+    padding: 0 0 0 8px;
+  }
+
+  #ygrp-text {
+    font-family: Georgia;
+  }
+
+  #ygrp-text p {
+    margin: 0 0 1em 0;
+  }
+
+  #ygrp-text tt {
+    font-size: 120%;
+  }
+
+  #ygrp-vital ul li:last-child {
+    border-right: none !important; 
+  } 
+  -->
+  </style>
+</head>
+
+<!--~-|**|PrettyHtmlEnd|**|-~-->
+</html>
+<!-- end group email -->
+
+
+**********
+From: Carlos Alberto Aranza Ruiz <caranzaruiz@yahoo.com.mx>
+To: Grupo_amigos_amigas@yahoogroups.com
+Subject: Re: [Grupo_amigos_amigas] EL ABRAZO!!!!
+Date: Tue Sep 07 00:51:18 ART 2010
+Content-Type: multipart/alternative; 
+	boundary="0-1305844800-1283831478=:90450"
+
+
+Hola, excelente correo, creo que a veces tenemos miedo de expresar sentimientos, y debemos manifestarle a nuestros seres queridos lo importante que son para nosotros, es tan rico sentir un abrazo! gracias por este bello mensaje!!
+
+
+      
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+</head>
+
+
+
+
+
+
+
+<body style="background-color: #fff;">
+<span style="display:none">&nbsp;</span>
+
+<!--~-|**|PrettyHtmlStartT|**|-~-->
+<div id="ygrp-mlmsg" style="position:relative;">
+  <div id="ygrp-msg" style="z-index: 1;">
+<!--~-|**|PrettyHtmlEndT|**|-~-->
+
+    <div id="ygrp-text" >
+      
+      
+      <p><table cellspacing="0" cellpadding="0" border="0"><tr><td valign="top" style="font: inherit;"><BR><BR>Hola, excelente correo, creo que a veces tenemos miedo de expresar sentimientos, y debemos manifestarle a nuestros seres queridos lo importante que son para nosotros, es tan rico sentir un abrazo! gracias por este bello mensaje!!</td></tr></table><br>
+
+
+
+      &nbsp;</p>
+
+    </div>
+     
+
+    <!--~-|**|PrettyHtmlStart|**|-~-->
+    <div style="color: #fff; height: 0;">__._,_.___</div>
+
+        
+  
+   
+    <div id="ygrp-actbar" style="clear: both; margin-bottom: 10px; white-space: nowrap; color: #666; padding-top: 15px;">
+      <div>
+        <a href="mailto:caranzaruiz@yahoo.com.mx?subject=Re: [Grupo_amigos_amigas] EL ABRAZO!!!!" style="margin-right: 0; padding-right: 0;">
+	  Responder a <span style="font-weight: 700;">remitente</span></a> |
+        <a href="mailto:Grupo_amigos_amigas@yahoogroups.com?subject=Re: [Grupo_amigos_amigas] EL ABRAZO!!!!">
+	  Responder a <span style="font-weight: 700;">grupo</span></a> |
+        	  <a href="http://es.groups.yahoo.com/group/Grupo_amigos_amigas/post;_ylc=X3oDMTJxNzhmODZxBF9TAzk3NDkwNDYzBGdycElkAzYyOTA2MzcEZ3Jwc3BJZAMxNjYwMzk3ODEyBG1zZ0lkAzMzMDg5BHNlYwNmdHIEc2xrA3JwbHkEc3RpbWUDMTI4MzgzMTQ4MA--?act=reply&messageNum=33089">Responder <span style="font-weight: 700;">mediante la Web</span></a> |
+            	<a href="http://es.groups.yahoo.com/group/Grupo_amigos_amigas/post;_ylc=X3oDMTJlZHFqMjR0BF9TAzk3NDkwNDYzBGdycElkAzYyOTA2MzcEZ3Jwc3BJZAMxNjYwMzk3ODEyBHNlYwNmdHIEc2xrA250cGMEc3RpbWUDMTI4MzgzMTQ4MA--" style="font-weight: 700;">Crear un tema nuevo</a>
+      </div>
+
+                <a href="http://es.groups.yahoo.com/group/Grupo_amigos_amigas/message/33083;_ylc=X3oDMTM2bmRmNmc3BF9TAzk3NDkwNDYzBGdycElkAzYyOTA2MzcEZ3Jwc3BJZAMxNjYwMzk3ODEyBG1zZ0lkAzMzMDg5BHNlYwNmdHIEc2xrA3Z0cGMEc3RpbWUDMTI4MzgzMTQ4MAR0cGNJZAMzMzA4Mw--">Mensajes con este tema</a>
+          (<span style="font-weight: 700;">3</span>)
+          </div> 
+<!------- Start Nav Bar ------>
+<!-- |**|begin egp html banner|**| -->
+<!-- |**|end egp html banner|**| -->
+
+<!-- |**|begin egp html banner|**| -->
+<div id="ygrp-vital" style="background-color: #e0ecee; font-family: Verdana; font-size: 10px; margin-bottom: 10px; padding: 10px;">
+      <span id="vithd" style="font-weight: bold; color: #333; text-transform: uppercase; ">Actividad reciente:</span>
+
+    <ul style="list-style-type: none; margin: 0; padding: 0; display: inline;">
+            <li style="border-right: 1px solid #000; font-weight: 700; display: inline; padding: 0 5px; margin-left: 0;">
+      <span class="cat"><a href="http://es.groups.yahoo.com/group/Grupo_amigos_amigas/members;_ylc=X3oDMTJmOGpsYzJxBF9TAzk3NDkwNDYzBGdycElkAzYyOTA2MzcEZ3Jwc3BJZAMxNjYwMzk3ODEyBHNlYwN2dGwEc2xrA3ZtYnJzBHN0aW1lAzEyODM4MzE0ODA-?o=6" style="text-decoration: none;">Miembros nuevos</a></span>
+      <span class="ct" style="color: #ff7900;">10</span>
+    </li>
+                                              </ul>
+    
+  <div style="clear: both; padding-top: 2px; color: #1e66ae;">
+    <a href="http://es.groups.yahoo.com/group/Grupo_amigos_amigas;_ylc=X3oDMTJlcWJoM2MyBF9TAzk3NDkwNDYzBGdycElkAzYyOTA2MzcEZ3Jwc3BJZAMxNjYwMzk3ODEyBHNlYwN2dGwEc2xrA3ZnaHAEc3RpbWUDMTI4MzgzMTQ4MA--" style="text-decoration: none;">Visita tu grupo</a>
+  </div>
+</div>
+
+      <div id="ygrp-grfd" style="font-family: Verdana; font-size: 12px; padding: 15px 0;">
+      
+<!-- |**|begin egp html banner|**| -->
+
+      Para cancelar su suscripción a este grupo, envíe un mensaje de correo-e a:<BR>
+amigosamigas2-unsubscribe@yahoogroups.com<BR>
+<BR>
+      
+<!-- |**|end egp html banner|**| -->
+
+    </div>
+  
+<div id="ft" style="font-family: Arial; font-size: 11px; margin-top: 5px; padding: 0 2px 0 0; clear: both;">
+  <a href="http://es.groups.yahoo.com/;_ylc=X3oDMTJkZ2JvMXNjBF9TAzk3NDkwNDYxBGdycElkAzYyOTA2MzcEZ3Jwc3BJZAMxNjYwMzk3ODEyBHNlYwNmdHIEc2xrA2dmcARzdGltZQMxMjgzODMxNDgw" style="float: left;"><img src="http://l.yimg.com/a/i/us/yg/logo/es.gif" height="19" width="141" alt="Yahoo! Grupos" style="border: 0;"/></a>
+  <div style="color: #747575; float: right;">Cambiar a: <a href="mailto:Grupo_amigos_amigas-traditional@yahoogroups.com?subject=Cambiar Formato de EnvÃ­o: Tradicional" style="text-decoration: none;">Solo Texto</a>, <a href="mailto:Grupo_amigos_amigas-digest@yahoogroups.com?subject=EnvÃ­o de Correo: ReseÃ±a" class="margin-rt" style="text-decoration: none;">Rese\xc3\xb1a Diaria</a> &bull; <a href="mailto:Grupo_amigos_amigas-unsubscribe@yahoogroups.com?subject=Cancelar suscripción" style="text-decoration: none;">Cancelar suscripción</a> &bull; <a href="http://es.docs.yahoo.com/info/utos.html" style="text-decoration: none;">Condiciones de uso</a></div>
+</div>
+
+<!-- |**|end egp html banner|**| -->
+
+  </div> <!-- ygrp-msg -->
+
+  <!-- Sponsor -->
+  <!-- |**|begin egp html banner|**| -->
+  <div id="ygrp-sponsor" style="width:160px; float:right; clear:none; margin:0 0 25px 0; background: #fff;">
+
+<!-- Start Recommendations -->
+<div id="ygrp-reco">
+     </div>
+<!-- End Recommendations -->
+
+
+
+  </div>   <!-- |**|end egp html banner|**| -->
+
+  <div style="clear:both; color: #FFF; font-size:1px;">.</div>
+</div>
+
+  <img src="http://geo.yahoo.com/serv?s=97490463/grpId=6290637/grpspId=1660397812/msgId=33089/stime=1283831480/nc1=1/nc2=2/nc3=3" width="1" height="1"> <br>
+
+<div style="color: #fff; height: 0;">__,_._,___</div>
+<!--~-|**|PrettyHtmlEnd|**|-~-->
+
+</body>
+
+<!--~-|**|PrettyHtmlStart|**|-~-->
+<head>
+  <style type="text/css">
+  <!--
+  #ygrp-mkp {
+  border: 1px solid #d8d8d8;
+  font-family: Arial;
+  margin: 10px 0;
+  padding: 0 10px;
+}
+
+#ygrp-mkp hr {
+  border: 1px solid #d8d8d8;
+}
+
+#ygrp-mkp #hd {
+  color: #628c2a;
+  font-size: 85%;
+  font-weight: 700;
+  line-height: 122%;
+  margin: 10px 0;
+}
+
+#ygrp-mkp #ads {
+  margin-bottom: 10px;
+}
+
+#ygrp-mkp .ad {
+  padding: 0 0;
+}
+
+#ygrp-mkp .ad p {
+  margin: 0;
+}
+
+#ygrp-mkp .ad a {
+  color: #0000ff;
+  text-decoration: none;
+}
+  #ygrp-sponsor #ygrp-lc {
+  font-family: Arial;
+}
+
+#ygrp-sponsor #ygrp-lc #hd {
+  margin: 10px 0px;
+  font-weight: 700;
+  font-size: 78%;
+  line-height: 122%;
+}
+
+#ygrp-sponsor #ygrp-lc .ad {
+  margin-bottom: 10px;
+  padding: 0 0;
+}
+
+  a {
+    color: #1e66ae;
+  }
+
+  #actions {
+    font-family: Verdana;
+    font-size: 11px;
+    padding: 10px 0;
+  }
+
+  #activity {
+    background-color: #e0ecee;
+    float: left;
+    font-family: Verdana;
+    font-size: 10px;
+    padding: 10px;
+  }
+
+  #activity span {
+    font-weight: 700;
+  }
+
+  #activity span:first-child {
+    text-transform: uppercase;
+  }
+
+  #activity span a {
+    color: #5085b6;
+    text-decoration: none;
+  }
+
+  #activity span span {
+    color: #ff7900;
+  }
+
+  #activity span .underline {
+    text-decoration: underline;
+  }
+
+  .attach {
+    clear: both;
+    display: table;
+    font-family: Arial;
+    font-size: 12px;
+    padding: 10px 0;
+    width: 400px;
+  }
+
+  .attach div a {
+    text-decoration: none;
+  }
+
+  .attach img {
+    border: none;
+    padding-right: 5px;
+  }
+
+  .attach label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .attach label a {
+    text-decoration: none;
+  }
+  
+  blockquote {
+    margin: 0 0 0 4px;
+  }
+
+  .bold {
+    font-family: Arial;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .bold a {
+    text-decoration: none;
+  }
+
+  dd.last p a {
+    font-family: Verdana;
+    font-weight: 700;
+  }
+
+  dd.last p span {
+    margin-right: 10px;
+    font-family: Verdana;
+    font-weight: 700;
+  }
+
+  dd.last p span.yshortcuts {
+    margin-right: 0;
+  }
+
+  div.attach-table div div a {
+    text-decoration: none;
+  }
+
+  div.attach-table {
+    width: 400px;
+  }
+
+  div.file-title a, div.file-title a:active, div.file-title a:hover, div.file-title a:visited {
+    text-decoration: none;
+  }
+
+  div.photo-title a, div.photo-title a:active, div.photo-title a:hover, div.photo-title a:visited {
+    text-decoration: none;
+  }
+
+  div#ygrp-mlmsg #ygrp-msg p a span.yshortcuts {
+    font-family: Verdana;
+    font-size: 10px;
+    font-weight: normal;
+  }
+
+  .green {
+    color: #628c2a;
+  }
+
+  .MsoNormal {
+    margin: 0 0 0 0;
+  }
+
+  o {
+    font-size: 0;
+  }
+
+  #photos div {
+    float: left;
+    width: 72px;
+  }
+
+  #photos div div {
+    border: 1px solid #666666;
+    height: 62px;
+    overflow: hidden;
+    width: 62px;
+  }
+
+  #photos div label {
+    color: #666666;
+    font-size: 10px;
+    overflow: hidden;
+    text-align: center;
+    white-space: nowrap;
+    width: 64px;
+  }
+
+  #reco-category {
+    font-size: 77%;
+  }
+
+  #reco-desc {
+    font-size: 77%;
+  }
+
+  .replbq {
+    margin: 4px;
+  }
+
+  #ygrp-actbar div a:first-child {
+   /* border-right: 0px solid #000;*/
+    margin-right: 2px;
+    padding-right: 5px;
+  }
+
+  #ygrp-mlmsg {
+    font-size: 13px;
+    font-family: Arial, helvetica,clean, sans-serif;
+    *font-size: small;
+    *font: x-small;
+  }
+
+  #ygrp-mlmsg table {
+    font-size: inherit;
+    font: 100%;
+  }
+
+  #ygrp-mlmsg select, input, textarea {
+    font: 99% Arial, Helvetica, clean, sans-serif;
+  }
+
+  #ygrp-mlmsg pre, code {
+    font:115% monospace;
+    *font-size:100%;
+  }
+
+  #ygrp-mlmsg * {
+    line-height: 1.22em;
+  }
+
+  #ygrp-mlmsg #logo {
+    padding-bottom: 10px;
+  }
+
+  #ygrp-mlmsg a {
+    color: #1E66AE;
+  }
+
+  #ygrp-msg p a {
+    font-family: Verdana;
+  }
+
+  #ygrp-msg p#attach-count span {
+    color: #1E66AE;
+    font-weight: 700;
+  }
+
+  #ygrp-reco #reco-head {
+    color: #ff7900;
+    font-weight: 700;
+  }
+
+  #ygrp-reco {
+    margin-bottom: 20px;
+    padding: 0px;
+  }
+
+  #ygrp-sponsor #ov li a {
+    font-size: 130%;
+    text-decoration: none;
+  }
+
+  #ygrp-sponsor #ov li {
+    font-size: 77%;
+    list-style-type: square;
+    padding: 6px 0;
+  } 
+
+  #ygrp-sponsor #ov ul {
+    margin: 0;
+    padding: 0 0 0 8px;
+  }
+
+  #ygrp-text {
+    font-family: Georgia;
+  }
+
+  #ygrp-text p {
+    margin: 0 0 1em 0;
+  }
+
+  #ygrp-text tt {
+    font-size: 120%;
+  }
+
+  #ygrp-vital ul li:last-child {
+    border-right: none !important; 
+  } 
+  -->
+  </style>
+</head>
+
+<!--~-|**|PrettyHtmlEnd|**|-~-->
+</html>
+<!-- end group email -->
+
+
+**********
+From: Mafe <mftl68@yahoo.com>
+To: Grupo_amigos_amigas@yahoogroups.com
+Subject: Re: [Grupo_amigos_amigas] EL ABRAZO!!!!
+Date: Tue Sep 07 00:55:40 ART 2010
+Content-Type: multipart/alternative; 
+	boundary="0-1254173402-1283831740=:58010"
+A tus ordenes, a mi me encantan los abrazos
+ Mafe 
+
+
+
+
+________________________________
+De: Carlos Alberto Aranza Ruiz <caranzaruiz@yahoo.com.mx>
+Para: Grupo_amigos_amigas@yahoogroups.com
+Enviado: lun, septiembre 6, 2010 10:51:18 PM
+Asunto: Re: [Grupo_amigos_amigas] EL ABRAZO!!!!
+
+  
+
+
+Hola, excelente correo, creo que a veces tenemos miedo de expresar sentimientos, 
+y debemos manifestarle a nuestros seres queridos lo importante que son para 
+nosotros, es tan rico sentir un abrazo! gracias por este bello mensaje!! 
+
+ 
+
+
+
+      
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+</head>
+
+
+
+
+
+
+
+<body style="background-color: #fff;">
+<span style="display:none">&nbsp;</span>
+
+<!--~-|**|PrettyHtmlStartT|**|-~-->
+<div id="ygrp-mlmsg" style="position:relative;">
+  <div id="ygrp-msg" style="z-index: 1;">
+<!--~-|**|PrettyHtmlEndT|**|-~-->
+
+    <div id="ygrp-text" >
+      
+      
+      <p><div style="font-family:verdana, helvetica, sans-serif;font-size:10pt;"><DIV>A tus ordenes, a mi me encantan los abrazos<BR>&nbsp;</DIV><EM><FONT color="#0000bf" face="times new roman, new york, times, serif"><STRONG>Mafe</STRONG></FONT></EM> 
+<DIV><BR></DIV>
+<DIV style="FONT-FAMILY: verdana, helvetica, sans-serif;FONT-SIZE: 10pt;"><BR>
+<DIV style="BORDER-LEFT: #1010ff 2px solid;FONT-FAMILY: times new roman, new york, times, serif;FONT-SIZE: 12pt;"><FONT size="2" face="Tahoma">
+<HR SIZE="1">
+<B><SPAN style="FONT-WEIGHT: bold;">De:</SPAN></B> Carlos Alberto Aranza Ruiz &lt;caranzaruiz@yahoo.com.mx&gt;<BR><B><SPAN style="FONT-WEIGHT: bold;">Para:</SPAN></B> Grupo_amigos_amigas@yahoogroups.com<BR><B><SPAN style="FONT-WEIGHT: bold;">Enviado:</SPAN></B> lun, septiembre 6, 2010 10:51:18 PM<BR><B><SPAN style="FONT-WEIGHT: bold;">Asunto:</SPAN></B> Re: [Grupo_amigos_amigas] EL ABRAZO!!!!<BR></FONT><BR><SPAN>&nbsp;</SPAN> 
+<DIV id="ygrp-text">
+<P>
+<TABLE border="0" cellSpacing="0" cellPadding="0">
+<TBODY>
+<TR>
+<TD vAlign="top"><BR><BR>Hola, excelente correo, creo que a veces tenemos miedo de expresar sentimientos, y debemos manifestarle a nuestros seres queridos lo importante que son para nosotros, es tan rico sentir un abrazo! gracias por este bello mensaje!!</TD></TR></TBODY></TABLE><BR>&nbsp;</P></DIV>
+
+</DIV></DIV></div><br>
+
+
+
+
+      &nbsp;</p>
+
+    </div>
+     
+
+    <!--~-|**|PrettyHtmlStart|**|-~-->
+    <div style="color: #fff; height: 0;">__._,_.___</div>
+
+        
+  
+   
+    <div id="ygrp-actbar" style="clear: both; margin-bottom: 10px; white-space: nowrap; color: #666; padding-top: 15px;">
+      <div>
+        <a href="mailto:mftl68@yahoo.com?subject=Re: [Grupo_amigos_amigas] EL ABRAZO!!!!" style="margin-right: 0; padding-right: 0;">
+	  Responder a <span style="font-weight: 700;">remitente</span></a> |
+        <a href="mailto:Grupo_amigos_amigas@yahoogroups.com?subject=Re: [Grupo_amigos_amigas] EL ABRAZO!!!!">
+	  Responder a <span style="font-weight: 700;">grupo</span></a> |
+        	  <a href="http://es.groups.yahoo.com/group/Grupo_amigos_amigas/post;_ylc=X3oDMTJxODJrcXNxBF9TAzk3NDkwNDYzBGdycElkAzYyOTA2MzcEZ3Jwc3BJZAMxNjYwMzk3ODEyBG1zZ0lkAzMzMDkwBHNlYwNmdHIEc2xrA3JwbHkEc3RpbWUDMTI4MzgzMTc1MA--?act=reply&messageNum=33090">Responder <span style="font-weight: 700;">mediante la Web</span></a> |
+            	<a href="http://es.groups.yahoo.com/group/Grupo_amigos_amigas/post;_ylc=X3oDMTJlNXZ2dTVvBF9TAzk3NDkwNDYzBGdycElkAzYyOTA2MzcEZ3Jwc3BJZAMxNjYwMzk3ODEyBHNlYwNmdHIEc2xrA250cGMEc3RpbWUDMTI4MzgzMTc1MA--" style="font-weight: 700;">Crear un tema nuevo</a>
+      </div>
+
+                <a href="http://es.groups.yahoo.com/group/Grupo_amigos_amigas/message/33083;_ylc=X3oDMTM2NDJrbGI4BF9TAzk3NDkwNDYzBGdycElkAzYyOTA2MzcEZ3Jwc3BJZAMxNjYwMzk3ODEyBG1zZ0lkAzMzMDkwBHNlYwNmdHIEc2xrA3Z0cGMEc3RpbWUDMTI4MzgzMTc1MAR0cGNJZAMzMzA4Mw--">Mensajes con este tema</a>
+          (<span style="font-weight: 700;">4</span>)
+          </div> 
+<!------- Start Nav Bar ------>
+<!-- |**|begin egp html banner|**| -->
+<!-- |**|end egp html banner|**| -->
+
+<!-- |**|begin egp html banner|**| -->
+<div id="ygrp-vital" style="background-color: #e0ecee; font-family: Verdana; font-size: 10px; margin-bottom: 10px; padding: 10px;">
+      <span id="vithd" style="font-weight: bold; color: #333; text-transform: uppercase; ">Actividad reciente:</span>
+
+    <ul style="list-style-type: none; margin: 0; padding: 0; display: inline;">
+            <li style="border-right: 1px solid #000; font-weight: 700; display: inline; padding: 0 5px; margin-left: 0;">
+      <span class="cat"><a href="http://es.groups.yahoo.com/group/Grupo_amigos_amigas/members;_ylc=X3oDMTJmNGF2czU4BF9TAzk3NDkwNDYzBGdycElkAzYyOTA2MzcEZ3Jwc3BJZAMxNjYwMzk3ODEyBHNlYwN2dGwEc2xrA3ZtYnJzBHN0aW1lAzEyODM4MzE3NDk-?o=6" style="text-decoration: none;">Miembros nuevos</a></span>
+      <span class="ct" style="color: #ff7900;">10</span>
+    </li>
+                                              </ul>
+    
+  <div style="clear: both; padding-top: 2px; color: #1e66ae;">
+    <a href="http://es.groups.yahoo.com/group/Grupo_amigos_amigas;_ylc=X3oDMTJlMTdvcGNhBF9TAzk3NDkwNDYzBGdycElkAzYyOTA2MzcEZ3Jwc3BJZAMxNjYwMzk3ODEyBHNlYwN2dGwEc2xrA3ZnaHAEc3RpbWUDMTI4MzgzMTc0OQ--" style="text-decoration: none;">Visita tu grupo</a>
+  </div>
+</div>
+
+      <div id="ygrp-grfd" style="font-family: Verdana; font-size: 12px; padding: 15px 0;">
+      
+<!-- |**|begin egp html banner|**| -->
+
+      Para cancelar su suscripción a este grupo, envíe un mensaje de correo-e a:<BR>
+amigosamigas2-unsubscribe@yahoogroups.com<BR>
+<BR>
+      
+<!-- |**|end egp html banner|**| -->
+
+    </div>
+  
+<div id="ft" style="font-family: Arial; font-size: 11px; margin-top: 5px; padding: 0 2px 0 0; clear: both;">
+  <a href="http://es.groups.yahoo.com/;_ylc=X3oDMTJkbDFhb3RjBF9TAzk3NDkwNDYxBGdycElkAzYyOTA2MzcEZ3Jwc3BJZAMxNjYwMzk3ODEyBHNlYwNmdHIEc2xrA2dmcARzdGltZQMxMjgzODMxNzUw" style="float: left;"><img src="http://l.yimg.com/a/i/us/yg/logo/es.gif" height="19" width="141" alt="Yahoo! Grupos" style="border: 0;"/></a>
+  <div style="color: #747575; float: right;">Cambiar a: <a href="mailto:Grupo_amigos_amigas-traditional@yahoogroups.com?subject=Cambiar Formato de EnvÃ­o: Tradicional" style="text-decoration: none;">Solo Texto</a>, <a href="mailto:Grupo_amigos_amigas-digest@yahoogroups.com?subject=EnvÃ­o de Correo: ReseÃ±a" class="margin-rt" style="text-decoration: none;">Rese\xc3\xb1a Diaria</a> &bull; <a href="mailto:Grupo_amigos_amigas-unsubscribe@yahoogroups.com?subject=Cancelar suscripción" style="text-decoration: none;">Cancelar suscripción</a> &bull; <a href="http://es.docs.yahoo.com/info/utos.html" style="text-decoration: none;">Condiciones de uso</a></div>
+</div>
+
+<!-- |**|end egp html banner|**| -->
+
+  </div> <!-- ygrp-msg -->
+
+  <!-- Sponsor -->
+  <!-- |**|begin egp html banner|**| -->
+  <div id="ygrp-sponsor" style="width:160px; float:right; clear:none; margin:0 0 25px 0; background: #fff;">
+
+<!-- Start Recommendations -->
+<div id="ygrp-reco">
+     </div>
+<!-- End Recommendations -->
+
+
+
+  </div>   <!-- |**|end egp html banner|**| -->
+
+  <div style="clear:both; color: #FFF; font-size:1px;">.</div>
+</div>
+
+  <img src="http://geo.yahoo.com/serv?s=97490463/grpId=6290637/grpspId=1660397812/msgId=33090/stime=1283831750/nc1=1/nc2=2/nc3=3" width="1" height="1"> <br>
+
+<div style="color: #fff; height: 0;">__,_._,___</div>
+<!--~-|**|PrettyHtmlEnd|**|-~-->
+
+</body>
+
+<!--~-|**|PrettyHtmlStart|**|-~-->
+<head>
+  <style type="text/css">
+  <!--
+  #ygrp-mkp {
+  border: 1px solid #d8d8d8;
+  font-family: Arial;
+  margin: 10px 0;
+  padding: 0 10px;
+}
+
+#ygrp-mkp hr {
+  border: 1px solid #d8d8d8;
+}
+
+#ygrp-mkp #hd {
+  color: #628c2a;
+  font-size: 85%;
+  font-weight: 700;
+  line-height: 122%;
+  margin: 10px 0;
+}
+
+#ygrp-mkp #ads {
+  margin-bottom: 10px;
+}
+
+#ygrp-mkp .ad {
+  padding: 0 0;
+}
+
+#ygrp-mkp .ad p {
+  margin: 0;
+}
+
+#ygrp-mkp .ad a {
+  color: #0000ff;
+  text-decoration: none;
+}
+  #ygrp-sponsor #ygrp-lc {
+  font-family: Arial;
+}
+
+#ygrp-sponsor #ygrp-lc #hd {
+  margin: 10px 0px;
+  font-weight: 700;
+  font-size: 78%;
+  line-height: 122%;
+}
+
+#ygrp-sponsor #ygrp-lc .ad {
+  margin-bottom: 10px;
+  padding: 0 0;
+}
+
+  a {
+    color: #1e66ae;
+  }
+
+  #actions {
+    font-family: Verdana;
+    font-size: 11px;
+    padding: 10px 0;
+  }
+
+  #activity {
+    background-color: #e0ecee;
+    float: left;
+    font-family: Verdana;
+    font-size: 10px;
+    padding: 10px;
+  }
+
+  #activity span {
+    font-weight: 700;
+  }
+
+  #activity span:first-child {
+    text-transform: uppercase;
+  }
+
+  #activity span a {
+    color: #5085b6;
+    text-decoration: none;
+  }
+
+  #activity span span {
+    color: #ff7900;
+  }
+
+  #activity span .underline {
+    text-decoration: underline;
+  }
+
+  .attach {
+    clear: both;
+    display: table;
+    font-family: Arial;
+    font-size: 12px;
+    padding: 10px 0;
+    width: 400px;
+  }
+
+  .attach div a {
+    text-decoration: none;
+  }
+
+  .attach img {
+    border: none;
+    padding-right: 5px;
+  }
+
+  .attach label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .attach label a {
+    text-decoration: none;
+  }
+  
+  blockquote {
+    margin: 0 0 0 4px;
+  }
+
+  .bold {
+    font-family: Arial;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .bold a {
+    text-decoration: none;
+  }
+
+  dd.last p a {
+    font-family: Verdana;
+    font-weight: 700;
+  }
+
+  dd.last p span {
+    margin-right: 10px;
+    font-family: Verdana;
+    font-weight: 700;
+  }
+
+  dd.last p span.yshortcuts {
+    margin-right: 0;
+  }
+
+  div.attach-table div div a {
+    text-decoration: none;
+  }
+
+  div.attach-table {
+    width: 400px;
+  }
+
+  div.file-title a, div.file-title a:active, div.file-title a:hover, div.file-title a:visited {
+    text-decoration: none;
+  }
+
+  div.photo-title a, div.photo-title a:active, div.photo-title a:hover, div.photo-title a:visited {
+    text-decoration: none;
+  }
+
+  div#ygrp-mlmsg #ygrp-msg p a span.yshortcuts {
+    font-family: Verdana;
+    font-size: 10px;
+    font-weight: normal;
+  }
+
+  .green {
+    color: #628c2a;
+  }
+
+  .MsoNormal {
+    margin: 0 0 0 0;
+  }
+
+  o {
+    font-size: 0;
+  }
+
+  #photos div {
+    float: left;
+    width: 72px;
+  }
+
+  #photos div div {
+    border: 1px solid #666666;
+    height: 62px;
+    overflow: hidden;
+    width: 62px;
+  }
+
+  #photos div label {
+    color: #666666;
+    font-size: 10px;
+    overflow: hidden;
+    text-align: center;
+    white-space: nowrap;
+    width: 64px;
+  }
+
+  #reco-category {
+    font-size: 77%;
+  }
+
+  #reco-desc {
+    font-size: 77%;
+  }
+
+  .replbq {
+    margin: 4px;
+  }
+
+  #ygrp-actbar div a:first-child {
+   /* border-right: 0px solid #000;*/
+    margin-right: 2px;
+    padding-right: 5px;
+  }
+
+  #ygrp-mlmsg {
+    font-size: 13px;
+    font-family: Arial, helvetica,clean, sans-serif;
+    *font-size: small;
+    *font: x-small;
+  }
+
+  #ygrp-mlmsg table {
+    font-size: inherit;
+    font: 100%;
+  }
+
+  #ygrp-mlmsg select, input, textarea {
+    font: 99% Arial, Helvetica, clean, sans-serif;
+  }
+
+  #ygrp-mlmsg pre, code {
+    font:115% monospace;
+    *font-size:100%;
+  }
+
+  #ygrp-mlmsg * {
+    line-height: 1.22em;
+  }
+
+  #ygrp-mlmsg #logo {
+    padding-bottom: 10px;
+  }
+
+  #ygrp-mlmsg a {
+    color: #1E66AE;
+  }
+
+  #ygrp-msg p a {
+    font-family: Verdana;
+  }
+
+  #ygrp-msg p#attach-count span {
+    color: #1E66AE;
+    font-weight: 700;
+  }
+
+  #ygrp-reco #reco-head {
+    color: #ff7900;
+    font-weight: 700;
+  }
+
+  #ygrp-reco {
+    margin-bottom: 20px;
+    padding: 0px;
+  }
+
+  #ygrp-sponsor #ov li a {
+    font-size: 130%;
+    text-decoration: none;
+  }
+
+  #ygrp-sponsor #ov li {
+    font-size: 77%;
+    list-style-type: square;
+    padding: 6px 0;
+  } 
+
+  #ygrp-sponsor #ov ul {
+    margin: 0;
+    padding: 0 0 0 8px;
+  }
+
+  #ygrp-text {
+    font-family: Georgia;
+  }
+
+  #ygrp-text p {
+    margin: 0 0 1em 0;
+  }
+
+  #ygrp-text tt {
+    font-size: 120%;
+  }
+
+  #ygrp-vital ul li:last-child {
+    border-right: none !important; 
+  } 
+  -->
+  </style>
+</head>
+
+<!--~-|**|PrettyHtmlEnd|**|-~-->
+</html>
+<!-- end group email -->
+
+
+**********

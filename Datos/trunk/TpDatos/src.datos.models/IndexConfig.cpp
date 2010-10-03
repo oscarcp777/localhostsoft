@@ -18,6 +18,7 @@ IndexConfig::IndexConfig() {
 IndexConfig::~IndexConfig() {
 
 }
+
 int IndexConfig::getBlockSize() const
 {
 	return blockSize;

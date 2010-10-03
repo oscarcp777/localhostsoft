@@ -8,13 +8,13 @@
 #include "Registry.h"
 #include "Key.h"
 Registry::Registry() {
-	// TODO Auto-generated constructor stub
-
+	this->key = NULL;
 }
 
 Registry::~Registry() {
 	if(this->key!=NULL)
 		delete this->key;
+
 	this->key=NULL;
 }
 Key* Registry::getKey(){

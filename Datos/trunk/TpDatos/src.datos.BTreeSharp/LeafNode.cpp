@@ -138,11 +138,12 @@ Registry* LeafNode::searchBlockMails(Registry* registry,ContainerInsertDataBlock
 	for(iterRegistry = blockMails->iteratorBegin(); iterRegistry != blockMails->iteratorEnd(); iterRegistry++){
 		reg=*iterRegistry;
 		if(registry->compareTo(reg) == 0){
-			((RegPrimary*)registry)->setMail((Mail*)reg);
+			((RegPrimary*)registry)->setMail((Mail*)reg->clone());
+			delete blockMails;
 			return registry;
 		}
 	}
-
+	delete blockMails;
 	return NULL;
 }
 bool LeafNode::isLeaf() const throw(){

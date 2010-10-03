@@ -41,7 +41,7 @@ IndexBSharp* StorageController::generatePrimaryIndex(char* userName, char* passw
 	string pass = password;
 	string fileName = userName;
 	fileName += ".IndPrimario";
-	this->primaryIndex = new IndexBSharp(fileName,BLOCK_SIZE,TYPE_REG_PRIMARY);
+	this->primaryIndex = new IndexBSharp(PATHFILES+fileName,BLOCK_SIZE,TYPE_REG_PRIMARY);
 	configIndex->setBlockSize(BLOCK_SIZE);
 	configIndex->setFileName(fileName);
 	configIndex->setTypeIndex(TYPE_PRIMARY);

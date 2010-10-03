@@ -22,9 +22,9 @@ Consultation::~Consultation() {
 	// TODO Auto-generated destructor stub
 }
 void Consultation::consultPrimaryIndex(IndexConfig* indexConfig,RegPrimary* regPrimary){
-	IndexBSharp* primaryIndex = new IndexBSharp(indexConfig->getFileName(),indexConfig->getBlockSize(),TYPE_REG_PRIMARY);
+	IndexBSharp* primaryIndex = new IndexBSharp(PATHFILES+indexConfig->getFileName(),indexConfig->getBlockSize(),TYPE_REG_PRIMARY);
 	regPrimary = (RegPrimary*) primaryIndex->searchRegistry(regPrimary);
-
+	delete primaryIndex;
 }
 
 void Consultation::consultSecondaryIndex(IndexConfig* indexConfig,list<int>* listOfIucs, string filterValue){
@@ -33,7 +33,7 @@ void Consultation::consultSecondaryIndex(IndexConfig* indexConfig,list<int>* lis
 	RegSelection* regSelection;
 
 	if(indexConfig->getTypeSecundaryIndex().compare((char*)TYPE_SELECTION) == 0){
-		secondaryIndex = new IndexBSharp(indexConfig->getFileName(),BLOCK_SIZE/*TODO indexConfig->getBlockSize()*/,TYPE_REG_SELECTION);
+		secondaryIndex = new IndexBSharp(PATHFILES+indexConfig->getFileName(),BLOCK_SIZE/*TODO indexConfig->getBlockSize()*/,TYPE_REG_SELECTION);
 		iter = secondaryIndex->getIterator();
 		while(iter->hasNext()){
 			regSelection = 	(RegSelection*) iter->next();
@@ -43,28 +43,18 @@ void Consultation::consultSecondaryIndex(IndexConfig* indexConfig,list<int>* lis
 
 	}
 	else{
-		secondaryIndex = new IndexBSharp(indexConfig->getFileName(),BLOCK_SIZE/*TODO indexConfig->getBlockSize()*/,TYPE_REG_CLASSIFICATION);
+		secondaryIndex = new IndexBSharp(PATHFILES+indexConfig->getFileName(),BLOCK_SIZE/*TODO indexConfig->getBlockSize()*/,TYPE_REG_CLASSIFICATION);
 		RegClassification* searchReg = new RegClassification();
+		RegClassification* resultReg;
 		searchReg->setKey(new KeyString(filterValue));
-		searchReg = (RegClassification*)secondaryIndex->searchRegistry(searchReg);
+		resultReg = (RegClassification*)secondaryIndex->searchRegistry(searchReg);
 		list<KeyInteger* > auxList = searchReg->getIucs();
 		list<KeyInteger*>::iterator actual;
 		for (actual = auxList.begin(); actual	!= auxList.end(); ++actual){
 			(*listOfIucs).push_back((*actual)->getValue());
 		}
-
-
-		//Esto es para chequear el arbol (print arbol de clasif.pero algo no anda)
-//		iter = secondaryIndex->getIterator();
-//		while(iter->hasNext()){
-//			RegClassification* regC =(RegClassification*) iter->next();
-//			regC->print(cout);
-//			for (actual = regC->getIucs().begin(); actual	!= regC->getIucs().end(); ++actual){
-//						std::cout << "IUC: "<<(*actual)->getValue();
-//			}
-//			std::cout<<std::endl;
-//		}
-//		delete iter;
+		delete searchReg;
+		delete resultReg;
 	}
 
 	delete secondaryIndex;

@@ -13,12 +13,16 @@ Controller::Controller() {
 	this->programFile = new TextFile();
 	this->primaryTree = NULL;
 	this->loadIndexNames();
+	this->search = NULL;
 }
 
 Controller::~Controller() {
 	delete this->programFile;
 	if(this->primaryTree != NULL)
 		delete this->primaryTree;
+
+	if(this->search != NULL)
+		delete this->search;
 
 	list<IndexConfig*>::iterator itIndex;
 	IndexConfig* indexConfig;
@@ -33,6 +37,7 @@ Controller::~Controller() {
 			mail=*itMails;
 			delete mail;
 		}
+
 }
 void Controller::loadInfoIndex(std::string linea,IndexConfig* index){
 
@@ -70,8 +75,10 @@ void Controller::loadInfoIndex(std::string linea,IndexConfig* index){
 
 }
 void Controller::loadIndexNames(){
-
-	this->programFile->open("archivo.dat");
+	string fileName= "";
+	fileName+=PATHFILES;
+	fileName+="config.dat";
+	this->programFile->open(fileName);
 	std::string linea = "";
 	this->programFile->read(linea);
 	int i=0;
@@ -81,7 +88,7 @@ void Controller::loadIndexNames(){
 		this->loadInfoIndex(linea, index);
 		if(index->getTypeIndex().compare("Primario") == 0){
 			//index->print();
-			this->primaryTree = new IndexBSharp(index->getFileName(),index->getBlockSize(),TYPE_REG_PRIMARY);
+			this->primaryTree = new IndexBSharp(PATHFILES+index->getFileName(),index->getBlockSize(),TYPE_REG_PRIMARY);
 		}
 		this->indexes.push_back(index);//en realidad tengo que meter los registros
 		this->programFile->read(linea);
@@ -126,7 +133,10 @@ void Controller::setSearch(Search* search){
 void Controller::addIndexToFile(IndexConfig* index){
 
 	if(!searchIndex(index->getFilterName())){
-		this->programFile->open("archivo.dat");
+		string fileName= "";
+		fileName+=PATHFILES;
+		fileName+="config.dat";
+		this->programFile->open(fileName);
 		std::string sizeBlock = StringUtils::convertirAString(index->getBlockSize());
 		std::string aux= sizeBlock+"|"+ index->getFilterName()+"|"+ index->getFileName()+"|"+index->getUserName() + "|"+index->getTypeIndex();
 		if(index->getTypeSecundaryIndex() != "")
@@ -232,8 +242,10 @@ int Controller::searchMails(std::string strSearch){
 								regPrimary->setKey(new KeyInteger((int)*it));
 								consultation->consultPrimaryIndex(*current,regPrimary);
 								if(regPrimary->getMail() != NULL)
-									this->listOfMails.push_back(regPrimary->getMail());
+									this->listOfMails.push_back((Mail*)regPrimary->getMail()->clone());
 								it++;
+								delete regPrimary->getMail();
+								delete regPrimary;
 							}
 
 						}
@@ -243,6 +255,7 @@ int Controller::searchMails(std::string strSearch){
 					current++;
 					}
 		}
+		delete consultation;
 	return 0;
 }
 

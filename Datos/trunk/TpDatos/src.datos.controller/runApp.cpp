@@ -59,7 +59,7 @@ int main (int argc,char** argv){
 			if(typeSecondaryIndex.compare("Clasificacion") == 0){
 				std::string filterName(argv[5]);
 				configOne->setFilterName(filterName);
-				configOne->print();////////////////////////////print
+				//configOne->print();////////////////////////////print
 
 			}else if(typeSecondaryIndex.compare("Seleccion") == 0){
 				std::string value(argv[5]);
@@ -70,10 +70,9 @@ int main (int argc,char** argv){
 			control->addSecondIndex(configOne);
 
 		}else if (strcmp(argv[1],"-li")==0){
-			IndexConfig* configOne = new IndexConfig();
+			IndexConfig* configOne;
 			std::string index(argv[2]);
 			configOne = control->loadIndexConfig(index);
-
 			control->loadSecondIndex(configOne);
 
 

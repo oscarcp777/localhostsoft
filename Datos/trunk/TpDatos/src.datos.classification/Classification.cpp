@@ -30,12 +30,11 @@ void Classification::loadSecondaryIndex(IndexConfig* indexConfig, IteratorBSharp
 				this->loadClassificationIndex(indexConfig,it);
 
 			else if(indexConfig->getTypeSecundaryIndex().compare((char*)TYPE_SELECTION) == 0){
-				cout<< "entro al if de seleccion dentro de loadSecondaryIndex "<<endl;
 				this->loadSelectionIndex(indexConfig,it);
 			}
 }
 void Classification::loadClassificationIndex(IndexConfig* indexConfig,IteratorBSharp* it){
-	IndexBSharp* secondaryIndex = new IndexBSharp(indexConfig->getFileName(),indexConfig->getBlockSize(),TYPE_REG_CLASSIFICATION);
+	IndexBSharp* secondaryIndex = new IndexBSharp(PATHFILES+indexConfig->getFileName(),indexConfig->getBlockSize(),TYPE_REG_CLASSIFICATION);
 	RegPrimary* regPrimary;
 	RegClassification* regClassification;
 	KeyString* key;
@@ -56,7 +55,7 @@ void Classification::loadClassificationIndex(IndexConfig* indexConfig,IteratorBS
 	delete it;
 }
 void Classification::loadSelectionIndex(IndexConfig* indexConfig,IteratorBSharp* it){
-	IndexBSharp* secondaryIndex = new IndexBSharp(indexConfig->getFileName(),indexConfig->getBlockSize(),TYPE_REG_SELECTION);
+	IndexBSharp* secondaryIndex = new IndexBSharp(PATHFILES+indexConfig->getFileName(),indexConfig->getBlockSize(),TYPE_REG_SELECTION);
 	RegPrimary* regPrimary;
 	RegSelection* regSelection;
 	int condition = indexConfig->getCondition();
