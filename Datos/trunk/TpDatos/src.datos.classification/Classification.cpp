@@ -61,11 +61,8 @@ void Classification::loadSelectionIndex(IndexConfig* indexConfig,IteratorBSharp*
 	RegSelection* regSelection;
 	int condition = indexConfig->getCondition();
 	string value = indexConfig->getValue();
-	cout<<"condition: "<<condition<<endl;
-	cout<<"value: "<<value<<endl;//////////////////////////////////////////////////////////////////////////////
 
 	while (it->hasNext()){
-		cout<<"entro al while de loadSelctionIndex"<<endl;
 		regPrimary = (RegPrimary*)it->next();
 		if(regPrimary->getMail()->containCondition(condition,value)){
 			regSelection = new RegSelection();
@@ -73,8 +70,7 @@ void Classification::loadSelectionIndex(IndexConfig* indexConfig,IteratorBSharp*
 			secondaryIndex->addRegistry(regSelection);
 		}
 	}
-	cout<<"antes de imprimir el secondary index en loadSelectionIndex"<<endl;
-	secondaryIndex->print(std::cout);
+
 	delete secondaryIndex;
 	delete it;
 }
