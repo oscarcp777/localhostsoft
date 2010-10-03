@@ -568,7 +568,6 @@ bool IndexBSharp::balanceLeafNode(Registry* reg, LeafNode* actualNode,LeafNode* 
 	    }
 		this->writeBlock(leftNode, leftNode->getNumBlock());
 		this->writeBlock(rightNode, rightNode->getNumBlock());
-		cout<<"SE BALANCEO HOJA"<<endl;
 		return true;
 	}
 
@@ -1276,19 +1275,27 @@ void IndexBSharp::printRecursive(Node* currentNode, std::ostream& outStream,
 		outStream << "COMPONENTES BLOQUE: " << endl;
 		list<Registry*>::iterator actualComp = currentNode->iteratorBegin();
 		list<Registry*>::iterator endComp = currentNode->iteratorEnd();
+		std::vector<int>::const_iterator actualBranch;
+		if (!currentNode->isLeaf()) {
+			InternalNode* internalNode = (InternalNode*) currentNode;
+			actualBranch =	internalNode->firstBranch();
+			outStream << " " << *actualBranch<< " ";
+			actualBranch++;
+		}
 		while (actualComp != endComp) {
 			Registry* reg = *actualComp;
 			this->printRegistry(reg, outStream);
-//			if (currentNode->isLeaf()) {
-//				LeafNode* leafNode = (LeafNode*) currentNode;
-//				leafNode->printMails(outStream, reg,
-//						this->containerInsertDataBlock);
-//
-//			}
+			if (!currentNode->isLeaf()) {
+				outStream << " " << *actualBranch<< " ";
+			}
 			++actualComp;
+			++actualBranch;
 		}
+		if (!currentNode->isLeaf())
+			outStream << endl;
+		outStream << "--ESPACIO OCUPADO: " << currentNode->getOcupedLong();
 		if (currentNode->isLeaf()) {
-			outStream << "--EN BLOQUE HOJA--";
+			outStream << " --EN BLOQUE HOJA--";
 			LeafNode* leafNode = (LeafNode*) currentNode;
 			outStream << "CON SIGUIENTE: " << leafNode->getNextBlock() << " ";
 
@@ -1296,18 +1303,18 @@ void IndexBSharp::printRecursive(Node* currentNode, std::ostream& outStream,
 			outStream << std::endl;
 			outStream << std::endl;
 		} else {
-			outStream << "--EN BLOQUE INTERNO--";
+			outStream << " --EN BLOQUE INTERNO--";
 			InternalNode* internalNode = (InternalNode*) currentNode;
-			std::vector<int>::const_iterator actualBranch =
-					internalNode->firstBranch();
-			std::vector<int>::const_iterator endBranch =
-					internalNode->lastBranch();
-			std::cout << "CON RAMAS(";
-			while (actualBranch != endBranch) {
-				outStream << " " << *actualBranch;
-				++actualBranch;
-			}
-			outStream << " ) ";
+			std::vector<int>::const_iterator actualBranch;
+			std::vector<int>::const_iterator endBranch = internalNode->lastBranch();
+
+//			std::vector<int>::const_iterator actualBranch =	internalNode->firstBranch();
+//			std::cout << "CON RAMAS(";
+//			while (actualBranch != endBranch) {
+//				outStream << " " << *actualBranch;
+//				++actualBranch;
+//			}
+//			outStream << " ) ";
 			outStream << std::endl;
 			outStream << std::endl;
 			outStream << std::endl;
