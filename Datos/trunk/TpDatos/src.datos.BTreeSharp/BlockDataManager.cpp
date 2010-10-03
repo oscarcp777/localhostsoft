@@ -24,7 +24,8 @@ Registry* BlockDataManager::insertIucInBlockData(RegClassification* registryNew,
 		blockIucs=this->readBlockData(numBlock,container);
 			while(blockIucs->getNextBlock()!=-1){
 				numBlock=blockIucs->getNextBlock();
-				blockIucs=this->readBlockData(blockIucs->getNextBlock(),container);
+				delete blockIucs;
+				blockIucs=this->readBlockData(numBlock,container);
 
 			}
 
@@ -72,6 +73,8 @@ void BlockDataManager::loadListIucBlockData(RegClassification* regClas,unsigned 
 		}
 
 	regClas->setListIuc(listIucs);
+	blockIucs->clearListRegistry();
+	delete blockIucs;
 
 }
 Registry* BlockDataManager::insertMailInBlockData(RegPrimary* registryNew,RegPrimary* registryFind,ContainerInsertDataBlock* container){

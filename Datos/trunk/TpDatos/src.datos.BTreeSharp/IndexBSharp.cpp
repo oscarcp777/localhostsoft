@@ -30,9 +30,7 @@ void IndexBSharp::initContainerDataBlock(const std::string& nameFile,unsigned in
 	this->containerInsertDataBlock->setTypeElement(typeElement);
 	this->containerInsertDataBlock->setSizeBlockData(sizeBlock);
 }
-IndexBSharp::IndexBSharp(const std::string& nameFile, unsigned int sizeBlock,
-
-		int typeElement) {
+IndexBSharp::IndexBSharp(const std::string& nameFile, unsigned int sizeBlock,int typeElement) {
 	this->containerInsertDataBlock = NULL;
 	containerInsertion=new ContainerInsertion();
 	this->sizeBlock = sizeBlock;
@@ -914,7 +912,7 @@ int IndexBSharp::insertInternalNode(InternalNode* internalNode,
 			// Verifico si puedo agregar en el bloque interno
 			Registry* replaceReg = (Registry*)(*actualRegistry);
 			internalNode->replaceRegistry(replaceReg, container->getLeftRegKey());
-
+            delete replaceReg;
 			if (internalNode->posibleToAgregateComponent(container->getRightRegKey())){
 				// Inserto en el bloque interno no lleno
 				this->insertInternalNodeNotFull(internalNode, container->getRightRegKey(),container->getRightBlock());
