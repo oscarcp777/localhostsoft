@@ -38,18 +38,18 @@ int main(int argc,char** argv){
 
 		/*Analisis de argumentos*/
 		if(argc>1){
-		if (strcmp(argv[1],"-c")==0){
+		if ((strcmp(argv[1],"-c")==0) && (argc == 4)){
 			std::string strPass = argv[3];
 			std::string strEmail = argv[2];
 			control->addEmail(strEmail);
 			control->addPass(strPass);
 			control->createPrimaryIndex();
 
-		}else if (strcmp(argv[1],"-f")==0){
+		}else if ((strcmp(argv[1],"-f") == 0) && (argc == 3)){
 			std::string strSearch(argv[2]);
 			control->searchMails(strSearch);
 			printResult(control);
-		}else if (strcmp(argv[1],"-si")==0){
+		}else if (strcmp(argv[1],"-si") == 0 && (argc > 4)){
 			IndexConfig* configOne = new IndexConfig();
 			std::string strEmail(argv[2]);
 			configOne->setUserName(strEmail);
@@ -57,12 +57,12 @@ int main(int argc,char** argv){
 			std::string typeSecondaryIndex(argv[3]);
 			configOne->setTypeSecundaryIndex(typeSecondaryIndex);
 			configOne->setCondition(atoi(argv[4]));
-			if(typeSecondaryIndex.compare("Clasificacion") == 0){
+			if((typeSecondaryIndex.compare("Clasificacion") == 0 ) && (argc == 6)){
 				std::string filterName(argv[5]);
 				configOne->setFilterName(filterName);
 				//configOne->print();////////////////////////////print
 
-			}else if(typeSecondaryIndex.compare("Seleccion") == 0){
+			}else if((typeSecondaryIndex.compare("Seleccion") == 0) && (argc == 7)){
 				std::string value(argv[5]);
 				configOne->setValue(value);
 				std::string filterName(argv[6]);
@@ -70,14 +70,14 @@ int main(int argc,char** argv){
 			}
 			control->addSecondIndex(configOne);
 
-		}else if (strcmp(argv[1],"-li")==0){
+		}else if ((strcmp(argv[1],"-li")==0 )&& (argc == 3)){
 			IndexConfig* configOne;
 			std::string index(argv[2]);
 			configOne = control->loadIndexConfig(index);
 			control->loadSecondIndex(configOne);
 
 
-		}else if(strcmp(argv[1],"-t")==0){
+		}else if((strcmp(argv[1],"-t")==0) && (argc == 2 )){
 			cout <<"test"<<endl;
 		}else{
 				puts("Argumentos invalidos");
