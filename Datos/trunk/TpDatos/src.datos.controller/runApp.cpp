@@ -69,7 +69,6 @@ int main(int argc,char** argv){
 				configOne->setFilterName(filterName);
 			}
 			control->addSecondIndex(configOne);
-
 		}else if ((strcmp(argv[1],"-li")==0 )&& (argc == 3)){
 			IndexConfig* configOne;
 			std::string index(argv[2]);
@@ -78,7 +77,71 @@ int main(int argc,char** argv){
 
 
 		}else if((strcmp(argv[1],"-t")==0) && (argc == 2 )){
-			cout <<"test"<<endl;
+			if(CONNECT == 0){
+				cout<<"Creando indice primario...PrimarioTest"<<endl;
+				std::string strPass = "pass";
+				std::string strEmail = "Test";
+				control->addEmail(strEmail);
+				control->addPass(strPass);
+				control->createPrimaryIndex();
+				cout<<"Indice primario creado exitosamente..."<<endl;
+
+				cout<<"Creando y cargando indice secundario de seleccion...SEL_TEST"<<endl;
+				IndexConfig* configSelection = new IndexConfig();
+				IndexConfig* config;
+				configSelection->setUserName(strEmail);
+				configSelection->setTypeIndex("Secundario");
+				configSelection->setTypeSecundaryIndex("Seleccion");
+				configSelection->setCondition(1);
+				configSelection->setValue("michael.richters@gmail.com");
+				configSelection->setFilterName("SEL_TEST");
+				control->addSecondIndex(configSelection);
+				config = control->loadIndexConfig("SEL_TEST");
+				control->loadSecondIndex(config);
+				cout<<"Indice secundario de seleccion creado exitosamente..."<<endl;
+
+				cout<<"Creando indice secundario de clasificacion...CLAS_TEST"<<endl;
+				IndexConfig* configClasification = new IndexConfig();
+				configClasification->setUserName(strEmail);
+				configClasification->setTypeIndex("Secundario");
+				configClasification->setTypeSecundaryIndex("Clasificacion");
+				configClasification->setCondition(1);
+				configClasification->setFilterName("CLAS_TEST");
+				control->addSecondIndex(configClasification);
+				config = control->loadIndexConfig("CLAS_TEST");
+				control->loadSecondIndex(config);
+				cout<<"Indice secundario de clasificacion creado exitosamente..."<<endl;
+
+
+				cout<<"Busqueda sobre primario...[PrimarioTest=5,6,11]"<<endl;
+				string parameters = "[PrimarioTest=5,6,11]";
+				control->searchMails(parameters);
+				list<Mail*>::iterator itPrimary;
+				for(itPrimary= control->iteratorBeginListOfMails(); itPrimary != control->iteratorEndListOfMails(); itPrimary++){
+					(*itPrimary)->print(cout);
+				}
+				cout<<"Fin busqueda..."<<endl;
+
+				cout<<"Busqueda sobre secundario seleccion...[SEL_TEST=]..."<<endl;
+				control->searchMails("[SEL_TEST=]");
+
+				list<int>::iterator it;
+				for(it= control->iteratorBeginListOfIucs(); it != control->iteratorEndListOfIucs(); it++){
+					cout<<"IUC: "<<*it<<endl;
+				}
+				cout<<"Fin busqueda..."<<endl;
+
+				control->clearListsIucs();
+				cout<<"Busqueda sobre secundario clasificacion... [CLAS_TEST=michael.richters@gmail.com]"<<endl;
+				control->searchMails("[CLAS_TEST=michael.richters@gmail.com]");
+
+				list<int>::iterator it2;
+				for(it2= control->iteratorBeginListOfIucs(); it2 != control->iteratorEndListOfIucs(); it2++){
+					cout<<"IUC: "<<*it2<<endl;
+				}
+				cout<<"Fin busqueda..."<<endl;
+
+			}
 		}else{
 				puts("Argumentos invalidos");
 			delete control;
@@ -91,80 +154,5 @@ int main(int argc,char** argv){
 
 		delete control;
 		return 0;
-
-
-		//*****SE CONECTA Y CREA INDICE PRIMARIO***
-		/*	std::string strEmail = "Datos.2c2010";
-			std::string strPass = "75067506";
-			Controller* control= new Controller();*/
-		//	std::cout << "INGRESE SU DIRECCION DE E-MAIL: ";
-		//	std::cin >> strEmail;
-		//
-		//	control->addEmail(strEmail);
-		//	std::cout << "INGRESE SU PASSWORD: ";
-		//	std::cin >> strPass;
-		//	control->addPass(strPass);
-		//	control->createPrimaryIndex();
-		//****************************************
-
-		//*****CREA INDICE DE CLASIFICACION***
-		/*	IndexConfig* configOne = new IndexConfig();
-			configOne->setUserName(strEmail);
-			configOne->setTypeIndex(TYPE_SECONDARY);
-			configOne->setTypeSecundaryIndex(TYPE_CLASSIFICATION);
-			configOne->setCondition(FROM);
-			configOne->setFilterName("Clasificacion1");
-			control->addSecondIndex(configOne);
-			control->loadSecondIndex(configOne);*/
-		//***********************************
-
-		//*******CREA INDICE DE SELECCION*******
-		//	IndexConfig* configTwo = new IndexConfig();
-		//	configTwo->setUserName(strEmail);
-		//	configTwo->setTypeIndex(TYPE_SECONDARY);
-		//	configTwo->setTypeSecundaryIndex(TYPE_SELECTION);
-		//	configTwo->setCondition(FROM);
-		//	configTwo->setValue("asyura.from@gmail.com");
-		//	configTwo->setFilterName("Seleccion1");
-		//	control->addSecondIndex(configTwo);
-		//	IndexConfig* configOne = new IndexConfig();
-		//	configOne = control->loadIndexConfig("Seleccion1");
-		//	control->loadSecondIndex(configOne);
-
-		//***********************************
-
-		//***********BUSQUEDA SOBRE PRIMARIO********
-		/*	Controller* control= new Controller();
-			control->searchMails("[PrimarioDatos.2c2010=1,4,6,8,22,30,7,171,200,98,276]");
-			list<Mail*>::iterator it;
-			for(it= control->iteratorBeginListOfMails(); it != control->iteratorEndListOfMails(); it++){
-					(*it)->print(cout);
-			}
-		//*/
-		//******************************************************
-
-		//***********BUSQUEDA SOBRE SECUNDARIO SELECCION********
-		/*	//Controller* control= new Controller();
-			cout<<"------------------------------------------------------------------------------------------"<<endl;
-			control->searchMails("[Seleccion1= ]");
-
-			list<int>::iterator it;
-			for(it= control->iteratorBeginListOfIucs(); it != control->iteratorEndListOfIucs(); it++){
-				cout<<"IUC: "<<*it<<endl;
-			}
-		cout<<"salio con cantidad de resultados: "<< control->getListOfIUCS().size() <<endl;*/
-		//******************************************************
-
-		//***********BUSQUEDA SOBRE SECUNDARIO CLASIFICACION********
-		//	Controller* control= new Controller();
-		//	control->searchMails("[Clasificacion1=santiagodonikian@gmail.com]");
-		//
-		//	list<int>::iterator it;
-		//	for(it= control->iteratorBeginListOfIucs(); it != control->iteratorEndListOfIucs(); it++){
-		//		cout<<"IUC: "<<*it<<endl;
-		//	}
-		//******************************************************
-
-		//	delete control;
 
 }

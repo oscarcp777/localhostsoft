@@ -11,8 +11,8 @@
 /*
  *
  */
-#define SERVER "pop.mail.yahoo.com" //"pop.gmail.com"
-#define PORT  110 // 995 para gmail, 110 para yahoo
+#define SERVER "pop.gmail.com"// "pop.mail.yahoo.com" //
+#define PORT  995// 995 para gmail, 110 para yahoo
 
 
 

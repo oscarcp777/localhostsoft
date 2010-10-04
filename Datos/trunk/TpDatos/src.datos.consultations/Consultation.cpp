@@ -45,16 +45,14 @@ void Consultation::consultSecondaryIndex(IndexConfig* indexConfig,list<int>* lis
 	else{
 		secondaryIndex = new IndexBSharp(PATHFILES+indexConfig->getFileName(),BLOCK_SIZE/*TODO indexConfig->getBlockSize()*/,TYPE_REG_CLASSIFICATION);
 		RegClassification* searchReg = new RegClassification();
-		RegClassification* resultReg;
 		searchReg->setKey(new KeyString(filterValue));
-		resultReg = (RegClassification*)secondaryIndex->searchRegistry(searchReg);
+		searchReg = (RegClassification*)secondaryIndex->searchRegistry(searchReg);
 		list<KeyInteger* > auxList = searchReg->getIucs();
 		list<KeyInteger*>::iterator actual;
 		for (actual = auxList.begin(); actual	!= auxList.end(); ++actual){
 			(*listOfIucs).push_back((*actual)->getValue());
 		}
 		delete searchReg;
-		delete resultReg;
 	}
 
 	delete secondaryIndex;

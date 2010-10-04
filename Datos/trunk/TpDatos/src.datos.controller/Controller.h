@@ -61,6 +61,7 @@ public:
 	bool searchIndex(std::string index);
 	IndexConfig* loadIndexConfig(std::string index);
 	int strSearchValidation(std::string strSearch);
+	void clearListsIucs();
 
 
 };

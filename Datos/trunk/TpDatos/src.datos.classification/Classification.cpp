@@ -43,7 +43,7 @@ void Classification::loadClassificationIndex(IndexConfig* indexConfig,IteratorBS
 	while (it->hasNext()){
 		regPrimary = (RegPrimary*)it->next();
 		regClassification = new RegClassification();
-		regPrimary->getMail()->print(cout);
+		//regPrimary->getMail()->print(cout);
 		key = new KeyString(regPrimary->getMail()->getCondition(condition));
 		regClassification->setKey(key);
 		regClassification->addIuc((KeyInteger*)regPrimary->getMail()->getKey()->clone());
@@ -69,7 +69,7 @@ void Classification::loadSelectionIndex(IndexConfig* indexConfig,IteratorBSharp*
 			secondaryIndex->addRegistry(regSelection);
 		}
 	}
-
+	secondaryIndex->print(cout);
 	delete secondaryIndex;
 	delete it;
 }
