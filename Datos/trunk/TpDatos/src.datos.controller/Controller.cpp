@@ -166,16 +166,26 @@ void Controller::addSecondIndex(IndexConfig* indexConfig) {
 
 }
 
-int Controller::createPrimaryIndex() {
-	StorageController* storage = new StorageController();
-	IndexConfig* configIndex = new IndexConfig();
-	this->primaryTree = storage->generatePrimaryIndex((char*)this->strEmail.c_str(),(char*)this->strPass.c_str(),configIndex);
-	this->addIndexToFile(configIndex);
-	this->indexes.push_back(configIndex);
 
-	delete storage;
+
+int Controller::createPrimaryIndex() {
+	if (this->primaryTree == NULL){
+		StorageController* storage = new StorageController();
+		IndexConfig* configIndex = new IndexConfig();
+
+		this->primaryTree = storage->generatePrimaryIndex((char*)this->strEmail.c_str(),(char*)this->strPass.c_str(),configIndex);
+		this->addIndexToFile(configIndex);
+		this->indexes.push_back(configIndex);
+		this->primaryTree->print(cout);
+		delete storage;
+
+	}else{
+		cout<<"Ya exite un arbol primario"<<endl;
+	}
 	return 0;
 }
+
+
 int Controller::loadSecondIndex(IndexConfig* indexConfig){
 	Classification* classification = new Classification();
 	if(this->primaryTree == NULL)
