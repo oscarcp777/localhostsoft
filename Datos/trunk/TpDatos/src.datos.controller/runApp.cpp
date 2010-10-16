@@ -86,7 +86,7 @@ int main(int argc,char** argv){
 				control->createPrimaryIndex();
 				cout<<"*******************Indice primario creado exitosamente..."<<endl<<endl;
 
-				cout<<"*******************Creando y cargando indice secundario de seleccion...SEL_TEST"<<endl<<endl;
+				cout<<"*******************Creando y cargando indice secundario de seleccion...SEL_TEST  filtro FROM=chromium@googlecode.com"<<endl<<endl;
 				IndexConfig* configSelection = new IndexConfig();
 				IndexConfig* config;
 				configSelection->setUserName(strEmail);
