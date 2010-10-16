@@ -173,16 +173,17 @@ void Mail::parseMail(char* text){
 	string messageId = "Message-Id:";
 	string endLine = "\n";
 	string delim = "--";
-	string end = "=";
+	string end = "\n--";
 	string beginMail = "<";
 	string endMail = ">";
 	string space = " ";
 	string caracter = " =?";
 
+
 	if(CONNECT == 1){
-//		cout<<"*******************************************************************"<<endl;
-//		cout<<text<<endl;
-//		cout<<"*******************************************************************"<<endl;
+		cout<<"*******************************************************************"<<endl;
+		cout<<text<<endl;
+		cout<<"*******************************************************************"<<endl;
 
 		posInitial = textMail.find(date.c_str(),0);
 		posFinal = textMail.find(endLine.c_str(),posInitial+date.size());
@@ -248,16 +249,16 @@ void Mail::parseMail(char* text){
 				messageId = "Message-Id:";
 				endLine = "\n";
 				delim = "--";
-				end = "¡¡END MAIL!!";
 				beginMail = "<";
 				endMail = ">";
 				space = " ";
 				caracter = " =?";
+				string end = "¡¡END MAIL!!";
 //
 //				cout<<"*******************************************************************"<<endl;
 //				cout<<text<<endl;
 //				cout<<"*******************************************************************"<<endl;
-
+				textMail+="¡¡END MAIL!!";
 
 				posInitial = textMail.find(date.c_str(),0);
 				posFinal = textMail.find(endLine.c_str(),posInitial+date.size());
