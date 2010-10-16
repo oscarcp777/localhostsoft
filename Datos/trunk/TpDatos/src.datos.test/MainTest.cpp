@@ -10,13 +10,15 @@
 #include <list>
 #include "TestBSharp.h"
 #include "TestStorageController.h"
+#include "TestManagerInvertedIndex.h"
+
 
 
 using namespace std;
 
-int mainOLD(int argc,char** argv) {
+int main12345(int argc,char** argv) {
 
-	TestBSharp* test = new TestBSharp();
+//	TestBSharp* test = new TestBSharp();
 //	test->testInsert();
 //	test->testsearch();
 //	test->testInsertAndSearch();
@@ -24,8 +26,8 @@ int mainOLD(int argc,char** argv) {
 //	test->testsearchRegClassification();
 //	test->testInsertAndSearchRegClassification();
 //	test->testInsertMails();
-	test->testPrint();
-	delete test;
+//	test->testPrint();
+//	delete test;
 /*
 	//TEST STORAGE
    TestStorage* teststorage = new TestStorage();
@@ -45,6 +47,14 @@ int mainOLD(int argc,char** argv) {
 //	test->testConnectAndCreatePrimaryIndex();
 //	test->testPrintPrimaryIndex();
 //	test->testSearchPrimaryIndex();
+
+
+
+//**********************TEST MANAGER INVERTED INDEX*******************
+	TestManagerInvertedIndex* myTest = new TestManagerInvertedIndex();
+	myTest->test();
+	delete myTest;
+//*********************************************************************
 	return 0;
 }
 
