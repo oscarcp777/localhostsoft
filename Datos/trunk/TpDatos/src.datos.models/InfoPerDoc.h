@@ -8,16 +8,21 @@
 #ifndef INFOPERDOC_H_
 #define INFOPERDOC_H_
 
-#include "KeyInteger.h"
 #include <list>
+#include <iostream>
+using namespace std;
 
 class InfoPerDoc {
 public:
-	InfoPerDoc();
+	InfoPerDoc(int iuc);
 	virtual ~InfoPerDoc();
+	void setIuc(int iuc);
+	int getIuc();
+	void addPosition(int pos);
+	void print(std::ostream& outStream);
 private:
-	KeyInteger* iuc;
-	list <int> listOfPositions;
+	int iuc;
+	list<int> listOfPositions;
 };
 
 #endif /* INFOPERDOC_H_ */

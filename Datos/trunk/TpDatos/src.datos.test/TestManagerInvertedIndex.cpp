@@ -23,7 +23,7 @@ void TestManagerInvertedIndex::test(){
 	mail->setKey(key);
 	mail->setDate("27/8/2009");
 	mail->setFrom("richy@lalala.com.ar");
-	mail->setMessage("Hola mundo borra la siguiente stop word aqui ahi ahì CARACAS lo mas fragil de la locura trabajo ser trabajan ARGENTINA voy al mundia de brasil");
+	mail->setMessage("Hola CARACAS mundo borra la siguiente stop word ARGENTINA aqui ahi ahì CARACAS lo mas fragil mundo de la locura trabajo ser trabajan ARGENTINA voy al mundia de brasil");
 	mail->setSubject("trabajo practico");
 	mail->setTo("yogui");
 	manager->loadMessageWords(mail);

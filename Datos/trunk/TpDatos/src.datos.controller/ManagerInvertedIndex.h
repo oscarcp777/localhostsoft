@@ -11,6 +11,8 @@
 #include "../src.datos.utils/Define.h"
 #include "../src.datos.storage/TextFile.h"
 #include "../src.datos.models/Mail.h"
+#include "../src.datos.models/RegInvertedIndex.h"
+#include <map>
 
 class ManagerInvertedIndex {
 public:
@@ -18,9 +20,12 @@ public:
 	virtual ~ManagerInvertedIndex();
 	void loadMessageWords(Mail* mail);
 	void removeStopWords();
+	void printMap(std::ostream& outStream);
+
 private:
 	WordsContainer* stopWords;
 	WordsContainer* currentWords;
+	map<string,RegInvertedIndex*> regMap;
 };
 
 #endif /* MANAGERINVERTEDINDEX_H_ */

@@ -30,15 +30,32 @@ ManagerInvertedIndex::~ManagerInvertedIndex() {
 void ManagerInvertedIndex::loadMessageWords(Mail* mail){
 	this->currentWords = new WordsContainer(mail->getIuc(), mail->getMessage());
 	vector<string>::iterator it;
-	for(it= this->currentWords->getWordsBegin(); it != this->currentWords->getWordsEnd(); it++ ){
-			cout<<*it<<endl;
-	}
+	RegInvertedIndex* regInvertedIndex;
+	InfoPerDoc* infoPerDoc;
 	this->removeStopWords();
-	cout<<"DESPUES DE REMOVER STOP WORDS"<<endl;
+	int count = 0;
 	for(it= this->currentWords->getWordsBegin(); it != this->currentWords->getWordsEnd(); it++ ){
-		cout<<*it<<endl;
+		regInvertedIndex = this->regMap[*it];
+
+		if(regInvertedIndex == NULL){//aparicion termino por primera vez
+			regInvertedIndex = new RegInvertedIndex();
+			regInvertedIndex->setKey(new KeyString(*it));
+			infoPerDoc = new InfoPerDoc(mail->getIuc());
+			infoPerDoc->addPosition(count);
+			regInvertedIndex->addInfoPerDoc(infoPerDoc);
+			this->regMap[*it] = regInvertedIndex;
+
 		}
+		else{//se repite el termino
+			infoPerDoc = regInvertedIndex->getFirstInfoPerDoc();
+			infoPerDoc->addPosition(count);
+
+		}
+		count++;
+	}
+	this->printMap(cout);
 	delete this->currentWords;
+
 }
 
 void ManagerInvertedIndex::removeStopWords(){
@@ -47,4 +64,13 @@ void ManagerInvertedIndex::removeStopWords(){
 		if(this->stopWords->contains(*it))
 			this->currentWords->removeWord(it);
 	}
+}
+
+void  ManagerInvertedIndex::printMap(std::ostream& outStream){
+	map<string,RegInvertedIndex*>::iterator it;
+	for(it = this->regMap.begin() ; it != this->regMap.end(); it++){
+		outStream<<"word map: "<<(*it).first<<endl;
+		((*it).second)->print(outStream);
+	}
+
 }
