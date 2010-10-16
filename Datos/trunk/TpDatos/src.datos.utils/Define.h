@@ -16,7 +16,7 @@
 #define CONNECT 1 // 1 se conecta a la cuenta, 0 baja de un archivo
 #define MAILSFILE "./files/mailsChico"
 #define PATHFILES "files/storage/"
-
+#define STOP_WORDS_FILE "./files/stopwords.txt"
 
 
 
