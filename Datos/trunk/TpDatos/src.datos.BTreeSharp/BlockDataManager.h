@@ -33,8 +33,9 @@ public:
 	 Registry* insertInfoPerDoc(RegInvertedIndex* registryNew,RegInvertedIndex* registryFind,ContainerInsertDataBlock* container);
 	 Registry* insertMailInBlockData(RegPrimary* registryNew,RegPrimary* registryFind,ContainerInsertDataBlock* container);
 	 Registry* insertIucInBlockData(RegClassification* registryNew,RegClassification* registryFind,ContainerInsertDataBlock* container);
-	 void      loadListRegistry(list<KeyInteger*> &listRegistry, list<Registry*>::iterator itBegin,list<Registry*>::iterator itEnd);
-	 void      loadListInfoPerDocBlockData(RegInvertedIndex* regIndex,unsigned  int numBlock,ContainerInsertDataBlock* container);
+	 void loadListRegistry(list<KeyInteger*> &listRegistry, list<Registry*>::iterator itBegin,list<Registry*>::iterator itEnd);
+	 void loadListInfoPerDocBlockData(RegInvertedIndex* regIndex,unsigned  int numBlock,ContainerInsertDataBlock* container);
+	 void loadListInfoPerDoc(list<InfoPerDoc*> &listRegistry, list<Registry*>::iterator itBegin,list<Registry*>::iterator itEnd);
 private:
 	 Mail*  validedSizeMail(Mail* mail,ContainerInsertDataBlock* container);
 };

@@ -64,20 +64,25 @@ void ManagerInvertedIndex::loadMessageWords(Mail* mail, IndexBSharp* indexBSharp
 	this->printMap(cout);
 	this->writeOrUpdateInvertedIndex(indexBSharp);
 	delete this->currentWords;
+	this->regMap.clear();
 
 }
 void ManagerInvertedIndex::writeOrUpdateInvertedIndex(IndexBSharp* indexBSharp){
 	RegInvertedIndex* regInvertedIndex;
+	RegInvertedIndex* regfound;
 	map<string,RegInvertedIndex*>::iterator it;
 
 	for(it = this->regMap.begin() ; it != this->regMap.end(); it++){
 		regInvertedIndex = (*it).second;
-		regInvertedIndex = (RegInvertedIndex*)indexBSharp->searchRegistry(regInvertedIndex);//busco el registro de indice invertido
+		regfound = (RegInvertedIndex*)indexBSharp->searchRegistry(regInvertedIndex);//busco el registro de indice invertido
 
-		if(regInvertedIndex != NULL){//si existe le agrego el nuevo info per doc
-			regInvertedIndex->addInfoPerDoc(((*it).second)->getFirstInfoPerDoc());
+		if(regfound != NULL){//si existe le agrego el nuevo info per doc
+			regfound->addInfoPerDoc(((*it).second)->getFirstInfoPerDoc());
+			indexBSharp->addRegistry(regfound);//se actualizado el indice
 		}
-		indexBSharp->addRegistry(regInvertedIndex);//se agrega al indice (puede ser nuevo o actualizado)
+		else{//si no existe
+			indexBSharp->addRegistry((*it).second);//se agrega al indice
+		}
 	}
 
 }
