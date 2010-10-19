@@ -33,7 +33,10 @@ int RegInvertedIndex::getNumBlock()
 void RegInvertedIndex::setNumBlock(int numBlock){
 	this->numBlock = numBlock;
 }
-
+void RegInvertedIndex::setListInfoPerDoc(list<InfoPerDoc*> &listInfoPerDocNew){
+	this->infoPerDoc.clear();
+	listInfoPerDocNew.swap(this->infoPerDoc);
+}
 Registry* RegInvertedIndex::clone(){
 	RegInvertedIndex* regClone = new RegInvertedIndex();
 	regClone->setKey((KeyString*)this->getKey()->clone());
