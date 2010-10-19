@@ -1221,7 +1221,7 @@ Registry* IndexBSharp::searchLeafNode(LeafNode* leafNode, Registry* registry) th
 	Registry* findRegistry = NULL;
 	bool find = false;
 	if(DATA==1){
-	if (this->typeElement == TYPE_REG_PRIMARY || this->typeElement== TYPE_REG_CLASSIFICATION) {
+	if (this->typeElement == TYPE_REG_PRIMARY || this->typeElement== TYPE_REG_CLASSIFICATION ||this->typeElement==TYPE_REG_INVERTED_INDEX) {
 		findRegistry = leafNode->searchRegistryBlockData(registry,this->containerInsertDataBlock);
 		return findRegistry;
 	}

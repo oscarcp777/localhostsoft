@@ -61,6 +61,7 @@ private:
 	 Registry* insertIucBlockNew(Registry* registry,ContainerInsertDataBlock* container);
 	 Registry* searchBlockMails(Registry* registry,ContainerInsertDataBlock* container);
 	 Registry* searchBlockRegClassification(Registry* registry,ContainerInsertDataBlock* container);
+	 Registry* searchBlockRegInvertedIndex(Registry* registry,ContainerInsertDataBlock* container);
 
 };
 

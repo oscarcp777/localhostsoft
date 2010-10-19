@@ -53,7 +53,9 @@ Registry* LeafNode::searchRegistryBlockData(Registry* registry,ContainerInsertDa
 	if(container->getTypeElement()==TYPE_REG_CLASSIFICATION){
 		registry=searchBlockRegClassification(registry, container);
 	}
-
+	if(container->getTypeElement()==TYPE_REG_INVERTED_INDEX){
+			registry=searchBlockRegInvertedIndex( registry, container);
+		}
 	return registry;
 }
 
@@ -117,6 +119,24 @@ Registry* LeafNode::searchBlockRegClassification(Registry* registry,ContainerIns
 	if (find == true){
 		RegClassification* regClas=(RegClassification*)reg;
 		this->blockDataManager->loadListIucBlockData((RegClassification*)registry,regClas->getNumBlock(),container);
+		return registry;
+	}else
+		return NULL;
+}
+Registry* LeafNode::searchBlockRegInvertedIndex(Registry* registry,ContainerInsertDataBlock* container){
+	list<Registry*>::iterator iterRegistry;
+	Registry* reg;
+	bool find = false;
+	for ( iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
+		reg=*iterRegistry;
+		if(registry->equals(reg)){
+			find = true;
+			break;
+		}
+	}
+	if (find == true){
+		RegInvertedIndex* regIndex=(RegInvertedIndex*)reg;
+		this->blockDataManager->loadListInfoPerDocBlockData((RegInvertedIndex*)registry,regIndex->getNumBlock(),container);
 		return registry;
 	}else
 		return NULL;

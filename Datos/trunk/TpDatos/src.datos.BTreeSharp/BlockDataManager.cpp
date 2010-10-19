@@ -89,7 +89,33 @@ void  BlockDataManager::loadListRegistry(list<KeyInteger*> &listRegistry, list<R
 		itBegin++;
 	}
 }
+void  BlockDataManager::loadListInfoPerDoc(list<InfoPerDoc*> &listRegistry, list<Registry*>::iterator itBegin,list<Registry*>::iterator itEnd){
+	while (itBegin != itEnd) {
+		listRegistry.push_back((InfoPerDoc*)*itBegin);
+		itBegin++;
+	}
+}
+void BlockDataManager::loadListInfoPerDocBlockData(RegInvertedIndex* regIndex,unsigned  int numBlock,ContainerInsertDataBlock* container){
+	list<InfoPerDoc*> listInfoPerDoc;
+	Block* blockInfoPerDoc;
+	int newNumBlock=0;
+	blockInfoPerDoc=this->readBlockData(numBlock,container);
+	loadListInfoPerDoc(listInfoPerDoc,blockInfoPerDoc->iteratorBegin(),blockInfoPerDoc->iteratorEnd());
+	blockInfoPerDoc->clearListRegistry();
+	newNumBlock=blockInfoPerDoc->getNextBlock();
+		while(newNumBlock!=-1){
+			delete blockInfoPerDoc;
+			blockInfoPerDoc=this->readBlockData(newNumBlock,container);
+			loadListInfoPerDoc(listInfoPerDoc,blockInfoPerDoc->iteratorBegin(),blockInfoPerDoc->iteratorEnd());
+			blockInfoPerDoc->clearListRegistry();
+			newNumBlock=blockInfoPerDoc->getNextBlock();
+		}
 
+	regIndex->setListInfoPerDoc(listInfoPerDoc);
+	blockInfoPerDoc->clearListRegistry();
+	delete blockInfoPerDoc;
+
+}
 void BlockDataManager::loadListIucBlockData(RegClassification* regClas,unsigned  int numBlock,ContainerInsertDataBlock* container){
 	list<KeyInteger*> listIucs;
 	Block* blockIucs;
