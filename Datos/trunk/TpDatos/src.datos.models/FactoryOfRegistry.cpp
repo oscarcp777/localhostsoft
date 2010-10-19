@@ -12,6 +12,8 @@
 #include "KeyInteger.h"
 #include "RegClassification.h"
 #include "RegSelection.h"
+#include "RegInvertedIndex.h"
+#include "InfoPerDoc.h"
 #include "../src.datos.utils/Define.h"
 
 FactoryOfRegistry::FactoryOfRegistry() {
@@ -38,6 +40,10 @@ Registry* FactoryOfRegistry::createRegistry(int type){
 				break;
 	case TYPE_KEY_STRING: return new KeyString("");
 					break;
+	case TYPE_REG_INVERTED_INDEX: return new RegInvertedIndex();
+						break;
+	case TYPE_INFO_PER_DOC: return new InfoPerDoc();
+							break;
 	default: return NULL;
 	}
 }

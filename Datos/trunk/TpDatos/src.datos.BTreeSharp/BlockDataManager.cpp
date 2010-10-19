@@ -16,6 +16,40 @@ BlockDataManager::BlockDataManager() {
 BlockDataManager::~BlockDataManager() {
 	// TODO Auto-generated destructor stub
 }
+Registry* BlockDataManager::insertInfoPerDoc(RegInvertedIndex* registryNew,RegInvertedIndex* registryFind,ContainerInsertDataBlock* container){
+	Block* blockIucs;
+	unsigned int numBlock=0;
+	if(registryFind!=NULL){
+		numBlock=registryFind->getNumBlock();
+		blockIucs=this->readBlockData(numBlock,container);
+			while(blockIucs->getNextBlock()!=-1){
+				numBlock=blockIucs->getNextBlock();
+				delete blockIucs;
+				blockIucs=this->readBlockData(numBlock,container);
+
+			}
+
+		if(blockIucs->posibleToAgregateComponent(registryNew->getInfoPerDoc())){
+			blockIucs->addReg(registryNew->getInfoPerDoc());
+
+			this->writeBlockData(blockIucs,numBlock,container);
+			registryNew->clearInfoPerDoc();
+			delete registryNew;
+			return NULL;
+		}else{
+			registryNew= (RegInvertedIndex*)this->insertInvertedIndexBlockNew(registryNew,container);
+			blockIucs->setNextBlock(registryNew->getNumBlock());
+			this->writeBlockData(blockIucs,numBlock,container);
+			registryNew->clearInfoPerDoc();
+			delete registryNew;
+			return NULL;
+		}
+	}else{
+		return this->insertInvertedIndexBlockNew(registryNew,container);
+	}
+
+	return NULL;
+}
 Registry* BlockDataManager::insertIucInBlockData(RegClassification* registryNew,RegClassification* registryFind,ContainerInsertDataBlock* container){
 	Block* blockIucs;
 	unsigned int numBlock=0;
@@ -118,6 +152,15 @@ Registry* BlockDataManager::insertIucBlockNew(RegClassification* registry,Contai
 	((RegClassification*)registry)->setNumBlock(numblock);
 	this->writeBlockData(blockIucNew,numblock,container);
 	registry->clearListIuc();
+	return registry;
+}
+Registry* BlockDataManager::insertInvertedIndexBlockNew(RegInvertedIndex* registry,ContainerInsertDataBlock* container){
+	unsigned int numblock=container->getFreeBlockController()->searchFreeBlock();
+	Block* blockIucNew= new Block(container->getSizeBlockData(),container->getTypeElementData(),container->getIndexed());
+	blockIucNew->addReg(((RegInvertedIndex*)registry)->getInfoPerDoc());
+	((RegInvertedIndex*)registry)->setNumBlock(numblock);
+	this->writeBlockData(blockIucNew,numblock,container);
+	registry->clearInfoPerDoc();
 	return registry;
 }
 Registry* BlockDataManager::insertMailBlockNew(RegPrimary* registry,ContainerInsertDataBlock* container){

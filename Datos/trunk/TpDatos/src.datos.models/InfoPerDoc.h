@@ -10,19 +10,30 @@
 
 #include <list>
 #include <iostream>
+#include "Registry.h"
+#include "KeyInteger.h"
 using namespace std;
 
-class InfoPerDoc {
+class InfoPerDoc : public Registry{
 public:
-	InfoPerDoc(int iuc);
+	InfoPerDoc();
 	virtual ~InfoPerDoc();
+	Registry* clone();
+	bool equals(Registry* comp);
+	void pack(Buffer* buffer);
+	void unPack(Buffer* buffer);
+	int getLongBytes();
+	Registry* cloneRegKey();
+	int compareTo(Registry* registry);
+	unsigned int getSize();
+	int print(std::ostream& outStream);
 	void setIuc(int iuc);
 	int getIuc();
-	void addPosition(int pos);
-	void print(std::ostream& outStream);
+	void addPosition(KeyInteger* pos);
+
 private:
-	int iuc;
-	list<int> listOfPositions;
+
+	list<KeyInteger*> listOfPositions;
 };
 
 #endif /* INFOPERDOC_H_ */

@@ -30,7 +30,11 @@ public:
 	int compareTo(Registry* registry);
 	unsigned int getSize();
 	int print(std::ostream& outStream);
+	int getNumBlock();
 	void setNumBlock(int numBlock);
+	InfoPerDoc* getInfoPerDoc();
+	 void clearInfoPerDoc();
+
 private:
 	int numBlock;
 	list<InfoPerDoc*> infoPerDoc;

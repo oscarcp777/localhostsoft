@@ -40,15 +40,17 @@ void ManagerInvertedIndex::loadMessageWords(Mail* mail){
 		if(regInvertedIndex == NULL){//aparicion termino por primera vez
 			regInvertedIndex = new RegInvertedIndex();
 			regInvertedIndex->setKey(new KeyString(*it));
-			infoPerDoc = new InfoPerDoc(mail->getIuc());
-			infoPerDoc->addPosition(count);
+			infoPerDoc = new InfoPerDoc();
+			KeyInteger* key=(KeyInteger*)mail->getKey()->clone();
+			infoPerDoc->setKey(key);
+			infoPerDoc->addPosition(new KeyInteger(count));
 			regInvertedIndex->addInfoPerDoc(infoPerDoc);
 			this->regMap[*it] = regInvertedIndex;
 
 		}
 		else{//se repite el termino
 			infoPerDoc = regInvertedIndex->getFirstInfoPerDoc();
-			infoPerDoc->addPosition(count);
+			infoPerDoc->addPosition(new KeyInteger(count));
 
 		}
 		count++;
@@ -64,6 +66,13 @@ void ManagerInvertedIndex::removeStopWords(){
 		if(this->stopWords->contains(*it))
 			this->currentWords->removeWord(it);
 	}
+}
+
+map<string,RegInvertedIndex*>::iterator ManagerInvertedIndex::getIteratorBegin(){
+	return this->regMap.begin();
+}
+map<string,RegInvertedIndex*>::iterator ManagerInvertedIndex::getIteratorEnd(){
+	return this->regMap.end();
 }
 
 void  ManagerInvertedIndex::printMap(std::ostream& outStream){

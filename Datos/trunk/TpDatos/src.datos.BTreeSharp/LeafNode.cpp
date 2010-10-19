@@ -39,9 +39,12 @@ Registry* LeafNode::insertBlockData(Registry* registry,ContainerInsertDataBlock*
 	}
 	if(container->getTypeElement()==TYPE_REG_CLASSIFICATION){
 		registry=insertBlockRegClassification( registry, container);
-		}
+	}
+	if(container->getTypeElement()==TYPE_REG_INVERTED_INDEX){
+		registry=insertBlockRegInvertedIndex( registry, container);
+	}
 
-return registry;
+	return registry;
 }
 Registry* LeafNode::searchRegistryBlockData(Registry* registry,ContainerInsertDataBlock* container){
 	if(container->getTypeElement()==TYPE_REG_PRIMARY){
@@ -73,6 +76,19 @@ Registry* LeafNode::insertBlockMails(Registry* registry,ContainerInsertDataBlock
 	}
 	return this->blockDataManager->insertMailInBlockData((RegPrimary*)registry,(RegPrimary*)reg,container);
 
+}
+Registry* LeafNode::insertBlockRegInvertedIndex(Registry* registry,ContainerInsertDataBlock* container){
+	list<Registry*>::iterator iterRegistry;
+	Registry* registryFind=NULL;
+	for ( iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
+		registryFind=*iterRegistry;
+		if(registry->equals(registryFind))
+			break;
+		else
+			registryFind=NULL;
+	}
+
+return this->blockDataManager->insertInfoPerDoc((RegInvertedIndex*)registry,(RegInvertedIndex*)registryFind,container);
 }
 Registry* LeafNode::insertBlockRegClassification(Registry* registry,ContainerInsertDataBlock* container){
 	list<Registry*>::iterator iterRegistry;

@@ -49,6 +49,8 @@ IndexBSharp::IndexBSharp(const std::string& nameFile, unsigned int sizeBlock,int
 		this->initContainerDataBlock(nameFile,BLOCK_SIZE_MAILS,typeElement,TYPE_MAIL,false);
 	if(typeElement==TYPE_REG_CLASSIFICATION)
 		this->initContainerDataBlock(nameFile,sizeBlock,typeElement,TYPE_KEY_INTEGER,true);
+	if(typeElement==TYPE_REG_INVERTED_INDEX)
+			this->initContainerDataBlock(nameFile,sizeBlock,typeElement,TYPE_INFO_PER_DOC,true);
 	this->readBlockRoot();
 }
 unsigned int IndexBSharp::averageEstimate(
@@ -419,7 +421,7 @@ int IndexBSharp::insertLeafNode(LeafNode* leafNode, Registry* registry,
 		ContainerInsertion* container, unsigned int brotherNode) throw () {
 
 	if(DATA==1){
-		if(this->typeElement==TYPE_REG_PRIMARY||this->typeElement==TYPE_REG_CLASSIFICATION){
+		if(this->typeElement==TYPE_REG_PRIMARY||this->typeElement==TYPE_REG_CLASSIFICATION||this->typeElement==TYPE_REG_INVERTED_INDEX){
 			registry=  leafNode->insertBlockData(registry,this->containerInsertDataBlock);
 		}
 		if(registry==NULL)

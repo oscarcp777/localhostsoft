@@ -11,6 +11,10 @@ RegInvertedIndex::RegInvertedIndex() {
 	// TODO Auto-generated constructor stub
 
 }
+InfoPerDoc* RegInvertedIndex::getInfoPerDoc()
+{
+	return (InfoPerDoc*)this->infoPerDoc.back();
+}
 
 RegInvertedIndex::~RegInvertedIndex() {
 	// TODO Auto-generated destructor stub
@@ -21,6 +25,10 @@ void RegInvertedIndex::addInfoPerDoc(InfoPerDoc* infoPerDoc){
 }
 InfoPerDoc* RegInvertedIndex::getFirstInfoPerDoc(){
 	return (*this->infoPerDoc.begin());
+}
+int RegInvertedIndex::getNumBlock()
+{
+	return numBlock;
 }
 void RegInvertedIndex::setNumBlock(int numBlock){
 	this->numBlock = numBlock;
@@ -78,4 +86,7 @@ int RegInvertedIndex::print(std::ostream& outStream){
 	}
 
 	return 0;
+}
+void RegInvertedIndex::clearInfoPerDoc(){
+    this->infoPerDoc.clear();
 }

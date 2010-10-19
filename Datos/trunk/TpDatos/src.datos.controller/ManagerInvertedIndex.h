@@ -21,6 +21,8 @@ public:
 	void loadMessageWords(Mail* mail);
 	void removeStopWords();
 	void printMap(std::ostream& outStream);
+	map<string,RegInvertedIndex*>::iterator getIteratorBegin();
+	map<string,RegInvertedIndex*>::iterator getIteratorEnd();
 
 private:
 	WordsContainer* stopWords;

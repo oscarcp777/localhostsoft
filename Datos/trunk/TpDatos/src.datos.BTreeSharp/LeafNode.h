@@ -56,6 +56,7 @@ private:
 	  *  Inserta un Iuc en un bloque de datos, el bloque puede ser uno existe o uno nuevo
 	  */
 	 Registry* insertBlockRegClassification(Registry* registry,ContainerInsertDataBlock* container);
+	 Registry* insertBlockRegInvertedIndex(Registry* registry,ContainerInsertDataBlock* container);
 	 Registry* insertMailBlockNew(Registry* registry,ContainerInsertDataBlock* container);
 	 Registry* insertIucBlockNew(Registry* registry,ContainerInsertDataBlock* container);
 	 Registry* searchBlockMails(Registry* registry,ContainerInsertDataBlock* container);

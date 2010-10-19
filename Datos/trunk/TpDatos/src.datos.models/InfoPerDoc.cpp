@@ -7,28 +7,74 @@
 
 #include "InfoPerDoc.h"
 
-InfoPerDoc::InfoPerDoc(int iuc) {
-	this->iuc = iuc;
-}
 
+InfoPerDoc::InfoPerDoc() {
+}
 InfoPerDoc::~InfoPerDoc() {
 	// TODO Auto-generated destructor stub
 }
-void InfoPerDoc::setIuc(int iuc){
-	this->iuc = iuc;
+
+Registry* InfoPerDoc::clone(){
+     return NULL;
 }
-int InfoPerDoc::getIuc(){
-	return this->iuc;
+bool InfoPerDoc::equals(Registry* comp){
+	  return NULL;
 }
-void InfoPerDoc::addPosition(int pos){
+void InfoPerDoc::pack(Buffer* buffer){
+	this->getKey()->pack(buffer);
+	unsigned int size=this->listOfPositions.size();
+	buffer->packField(&size,sizeof(size));
+	list<KeyInteger*>::iterator it;
+	for(it = this->listOfPositions.begin() ; it != this->listOfPositions.end() ; it++){
+		KeyInteger* key=(KeyInteger*)*it;
+		key->pack(buffer);
+	}
+}
+void InfoPerDoc::unPack(Buffer* buffer){
+	this->getKey()->unPack(buffer);
+	unsigned int numberElements=0;
+	buffer->unPackField(&numberElements,sizeof(numberElements));
+		for(unsigned int i=0; i<numberElements; i++){
+			this->listOfPositions.push_back(new KeyInteger());
+		}
+	list<KeyInteger*>::iterator it;
+	for(it = this->listOfPositions.begin() ; it != this->listOfPositions.end() ; it++){
+		KeyInteger* key=(KeyInteger*)*it;
+		key->unPack(buffer);
+	}
+}
+int InfoPerDoc::getLongBytes(){
+	return this->getSize();
+}
+Registry* InfoPerDoc::cloneRegKey(){
+	 return NULL;
+}
+int InfoPerDoc::compareTo(Registry* registry){
+	KeyInteger* key=NULL;
+		if(registry->getKey()==NULL){
+			key=(KeyInteger*)registry;
+		}
+		else{
+			key=(KeyInteger*)registry->getKey();
+		}
+		return this->getKey()->compareTo(key);
+}
+unsigned int InfoPerDoc::getSize(){
+   return ((KeyInteger*)this->getKey())->getLongBytes()+this->listOfPositions.size()*sizeof(unsigned int);
+}
+
+void InfoPerDoc::addPosition(KeyInteger* pos){
 	this->listOfPositions.push_back(pos);
 }
-void InfoPerDoc::print(std::ostream& outStream){
-	outStream<<"IUC: "<<this->iuc<<endl;
-	list<int>::iterator it;
+int InfoPerDoc::print(ostream& outStream){
+	outStream<<"IUC: ";
+	this->getKey()->print(outStream);
+	list<KeyInteger*>::iterator it;
 	outStream<<"pos: ";
-		for(it = this->listOfPositions.begin() ; it != this->listOfPositions.end() ; it++){
-			outStream<<*it<<" ";
-		}
-		outStream<<endl;
+	for(it = this->listOfPositions.begin() ; it != this->listOfPositions.end() ; it++){
+		KeyInteger* key=(KeyInteger*)*it;
+		key->print(outStream);
+	}
+	outStream<<endl;
+	return 1;
 }

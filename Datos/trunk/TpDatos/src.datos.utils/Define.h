@@ -33,6 +33,8 @@
 #define TYPE_MAIL 4
 #define TYPE_KEY_INTEGER 5
 #define TYPE_KEY_STRING 6
+#define TYPE_REG_INVERTED_INDEX 7
+#define TYPE_INFO_PER_DOC 8
 
 #define DATA 1
 #define INSERTION_OK 0
