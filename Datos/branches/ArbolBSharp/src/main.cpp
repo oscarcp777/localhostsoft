@@ -205,38 +205,39 @@ void probarIndiceBSharpImprimir() {
 	Clave::puntero clavePrimaria = new Clave();
 	ComparadorClave::puntero comparadorClave = new ComparadorClaveDummy();
 	esquema->agregar_campo("id", TIPO_CAMPO_ENTERO);
-	esquema->agregar_campo("nombre", TIPO_CAMPO_CADENA);
-	esquema->agregar_campo("apellido", TIPO_CAMPO_CADENA);
+	esquema->agregar_campo("nombre", TIPO_CAMPO_ENTERO);
+	//esquema->agregar_campo("apellido", TIPO_CAMPO_CADENA);
 
 	clavePrimaria->agregar_campo("id");
 
-	IndiceBSharp::puntero indice = new IndiceBSharp("prueba-indice-imprimir", 128, esquema, clavePrimaria, comparadorClave);
-	srand((unsigned) time(0));
-	int cantidad_insertar = 500; //rand() % RAND_MAX;
-
+	IndiceBSharp::puntero indice = new IndiceBSharp("prueba-indice-imprimir", 64, esquema, clavePrimaria, comparadorClave);
+	//srand((unsigned) time(0));
+	int cantidad_insertar = 75; //rand() % RAND_MAX;
+	int vecInserts[cantidad_insertar];
 
 	std::string stream;
 	std::string streamApellido;
 	for (int counter = 0; counter < cantidad_insertar; ++counter) {
 		RegistroLongitudVariable::puntero registro = new RegistroLongitudVariable(clavePrimaria);
 
-		int id_agregar = rand() % 10000;
+		int id_agregar = rand() % 1000;
+		vecInserts[counter]=id_agregar;
 		//indice->imprimir(std::cout);
-		stream.append("SAN ").append(convertIntToString(id_agregar));
-		streamApellido.append("DONI ").append(convertIntToString(id_agregar));
+//		stream.append("SAN ").append(convertIntToString(id_agregar));
+//		streamApellido.append("DONI ").append(convertIntToString(id_agregar));
 		std::cout << "----A Insertar----" << std::endl;
 		std::cout << "ID: " << id_agregar;
-		std::cout << " Nombre:\"" << stream << "\"";
-		std::cout << " Apellido:\"" << streamApellido << "\""<< std::endl;
+//		std::cout << " Nombre:\"" << stream << "\"";
+//		std::cout << " Apellido:\"" << streamApellido << "\""<< std::endl;
 
 
 		registro->agregar_campo("id", new CampoEntero(id_agregar));
-		registro->agregar_campo("nombre", new CampoCadena(stream));
-		registro->agregar_campo("apellido", new CampoCadena(streamApellido));
+		registro->agregar_campo("nombre", new CampoEntero(id_agregar));
+		//registro->agregar_campo("apellido", new CampoCadena(streamApellido));
 
 
 		indice->agregar_registro(registro);
-		std::cout << "COUNTER: " << counter << " REGISTRO AGREGADO id: " << id_agregar << std::endl;
+		std::cout << " COUNTER: " << counter << " REGISTRO AGREGADO id: " << id_agregar << std::endl;
 		std::cout << "longitud registro:  "<< registro->GetLongitudBytesAlmacenada() << std::endl;
 //		std::cout << *(std::string*) registro->obtener_campo("nombre")->obtener_valor() << std::endl;
 //      std::cout << *(std::string*) registro->obtener_campo("apellido")->obtener_valor() << std::endl;
@@ -247,33 +248,110 @@ void probarIndiceBSharpImprimir() {
 
 	}
 	indice->imprimir(std::cout);
+
+
+//	std::string opcion;
+//	do {
+//		std::cout << "--------PRUEBA DE BUSQUEDA-----" << std::endl;
+//		int id;
+//		std::cout << "Ingrese id a buscar: ";
+//		std::cin >> id;
+//		std::cout << "Se va a buscar el id: " << id << std::endl;
+//		RegistroLongitudVariable::puntero registro = new RegistroLongitudVariable(clavePrimaria);
+//		registro->agregar_campo("id", new CampoEntero(id));
+//
+//		Registro::puntero registroLeido = indice->buscar_registro(registro);
+//
+//		if (registroLeido != NULL) {
+//			std::cout << "Registro encontrado..." << std::endl;
+//			std::cout << "id: " << (*(int*)  registroLeido->obtener_campo("id")->obtener_valor()) << std::endl;
+//			std::cout << "Nombre: " << (*(int*) registroLeido->obtener_campo("nombre")->obtener_valor()) << std::endl;
+//		} else {
+//			std::cout << "No se pudo encontrar registro con ese id..." << std::endl;
+//		}
+//		std::cout << "Desea buscar nuevamente? (SI / NO) " << std::endl;
+//		std::cin >> opcion;
+//	} while (opcion == "SI");
+
+
+	//	std::string opcion;
+	//			do {
+	//				std::cout << "--------PRUEBA DE ELIMINACION-----" << std::endl;
+	//				int id;
+	//				std::cout << "Ingrese id a eliminar: ";
+	//				std::cin >> id;
+	//				std::cout << "Se va a eliminar el id: " << id << std::endl;
+	//				RegistroLongitudVariable::puntero registro = new RegistroLongitudVariable(clavePrimaria);
+	//				registro->agregar_campo("id", new CampoEntero(id));
+	//
+	//				indice->borrar_registro(registro);
+	//
+	//				std::cout << "Registro eliminado..." << std::endl;
+	//				indice->imprimir(std::cout);
+	//				std::cout << "Desea eliminar nuevamente? (SI / NO) " << std::endl;
+	//				std::cin >> opcion;
+	//			} while (opcion == "SI");
+
+
+	for (int counter = 0; counter < cantidad_insertar; ++counter) {
+		RegistroLongitudVariable::puntero registro = new RegistroLongitudVariable(clavePrimaria);
+		int id_eliminar = vecInserts[counter];
+		if (counter >= 44)
+			indice->imprimir(std::cout);
+		std::cout << "----A Eliminar----";
+		std::cout << "ID: " << id_eliminar << std::endl;
+
+
+		registro->agregar_campo("id", new CampoEntero(id_eliminar));
+
+		indice->borrar_registro(registro);
+
+		std::cout << "COUNTER: " << counter << " REGISTRO ELIMINADO id: " << id_eliminar << std::endl;
+//		indice->imprimir(std::cout);
+
+	}
+	indice->imprimir(std::cout);
 	std::cout << "Termino el test" << std::endl;
 
 
-	std::string opcion;
-		do {
-			std::cout << "--------PRUEBA DE BUSQUEDA-----" << std::endl;
-			int id;
-			std::cout << "Ingrese id a buscar: ";
-			std::cin >> id;
-			std::cout << "Se va a buscar el id: " << id << std::endl;
-			RegistroLongitudVariable::puntero registro = new RegistroLongitudVariable(clavePrimaria);
-			registro->agregar_campo("id", new CampoEntero(id));
-
-			Registro::puntero registroLeido = indice->buscar_registro(registro);
-
-			if (registroLeido != NULL) {
-				std::cout << "Registro encontrado..." << std::endl;
-				std::cout << "id: " << (*(int*)  registroLeido->obtener_campo("id")->obtener_valor()) << std::endl;
-				std::cout << "Nombre: " << (*(std::string*) registroLeido->obtener_campo("nombre")->obtener_valor()) << std::endl;
-			} else {
-				std::cout << "No se pudo encontrar registro con ese id..." << std::endl;
-			}
-			std::cout << "Desea buscar nuevamente? (SI / NO) " << std::endl;
-			std::cin >> opcion;
-		} while (opcion == "SI");
 }
 
+
+void probarIndiceBSharpEliminar() {
+	Esquema::puntero esquema = new Esquema();
+	Clave::puntero clavePrimaria = new Clave();
+	ComparadorClave::puntero comparadorClave = new ComparadorClaveDummy();
+	esquema->agregar_campo("id", TIPO_CAMPO_ENTERO);
+	esquema->agregar_campo("nombre", TIPO_CAMPO_ENTERO);
+	//esquema->agregar_campo("apellido", TIPO_CAMPO_CADENA);
+
+	clavePrimaria->agregar_campo("id");
+
+	IndiceBSharp::puntero indice = new IndiceBSharp("prueba-indice-imprimir", 64, esquema, clavePrimaria, comparadorClave);
+	//srand((unsigned) time(0));
+	int cantidad_eliminar = 500; //rand() % RAND_MAX;
+
+
+	for (int counter = 0; counter < cantidad_eliminar; ++counter) {
+		RegistroLongitudVariable::puntero registro = new RegistroLongitudVariable(clavePrimaria);
+
+		int id_eliminar = rand() % 10000;
+		std::cout << "----A Eliminar----" << std::endl;
+		std::cout << "ID: " << id_eliminar;
+
+
+		registro->agregar_campo("id", new CampoEntero(id_eliminar));
+
+		indice->borrar_registro(registro);
+
+		std::cout << "COUNTER: " << counter << " REGISTRO ELIMINADO id: " << id_eliminar << std::endl;
+
+
+	}
+	indice->imprimir(std::cout);
+	std::cout << "Termino el test" << std::endl;
+
+}
 
 
 void probarIndiceBSharpImprimir2() {
@@ -1463,8 +1541,8 @@ void probarRecursoDeAlmacenamiento( void )
 int main(int argc, char** argv)
 {
 	/**pruebas indice b#**/
-   //probarIndiceBSharpImprimir();
-   probarIndiceBSharpImprimir2();
+   probarIndiceBSharpImprimir();
+//   probarIndiceBSharpImprimir2();
 //    probarIndiceBSharp();
 
     /**pruebas hash**/

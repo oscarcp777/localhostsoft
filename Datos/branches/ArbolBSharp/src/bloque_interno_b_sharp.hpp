@@ -44,7 +44,11 @@ class BloqueInternoBSharp: public BloqueBSharp {
 		/**
 		 * Remueve una rama del bloque interno b sharp.
 		 */
-		void remover_rama(int rama) throw();
+		void remover_rama(BloqueInternoBSharp::iterador_rama posicion) throw();
+		/**
+		 * Remueve la ultima rama del bloque interno b sharp.
+		 */
+		void remover_ultima_rama() throw();
 		/**
 		 * Transfiere todas las ramas del indice b sharp al contenedor de ramas.
 		 */
@@ -92,7 +96,7 @@ class BloqueInternoBSharp: public BloqueBSharp {
 		/**
 		 * Devuelve si hay subflujo o no
 		 */
-		virtual bool hay_subflujo() const throw();
+		virtual bool hay_subflujo(unsigned int espacioMin) const throw();
 	private:
 		/**
 		 * Almacena la lista de ramas del bloque interno b sharp.

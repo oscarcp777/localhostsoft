@@ -14,8 +14,16 @@ void ComponenteCompuesto::agregar_componente(Componente::puntero componente, Com
 	this->listaComponentes.insert(posicion, componente);
 }
 
-void ComponenteCompuesto::remover_componente(Componente::puntero componente) throw() {
-	std::remove(this->primer_componente(), this->ultimo_componente(), componente);
+void ComponenteCompuesto::remover_componente(ComponenteCompuesto::iterador_componentes posicion) throw() {
+	this->listaComponentes.erase(posicion);
+}
+
+void ComponenteCompuesto::remover_ultimo_componente() throw() {
+	this->listaComponentes.pop_back();
+}
+
+void ComponenteCompuesto::establecer_componente(unsigned int posicion, Componente::puntero componente) throw() {
+	this->listaComponentes[posicion] = componente;
 }
 
 void ComponenteCompuesto::transferir_componentes(ComponenteCompuesto::contenedor_componentes& contenedor_componentes) throw() {

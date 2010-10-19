@@ -15,8 +15,12 @@ void BloqueInternoBSharp::agregar_rama(int rama, BloqueInternoBSharp::iterador_r
 	this->listaRamas.insert(posicion, rama);
 }
 
-void BloqueInternoBSharp::remover_rama(int rama) throw() {
-	std::remove(this->primer_rama(), this->ultima_rama(), rama);
+void BloqueInternoBSharp::remover_rama(BloqueInternoBSharp::iterador_rama posicion) throw() {
+	this->listaRamas.erase(posicion);
+}
+
+void BloqueInternoBSharp::remover_ultima_rama() throw() {
+	this->listaRamas.pop_back();
 }
 
 void BloqueInternoBSharp::transferir_ramas(BloqueInternoBSharp::contenedor_ramas& contenedor_ramas) throw() {
@@ -80,17 +84,10 @@ unsigned int BloqueInternoBSharp::obtener_longitud_ocupada() const throw() {
 }
 
 
-bool BloqueInternoBSharp::hay_subflujo() const throw() {
-	unsigned int espacio_ocupado = this->obtener_longitud_ocupada() - this->obtener_espacio_metadata();
-	std::cout << "Bloque: " << this->obtener_numero_bloque() <<" Espacio Ocupado: " << espacio_ocupado << " Peso prom: " << this->getPesoPromedio() << std::endl;
+bool BloqueInternoBSharp::hay_subflujo(unsigned int espacioMin) const throw() {
 
-	unsigned int cota_subflujo = (2*this->GetLongitudBytes()/3)-(0.5*this->getPesoPromedio());
-	std::cout << "Limite Subflujo: " <<  cota_subflujo << std::endl;
-	if (this->obtener_longitud_ocupada() < cota_subflujo) {
-		return true;
-	} else {
-		return false;
-	}
+	unsigned int cota_subflujo = espacioMin-(0.5*this->getPesoPromedio())+obtener_espacio_metadata();
+	return (this->obtener_longitud_ocupada() < cota_subflujo);
 }
 
 unsigned int BloqueInternoBSharp::obtener_espacio_metadata() const{

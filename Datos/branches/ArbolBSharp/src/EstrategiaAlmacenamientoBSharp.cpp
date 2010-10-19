@@ -11,7 +11,7 @@ EstrategiaAlmacenamientoBSharp::~EstrategiaAlmacenamientoBSharp() throw() {
 bool EstrategiaAlmacenamientoBSharp::escribir_bloque(unsigned int numero_bloque, BloqueBSharp::puntero bloque, Archivo::puntero archivo) throw() {
 	bool exitoso = false;
 	if (bloque != NULL && archivo != NULL) {
-		std::cout<<"--------ESCRIBIO BLOQUE: "<<numero_bloque<<std::endl;
+//		std::cout<<"--------ESCRIBIO BLOQUE: "<<numero_bloque<<std::endl;
 		char* bytes = escribir_bloque_en_bytes(bloque);
 		exitoso = archivo->escribir(bytes, numero_bloque);
 		delete[] bytes;
@@ -22,7 +22,7 @@ bool EstrategiaAlmacenamientoBSharp::escribir_bloque(unsigned int numero_bloque,
 bool EstrategiaAlmacenamientoBSharp::escribir_bloque_raiz(unsigned int numero_bloque, BloqueBSharp::puntero bloqueRaiz, Archivo::puntero archivo) throw() {
 	bool exitoso = false;
 	if (bloqueRaiz != NULL && archivo != NULL) {
-		std::cout<<"--------ESCRIBIO BLOQUE: "<<numero_bloque<<std::endl;
+//		std::cout<<"--------ESCRIBIO BLOQUE: "<<numero_bloque<<std::endl;
 		char* bytes = escribir_bloque_en_bytes(bloqueRaiz);
 		exitoso = archivo->escribir(bytes, numero_bloque, 2*archivo->obtener_longitud_en_bytes());
 		delete[] bytes;
@@ -34,6 +34,7 @@ BloqueBSharp::puntero EstrategiaAlmacenamientoBSharp::leer_bloque(unsigned int n
 	if (archivo != NULL) {
 		char* bytes = new char[archivo->obtener_longitud_en_bytes()];
 		if (archivo->leer(bytes, numero_bloque)) {
+		//	std::cout<<"--------LEYO BLOQUE: "<<numero_bloque<<std::endl;
 			BloqueBSharp::puntero bloque = leer_bloque_desde_bytes(bytes, archivo->obtener_longitud_en_bytes());
 			delete[] bytes;
 			return bloque;
@@ -50,6 +51,7 @@ BloqueBSharp::puntero EstrategiaAlmacenamientoBSharp::leer_bloque_raiz(unsigned 
 	if (archivo != NULL) {
 		char* bytes = new char[2*archivo->obtener_longitud_en_bytes()];
 		if (archivo->leer(bytes, numero_bloque,2*archivo->obtener_longitud_en_bytes())) {
+		//	std::cout<<"--------LEYO BLOQUE: "<<numero_bloque<<std::endl;
 			BloqueBSharp::puntero bloque = leer_bloque_desde_bytes(bytes, 2*archivo->obtener_longitud_en_bytes());
 			delete[] bytes;
 			return bloque;

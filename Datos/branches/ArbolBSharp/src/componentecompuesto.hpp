@@ -47,7 +47,15 @@ class ComponenteCompuesto: public Componente {
 		/**
 		 * Remueve un componente de la lista de componentes.
 		 */
-		virtual void remover_componente(Componente::puntero componente) throw();
+		virtual void remover_componente(ComponenteCompuesto::iterador_componentes posicion) throw();
+		/**
+		 * Remueve el ultimo componente de la lista de componentes.
+		 */
+		virtual void remover_ultimo_componente() throw();
+		/**
+		 * Establece un componente en la posicion dada.
+		 */
+		virtual void establecer_componente(unsigned int posicion, Componente::puntero componente) throw();
 		/**
 		 * Transfiere todos los componentes de la lista de componentes, a la lista de componentes pasada por parametro
 		 * vaciando el componente compuesto.

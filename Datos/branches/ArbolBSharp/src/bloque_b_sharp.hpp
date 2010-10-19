@@ -15,6 +15,10 @@ class BloqueBSharp: public Bloque {
 		 */
 		typedef PunteroIntrusivo<BloqueBSharp> puntero;
 		/**
+		 * Define el tipo de ID BLOQUE INVALIDO.
+		 */
+		static const int ID_BLOQUE_INVALIDO = -1;
+		/**
 		 * Constructor de la clase BloqueBSharp.
 		 * Recibe como parametro la longitud del bloque y el nivel
 		 * del bloque en el arbol B sharp.
@@ -41,6 +45,14 @@ class BloqueBSharp: public Bloque {
 		 */
 		virtual void establecer_nivel(unsigned int nivel) throw();
 		/**
+		 * Obtiene el bloque siguiente en el arbol b sharp.
+		 */
+		int obtener_bloque_siguiente() const throw();
+		/**
+		 * Establece el bloque siguiente en el arbol b sharp.
+		 */
+		void establecer_bloque_siguiente(int bloque_siguiente) throw();
+		/**
 		 * Devuelve si el bloque es hoja o no, si su nivel es 0.
 		 */
 		virtual bool es_hoja() const throw();
@@ -57,20 +69,18 @@ class BloqueBSharp: public Bloque {
 		 */
 		virtual unsigned int obtener_longitud_ocupada() const throw();
 		/**
+		 * Devuelve si el bloque esta semi vacio, menos de la mitad de su capacidad.
+		 */
+		bool esta_semi_vacio() throw();
+		/**
 		 * Devuelve si hay subflujo o no
 		 */
-		virtual bool hay_subflujo() const throw () = 0;
+		virtual bool hay_subflujo(unsigned int espacioMin) const throw () = 0;
 
 
-		unsigned int getPesoPromedio() const
-		{
-			return pesoPromedio;
-		}
+		unsigned int getPesoPromedio() const;
 
-		void setPesoPromedio(unsigned int pesoPromedio)
-		{
-			this->pesoPromedio = pesoPromedio;
-		}
+		void setPesoPromedio(unsigned int pesoPromedio);
 
 private:
 		/**
@@ -86,6 +96,12 @@ private:
 		 * Promedio pesos en bytes de la lista de registros a splitear
 		 */
 		unsigned int pesoPromedio;
+
+		/**
+		 * Almacena el bloque siguiente en el arbol b sharp.
+		 */
+		int bloque_siguiente;
+
 
 	protected:
 		/**

@@ -31,26 +31,18 @@ class BloqueExternoBSharp: public BloqueBSharp {
 		 */
 		virtual ~BloqueExternoBSharp() throw();
 		/**
-		 * Obtiene el id del bloque externo siguiente del arbol b sharp.
-		 */
-		int obtener_bloque_siguiente() const throw();
-		/**
-		 * Establece el id del bloque externo siguiente del arbol b sharp.
-		 */
-		void establecer_bloque_siguiente(int numero_bloque) throw();
-		/**
 		 * Obtiene la longitud ocupada en bytes del bloque.
 		 */
 		virtual unsigned int obtener_longitud_ocupada() const throw();
 		/**
-		 * Devuelve si hay subflujo o no
+		 * Devuelve si hay subflujo o no en la insercion (toma en cuenta carga total)
+		 */
+		virtual bool hay_subflujo(unsigned int espacioMin) const throw();
+		/**
+		 * Devuelve si hay subflujo o no en la baja (toma en cuenta carga del nodo)
 		 */
 		virtual bool hay_subflujo() const throw();
 	private:
-		/**
-		 * Almacena el bloque externo siguiente del arbol b sharp.
-		 */
-		int bloque_siguiente;
 		/**
 		 * Devuelve el espacio de metadata utilizado
 		 */

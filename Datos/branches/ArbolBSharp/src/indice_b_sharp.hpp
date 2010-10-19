@@ -4,6 +4,8 @@
 #define INSERCION_CORRECTA 0
 #define HAY_SOBREFLUJO 1
 #define HAY_BALANCEO 2
+#define ELIMINACION_CORRECTA 3
+#define HAY_SUBFLUJO 4
 
 #include<iostream>
 
@@ -20,6 +22,7 @@
 #include "bloque_interno_b_sharp.hpp"
 #include "bloque_externo_b_sharp.hpp"
 #include "resultado_insercion.hpp"
+#include "resultado_balanceo.hpp"
 
 /**
  * Clase que define una estrategia de indice arbol B sharp.
@@ -81,6 +84,10 @@ class IndiceBSharp: public EstrategiaIndice {
 		 */
 		void manejarDivisionRaizInterna(ResultadoInsercion& resultado) throw();
 		/**
+		 * Maneja el subflujo al balancearse o fusionarse dos bloques hijos del bloque raiz del indice b sharp.
+		 */
+		void manejar_subflujo_raiz() throw();
+		/**
 		 * Inserta un registro en un bloque externo.
 		 * @param bloqueExterno - El bloque externo donde insertar el registro.
 		 * @param regsitro - El registro a insertar.
@@ -113,19 +120,11 @@ class IndiceBSharp: public EstrategiaIndice {
 		/**
 		 * Inserta un registro en un bloque externo lleno.
 		 * @param bloqueExterno - El bloque externo donde insertar el registro.
-		 * @param registro - El registro a insertar.
-		 * @param resultado - El resultado de insercion del registro en el bloque externo.
-		 */
-		void insertar_bloque_externo_lleno(BloqueExternoBSharp::puntero& bloqueExterno, const Registro::puntero& registro,
-			ResultadoInsercion& resultado) throw();
-		/**
-		 * Inserta un registro en un bloque externo lleno.
-		 * @param bloqueExterno - El bloque externo donde insertar el registro.
 		 * @param bloqueHermano - El bloque hermano del bloque actual.
 		 * @param registro - El registro a insertar.
 		 * @param resultado - El resultado de insercion del registro en el bloque externo.
 		 */
-		void insertar_bloque_externo_lleno2(BloqueExternoBSharp::puntero& bloqueExterno,BloqueExternoBSharp::puntero& bloqueHermano, const Registro::puntero& registro,
+		void insertar_bloque_externo_lleno(BloqueExternoBSharp::puntero& bloqueExterno,BloqueExternoBSharp::puntero& bloqueHermano, const Registro::puntero& registro,
 						ResultadoInsercion& resultado) throw();
 		/**
 		 * Inserta un registro en un bloque interno.
@@ -151,19 +150,11 @@ class IndiceBSharp: public EstrategiaIndice {
 		/**
 		 * Inserta un registro en un bloque interno lleno.
 		 * @param bloqueInterno - El bloque interno donde insertar el registro.
-		 * @param registroClave - El registro con la clave a insertar.
-		 * @param resultado - El resultado de insercion del registro en el bloque interno.
-		 */
-		void insertar_bloque_interno_lleno(BloqueInternoBSharp::puntero& bloqueInterno, const Registro::puntero& registro,
-				unsigned int bloque_izquierdo, unsigned int bloque_derecho, ResultadoInsercion& resultado) throw();
-		/**
-		 * Inserta un registro en un bloque interno lleno.
-		 * @param bloqueInterno - El bloque interno donde insertar el registro.
 		 * @param bloqueHermano - El bloque interno hermano del bloque actual.
 		 * @param registroClave - El registro con la clave a insertar.
 		 * @param resultado - El resultado de insercion del registro en el bloque interno.
 		 */
-		bool insertar_bloque_interno_lleno2(BloqueInternoBSharp::puntero& bloqueInterno, BloqueInternoBSharp::puntero& bloqueHermano, const Registro::puntero& registro,
+		bool insertar_bloque_interno_lleno(BloqueInternoBSharp::puntero& bloqueInterno, BloqueInternoBSharp::puntero& bloqueHermano, const Registro::puntero& registro,
 				ResultadoInsercion& resultado,Registro::puntero& registroPadre) throw();
 		/**
 		 * Busca la posicion de insercion externa para el registro dado.
@@ -192,13 +183,89 @@ class IndiceBSharp: public EstrategiaIndice {
 		 */
 		int buscar_rama(const BloqueInternoBSharp::puntero& bloqueInterno, const Registro::puntero& registro) throw();
 		/**
-		 * Busca la rama hermana, por la cual se balancea (mergea o splitea) si no puede insertar
+		 * Busca la rama hermana, por la cual se intenta balancear antes de hacer una division de nodos
 		 */
 		int buscar_rama_hermana(const BloqueInternoBSharp::puntero& bloqueInterno, const Registro::puntero& registro) throw();
+		/**
+		 * Busca la ramas hermanas, por las cuales se balancea si no se pueden fusionar nodos
+		 */
+		void buscar_ramas_hermanas(const BloqueInternoBSharp::puntero& bloqueInterno, const Registro::puntero& registro, int *r1, int *r2) throw();
 		/**
 		 * Estrae la clave de un registro al momento de hacer un split de un bloque hoja.
 		 */
 		Registro::puntero extraer_clave(const Registro::puntero& registro) throw();
+		/**
+		 * Remueve un registro en un bloque externo.
+		 * @param bloqueExterno - El bloque externo donde borrar el regsitro.
+		 * @param registro - El registro a borar del bloque externo.
+		 * @return int - Retorna true si hubo subflujo en el bloque externo.
+		 */
+		int remover_bloque_externo(BloqueExternoBSharp::puntero& bloqueExterno, const Registro::puntero& registro) throw();
+		/**
+		 * Remueve un registro en un bloque interno.
+		 * @param bloqueInterno - El bloque interno donde borrar el registtro.
+		 * @param registroClave - El registro con la clave a borrar.
+		 * @param resultadoBalanceo - El resultado de balancear bloques luego de borrado.
+		 */
+		bool remover_bloque_interno(BloqueInternoBSharp::puntero& bloqueINterno, const Registro::puntero& registro,
+				ResultadoBalanceo& resultadoBalanceo) throw();
+		/**
+		 * Borra el bloque mas a la izquierda o mas a la derecha cuando esta completamente vacio.
+		 * @param bloqueBorrar - El bloque a borrar.
+		 */
+		void borrar_bloque(BloqueBSharp::puntero& bloqueBorrar) throw();
+		/**
+		 * Actualiza el bloque padre luego de haber borrado a un bloque hijo mas a la izquierda o mas a al derecha.
+		 * @param bloquePadre
+		 * @param izquierda
+		 */
+		void actualizar_borrado(BloqueInternoBSharp::puntero& bloquePadre, bool izquierdo) throw();
+		/**
+		 * Balancea el primer bloque con el segundo bloque, el segundo bloque.
+		 * @param primerBloque - Primer bloque a balancear.
+		 * @param segundoBloque - Segundo bloque a balancear, debe ser hermano derecho del primer bloque.
+		 */
+		void balancear_bloques(BloqueBSharp::puntero& primerBloque, BloqueBSharp::puntero& segundoBloque, ResultadoBalanceo& resultado) throw();
+		/**
+		 * Verifica el primer bloque puede ser fusionado con el segundo bloque.
+		 * @param primerBloque - Primer bloque a fusionar.
+		 * @param segundoBloque - Segundo bloque a fusionar.
+		 * @return boolean - Retorna true si ambos bloques se pueden fusionar.
+		 */
+		bool puede_fusionar_bloques(BloqueBSharp::puntero& primerBloque, BloqueBSharp::puntero& segundoBloque) throw();
+		/**
+		 * Fusiona el primer bloque con el segundo bloque, el segundo bloque es removido del indice b sharp.
+		 * @param primerBloque - Primer bloque a fusionar.
+		 * @param segundBloque - Segundo bloque a fusionar, debe ser hermano derecho del primer bloque.
+		 */
+		void fusionar_bloques(BloqueBSharp::puntero& primerBloque, BloqueBSharp::puntero& segundoBloque) throw();
+		/**
+		 * Busca el hermano izquierdo de un bloque, si existe lo devuelve, sino devuelve NULL.
+		 * @param bloquePadre - Bloque padre del bloque a buscar su hermano.
+		 * @param bloqueHijo - Bloque del cual buscar su hermano.
+		 * @return BloqueBSharp::puntero - Retorna el bloque hermano izquierdo si existe, sino devuelve NULL.
+		 */
+		BloqueBSharp::puntero buscar_hermano_izquierdo(BloqueInternoBSharp::puntero& bloquePadre, BloqueBSharp::puntero& bloqueHijo) throw();
+		/**
+		 * Busca el hermano derecho de un bloque, si existe lo devuelve, sino devuelve NULL.
+		 * @param bloquePadre - Bloque padre del bloque a buscar su hermano.
+		 * @param bloqueHijo . Bloque del cual buscar su hermano.
+		 * @return BloqueBSharp::puntero - Retorna el bloque hermano derecho si existe, sino devuelve NULL.
+		 */
+		BloqueBSharp::puntero buscar_hermano_derecho(BloqueInternoBSharp::puntero& bloquePadre, BloqueBSharp::puntero& bloqueHijo) throw();
+		/**
+		 * Actualiza un bloque interno luego de una operacion de balanceo entre sus bloques hijos.
+		 * @param bloqueInterno - Bloque interno a actualizar padre de ambos hijos balanceados.
+		 * @param resultadoBalanceo - El resultado de la operacion de balanceo.
+		 */
+		void actualizar_balanceo(BloqueInternoBSharp::puntero& bloqueInterno, ResultadoBalanceo& resultadoBalanceo) throw();
+		/**
+		 * Actualiza un bloque interno lueg de una operacion de fusion entre sus bloques hijos.
+		 * @param bloqueInterno - Bloque interno a actualizar, padre de ambos hijos fusionados.
+		 * @param numero_bloque_eliminado - Numero de bloque eliminado como parte de la fusion (Hermano derecho).
+		 */
+		void actualizar_fusion(BloqueInternoBSharp::puntero& bloqueInterno, int numero_bloque_eliminado) throw();
+
 		/**
 		 * Busca un registro en un bloque externo devolviendo el registro coincidente.
 		 * @param registro - El registro a buscar en el bloque externo.
@@ -251,6 +318,17 @@ class IndiceBSharp: public EstrategiaIndice {
 		 * Almacena el bloque raiz del indice b sharp.
 		 */
 		BloqueBSharp::puntero bloqueRaiz;
+
+		/**
+		 * @param bloqueActual - El bloque actual en el cual se elimino una clave
+		 * @param bloquePrimerHermano - Uno de los hermanos del bloque actual
+		 * @param bloqueSegundoHermano - El otro de los hermanos del bloque actual
+		 * @param resultado - Carga los registros a ser modificados en el nivel superior
+		 * @return bool - true si balanceo, false si no pudo balancear
+		 */
+		bool balancearBloquesExternosAlRemover(BloqueExternoBSharp::puntero& bloqueActual,
+										BloqueExternoBSharp::puntero& bloquePrimerHermano, BloqueExternoBSharp::puntero& bloqueSegundoHermano,
+										ResultadoInsercion& resultado);
 };
 
 #endif // INDICE_B_SHARP_HPP
