@@ -7,6 +7,7 @@
 
 #include "ManagerInvertedIndex.h"
 
+
 ManagerInvertedIndex::ManagerInvertedIndex() {
 
 	TextFile* file = new TextFile();
@@ -27,14 +28,19 @@ ManagerInvertedIndex::~ManagerInvertedIndex() {
 	delete this->stopWords;
 }
 
-void ManagerInvertedIndex::loadMessageWords(Mail* mail){
+void ManagerInvertedIndex::loadMessageWords(Mail* mail, IndexBSharp* indexBSharp){
+
+
 	this->currentWords = new WordsContainer(mail->getIuc(), mail->getMessage());
 	vector<string>::iterator it;
 	RegInvertedIndex* regInvertedIndex;
 	InfoPerDoc* infoPerDoc;
 	this->removeStopWords();
 	int count = 0;
+
+
 	for(it= this->currentWords->getWordsBegin(); it != this->currentWords->getWordsEnd(); it++ ){
+
 		regInvertedIndex = this->regMap[*it];
 
 		if(regInvertedIndex == NULL){//aparicion termino por primera vez
@@ -56,9 +62,26 @@ void ManagerInvertedIndex::loadMessageWords(Mail* mail){
 		count++;
 	}
 	this->printMap(cout);
+	this->writeOrUpdateInvertedIndex(indexBSharp);
 	delete this->currentWords;
 
 }
+void ManagerInvertedIndex::writeOrUpdateInvertedIndex(IndexBSharp* indexBSharp){
+	RegInvertedIndex* regInvertedIndex;
+	map<string,RegInvertedIndex*>::iterator it;
+
+	for(it = this->regMap.begin() ; it != this->regMap.end(); it++){
+		regInvertedIndex = (*it).second;
+		regInvertedIndex = (RegInvertedIndex*)indexBSharp->searchRegistry(regInvertedIndex);//busco el registro de indice invertido
+
+		if(regInvertedIndex != NULL){//si existe le agrego el nuevo info per doc
+			regInvertedIndex->addInfoPerDoc(((*it).second)->getFirstInfoPerDoc());
+		}
+		indexBSharp->addRegistry(regInvertedIndex);//se agrega al indice (puede ser nuevo o actualizado)
+	}
+
+}
+
 
 void ManagerInvertedIndex::removeStopWords(){
 	vector<string>::iterator it;

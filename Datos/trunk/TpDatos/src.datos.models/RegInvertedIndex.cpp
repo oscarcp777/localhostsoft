@@ -44,11 +44,11 @@ bool RegInvertedIndex::equals(Registry* registry){
 	KeyString* key=(KeyString*)registry->getKey();
 	return this->getKey()->equals(key) ;
 }
-void RegInvertedIndex::pack(Buffer* buffer){
+void RegInvertedIndex::pack(Buffer* buffer){//TODO
 	this->getKey()->pack(buffer);
 	buffer->packField(&this->numBlock,sizeof(this->numBlock));
 }
-void RegInvertedIndex::unPack(Buffer* buffer){
+void RegInvertedIndex::unPack(Buffer* buffer){//TODO
 	this->setKey(new KeyString(""));
 	this->getKey()->unPack(buffer);
 	buffer->unPackField(&this->numBlock,sizeof(this->numBlock));
@@ -68,7 +68,7 @@ int RegInvertedIndex::compareTo(Registry* registry){
 }
 unsigned int RegInvertedIndex::getSize(){
 	KeyString* key=(KeyString*)this->getKey();
-	return key->getSize()+sizeof(this->numBlock);
+	return key->getSize()+sizeof(this->numBlock); //TODO
 }
 Registry* RegInvertedIndex::cloneRegKey(){
 	return this->getKey()->clone();

@@ -12,22 +12,25 @@
 #include "../src.datos.storage/TextFile.h"
 #include "../src.datos.models/Mail.h"
 #include "../src.datos.models/RegInvertedIndex.h"
+#include "../src.datos.BTreeSharp/IndexBSharp.h"
 #include <map>
 
 class ManagerInvertedIndex {
 public:
 	ManagerInvertedIndex();
 	virtual ~ManagerInvertedIndex();
-	void loadMessageWords(Mail* mail);
+	void loadMessageWords(Mail* mail, IndexBSharp* indexBSharp);
 	void removeStopWords();
 	void printMap(std::ostream& outStream);
 	map<string,RegInvertedIndex*>::iterator getIteratorBegin();
 	map<string,RegInvertedIndex*>::iterator getIteratorEnd();
+	void writeOrUpdateInvertedIndex(IndexBSharp* indexBSharp);
 
 private:
 	WordsContainer* stopWords;
 	WordsContainer* currentWords;
 	map<string,RegInvertedIndex*> regMap;
+
 };
 
 #endif /* MANAGERINVERTEDINDEX_H_ */

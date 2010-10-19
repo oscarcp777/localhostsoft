@@ -39,13 +39,8 @@ void TestManagerInvertedIndex::test(){
 	mail2->setSubject("trabajo practico");
 	mail2->setTo("yogui");
 
-	manager->loadMessageWords(mail);
-	manager->loadMessageWords(mail2);
-	map<string,RegInvertedIndex*>::iterator it;
-	for(it = manager->getIteratorBegin() ; it != manager->getIteratorEnd(); it++){
-		indexBSharp->addRegistry((RegInvertedIndex*)((*it).second));
-
-		}
+	manager->loadMessageWords(mail,indexBSharp);
+	manager->loadMessageWords(mail2,indexBSharp);
 
 	indexBSharp->print(std::cout);
 	delete indexBSharp;
