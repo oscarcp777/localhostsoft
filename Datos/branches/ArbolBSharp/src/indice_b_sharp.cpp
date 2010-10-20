@@ -416,12 +416,260 @@ BloqueInternoBSharp::contenedor_ramas& ramasBloqueDerecho)throw(){
 	}
 }
 
+bool IndiceBSharp::removerBloqueExternoLleno(BloqueExternoBSharp::puntero& bloqueActual,
+								BloqueExternoBSharp::puntero& bloquePrimerHermano, BloqueExternoBSharp::puntero& bloqueSegundoHermano,
+								ResultadoInsercion& resultado){
+
+	unsigned int cont=0;
+
+	// Crea contenedor de componentes para almacenar los registros de los bloques
+	BloqueExternoBSharp::contenedor_componentes lista_registros;
+
+	//Registro menor del bloque actual
+	Registro::puntero registroActual = static_cast<Registro::puntero>(*(bloqueActual->primer_componente()));
+
+	//Registro menor bloque primer hermano
+	Registro::puntero registroPrimerHermano = static_cast<Registro::puntero>(*(bloquePrimerHermano->primer_componente()));
+
+	//Registro menor bloque segundo hermano
+	Registro::puntero registroSegundoHermano = static_cast<Registro::puntero>(*(bloqueSegundoHermano->primer_componente()));
+
+	BloqueExternoBSharp::puntero bloqueIzquierdo;
+	BloqueExternoBSharp::puntero bloqueCentro;
+	BloqueExternoBSharp::puntero bloqueDerecho;
+	BloqueExternoBSharp::contenedor_componentes registrosBloqueIzquierdo;
+	BloqueExternoBSharp::contenedor_componentes registrosBloqueCentro;
+	BloqueExternoBSharp::contenedor_componentes registrosBloqueDerecho;
+
+	//Diferencio orden bloques
+	if (this->comparadorClave->es_menor(this->clave, registroActual, registroPrimerHermano))
+		if (this->comparadorClave->es_menor(this->clave, registroActual, registroSegundoHermano)){
+			bloqueIzquierdo = bloqueActual;
+			if (this->comparadorClave->es_menor(this->clave, registroPrimerHermano, registroSegundoHermano)){
+				bloqueCentro = bloquePrimerHermano;
+				bloqueDerecho = bloqueSegundoHermano;
+			}else{
+				bloqueCentro = bloqueSegundoHermano;
+				bloqueDerecho = bloquePrimerHermano;
+			}
+		}else{
+			bloqueIzquierdo = bloqueSegundoHermano;
+			bloqueCentro = bloqueActual;
+			bloqueDerecho = bloquePrimerHermano;
+		}
+	else
+		if (this->comparadorClave->es_menor(this->clave, registroActual, registroSegundoHermano)){
+			bloqueIzquierdo = bloquePrimerHermano;
+			bloqueCentro = bloqueActual;
+			bloqueDerecho = bloqueSegundoHermano;
+		}else{
+			bloqueDerecho = bloqueActual;
+			if (this->comparadorClave->es_menor(this->clave, registroPrimerHermano, registroSegundoHermano)){
+				bloqueIzquierdo = bloquePrimerHermano;
+				bloqueCentro = bloqueSegundoHermano;
+			}else{
+				bloqueIzquierdo = bloqueSegundoHermano;
+				bloqueCentro = bloquePrimerHermano;
+			}
+		}
+
+	bloqueIzquierdo->transferir_componentes(registrosBloqueIzquierdo);
+	bloqueCentro->transferir_componentes(registrosBloqueCentro);
+	bloqueDerecho->transferir_componentes(registrosBloqueDerecho);
+
+	BloqueExternoBSharp::contenedor_componentes lista_registros_aux;
+	this->juntarListasComponentes(lista_registros_aux,registrosBloqueIzquierdo,registrosBloqueCentro);
+
+	this->juntarListasComponentes(lista_registros,lista_registros_aux,registrosBloqueDerecho);
+
+
+	// Llena bloque izquierdo
+	BloqueExternoBSharp::iterador_componentes componenteListaFinal = lista_registros.begin();
+	while (bloqueIzquierdo->puede_agregar_componente(*componenteListaFinal)){
+		bloqueIzquierdo->agregar_componente(*componenteListaFinal);
+		componenteListaFinal++;
+		cont++;
+	}
+
+	// Llena bloque centro
+	resultado.establecer_registro_clave_media(this->extraer_clave(*componenteListaFinal));
+	while (bloqueCentro->puede_agregar_componente(*componenteListaFinal)){
+		bloqueCentro->agregar_componente(*componenteListaFinal);
+		componenteListaFinal++;
+		cont++;
+	}
+
+	if(cont!=lista_registros.size()){
+		std::cout<<"###########################################################"<<std::endl;
+		std::cout<<"############# DANGER SE PERDIO UN registro    ##############"<<std::endl;
+		std::cout<<"###########################################################"<<std::endl;
+
+		std::cout<<" CANTIDAD DE REGISTROS INSERTADOS "<<cont<<std::endl;
+		std::cout<<" CANTIDAD DE REGISTROS "<<lista_registros.size()<<std::endl;
+	}
+
+	if (componenteListaFinal != lista_registros.end()){
+		std::cout<<"No se puede fusionar bloques"<<std::endl;
+		bloqueIzquierdo->vaciar_componentes();
+		BloqueExternoBSharp::iterador_componentes componenteListaBloque = registrosBloqueIzquierdo.begin();
+		while (componenteListaBloque != registrosBloqueIzquierdo.end()){
+			bloqueIzquierdo->agregar_componente(*componenteListaBloque);
+			componenteListaBloque++;
+		}
+		bloqueCentro->vaciar_componentes();
+		componenteListaBloque = registrosBloqueCentro.begin();
+		while (componenteListaBloque != registrosBloqueCentro.end()){
+			bloqueCentro->agregar_componente(*componenteListaBloque);
+			componenteListaBloque++;
+		}
+		registrosBloqueIzquierdo.clear();
+		registrosBloqueCentro.clear();
+		registrosBloqueDerecho.clear();
+		return false;
+	}
+	else{
+		// Enlaza a los bloques
+		bloqueCentro->establecer_bloque_siguiente(bloqueDerecho->obtener_numero_bloque());
+
+		// Marco segundo bloque como borrado
+		this->estrategiaEspacioLibre->escribir_espacio_ocupado(bloqueDerecho->obtener_numero_bloque(), 0);
+		// Escribo longitud ocupada de primer bloque
+		this->estrategiaEspacioLibre->escribir_espacio_ocupado(bloqueCentro->obtener_numero_bloque(), bloqueCentro->obtener_longitud_ocupada());
+		// Escribo longitud ocupada de primer bloque
+		this->estrategiaEspacioLibre->escribir_espacio_ocupado(bloqueIzquierdo->obtener_numero_bloque(), bloqueIzquierdo->obtener_longitud_ocupada());
+		// Escribo primer bloque
+		this->estrategiaAlmacenamiento->escribir_bloque(bloqueIzquierdo->obtener_numero_bloque(), bloqueIzquierdo, this->archivoIndice);
+		// Escribo primer bloque
+		this->estrategiaAlmacenamiento->escribir_bloque(bloqueCentro->obtener_numero_bloque(), bloqueCentro, this->archivoIndice);
+	}
+}
+
 bool IndiceBSharp::balancearBloquesExternosAlRemover(BloqueExternoBSharp::puntero& bloqueActual,
 								BloqueExternoBSharp::puntero& bloquePrimerHermano, BloqueExternoBSharp::puntero& bloqueSegundoHermano,
 								ResultadoInsercion& resultado){
-//	unsigned int cont=0;
-//	if (bloqueHermano == NULL)
+	unsigned int cont=0;
+	if (bloquePrimerHermano == NULL || bloqueSegundoHermano == NULL)
 		return false;
+
+	// Crea contenedor de componentes para almacenar los registros de los bloques
+	BloqueExternoBSharp::contenedor_componentes lista_registros;
+
+	//Registro menor del bloque actual
+	Registro::puntero registroActual = static_cast<Registro::puntero>(*(bloqueActual->primer_componente()));
+
+	//Registro menor bloque primer hermano
+	Registro::puntero registroPrimerHermano = static_cast<Registro::puntero>(*(bloquePrimerHermano->primer_componente()));
+
+	//Registro menor bloque segundo hermano
+	Registro::puntero registroSegundoHermano = static_cast<Registro::puntero>(*(bloqueSegundoHermano->primer_componente()));
+
+	BloqueExternoBSharp::puntero bloqueIzquierdo;
+	BloqueExternoBSharp::puntero bloqueCentro;
+	BloqueExternoBSharp::puntero bloqueDerecho;
+	BloqueExternoBSharp::contenedor_componentes registrosBloqueIzquierdo;
+	BloqueExternoBSharp::contenedor_componentes registrosBloqueCentro;
+	BloqueExternoBSharp::contenedor_componentes registrosBloqueDerecho;
+
+	//Diferencio orden bloques
+	if (this->comparadorClave->es_menor(this->clave, registroActual, registroPrimerHermano))
+		if (this->comparadorClave->es_menor(this->clave, registroActual, registroSegundoHermano)){
+			bloqueIzquierdo = bloqueActual;
+			if (this->comparadorClave->es_menor(this->clave, registroPrimerHermano, registroSegundoHermano)){
+				bloqueCentro = bloquePrimerHermano;
+				bloqueDerecho = bloqueSegundoHermano;
+			}else{
+				bloqueCentro = bloqueSegundoHermano;
+				bloqueDerecho = bloquePrimerHermano;
+			}
+		}else{
+			bloqueIzquierdo = bloqueSegundoHermano;
+			bloqueCentro = bloqueActual;
+			bloqueDerecho = bloquePrimerHermano;
+		}
+	else
+		if (this->comparadorClave->es_menor(this->clave, registroActual, registroSegundoHermano)){
+			bloqueIzquierdo = bloquePrimerHermano;
+			bloqueCentro = bloqueActual;
+			bloqueDerecho = bloqueSegundoHermano;
+		}else{
+			bloqueDerecho = bloqueActual;
+			if (this->comparadorClave->es_menor(this->clave, registroPrimerHermano, registroSegundoHermano)){
+				bloqueIzquierdo = bloquePrimerHermano;
+				bloqueCentro = bloqueSegundoHermano;
+			}else{
+				bloqueIzquierdo = bloqueSegundoHermano;
+				bloqueCentro = bloquePrimerHermano;
+			}
+		}
+
+	bloqueIzquierdo->transferir_componentes(registrosBloqueIzquierdo);
+	bloqueCentro->transferir_componentes(registrosBloqueCentro);
+	bloqueDerecho->transferir_componentes(registrosBloqueDerecho);
+
+	BloqueExternoBSharp::contenedor_componentes lista_registros_aux;
+	this->juntarListasComponentes(lista_registros_aux,registrosBloqueIzquierdo,registrosBloqueCentro);
+
+	this->juntarListasComponentes(lista_registros,lista_registros_aux,registrosBloqueDerecho);
+
+
+
+	//SACAR
+	//			std::cout<<"LISTA ENTERA: "<< std::endl;
+	//			BloqueExternoBSharp::iterador_componentes actual3 = lista_registros.begin();
+	//			while (actual3 != lista_registros.end()){
+	//				Registro::puntero registroAux = static_cast<Registro::puntero>(*actual3);
+	//				imprimir_registro(registroAux,std::cout);
+	//				actual3++;
+	//			}
+	//			std::cout<<"FIN LISTA ENTERA: "<< std::endl;
+
+
+
+	BloqueExternoBSharp::iterador_componentes componenteListaFinal = lista_registros.begin();
+	while (bloqueIzquierdo->puede_agregar_componente(*componenteListaFinal)){
+		bloqueIzquierdo->agregar_componente(*componenteListaFinal);
+		componenteListaFinal++;
+		cont++;
+	}
+
+	// Establece el elemento izq a subir en el resultado
+	resultado.establecer_registro_clave_izq(this->extraer_clave(*componenteListaFinal));
+	while (bloqueCentro->puede_agregar_componente(*componenteListaFinal)){
+			bloqueCentro->agregar_componente(*componenteListaFinal);
+			componenteListaFinal++;
+			cont++;
+	}
+	// Establece el elemento izq a subir en el resultado
+	resultado.establecer_registro_clave_der(this->extraer_clave(*componenteListaFinal));
+	while (componenteListaFinal != lista_registros.end()){
+		if (bloqueDerecho->puede_agregar_componente(*componenteListaFinal))
+			bloqueDerecho->agregar_componente(*componenteListaFinal);
+		else
+			break;
+		componenteListaFinal++;
+		cont++;
+	}
+
+	if(cont!=lista_registros.size()){
+		std::cout<<"###########################################################"<<std::endl;
+		std::cout<<"############# DANGER SE PERDIO UN registro    ##############"<<std::endl;
+		std::cout<<"###########################################################"<<std::endl;
+
+		std::cout<<" CANTIDAD DE REGISTROS INSERTADOS "<<cont<<std::endl;
+		std::cout<<" CANTIDAD DE REGISTROS "<<lista_registros.size()<<std::endl;
+	}
+
+	std::cout<<"Si se puede hacer balanceo externo"<<std::endl;
+	// Escribe bloque izquierdo
+	this->estrategiaAlmacenamiento->escribir_bloque(bloqueIzquierdo->obtener_numero_bloque(), bloqueIzquierdo, this->archivoIndice);
+	// Escribe bloque centro
+	this->estrategiaAlmacenamiento->escribir_bloque(bloqueCentro->obtener_numero_bloque(), bloqueCentro, this->archivoIndice);
+	// Escribe bloque derecho
+	this->estrategiaAlmacenamiento->escribir_bloque(bloqueDerecho->obtener_numero_bloque(), bloqueDerecho, this->archivoIndice);
+
+	return true;
+
+
 
 }
 

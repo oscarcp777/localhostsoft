@@ -329,6 +329,10 @@ class IndiceBSharp: public EstrategiaIndice {
 		bool balancearBloquesExternosAlRemover(BloqueExternoBSharp::puntero& bloqueActual,
 										BloqueExternoBSharp::puntero& bloquePrimerHermano, BloqueExternoBSharp::puntero& bloqueSegundoHermano,
 										ResultadoInsercion& resultado);
+
+		bool removerBloqueExternoLleno(BloqueExternoBSharp::puntero& bloqueActual,
+										BloqueExternoBSharp::puntero& bloquePrimerHermano, BloqueExternoBSharp::puntero& bloqueSegundoHermano,
+										ResultadoInsercion& resultado);
 };
 
 #endif // INDICE_B_SHARP_HPP
