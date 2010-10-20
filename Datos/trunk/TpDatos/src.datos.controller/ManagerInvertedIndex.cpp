@@ -68,23 +68,14 @@ void ManagerInvertedIndex::loadMessageWords(Mail* mail, IndexBSharp* indexBSharp
 
 }
 void ManagerInvertedIndex::writeOrUpdateInvertedIndex(IndexBSharp* indexBSharp){
+	//TODO monos el arbol lo actualiza solo si ya existe si no agrega uno nuevo no era
+	//TODO necesario lo que estaban haciendo de buscarlo antes eso es parte de la logica del arbol
 	RegInvertedIndex* regInvertedIndex;
-	RegInvertedIndex* regfound;
 	map<string,RegInvertedIndex*>::iterator it;
-
 	for(it = this->regMap.begin() ; it != this->regMap.end(); it++){
 		regInvertedIndex = (*it).second;
-		regfound = (RegInvertedIndex*)indexBSharp->searchRegistry(regInvertedIndex);//busco el registro de indice invertido
-
-		if(regfound != NULL){//si existe le agrego el nuevo info per doc
-			regfound->addInfoPerDoc(((*it).second)->getFirstInfoPerDoc());
-			indexBSharp->addRegistry(regfound);//se actualizado el indice
+			indexBSharp->addRegistry(regInvertedIndex);//se agrega al indice
 		}
-		else{//si no existe
-			indexBSharp->addRegistry((*it).second);//se agrega al indice
-		}
-	}
-
 }
 
 

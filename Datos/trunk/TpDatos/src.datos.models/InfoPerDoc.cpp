@@ -32,6 +32,7 @@ void InfoPerDoc::pack(Buffer* buffer){
 	}
 }
 void InfoPerDoc::unPack(Buffer* buffer){
+	this->setKey(new KeyInteger(-1));
 	this->getKey()->unPack(buffer);
 	unsigned int numberElements=0;
 	buffer->unPackField(&numberElements,sizeof(numberElements));

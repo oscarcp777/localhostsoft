@@ -52,7 +52,7 @@ int main(int argc,char** argv) {
 
 //**********************TEST MANAGER INVERTED INDEX*******************
 	TestManagerInvertedIndex* myTest = new TestManagerInvertedIndex();
-	myTest->test();
+	myTest->testSearch();
 	delete myTest;
 //*********************************************************************
 	return 0;

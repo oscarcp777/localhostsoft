@@ -14,7 +14,8 @@ class TestManagerInvertedIndex {
 public:
 	TestManagerInvertedIndex();
 	virtual ~TestManagerInvertedIndex();
-	void test();
+	void testInsert();
+	void testSearch();
 };
 
 #endif /* TESTMANAGERINVERTEDINDEX_H_ */

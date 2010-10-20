@@ -1275,6 +1275,7 @@ void IndexBSharp::printRecursive(Node* currentNode, std::ostream& outStream,
 		outStream << "NUMERO BLOQUE: " << currentNode->getNumBlock() << " ";
 		outStream << "NIVEL: " << currentNode->getLevel() << " ";
 		outStream << "COMPONENTES BLOQUE: " << endl;
+
 		list<Registry*>::iterator actualComp = currentNode->iteratorBegin();
 		list<Registry*>::iterator endComp = currentNode->iteratorEnd();
 		std::vector<int>::const_iterator actualBranch;
