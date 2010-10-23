@@ -297,7 +297,7 @@ void probarIndiceBSharpImprimir() {
 	for (int counter = 0; counter < cantidad_insertar; ++counter) {
 		RegistroLongitudVariable::puntero registro = new RegistroLongitudVariable(clavePrimaria);
 		int id_eliminar = vecInserts[counter];
-		if (counter >= 25)
+		if (counter >= 26)
 			indice->imprimir(std::cout);
 		std::cout << "----A Eliminar----";
 		std::cout << "ID: " << id_eliminar << std::endl;

@@ -665,7 +665,7 @@ bool IndiceBSharp::removerBloqueInternoLleno(BloqueInternoBSharp::puntero& bloqu
 	bloqueDerecho->transferir_ramas(ramasBloqueDerecho);
 
 	BloqueInternoBSharp::contenedor_ramas lista_ramas_aux;
-	this->juntarListaRamas(lista_ramas_aux,ramasBloqueIzquierdo,ramasBloqueDerecho);
+	this->juntarListaRamas(lista_ramas_aux,ramasBloqueIzquierdo,ramasBloqueCentro);
 
 	this->juntarListaRamas(lista_ramas,lista_ramas_aux,ramasBloqueDerecho);
 
@@ -693,24 +693,17 @@ bool IndiceBSharp::removerBloqueInternoLleno(BloqueInternoBSharp::puntero& bloqu
 		componenteListaFinal++;
 		cont++;
 
-	// Llena bloque centro
-	while (bloqueCentro->puede_agregar_componente(*componenteListaFinal)){
-		bloqueCentro->agregar_componente(*componenteListaFinal);
-		bloqueCentro->agregar_rama(*ramaListaFinal);
-		componenteListaFinal++;
-		ramaListaFinal++;
-		cont++;
+	while (componenteListaFinal != lista_registros.end()){
+			if (bloqueCentro->puede_agregar_componente(*componenteListaFinal)){
+				bloqueCentro->agregar_componente(*componenteListaFinal);
+				bloqueCentro->agregar_rama(*ramaListaFinal);
+			}
+			else
+				break;
+			componenteListaFinal++;
+			ramaListaFinal++;
+			cont++;
 	}
-
-	if(cont!=lista_registros.size()){
-		std::cout<<"###########################################################"<<std::endl;
-		std::cout<<"############# DANGER SE PERDIO UN registro    ##############"<<std::endl;
-		std::cout<<"###########################################################"<<std::endl;
-
-		std::cout<<" CANTIDAD DE REGISTROS INSERTADOS "<<cont<<std::endl;
-		std::cout<<" CANTIDAD DE REGISTROS "<<lista_registros.size()<<std::endl;
-	}
-
 
 	if (componenteListaFinal != lista_registros.end()){
 		std::cout<<"No se puede fusionar bloques"<<std::endl;
@@ -768,7 +761,8 @@ bool IndiceBSharp::removerBloqueInternoLleno(BloqueInternoBSharp::puntero& bloqu
 	}////////////////////////////////////////////////////////////////7me quede aca antes del sushi
 	else{
 		// Enlaza a los bloques
-		bloqueCentro->establecer_bloque_siguiente(bloqueDerecho->obtener_numero_bloque());
+		bloqueCentro->establecer_bloque_siguiente(bloqueDerecho->obtener_bloque_siguiente());
+		resultado.establecer_bloque_derecho(bloqueDerecho->obtener_numero_bloque());
 
 		// Marco segundo bloque como borrado
 		this->estrategiaEspacioLibre->escribir_espacio_ocupado(bloqueDerecho->obtener_numero_bloque(), 0);
