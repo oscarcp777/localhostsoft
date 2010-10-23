@@ -88,6 +88,8 @@ unsigned int BloqueBSharp::getPesoPromedio() const
 			actual++;
 			contador++;
 		}
+		if (contador == 0)
+			return 0;
 		unsigned int pesoPromedio = pesoTotal/contador;
 		return pesoPromedio;
 	}

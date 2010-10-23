@@ -200,15 +200,16 @@ class IndiceBSharp: public EstrategiaIndice {
 		 * @param registro - El registro a borar del bloque externo.
 		 * @return int - Retorna true si hubo subflujo en el bloque externo.
 		 */
-		int remover_bloque_externo(BloqueExternoBSharp::puntero& bloqueExterno, const Registro::puntero& registro) throw();
+		int remover_bloque_externo(BloqueExternoBSharp::puntero& bloqueExterno, const Registro::puntero& registro,
+				ResultadoInsercion& resultado, unsigned int primerHermano, unsigned int segundoHermano) throw();
 		/**
 		 * Remueve un registro en un bloque interno.
 		 * @param bloqueInterno - El bloque interno donde borrar el registtro.
 		 * @param registroClave - El registro con la clave a borrar.
 		 * @param resultadoBalanceo - El resultado de balancear bloques luego de borrado.
 		 */
-		bool remover_bloque_interno(BloqueInternoBSharp::puntero& bloqueINterno, const Registro::puntero& registro,
-				ResultadoBalanceo& resultadoBalanceo) throw();
+		int remover_bloque_interno(BloqueInternoBSharp::puntero& bloqueINterno, const Registro::puntero& registro,
+				ResultadoBalanceo& resultadoBalanceo, ResultadoInsercion& resultadoInsercion) throw();
 		/**
 		 * Borra el bloque mas a la izquierda o mas a la derecha cuando esta completamente vacio.
 		 * @param bloqueBorrar - El bloque a borrar.
@@ -264,7 +265,7 @@ class IndiceBSharp: public EstrategiaIndice {
 		 * @param bloqueInterno - Bloque interno a actualizar, padre de ambos hijos fusionados.
 		 * @param numero_bloque_eliminado - Numero de bloque eliminado como parte de la fusion (Hermano derecho).
 		 */
-		void actualizar_fusion(BloqueInternoBSharp::puntero& bloqueInterno, int numero_bloque_eliminado) throw();
+		void actualizar_fusion(BloqueInternoBSharp::puntero& bloqueInterno, ResultadoInsercion& resultadoInsercion) throw();
 
 		/**
 		 * Busca un registro en un bloque externo devolviendo el registro coincidente.
