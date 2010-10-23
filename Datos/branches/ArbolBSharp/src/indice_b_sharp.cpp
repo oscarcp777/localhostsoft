@@ -142,6 +142,7 @@ void IndiceBSharp::manejarDivisionRaizHoja(ResultadoInsercion& resultado, const 
 	// Establece primer elemento a insertar en la raiz
 	resultado.establecer_registro_clave_izq(this->extraer_clave(*componenteListaFinal));
 
+
 	// Inserta elementos en bloque central
 	while (nuevoBloqueCen->hay_subflujo((peso_promedio*lista_registros.size())/3)){
 		nuevoBloqueCen->agregar_componente(*componenteListaFinal);
@@ -202,8 +203,6 @@ void IndiceBSharp::manejarDivisionRaizHoja(ResultadoInsercion& resultado, const 
 	this->estrategiaAlmacenamiento->escribir_bloque_raiz(this->bloqueRaiz->obtener_numero_bloque(), this->bloqueRaiz, this->archivoIndice);
 
 }
-
-
 
 void IndiceBSharp::manejarDivisionRaizInterna(ResultadoInsercion& resultado) throw() {
 	unsigned int cont=0;
@@ -384,7 +383,6 @@ void IndiceBSharp::manejar_subflujo_raiz() throw() {
 	}
 }
 
-
 //quiero usar polimorfismo con los bloques internos y externos
 void IndiceBSharp::juntarListasComponentes(Bloque::contenedor_componentes& lista_registros,
 		Bloque::contenedor_componentes& registrosBloqueIzquierdo,Bloque::contenedor_componentes& registrosBloqueDerecho)throw(){
@@ -457,6 +455,7 @@ bool IndiceBSharp::removerBloqueExternoLleno(BloqueExternoBSharp::puntero& bloqu
 			bloqueCentro = bloqueActual;
 			bloqueDerecho = bloquePrimerHermano;
 		}
+
 	else
 		if (this->comparadorClave->es_menor(this->clave, registroActual, registroSegundoHermano)){
 			bloqueIzquierdo = bloquePrimerHermano;
@@ -541,9 +540,190 @@ bool IndiceBSharp::removerBloqueExternoLleno(BloqueExternoBSharp::puntero& bloqu
 		this->estrategiaAlmacenamiento->escribir_bloque(bloqueIzquierdo->obtener_numero_bloque(), bloqueIzquierdo, this->archivoIndice);
 		// Escribo primer bloque
 		this->estrategiaAlmacenamiento->escribir_bloque(bloqueCentro->obtener_numero_bloque(), bloqueCentro, this->archivoIndice);
+		return true;
 	}
 }
+bool IndiceBSharp::removerBloqueInternoLleno(BloqueInternoBSharp::puntero& bloqueActual,
+												BloqueInternoBSharp::puntero& bloquePrimerHermano, BloqueInternoBSharp::puntero& bloqueSegundoHermano,
+												ResultadoInsercion& resultado){
 
+	unsigned int cont=0;
+
+	// Crea contenedor de componentes para almacenar los registros de los bloques
+	BloqueInternoBSharp::contenedor_componentes lista_registros;
+
+	//Registro menor del bloque actual
+	Registro::puntero registroActual = static_cast<Registro::puntero>(*(bloqueActual->primer_componente()));
+
+	//Registro menor bloque primer hermano
+	Registro::puntero registroPrimerHermano = static_cast<Registro::puntero>(*(bloquePrimerHermano->primer_componente()));
+
+	//Registro menor bloque segundo hermano
+	Registro::puntero registroSegundoHermano = static_cast<Registro::puntero>(*(bloqueSegundoHermano->primer_componente()));
+
+	BloqueInternoBSharp::puntero bloqueIzquierdo;
+	BloqueInternoBSharp::puntero bloqueCentro;
+	BloqueInternoBSharp::puntero bloqueDerecho;
+	BloqueInternoBSharp::contenedor_componentes registrosBloqueIzquierdo;
+	BloqueInternoBSharp::contenedor_componentes registrosBloqueCentro;
+	BloqueInternoBSharp::contenedor_componentes registrosBloqueDerecho;
+
+	// Crea contenedor de ramas para insertar la rama nueva...
+	BloqueInternoBSharp::contenedor_ramas lista_ramas;
+
+	BloqueInternoBSharp::contenedor_ramas ramasBloqueIzquierdo;
+	BloqueInternoBSharp::contenedor_ramas ramasBloqueCentro;
+	BloqueInternoBSharp::contenedor_ramas ramasBloqueDerecho;
+
+	//Diferencio orden bloques
+	if (this->comparadorClave->es_menor(this->clave, registroActual, registroPrimerHermano))
+		if (this->comparadorClave->es_menor(this->clave, registroActual, registroSegundoHermano)){
+			bloqueIzquierdo = bloqueActual;
+			if (this->comparadorClave->es_menor(this->clave, registroPrimerHermano, registroSegundoHermano)){
+				bloqueCentro = bloquePrimerHermano;
+				bloqueDerecho = bloqueSegundoHermano;
+			}else{
+				bloqueCentro = bloqueSegundoHermano;
+				bloqueDerecho = bloquePrimerHermano;
+			}
+		}else{
+			bloqueIzquierdo = bloqueSegundoHermano;
+			bloqueCentro = bloqueActual;
+			bloqueDerecho = bloquePrimerHermano;
+		}
+
+	else
+		if (this->comparadorClave->es_menor(this->clave, registroActual, registroSegundoHermano)){
+			bloqueIzquierdo = bloquePrimerHermano;
+			bloqueCentro = bloqueActual;
+			bloqueDerecho = bloqueSegundoHermano;
+		}else{
+			bloqueDerecho = bloqueActual;
+			if (this->comparadorClave->es_menor(this->clave, registroPrimerHermano, registroSegundoHermano)){
+				bloqueIzquierdo = bloquePrimerHermano;
+				bloqueCentro = bloqueSegundoHermano;
+			}else{
+				bloqueIzquierdo = bloqueSegundoHermano;
+				bloqueCentro = bloquePrimerHermano;
+			}
+		}
+
+	bloqueIzquierdo->transferir_componentes(registrosBloqueIzquierdo);
+	bloqueCentro->transferir_componentes(registrosBloqueCentro);
+	bloqueDerecho->transferir_componentes(registrosBloqueDerecho);
+
+	BloqueInternoBSharp::contenedor_componentes lista_registros_aux;
+	this->juntarListasComponentes(lista_registros_aux,registrosBloqueIzquierdo,registrosBloqueCentro);
+
+	this->juntarListasComponentes(lista_registros,lista_registros_aux,registrosBloqueDerecho);
+
+	bloqueIzquierdo->transferir_ramas(ramasBloqueIzquierdo);
+	bloqueCentro->transferir_ramas(ramasBloqueCentro);
+	bloqueDerecho->transferir_ramas(ramasBloqueDerecho);
+
+	BloqueInternoBSharp::contenedor_ramas lista_ramas_aux;
+	this->juntarListaRamas(lista_ramas_aux,ramasBloqueIzquierdo,ramasBloqueDerecho);
+
+	this->juntarListaRamas(lista_ramas,lista_ramas_aux,ramasBloqueDerecho);
+
+
+	// Llena bloque izquierdo
+	BloqueInternoBSharp::iterador_componentes componenteListaFinal = lista_registros.begin();
+	BloqueInternoBSharp::iterador_rama ramaListaFinal = lista_ramas.begin();
+
+	bloqueIzquierdo->agregar_rama(*ramaListaFinal);
+	ramaListaFinal++;
+
+	while (bloqueIzquierdo->puede_agregar_componente(*componenteListaFinal)){
+		bloqueIzquierdo->agregar_componente(*componenteListaFinal);
+		bloqueIzquierdo->agregar_rama(*ramaListaFinal);
+		componenteListaFinal++;
+		ramaListaFinal++;
+		cont++;
+	}
+
+	bloqueCentro->agregar_rama(*ramaListaFinal);
+		ramaListaFinal++;
+		// Establece el elemento medio a subir en el resultado de insercion
+		Registro::puntero copia = resultado.obtener_registro_clave_media();
+		resultado.establecer_registro_clave_media(this->extraer_clave(*componenteListaFinal));
+		componenteListaFinal++;
+		cont++;
+
+	// Llena bloque centro
+	while (bloqueCentro->puede_agregar_componente(*componenteListaFinal)){
+		bloqueCentro->agregar_componente(*componenteListaFinal);
+		bloqueCentro->agregar_rama(*ramaListaFinal);
+		componenteListaFinal++;
+		ramaListaFinal++;
+		cont++;
+	}
+
+	if(cont!=lista_registros.size()){
+		std::cout<<"###########################################################"<<std::endl;
+		std::cout<<"############# DANGER SE PERDIO UN registro    ##############"<<std::endl;
+		std::cout<<"###########################################################"<<std::endl;
+
+		std::cout<<" CANTIDAD DE REGISTROS INSERTADOS "<<cont<<std::endl;
+		std::cout<<" CANTIDAD DE REGISTROS "<<lista_registros.size()<<std::endl;
+	}
+
+
+	if (componenteListaFinal != lista_registros.end()){
+		std::cout<<"No se puede fusionar bloques"<<std::endl;
+		bloqueIzquierdo->vaciar_componentes();
+		BloqueInternoBSharp::iterador_componentes componenteListaBloque = registrosBloqueIzquierdo.begin();
+		while (componenteListaBloque != registrosBloqueIzquierdo.end()){
+			bloqueIzquierdo->agregar_componente(*componenteListaBloque);
+			componenteListaBloque++;
+		}
+		bloqueCentro->vaciar_componentes();
+		componenteListaBloque = registrosBloqueCentro.begin();
+		while (componenteListaBloque != registrosBloqueCentro.end()){
+			bloqueCentro->agregar_componente(*componenteListaBloque);
+			componenteListaBloque++;
+		}
+		registrosBloqueIzquierdo.clear();
+		registrosBloqueCentro.clear();
+		registrosBloqueDerecho.clear();
+
+		bloqueIzquierdo->vaciar_ramas();
+		BloqueInternoBSharp::iterador_rama ramaListaBloque = ramasBloqueIzquierdo.begin();
+		while (ramaListaBloque != ramasBloqueIzquierdo.end()){
+			bloqueIzquierdo->agregar_rama(*ramaListaBloque);
+			ramaListaBloque++;
+		}
+		bloqueCentro->vaciar_ramas();
+		ramaListaBloque = ramasBloqueCentro.begin();
+		while (ramaListaBloque != ramasBloqueCentro.end()){
+			bloqueCentro->agregar_rama(*ramaListaBloque);
+			ramaListaBloque++;
+		}
+		ramasBloqueIzquierdo.clear();
+		ramasBloqueDerecho.clear();
+		ramasBloqueCentro.clear();
+
+		resultado.establecer_registro_clave_media(copia);
+
+		return false;
+	}////////////////////////////////////////////////////////////////7me quede aca antes del sushi
+	else{
+		// Enlaza a los bloques
+		bloqueCentro->establecer_bloque_siguiente(bloqueDerecho->obtener_numero_bloque());
+
+		// Marco segundo bloque como borrado
+		this->estrategiaEspacioLibre->escribir_espacio_ocupado(bloqueDerecho->obtener_numero_bloque(), 0);
+		// Escribo longitud ocupada de primer bloque
+		this->estrategiaEspacioLibre->escribir_espacio_ocupado(bloqueCentro->obtener_numero_bloque(), bloqueCentro->obtener_longitud_ocupada());
+		// Escribo longitud ocupada de primer bloque
+		this->estrategiaEspacioLibre->escribir_espacio_ocupado(bloqueIzquierdo->obtener_numero_bloque(), bloqueIzquierdo->obtener_longitud_ocupada());
+		// Escribo primer bloque
+		this->estrategiaAlmacenamiento->escribir_bloque(bloqueIzquierdo->obtener_numero_bloque(), bloqueIzquierdo, this->archivoIndice);
+		// Escribo primer bloque
+		this->estrategiaAlmacenamiento->escribir_bloque(bloqueCentro->obtener_numero_bloque(), bloqueCentro, this->archivoIndice);
+		return true;
+	}
+}
 bool IndiceBSharp::balancearBloquesExternosAlRemover(BloqueExternoBSharp::puntero& bloqueActual,
 								BloqueExternoBSharp::puntero& bloquePrimerHermano, BloqueExternoBSharp::puntero& bloqueSegundoHermano,
 								ResultadoInsercion& resultado){
@@ -669,7 +849,153 @@ bool IndiceBSharp::balancearBloquesExternosAlRemover(BloqueExternoBSharp::punter
 
 	return true;
 
+}
 
+bool IndiceBSharp::balancearBloquesInternosAlRemover(BloqueInternoBSharp::puntero& bloqueActual,
+		BloqueInternoBSharp::puntero& bloquePrimerHermano, BloqueInternoBSharp::puntero& bloqueSegundoHermano,
+								ResultadoInsercion& resultado){
+	unsigned int cont=0;
+	if (bloquePrimerHermano == NULL || bloqueSegundoHermano == NULL)
+		return false;
+
+	// Crea contenedor de componentes para almacenar los registros de los bloques
+	BloqueInternoBSharp::contenedor_componentes lista_registros;
+
+	//Registro menor del bloque actual
+	Registro::puntero registroActual = static_cast<Registro::puntero>(*(bloqueActual->primer_componente()));
+
+	//Registro menor bloque primer hermano
+	Registro::puntero registroPrimerHermano = static_cast<Registro::puntero>(*(bloquePrimerHermano->primer_componente()));
+
+	//Registro menor bloque segundo hermano
+	Registro::puntero registroSegundoHermano = static_cast<Registro::puntero>(*(bloqueSegundoHermano->primer_componente()));
+
+	BloqueInternoBSharp::puntero bloqueIzquierdo;
+	BloqueInternoBSharp::puntero bloqueCentro;
+	BloqueInternoBSharp::puntero bloqueDerecho;
+	BloqueInternoBSharp::contenedor_componentes registrosBloqueIzquierdo;
+	BloqueInternoBSharp::contenedor_componentes registrosBloqueCentro;
+	BloqueInternoBSharp::contenedor_componentes registrosBloqueDerecho;
+
+	// Crea contenedor de ramas para insertar la rama nueva...
+	BloqueInternoBSharp::contenedor_ramas lista_ramas;
+
+	BloqueInternoBSharp::contenedor_ramas ramasBloqueIzquierdo;
+	BloqueInternoBSharp::contenedor_ramas ramasBloqueCentro;
+	BloqueInternoBSharp::contenedor_ramas ramasBloqueDerecho;
+
+	//Diferencio orden bloques
+	if (this->comparadorClave->es_menor(this->clave, registroActual, registroPrimerHermano))
+		if (this->comparadorClave->es_menor(this->clave, registroActual, registroSegundoHermano)){
+			bloqueIzquierdo = bloqueActual;
+			if (this->comparadorClave->es_menor(this->clave, registroPrimerHermano, registroSegundoHermano)){
+				bloqueCentro = bloquePrimerHermano;
+				bloqueDerecho = bloqueSegundoHermano;
+			}else{
+				bloqueCentro = bloqueSegundoHermano;
+				bloqueDerecho = bloquePrimerHermano;
+			}
+		}else{
+			bloqueIzquierdo = bloqueSegundoHermano;
+			bloqueCentro = bloqueActual;
+			bloqueDerecho = bloquePrimerHermano;
+		}
+	else
+		if (this->comparadorClave->es_menor(this->clave, registroActual, registroSegundoHermano)){
+			bloqueIzquierdo = bloquePrimerHermano;
+			bloqueCentro = bloqueActual;
+			bloqueDerecho = bloqueSegundoHermano;
+		}else{
+			bloqueDerecho = bloqueActual;
+			if (this->comparadorClave->es_menor(this->clave, registroPrimerHermano, registroSegundoHermano)){
+				bloqueIzquierdo = bloquePrimerHermano;
+				bloqueCentro = bloqueSegundoHermano;
+			}else{
+				bloqueIzquierdo = bloqueSegundoHermano;
+				bloqueCentro = bloquePrimerHermano;
+			}
+		}
+
+	bloqueIzquierdo->transferir_componentes(registrosBloqueIzquierdo);
+	bloqueCentro->transferir_componentes(registrosBloqueCentro);
+	bloqueDerecho->transferir_componentes(registrosBloqueDerecho);
+
+	bloqueIzquierdo->transferir_ramas(ramasBloqueIzquierdo);
+	bloqueCentro->transferir_ramas(ramasBloqueCentro);
+	bloqueDerecho->transferir_ramas(ramasBloqueDerecho);
+
+	BloqueInternoBSharp::contenedor_componentes lista_registros_aux;
+	this->juntarListasComponentes(lista_registros_aux,registrosBloqueIzquierdo,registrosBloqueCentro);
+
+	this->juntarListasComponentes(lista_registros,lista_registros_aux,registrosBloqueDerecho);
+
+	BloqueInternoBSharp::contenedor_ramas lista_ramas_aux;
+	this->juntarListaRamas(lista_ramas_aux,ramasBloqueIzquierdo,ramasBloqueDerecho);
+
+	this->juntarListaRamas(lista_ramas,lista_ramas_aux,ramasBloqueDerecho);
+
+	BloqueInternoBSharp::iterador_componentes componenteListaFinal = lista_registros.begin();
+	BloqueInternoBSharp::iterador_rama ramaListaFinal = lista_ramas.begin();
+
+	bloqueIzquierdo->agregar_rama(*ramaListaFinal);
+	ramaListaFinal++;
+	while (bloqueIzquierdo->puede_agregar_componente(*componenteListaFinal)){
+		bloqueIzquierdo->agregar_componente(*componenteListaFinal);
+		componenteListaFinal++;
+		bloqueIzquierdo->agregar_rama(*ramaListaFinal);
+		componenteListaFinal++;
+		cont++;
+	}
+	bloqueCentro->agregar_rama(*ramaListaFinal);
+	ramaListaFinal++;
+
+	// Establece el elemento izq a subir en el resultado
+	resultado.establecer_registro_clave_izq(this->extraer_clave(*componenteListaFinal));
+	componenteListaFinal++;
+	cont++;
+	while (bloqueCentro->puede_agregar_componente(*componenteListaFinal)){
+			bloqueCentro->agregar_componente(*componenteListaFinal);
+			bloqueCentro->agregar_rama(*ramaListaFinal);
+			ramaListaFinal++;
+			componenteListaFinal++;
+			cont++;
+	}
+	// Establece el elemento izq a subir en el resultado
+
+	resultado.establecer_registro_clave_der(this->extraer_clave(*componenteListaFinal));
+	componenteListaFinal++;
+	cont++;
+	while (componenteListaFinal != lista_registros.end()){
+		if (bloqueDerecho->puede_agregar_componente(*componenteListaFinal)){
+			bloqueDerecho->agregar_componente(*componenteListaFinal);
+			bloqueDerecho->agregar_rama(*ramaListaFinal);
+		}
+		else
+			break;
+		componenteListaFinal++;
+		ramaListaFinal++;
+		cont++;
+	}
+
+
+	if(cont!=lista_registros.size()){
+		std::cout<<"###########################################################"<<std::endl;
+		std::cout<<"############# DANGER SE PERDIO UN registro    ##############"<<std::endl;
+		std::cout<<"###########################################################"<<std::endl;
+
+		std::cout<<" CANTIDAD DE REGISTROS INSERTADOS "<<cont<<std::endl;
+		std::cout<<" CANTIDAD DE REGISTROS "<<lista_registros.size()<<std::endl;
+	}
+
+	std::cout<<"Si se puede hacer balanceo externo"<<std::endl;
+	// Escribe bloque izquierdo
+	this->estrategiaAlmacenamiento->escribir_bloque(bloqueIzquierdo->obtener_numero_bloque(), bloqueIzquierdo, this->archivoIndice);
+	// Escribe bloque centro
+	this->estrategiaAlmacenamiento->escribir_bloque(bloqueCentro->obtener_numero_bloque(), bloqueCentro, this->archivoIndice);
+	// Escribe bloque derecho
+	this->estrategiaAlmacenamiento->escribir_bloque(bloqueDerecho->obtener_numero_bloque(), bloqueDerecho, this->archivoIndice);
+
+	return true;
 
 }
 
@@ -1797,8 +2123,6 @@ BloqueBSharp::puntero IndiceBSharp::buscar_hermano_izquierdo(BloqueInternoBSharp
 //		return this->estrategiaAlmacenamiento->leer_bloque(bloquePadre->obtener_rama(posicion_rama_hija - 1), this->archivoIndice);
 //	}
 }
-
-
 
 BloqueBSharp::puntero IndiceBSharp::buscar_hermano_derecho(BloqueInternoBSharp::puntero& bloquePadre, BloqueBSharp::puntero& bloqueHijo) throw() {
 	// Si el bloque siguiente no es invalido, tiene hermano derecho, lo devuelvo
