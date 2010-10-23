@@ -537,15 +537,6 @@ bool IndiceBSharp::removerBloqueExternoLleno(BloqueExternoBSharp::puntero& bloqu
 				break;
 			componenteListaFinal++;
 			cont++;
-		}
-
-	if(cont!=lista_registros.size()){
-		std::cout<<"###########################################################"<<std::endl;
-		std::cout<<"############# DANGER SE PERDIO UN registro    ##############"<<std::endl;
-		std::cout<<"###########################################################"<<std::endl;
-
-		std::cout<<" CANTIDAD DE REGISTROS INSERTADOS "<<cont<<std::endl;
-		std::cout<<" CANTIDAD DE REGISTROS "<<lista_registros.size()<<std::endl;
 	}
 
 	if (componenteListaFinal != lista_registros.end()){
@@ -560,6 +551,12 @@ bool IndiceBSharp::removerBloqueExternoLleno(BloqueExternoBSharp::puntero& bloqu
 		componenteListaBloque = registrosBloqueCentro.begin();
 		while (componenteListaBloque != registrosBloqueCentro.end()){
 			bloqueCentro->agregar_componente(*componenteListaBloque);
+			componenteListaBloque++;
+		}
+		bloqueDerecho->vaciar_componentes();
+		componenteListaBloque = registrosBloqueDerecho.begin();
+		while (componenteListaBloque != registrosBloqueDerecho.end()){
+			bloqueDerecho->agregar_componente(*componenteListaBloque);
 			componenteListaBloque++;
 		}
 		registrosBloqueIzquierdo.clear();
@@ -1999,12 +1996,16 @@ int IndiceBSharp::remover_bloque_interno(BloqueInternoBSharp::puntero& bloqueInt
 		if (respuestaHijo == HAY_BALANCEO) {
 			Registro::puntero registroMayorAReemplazar;
 			Registro::puntero registroMenorAReemplazar;
-			if (rama_borrar == *bloqueInterno->ultima_rama()){
-				Registro::puntero registroMayorAReemplazar =  (Registro::puntero) *actualComponente;
-				Registro::puntero registroMenorAReemplazar =  (Registro::puntero) *(--actualComponente);
+//			std::cout << "Actual: ";
+//						this->imprimir_registro(*(--actualComponente), std::cout);
+//						std::cout<< std::endl;
+			BloqueInternoBSharp::iterador_rama ultimaRama = bloqueInterno->ultima_rama();
+			if (rama_borrar == *(--ultimaRama)){
+				registroMayorAReemplazar =  (Registro::puntero) *actualComponente;
+				registroMenorAReemplazar =  (Registro::puntero) *(--actualComponente);
 			}else{
-				Registro::puntero registroMenorAReemplazar =  (Registro::puntero) *actualComponente;
-				Registro::puntero registroMayorAReemplazar =  (Registro::puntero) *(++actualComponente);
+				registroMenorAReemplazar =  (Registro::puntero) *actualComponente;
+				registroMayorAReemplazar =  (Registro::puntero) *(++actualComponente);
 
 			}
 
