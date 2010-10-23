@@ -41,7 +41,6 @@ class BloqueExternoBSharp: public BloqueBSharp {
 		/**
 		 * Devuelve si hay subflujo o no en la baja (toma en cuenta carga del nodo)
 		 */
-		virtual bool hay_subflujo() const throw();
 	private:
 		/**
 		 * Devuelve el espacio de metadata utilizado

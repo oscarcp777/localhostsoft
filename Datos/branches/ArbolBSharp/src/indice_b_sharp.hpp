@@ -209,7 +209,7 @@ class IndiceBSharp: public EstrategiaIndice {
 		 * @param resultadoBalanceo - El resultado de balancear bloques luego de borrado.
 		 */
 		int remover_bloque_interno(BloqueInternoBSharp::puntero& bloqueINterno, const Registro::puntero& registro,
-				ResultadoBalanceo& resultadoBalanceo, ResultadoInsercion& resultadoInsercion) throw();
+				ResultadoBalanceo& resultadoBalanceo, ResultadoInsercion& resultadoInsercion, unsigned int primerHermano, unsigned int segundoHermano) throw();
 		/**
 		 * Borra el bloque mas a la izquierda o mas a la derecha cuando esta completamente vacio.
 		 * @param bloqueBorrar - El bloque a borrar.

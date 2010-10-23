@@ -82,6 +82,8 @@ class BloqueBSharp: public Bloque {
 
 		void setPesoPromedio(unsigned int pesoPromedio);
 
+		bool haySubflujo() const throw();
+
 private:
 		/**
 		 * Almacena el numero de bloque en el arbol B sharp.

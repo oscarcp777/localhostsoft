@@ -21,13 +21,6 @@ bool BloqueExternoBSharp::hay_subflujo(unsigned int espacioMin) const throw() {
 	return (this->obtener_longitud_ocupada() < cota_subflujo);
 }
 
-bool BloqueExternoBSharp::hay_subflujo() const throw() {
-
-	unsigned int cota_subflujo = (2*this->GetLongitudBytes()/3)-(0.5*this->getPesoPromedio());
-	std::cout<<"SUBFLUJO_BAJA: "<<cota_subflujo<<std::endl;
-	return (this->obtener_longitud_ocupada() < cota_subflujo);
-}
-
 unsigned int BloqueExternoBSharp::obtener_espacio_metadata() const{
 	unsigned int espacio_metadata = BloqueBSharp::obtener_espacio_metadata();
 	espacio_metadata += sizeof(int);

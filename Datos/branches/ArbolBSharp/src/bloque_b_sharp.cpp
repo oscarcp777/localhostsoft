@@ -100,3 +100,10 @@ void BloqueBSharp::setPesoPromedio(unsigned int pesoPromedio)
 	this->pesoPromedio = pesoPromedio;
 }
 
+bool BloqueBSharp::haySubflujo() const throw() {
+
+	unsigned int cota_subflujo = (2*this->GetLongitudBytes()/3)-(0.5*this->getPesoPromedio());
+	std::cout<<"SUBFLUJO_BAJA: "<<cota_subflujo<<std::endl;
+	return (this->obtener_longitud_ocupada() < cota_subflujo);
+}
+
