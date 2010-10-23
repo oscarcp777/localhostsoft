@@ -212,7 +212,7 @@ void probarIndiceBSharpImprimir() {
 
 	IndiceBSharp::puntero indice = new IndiceBSharp("prueba-indice-imprimir", 64, esquema, clavePrimaria, comparadorClave);
 	//srand((unsigned) time(0));
-	int cantidad_insertar = 30; //rand() % RAND_MAX;
+	int cantidad_insertar = 80; //rand() % RAND_MAX;
 	int vecInserts[cantidad_insertar];
 
 	std::string stream;
@@ -297,7 +297,7 @@ void probarIndiceBSharpImprimir() {
 	for (int counter = 0; counter < cantidad_insertar; ++counter) {
 		RegistroLongitudVariable::puntero registro = new RegistroLongitudVariable(clavePrimaria);
 		int id_eliminar = vecInserts[counter];
-		if (counter >= 15)
+		if (counter >= 25)
 			indice->imprimir(std::cout);
 		std::cout << "----A Eliminar----";
 		std::cout << "ID: " << id_eliminar << std::endl;

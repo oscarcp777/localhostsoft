@@ -726,6 +726,14 @@ bool IndiceBSharp::removerBloqueInternoLleno(BloqueInternoBSharp::puntero& bloqu
 			bloqueCentro->agregar_componente(*componenteListaBloque);
 			componenteListaBloque++;
 		}
+
+		bloqueDerecho->vaciar_componentes();
+		componenteListaBloque = registrosBloqueDerecho.begin();
+		while (componenteListaBloque != registrosBloqueDerecho.end()){
+			bloqueCentro->agregar_componente(*componenteListaBloque);
+			componenteListaBloque++;
+		}
+
 		registrosBloqueIzquierdo.clear();
 		registrosBloqueCentro.clear();
 		registrosBloqueDerecho.clear();
@@ -742,6 +750,14 @@ bool IndiceBSharp::removerBloqueInternoLleno(BloqueInternoBSharp::puntero& bloqu
 			bloqueCentro->agregar_rama(*ramaListaBloque);
 			ramaListaBloque++;
 		}
+
+		bloqueDerecho->vaciar_ramas();
+		ramaListaBloque = ramasBloqueDerecho.begin();
+		while (ramaListaBloque != ramasBloqueDerecho.end()){
+			bloqueDerecho->agregar_rama(*ramaListaBloque);
+			ramaListaBloque++;
+		}
+
 		ramasBloqueIzquierdo.clear();
 		ramasBloqueDerecho.clear();
 		ramasBloqueCentro.clear();
@@ -981,9 +997,15 @@ bool IndiceBSharp::balancearBloquesInternosAlRemover(BloqueInternoBSharp::punter
 	BloqueInternoBSharp::iterador_componentes componenteListaFinal = lista_registros.begin();
 	BloqueInternoBSharp::iterador_rama ramaListaFinal = lista_ramas.begin();
 
+	unsigned int peso_promedio = this->calcularPromedio(lista_registros.begin(), lista_registros.end());
+	bloqueIzquierdo->setPesoPromedio(peso_promedio);
+	bloqueCentro->setPesoPromedio(peso_promedio);
+	bloqueDerecho->setPesoPromedio(peso_promedio);
+
 	bloqueIzquierdo->agregar_rama(*ramaListaFinal);
 	ramaListaFinal++;
-	while (bloqueIzquierdo->puede_agregar_componente(*componenteListaFinal)){
+
+	while (bloqueIzquierdo->hay_subflujo((peso_promedio*lista_registros.size())/3)){
 		bloqueIzquierdo->agregar_componente(*componenteListaFinal);
 		componenteListaFinal++;
 		bloqueIzquierdo->agregar_rama(*ramaListaFinal);
@@ -997,7 +1019,7 @@ bool IndiceBSharp::balancearBloquesInternosAlRemover(BloqueInternoBSharp::punter
 	resultado.establecer_registro_clave_izq(this->extraer_clave(*componenteListaFinal));
 	componenteListaFinal++;
 	cont++;
-	while (bloqueCentro->puede_agregar_componente(*componenteListaFinal)){
+	while (bloqueCentro->hay_subflujo((peso_promedio*lista_registros.size())/3)){
 			bloqueCentro->agregar_componente(*componenteListaFinal);
 			bloqueCentro->agregar_rama(*ramaListaFinal);
 			ramaListaFinal++;
