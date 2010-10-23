@@ -833,7 +833,10 @@ bool IndiceBSharp::balancearBloquesExternosAlRemover(BloqueExternoBSharp::punter
 	this->juntarListasComponentes(lista_registros,lista_registros_aux,registrosBloqueDerecho);
 
 
-
+	unsigned int peso_promedio = this->calcularPromedio(lista_registros.begin(), lista_registros.end());
+	bloqueIzquierdo->setPesoPromedio(peso_promedio);
+	bloqueCentro->setPesoPromedio(peso_promedio);
+	bloqueDerecho->setPesoPromedio(peso_promedio);
 	//SACAR
 	//			std::cout<<"LISTA ENTERA: "<< std::endl;
 	//			BloqueExternoBSharp::iterador_componentes actual3 = lista_registros.begin();
@@ -847,7 +850,7 @@ bool IndiceBSharp::balancearBloquesExternosAlRemover(BloqueExternoBSharp::punter
 
 
 	BloqueExternoBSharp::iterador_componentes componenteListaFinal = lista_registros.begin();
-	while (bloqueIzquierdo->puede_agregar_componente(*componenteListaFinal)){
+	while (bloqueIzquierdo->hay_subflujo((peso_promedio*lista_registros.size())/3)){
 		bloqueIzquierdo->agregar_componente(*componenteListaFinal);
 		componenteListaFinal++;
 		cont++;
@@ -855,7 +858,7 @@ bool IndiceBSharp::balancearBloquesExternosAlRemover(BloqueExternoBSharp::punter
 
 	// Establece el elemento izq a subir en el resultado
 	resultado.establecer_registro_clave_izq(this->extraer_clave(*componenteListaFinal));
-	while (bloqueCentro->puede_agregar_componente(*componenteListaFinal)){
+	while (bloqueCentro->hay_subflujo((peso_promedio*lista_registros.size())/3)){
 			bloqueCentro->agregar_componente(*componenteListaFinal);
 			componenteListaFinal++;
 			cont++;
