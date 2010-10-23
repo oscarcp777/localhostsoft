@@ -26,6 +26,7 @@ public:
 	void parserMailWords(string message);
 	void removeWord(vector<string>::iterator it);
 	bool contains(string word);
+	void print();
 
 private:
 	vector<string> words;

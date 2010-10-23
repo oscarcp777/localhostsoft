@@ -28,7 +28,7 @@ void printResult(Controller* control){
 }
 
 
-int main457(int argc,char** argv){
+int main9876(int argc,char** argv){
 
 	//----- ./Aplicacion -c email pass
 	//----- ./Aplicacion -f stringAbuscar
@@ -66,6 +66,10 @@ int main457(int argc,char** argv){
 				std::string value(argv[5]);
 				configOne->setValue(value);
 				std::string filterName(argv[6]);
+				configOne->setFilterName(filterName);
+			}
+			else if(typeSecondaryIndex.compare("Invertido") == 0){
+				std::string filterName(argv[4]);
 				configOne->setFilterName(filterName);
 			}
 			control->addSecondIndex(configOne);

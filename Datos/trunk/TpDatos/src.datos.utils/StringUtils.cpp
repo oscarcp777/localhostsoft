@@ -137,6 +137,35 @@ string StringUtils::trimPorTag(std::string cadena){
 
 	return cadenaSinEspacios;
 }
+string StringUtils::removeCharacter(std::string cadena){
+	char point = '.';
+	char coma = ',';
+	char comilla = '"';
+	char par1 = '(';
+	char par2 = ')';
+	vector<char> vec;
+	vector<char>::iterator it = vec.begin();
+	vec.push_back(point);
+	vec.push_back(coma);
+	vec.push_back(comilla);
+	vec.push_back(par1);
+	vec.push_back(par2);
+
+	int i;
+	for(it = vec.begin(); it != vec.end(); it++){
+		 i = cadena.find((*it),0);
+		while(i > 0){
+			cadena.erase(i,1);
+			i = cadena.find((*it),i);
+
+		}
+
+	}
+
+
+
+	return cadena;
+}
 string StringUtils::trim(std::string cadena){
  string::iterator It = cadena.begin();
  string cadenaSinEspacios;
@@ -201,6 +230,7 @@ string caracter;
 
 	return cadenaSinEspacios;
 }
+
 void StringUtils::Tokenize(const string& str, vector<string>& tokens, const string& delimiters ){
     // Skip delimiters at beginning.
     string::size_type lastPos = str.find_first_not_of(delimiters, 0);
@@ -209,7 +239,7 @@ void StringUtils::Tokenize(const string& str, vector<string>& tokens, const stri
 
     while (string::npos != pos || string::npos != lastPos)
     {
-        // Found a token, add it to the vector.
+    	// Found a token, add it to the vector.
         tokens.push_back(str.substr(lastPos, pos - lastPos));
         // Skip delimiters.  Note the "not_of"
         lastPos = str.find_first_not_of(delimiters, pos);
@@ -217,7 +247,24 @@ void StringUtils::Tokenize(const string& str, vector<string>& tokens, const stri
         pos = str.find_first_of(delimiters, lastPos);
     }
 }
+void StringUtils::TokenizeAndTrim(const string& str, vector<string>& tokens, const string& delimiters ){
+    // Skip delimiters at beginning.
+    string::size_type lastPos = str.find_first_not_of(delimiters, 0);
+    // Find first "non-delimiter".
+    string::size_type pos     = str.find_first_of(delimiters, lastPos);
 
+    while (string::npos != pos || string::npos != lastPos)
+    {
+    	string var = str.substr(lastPos, pos - lastPos);
+    	// Found a token, add it to the vector.
+       var = trim(var);
+    	tokens.push_back(removeCharacter(var));
+        // Skip delimiters.  Note the "not_of"
+        lastPos = str.find_first_not_of(delimiters, pos);
+        // Find next "non-delimiter"
+        pos = str.find_first_of(delimiters, lastPos);
+    }
+}
 std::string StringUtils::trimPalabra(std::string cadena){
  string::iterator It = cadena.begin();
  string cadenaSinEspacios;

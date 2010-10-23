@@ -38,6 +38,7 @@ void ManagerInvertedIndex::loadMessageWords(Mail* mail, IndexBSharp* indexBSharp
 	this->removeStopWords();
 	int count = 0;
 
+	this->currentWords->print();
 
 	for(it= this->currentWords->getWordsBegin(); it != this->currentWords->getWordsEnd(); it++ ){
 

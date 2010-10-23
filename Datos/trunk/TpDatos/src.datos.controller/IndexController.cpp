@@ -40,6 +40,15 @@ void IndexController::generateSelectionIndex(IndexConfig* indexConfig){
 	delete primaryIndex;
 
 }
+
+void IndexController::generateInvertedIndex(IndexConfig* indexConfig){
+	string fileName = indexConfig->getUserName();
+	fileName += ".IndSecundario.Invertido";
+	IndexBSharp* primaryIndex = new IndexBSharp(PATHFILES+fileName,BLOCK_SIZE,TYPE_REG_INVERTED_INDEX);
+	indexConfig->setBlockSize(BLOCK_SIZE);
+	indexConfig->setFileName(fileName);
+	delete primaryIndex;
+}
 void IndexController::generateSecondaryIndex(IndexBSharp* primaryIndex,IndexConfig* indexConfig){
 
 	if(indexConfig->getTypeSecundaryIndex().compare((char*)TYPE_CLASSIFICATION) == 0)
@@ -47,4 +56,9 @@ void IndexController::generateSecondaryIndex(IndexBSharp* primaryIndex,IndexConf
 
 	else if(indexConfig->getTypeSecundaryIndex().compare((char*)TYPE_SELECTION) == 0)
 		this->generateSelectionIndex(indexConfig);
+
+	else if(indexConfig->getTypeSecundaryIndex().compare((char*)TYPE_INVERTED_INDEX) == 0)
+			this->generateInvertedIndex(indexConfig);
 }
+
+

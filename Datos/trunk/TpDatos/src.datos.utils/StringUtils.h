@@ -25,7 +25,9 @@ public:
     static string trimPorTag(std::string cadena);
 	static std::string trimPalabra(std::string cadena);
 	static std::string actualizarCadena(string cadena,char char_reemplazable);
+	static string removeCharacter(std::string cadena);
 	static void Tokenize(const string& str, vector<string>& tokens, const string& delimiters );
+	static void TokenizeAndTrim(const string& str, vector<string>& tokens, const string& delimiters);
 	static int contadorTag(std::string cadena);
 	static  std::string convertirAString( int numero);
 	static void sortVector(vector<int> &vector);

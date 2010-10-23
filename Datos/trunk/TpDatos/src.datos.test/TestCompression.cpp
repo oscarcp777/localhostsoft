@@ -41,10 +41,10 @@ void TestCompression::testDelta(){
 	        BitOutputStream* bits = new BitOutputStream();
 	        ByteArrayBuffer* buffer= new ByteArrayBuffer(512);
 	        BitOutput* bo = new BitOutput(buffer);
-	        bo->writeDelta(27);
+	        bo->writeDelta(5678089);
 	        bo->flush();
 	        cout<<"EL 27 EN delta :0010110110000000"<<endl;
-	        cout<<"BITS DEL BUFFER :"<<bits->toString(buffer)<<endl;
+	       // cout<<"BITS DEL BUFFER :"<<bits->toString(buffer)<<endl;
 	        buffer->init();
 	        BitInput* bi=new BitInput(buffer);
 	        long result=bi->readDelta();

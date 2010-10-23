@@ -34,7 +34,7 @@ vector<string>::iterator WordsContainer::getWordsEnd(){
 
 void WordsContainer::parserMailWords(string message){
 	string delim = " ";
-	StringUtils::Tokenize(message,this->words,delim);
+	StringUtils::TokenizeAndTrim(message,this->words,delim);
 }
 
 void WordsContainer::removeWord(vector<string>::iterator it){
@@ -47,4 +47,10 @@ bool WordsContainer::contains(string word){
 			return true;
 	else
 		return false;
+}
+void WordsContainer::print(){
+	vector<string>::iterator it;
+	for(it = this->getWordsBegin() ; it!= this->getWordsEnd() ; it++){
+		cout<<*it<<endl;
+	}
 }

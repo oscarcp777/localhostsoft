@@ -52,12 +52,17 @@ int main(int argc,char** argv) {
 
 
 //**********************TEST MANAGER INVERTED INDEX*******************
-	TestCompression* myTest = new TestCompression();
+//	TestCompression* myTest = new TestCompression();
 //	myTest->testUnario();
 //	myTest->testGamma();
-	myTest->testDelta();
-	delete myTest;
+//	myTest->testDelta();
+//	delete myTest;
 //*********************************************************************
+
+	TestManagerInvertedIndex* myTest = new TestManagerInvertedIndex();
+	myTest->testSearch();
+	delete myTest;
+
 	return 0;
 }
 

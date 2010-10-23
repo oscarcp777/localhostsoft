@@ -21,7 +21,6 @@ bool InfoPerDoc::equals(Registry* comp){
 	  return NULL;
 }
 void InfoPerDoc::pack(Buffer* buffer){
-	cout<<"PACK "<< ((KeyInteger*)this->getKey())->getValue()<<endl;
 	this->getKey()->pack(buffer);
 	unsigned int size=this->listOfPositions.size();
 	buffer->packField(&size,sizeof(size));

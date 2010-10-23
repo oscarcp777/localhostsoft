@@ -14,6 +14,7 @@
 #include "../src.datos.models/KeyString.h"
 #include "../src.datos.models/RegSelection.h"
 #include "../src.datos.utils/StringUtils.h"
+#include "../src.datos.controller/ManagerInvertedIndex.h"
 
 
 Classification::Classification() {
@@ -32,6 +33,9 @@ void Classification::loadSecondaryIndex(IndexConfig* indexConfig, IteratorBSharp
 			else if(indexConfig->getTypeSecundaryIndex().compare((char*)TYPE_SELECTION) == 0){
 				this->loadSelectionIndex(indexConfig,it);
 			}
+			else if(indexConfig->getTypeSecundaryIndex().compare((char*)TYPE_INVERTED_INDEX) == 0){
+							this->loadInvertedIndex(indexConfig,it);
+						}
 }
 void Classification::loadClassificationIndex(IndexConfig* indexConfig,IteratorBSharp* it){
 	IndexBSharp* secondaryIndex = new IndexBSharp(PATHFILES+indexConfig->getFileName(),indexConfig->getBlockSize(),TYPE_REG_CLASSIFICATION);
@@ -53,6 +57,22 @@ void Classification::loadClassificationIndex(IndexConfig* indexConfig,IteratorBS
 	secondaryIndex->print(cout);
 	delete secondaryIndex;
 	delete it;
+}
+void Classification::loadInvertedIndex(IndexConfig* indexConfig,IteratorBSharp* it){
+	IndexBSharp* secondaryIndex = new IndexBSharp(PATHFILES+indexConfig->getFileName(),indexConfig->getBlockSize(),TYPE_REG_INVERTED_INDEX);
+	RegPrimary* regPrimary;
+	ManagerInvertedIndex* manager = new ManagerInvertedIndex();
+
+	while (it->hasNext()){
+		regPrimary = (RegPrimary*)it->next();
+		regPrimary->getMail()->print(cout);
+		manager->loadMessageWords(regPrimary->getMail(),secondaryIndex);
+
+	}
+	secondaryIndex->print(cout);
+	delete secondaryIndex;
+	delete it;
+	delete manager;
 }
 void Classification::loadSelectionIndex(IndexConfig* indexConfig,IteratorBSharp* it){
 	IndexBSharp* secondaryIndex = new IndexBSharp(PATHFILES+indexConfig->getFileName(),indexConfig->getBlockSize(),TYPE_REG_SELECTION);

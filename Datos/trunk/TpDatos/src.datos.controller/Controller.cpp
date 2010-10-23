@@ -56,6 +56,14 @@ void Controller::loadInfoIndex(std::string linea,IndexConfig* index){
 		index->setUserName(tokens.at(3));
 		index->setTypeIndex(tokens.at(4));
 	}
+	if (size == 6){
+		index->setBlockSize(atoi(tokens.at(0).c_str()));
+		index->setFilterName(tokens.at(1));
+		index->setFileName(tokens.at(2));
+		index->setUserName(tokens.at(3));
+		index->setTypeIndex(tokens.at(4));
+		index->setTypeSecundaryIndex(tokens.at(5));
+	}
 	if (size == 7){
 		index->setBlockSize(atoi(tokens.at(0).c_str()));
 		index->setFilterName(tokens.at(1));
@@ -165,8 +173,6 @@ void Controller::addSecondIndex(IndexConfig* indexConfig) {
 	delete indexController;
 
 }
-
-
 
 int Controller::createPrimaryIndex() {
 	if (this->primaryTree == NULL){

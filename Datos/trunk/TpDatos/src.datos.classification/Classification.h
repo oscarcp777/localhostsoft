@@ -18,6 +18,7 @@ public:
 private:
 	void loadClassificationIndex(IndexConfig* indexConfig, IteratorBSharp* it);
 	void loadSelectionIndex(IndexConfig* indexConfig, IteratorBSharp* it);
+	void loadInvertedIndex(IndexConfig* indexConfig,IteratorBSharp* it);
 };
 
 #endif /* CLASSIFICATION_H_ */
