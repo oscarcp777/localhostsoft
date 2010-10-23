@@ -15,7 +15,9 @@ class TestCompression {
 public:
 	TestCompression();
 	virtual ~TestCompression();
-	void testCompression();
+	void testUnario();
+	void testGamma();
+	void testDelta();
 };
 
 #endif /* TESTCOMPRESSION_H_ */

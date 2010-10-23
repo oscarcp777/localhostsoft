@@ -53,7 +53,9 @@ int main(int argc,char** argv) {
 
 //**********************TEST MANAGER INVERTED INDEX*******************
 	TestCompression* myTest = new TestCompression();
-	myTest->testCompression();
+//	myTest->testUnario();
+//	myTest->testGamma();
+	myTest->testDelta();
 	delete myTest;
 //*********************************************************************
 	return 0;
