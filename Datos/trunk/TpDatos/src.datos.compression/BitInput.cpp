@@ -10,7 +10,7 @@
 
 static char ZERO_BYTE = (char) 0;
 
-static int ALL_ONES_INT = ~0;
+static unsigned int ALL_ONES_INT = ~0;
 
 BitInput::BitInput(ByteArrayBuffer* in) {
 	this->mEndOfStream = false;
@@ -186,11 +186,11 @@ void BitInput::notEndOfStream() throw(){
 
 
 long BitInput::leastSignificantBits2(int n, int numBits){
-    return (ALL_ONES_INT >>/*>TODO*/ (32-numBits)) & n;
+    return (ALL_ONES_INT >> (32-numBits)) & n;
 }
 
 long BitInput::sliceBits2(int n, int leastSignificantBit, int numBits){
-        return leastSignificantBits2(n >>/*>TODO*/ leastSignificantBit,
+        return leastSignificantBits2(((unsigned int) n) >>/*>TODO*/ leastSignificantBit,
                                      numBits);
 }
 

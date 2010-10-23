@@ -8,7 +8,7 @@
 #include "BitOutput.h"
 #include "../src.datos.exception/eCompression.h"
 
-static long ALL_ONES_LONG = ~0l;
+static unsigned long ALL_ONES_LONG = ~0l;
 
 static char ZERO_BYTE = (char) 0;
 
@@ -190,11 +190,11 @@ long BitOutput::sliceBits(long n, int leastSignificantBit, int numBits) throw(){
 }
 
 long BitOutput::leastSignificantBits2(long n, int numBits) {
-	return (ALL_ONES_LONG >>/*>TODO*/ (64-numBits)) & n;
+	return (ALL_ONES_LONG >> (64-numBits)) & n;
 }
 
 long BitOutput::sliceBits2(long n, int leastSignificantBit, int numBits){
-	return leastSignificantBits2(n >>/*>TODO*/ leastSignificantBit,numBits);
+	return leastSignificantBits2(((unsigned int) n) >> leastSignificantBit,numBits);
 }
 
 int BitOutput::mostSignificantPowerOfTwo(long n) {

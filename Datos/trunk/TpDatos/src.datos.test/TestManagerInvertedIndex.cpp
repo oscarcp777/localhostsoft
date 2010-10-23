@@ -53,7 +53,7 @@ void TestManagerInvertedIndex::testInsert(){
 void TestManagerInvertedIndex::testSearch(){
 	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTree.dat",BLOCK_SIZE,TYPE_REG_INVERTED_INDEX);
 	RegInvertedIndex* regInvertedIndex= new RegInvertedIndex();
-	regInvertedIndex->setKey(new KeyString("ARGENTINA"));
+	regInvertedIndex->setKey(new KeyString("CARACAS"));
 	indexBSharp->searchRegistry(regInvertedIndex);
 	regInvertedIndex->print(cout);
 	delete indexBSharp;
