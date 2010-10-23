@@ -14,7 +14,7 @@
 using namespace std;
 class Buffer{
 
-private:
+protected:
 	char* buffer; //character array to hold field values
 	int bufferSize; //sum of the sizes of packed fields
 	int maxBytes; //maximum number of characters in the buffer
@@ -48,29 +48,14 @@ public:
 	int unPackFieldString(string& field, int size);
 
 	int print();
-    int getMaxBytes() const
-    {
-        return maxBytes;
-    }
+    char *getData() const;
+    int getBufferSize() const;
+    int getMaxBytes() const;
+    int getNextByte() const;
+    void setBufferSize(int bufferSize);
+    void setMaxBytes(int maxBytes);
+    void setNextByte(int nextByte);
 
-    void setMaxBytes(int maxBytes)
-    {
-        this->maxBytes = maxBytes;
-    }
-
-    char *getData()
-    {
-        return buffer;
-    }
-
-    int getBufferSize() const
-    {
-        return bufferSize;
-    }
-    void setBufferSize(int bufferSize )
-       {
-           this->bufferSize= bufferSize;
-       }
 
 };
 

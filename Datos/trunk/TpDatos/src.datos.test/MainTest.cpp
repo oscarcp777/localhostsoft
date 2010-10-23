@@ -10,6 +10,7 @@
 #include <list>
 #include "TestBSharp.h"
 #include "TestStorageController.h"
+#include "TestCompression.h"
 #include "TestManagerInvertedIndex.h"
 
 
@@ -51,8 +52,8 @@ int main(int argc,char** argv) {
 
 
 //**********************TEST MANAGER INVERTED INDEX*******************
-	TestManagerInvertedIndex* myTest = new TestManagerInvertedIndex();
-	myTest->testSearch();
+	TestCompression* myTest = new TestCompression();
+	myTest->testCompression();
 	delete myTest;
 //*********************************************************************
 	return 0;

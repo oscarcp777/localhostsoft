@@ -58,7 +58,45 @@ int Buffer::unPackFieldString(string& field, int size){
 
 	return pos;
 }
+char *Buffer::getData() const
+{
+    return buffer;
+}
+
+int Buffer::getBufferSize() const
+{
+    return bufferSize;
+}
+
+int Buffer::getMaxBytes() const
+{
+    return maxBytes;
+}
+
+int Buffer::getNextByte() const
+{
+    return nextByte;
+}
+
+
+
+void Buffer::setBufferSize(int bufferSize)
+{
+    this->bufferSize = bufferSize;
+}
+
+void Buffer::setMaxBytes(int maxBytes)
+{
+    this->maxBytes = maxBytes;
+}
+
+void Buffer::setNextByte(int nextByte)
+{
+    this->nextByte = nextByte;
+}
+
 int Buffer::print(){
     cout<<this->buffer<<endl;
     return 1;
 }
+

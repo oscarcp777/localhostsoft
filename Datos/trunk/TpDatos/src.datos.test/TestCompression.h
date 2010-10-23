@@ -8,6 +8,7 @@
 #ifndef TESTCOMPRESSION_H_
 #define TESTCOMPRESSION_H_
 #include <iostream>
+#include <bitset>
 using namespace std;
 
 class TestCompression {
