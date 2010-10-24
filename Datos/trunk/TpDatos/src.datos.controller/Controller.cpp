@@ -274,6 +274,7 @@ int Controller::searchMails(std::string strSearch){
 						}
 						else
 							consultation->consultSecondaryIndex(*current,&this->listOfIucs, this->search->getStrSearch());
+
 					}
 					current++;
 					}

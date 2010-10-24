@@ -32,10 +32,11 @@ public:
 	int print(std::ostream& outStream);
 	int getNumBlock();
 	void setNumBlock(int numBlock);
-	 void setListInfoPerDoc(list<InfoPerDoc*> &listInfoPerDocNew);
+	void setListInfoPerDoc(list<InfoPerDoc*> &listInfoPerDocNew);
 	InfoPerDoc* getInfoPerDoc();
-	 void clearInfoPerDoc();
-
+	void clearInfoPerDoc();
+	list<InfoPerDoc*>::iterator getBeginListInfoPerDoc();
+	list<InfoPerDoc*>::iterator getEndListInfoPerDoc();
 private:
 	int numBlock;
 	list<InfoPerDoc*> infoPerDoc;

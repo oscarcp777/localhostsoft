@@ -27,6 +27,7 @@ public:
 	map<string,RegInvertedIndex*>::iterator getIteratorBegin();
 	map<string,RegInvertedIndex*>::iterator getIteratorEnd();
 	void writeOrUpdateInvertedIndex(IndexBSharp* indexBSharp);
+	void removeStopWordsFromVector(vector<string>* words);
 
 private:
 	WordsContainer* stopWords;

@@ -91,6 +91,17 @@ void ManagerInvertedIndex::removeStopWords(){
 			this->currentWords->removeWord(it);
 	}
 }
+void ManagerInvertedIndex::removeStopWordsFromVector(vector<string>* words){
+	vector<string>::iterator it;
+	vector<string>::iterator auxIt;
+	for(it= (*words).begin(); it != (*words).end(); it++ ){
+		if(this->stopWords->contains(*it)){
+			auxIt = it;
+			it--;
+			(*words).erase(auxIt);
+		}
+	}
+}
 void ManagerInvertedIndex::removeDirtyWords(){
 	vector<string>::iterator it;
 	for(it= this->currentWords->getWordsBegin(); it != this->currentWords->getWordsEnd(); it++ ){
@@ -99,6 +110,7 @@ void ManagerInvertedIndex::removeDirtyWords(){
 	}
 }
 void ManagerInvertedIndex::loadDirtyWords(){
+	this->dirtyWords->addWord("");
 	this->dirtyWords->addWord(" ");
 	this->dirtyWords->addWord("\n");
 	this->dirtyWords->addWord("\t");

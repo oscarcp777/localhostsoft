@@ -30,6 +30,9 @@ public:
 	void setIuc(int iuc);
 	int getIuc();
 	void addPosition(KeyInteger* pos);
+	bool compareDistance(InfoPerDoc* infoPerDoc, int distance);
+	list<KeyInteger*>::iterator getBeginListPositions();
+	list<KeyInteger*>::iterator getEndListPositions();
 
 private:
 

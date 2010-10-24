@@ -53,8 +53,8 @@ void TestManagerInvertedIndex::testInsert(){
 void TestManagerInvertedIndex::testSearch(){
 	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/rdubini.IndSecundario.Invertido",BLOCK_SIZE,TYPE_REG_INVERTED_INDEX);
 	RegInvertedIndex* regInvertedIndex= new RegInvertedIndex();
-	regInvertedIndex->setKey(new KeyString("desarrollada"));
-	indexBSharp->searchRegistry(regInvertedIndex);
+	regInvertedIndex->setKey(new KeyString("group"));
+	regInvertedIndex=(RegInvertedIndex*)indexBSharp->searchRegistry(regInvertedIndex);
 	regInvertedIndex->print(cout);
 	delete indexBSharp;
 	delete regInvertedIndex;

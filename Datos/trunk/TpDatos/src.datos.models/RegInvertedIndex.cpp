@@ -26,6 +26,13 @@ void RegInvertedIndex::addInfoPerDoc(InfoPerDoc* infoPerDoc){
 InfoPerDoc* RegInvertedIndex::getFirstInfoPerDoc(){
 	return (*this->infoPerDoc.begin());
 }
+
+list<InfoPerDoc*>::iterator RegInvertedIndex::getBeginListInfoPerDoc(){
+	return this->infoPerDoc.begin();
+}
+list<InfoPerDoc*>::iterator RegInvertedIndex::getEndListInfoPerDoc(){
+	return this->infoPerDoc.end();
+}
 int RegInvertedIndex::getNumBlock()
 {
 	return numBlock;

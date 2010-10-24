@@ -67,6 +67,28 @@ unsigned int InfoPerDoc::getSize(){
 void InfoPerDoc::addPosition(KeyInteger* pos){
 	this->listOfPositions.push_back(pos);
 }
+list<KeyInteger*>::iterator InfoPerDoc::getBeginListPositions(){
+	return this->listOfPositions.begin();
+}
+list<KeyInteger*>::iterator InfoPerDoc::getEndListPositions(){
+	return this->listOfPositions.end();
+}
+
+bool InfoPerDoc::compareDistance(InfoPerDoc* infoPerDoc, int distance){
+	list<KeyInteger*>::iterator it;
+	list<KeyInteger*>::iterator itSecondary;
+	int pos;
+	int posSecundary;
+	for(it = this->listOfPositions.begin(); it != this->listOfPositions.end(); it++){
+		pos = ((KeyInteger*)(*it)->getKey())->getValue();
+		for(itSecondary= infoPerDoc->getBeginListPositions(); itSecondary != infoPerDoc->getEndListPositions(); itSecondary++){
+			posSecundary = ((KeyInteger*)(*itSecondary)->getKey())->getValue();
+			if(abs(pos - posSecundary) == distance)
+				return true;
+		}
+	}
+	return false;
+}
 int InfoPerDoc::print(ostream& outStream){
 	outStream<<"IUC: ";
 	this->getKey()->print(outStream);
