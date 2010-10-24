@@ -209,7 +209,8 @@ class IndiceBSharp: public EstrategiaIndice {
 		 * @param resultadoBalanceo - El resultado de balancear bloques luego de borrado.
 		 */
 		int remover_bloque_interno(BloqueInternoBSharp::puntero& bloqueINterno, const Registro::puntero& registro,
-				ResultadoBalanceo& resultadoBalanceo, ResultadoInsercion& resultadoInsercion, unsigned int primerHermano, unsigned int segundoHermano) throw();
+				ResultadoBalanceo& resultadoBalanceo, ResultadoInsercion& resultadoInsercion, unsigned int primerHermano, unsigned int segundoHermano,
+				Registro::puntero& registroPrimerPadre, Registro::puntero& registroSegundoPadre) throw();
 		/**
 		 * Borra el bloque mas a la izquierda o mas a la derecha cuando esta completamente vacio.
 		 * @param bloqueBorrar - El bloque a borrar.
@@ -336,10 +337,10 @@ class IndiceBSharp: public EstrategiaIndice {
 										ResultadoInsercion& resultado);
 		bool removerBloqueInternoLleno(BloqueInternoBSharp::puntero& bloqueActual,
 												BloqueInternoBSharp::puntero& bloquePrimerHermano, BloqueInternoBSharp::puntero& bloqueSegundoHermano,
-												ResultadoInsercion& resultado);
+												ResultadoInsercion& resultado,Registro::puntero& registroPrimerPadre,Registro::puntero& registroSegundoPadre);
 		bool balancearBloquesInternosAlRemover(BloqueInternoBSharp::puntero& bloqueActual,
 				BloqueInternoBSharp::puntero& bloquePrimerHermano, BloqueInternoBSharp::puntero& bloqueSegundoHermano,
-										ResultadoInsercion& resultado);
+										ResultadoInsercion& resultado,Registro::puntero& registroPrimerPadre,Registro::puntero& registroSegundoPadre);
 };
 
 #endif // INDICE_B_SHARP_HPP
