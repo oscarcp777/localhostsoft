@@ -16,6 +16,8 @@ ManagerInvertedIndex::ManagerInvertedIndex() {
 	file->read(line);
 	//cout<<"linea: "<<line<<endl;
 	this->stopWords = new WordsContainer(line);
+	this->dirtyWords = new WordsContainer();
+	this->loadDirtyWords();
 	file->close();
 //	vector<string>::iterator it;
 //	for(it= this->stopWords->getWordsBegin(); it != this->stopWords->getWordsEnd(); it++ ){
@@ -26,6 +28,7 @@ ManagerInvertedIndex::ManagerInvertedIndex() {
 
 ManagerInvertedIndex::~ManagerInvertedIndex() {
 	delete this->stopWords;
+	delete this->dirtyWords;
 }
 
 void ManagerInvertedIndex::loadMessageWords(Mail* mail, IndexBSharp* indexBSharp){
@@ -36,7 +39,8 @@ void ManagerInvertedIndex::loadMessageWords(Mail* mail, IndexBSharp* indexBSharp
 	RegInvertedIndex* regInvertedIndex;
 	InfoPerDoc* infoPerDoc;
 	this->removeStopWords();
-	int count = 0;
+	this->removeDirtyWords();
+	int count = 1;
 
 	this->currentWords->print();
 
@@ -87,7 +91,18 @@ void ManagerInvertedIndex::removeStopWords(){
 			this->currentWords->removeWord(it);
 	}
 }
-
+void ManagerInvertedIndex::removeDirtyWords(){
+	vector<string>::iterator it;
+	for(it= this->currentWords->getWordsBegin(); it != this->currentWords->getWordsEnd(); it++ ){
+		if(this->dirtyWords->contains(*it))
+			this->currentWords->removeWord(it);
+	}
+}
+void ManagerInvertedIndex::loadDirtyWords(){
+	this->dirtyWords->addWord(" ");
+	this->dirtyWords->addWord("\n");
+	this->dirtyWords->addWord("\t");
+}
 map<string,RegInvertedIndex*>::iterator ManagerInvertedIndex::getIteratorBegin(){
 	return this->regMap.begin();
 }

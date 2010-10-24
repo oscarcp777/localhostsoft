@@ -20,7 +20,9 @@ public:
 	ManagerInvertedIndex();
 	virtual ~ManagerInvertedIndex();
 	void loadMessageWords(Mail* mail, IndexBSharp* indexBSharp);
+	void loadDirtyWords();
 	void removeStopWords();
+	void removeDirtyWords();
 	void printMap(std::ostream& outStream);
 	map<string,RegInvertedIndex*>::iterator getIteratorBegin();
 	map<string,RegInvertedIndex*>::iterator getIteratorEnd();
@@ -28,6 +30,7 @@ public:
 
 private:
 	WordsContainer* stopWords;
+	WordsContainer* dirtyWords;
 	WordsContainer* currentWords;
 	map<string,RegInvertedIndex*> regMap;
 

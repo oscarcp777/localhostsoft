@@ -16,6 +16,7 @@ using namespace std;
 
 class WordsContainer {
 public:
+	WordsContainer();
 	WordsContainer(string message);
 	WordsContainer(int iuc, string message);
 	virtual ~WordsContainer();
@@ -26,6 +27,7 @@ public:
 	void parserMailWords(string message);
 	void removeWord(vector<string>::iterator it);
 	bool contains(string word);
+	void addWord(string word);
 	void print();
 
 private:

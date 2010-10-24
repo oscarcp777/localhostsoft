@@ -17,7 +17,7 @@
 
 using namespace std;
 
-int main(int argc,char** argv) {
+int main234(int argc,char** argv) {
 
 //	TestBSharp* test = new TestBSharp();
 //	test->testInsert();
@@ -60,6 +60,7 @@ int main(int argc,char** argv) {
 //*********************************************************************
 
 	TestManagerInvertedIndex* myTest = new TestManagerInvertedIndex();
+//	myTest->testInsert();
 	myTest->testSearch();
 	delete myTest;
 

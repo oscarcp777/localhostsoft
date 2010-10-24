@@ -7,6 +7,9 @@
 
 #include "WordsContainer.h"
 
+WordsContainer::WordsContainer() {
+
+}
 WordsContainer::WordsContainer(string message) {
 	this->parserMailWords(message);
 }
@@ -47,6 +50,9 @@ bool WordsContainer::contains(string word){
 			return true;
 	else
 		return false;
+}
+void WordsContainer::addWord(string word){
+	this->words.push_back(word);
 }
 void WordsContainer::print(){
 	vector<string>::iterator it;
