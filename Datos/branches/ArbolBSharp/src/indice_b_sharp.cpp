@@ -2085,13 +2085,12 @@ int IndiceBSharp::remover_bloque_interno(BloqueInternoBSharp::puntero& bloqueInt
 	std::cout<<"Rama Hermana1: "<< ramaUno<<std::endl;
 	std::cout<<"Rama Hermana2: "<< ramaDos<<std::endl;
 
-	bool esPrimerComponente = false;
+	bool esUltimoComponente = false;
 
 
 	//Obtengo elemento actual del bloque por el cual bajo a la rama siguiente
 	BloqueInternoBSharp::iterador_componentes_constante actualComponente = bloqueInterno->primer_componente();
 	BloqueInternoBSharp::iterador_componentes_constante finComponente = bloqueInterno->ultimo_componente();
-	--finComponente;
 	while (actualComponente != finComponente) {
 		if (this->comparadorClave->es_menor(this->clave, registroClave, Registro::puntero(*actualComponente))) {
 			break;
@@ -2099,8 +2098,13 @@ int IndiceBSharp::remover_bloque_interno(BloqueInternoBSharp::puntero& bloqueInt
 		actualComponente++;
 	}
 
-	if (actualComponente ==  bloqueInterno->primer_componente())
-			esPrimerComponente=true;
+
+	if (actualComponente ==  finComponente)
+		esUltimoComponente=true;
+
+	if (actualComponente !=  bloqueInterno->primer_componente())
+			actualComponente--;
+
 
 	// Leo el bloque por el cual borrar
 	BloqueBSharp::puntero bloqueRamaBorrar = this->estrategiaAlmacenamiento->leer_bloque(rama_borrar, this->archivoIndice);
@@ -2116,7 +2120,7 @@ int IndiceBSharp::remover_bloque_interno(BloqueInternoBSharp::puntero& bloqueInt
 			Registro::puntero registroPrimerPadre;
 			Registro::puntero registroSegundoPadre;
 			BloqueInternoBSharp::iterador_componentes_constante actualComponenteAux = actualComponente;
-			if (!esPrimerComponente){
+			if (esUltimoComponente){
 				registroSegundoPadre = (Registro::puntero) *actualComponenteAux;
 				registroPrimerPadre = (Registro::puntero) *(--actualComponenteAux);
 			}else{
@@ -2140,7 +2144,7 @@ int IndiceBSharp::remover_bloque_interno(BloqueInternoBSharp::puntero& bloqueInt
 //						std::cout<< std::endl;
 			BloqueInternoBSharp::iterador_rama ultimaRama = bloqueInterno->ultima_rama();
 			BloqueInternoBSharp::iterador_componentes_constante actualComponenteAux = actualComponente;
-			if (!esPrimerComponente){
+			if (esUltimoComponente){
 				registroMayorAReemplazar =  (Registro::puntero) *actualComponenteAux;
 				registroMenorAReemplazar =  (Registro::puntero) *(--actualComponenteAux);
 			}else{
@@ -2203,10 +2207,8 @@ int IndiceBSharp::remover_bloque_interno(BloqueInternoBSharp::puntero& bloqueInt
 				}
 		}
 	}
-	if (respuesta == ELIMINACION_CORRECTA)
+	if (respuesta == ELIMINACION_CORRECTA){
 		BloqueInternoBSharp::iterador_componentes_constante actualComponenteAux = actualComponente;
-		if (!esPrimerComponente)
-			actualComponenteAux--;
 		if (this->comparadorClave->es_igual(this->clave, registroClave, Registro::puntero(*actualComponenteAux))){
 			std::cout << "Registro Interno Eliminado: ";
 			this->imprimir_registro((Registro::puntero) *actualComponenteAux, std::cout);
@@ -2224,7 +2226,7 @@ int IndiceBSharp::remover_bloque_interno(BloqueInternoBSharp::puntero& bloqueInt
 			resultadoInsercion.establecer_clave_interna(NULL);
 
 		}
-
+	}
 	return respuesta;
 }
 
