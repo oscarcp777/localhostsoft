@@ -2037,7 +2037,7 @@ int IndiceBSharp::remover_bloque_externo(BloqueExternoBSharp::puntero& bloqueExt
 		esPrimero = false;
 		++actualComponente;
 	}
-	if (esPrimero)
+	if (esPrimero && bloqueExterno->cantidad_componentes() > 0)
 		resultado.establecer_clave_interna(*bloqueExterno->primer_componente());
 
 	// DONI
@@ -2144,7 +2144,9 @@ int IndiceBSharp::remover_bloque_interno(BloqueInternoBSharp::puntero& bloqueInt
 //						std::cout<< std::endl;
 			BloqueInternoBSharp::iterador_rama ultimaRama = bloqueInterno->ultima_rama();
 			BloqueInternoBSharp::iterador_componentes_constante actualComponenteAux = actualComponente;
+
 			if (esUltimoComponente){
+
 				registroMayorAReemplazar =  (Registro::puntero) *actualComponenteAux;
 				registroMenorAReemplazar =  (Registro::puntero) *(--actualComponenteAux);
 			}else{
