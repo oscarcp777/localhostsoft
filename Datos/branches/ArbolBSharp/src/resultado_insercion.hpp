@@ -77,6 +77,17 @@ class ResultadoInsercion {
 		 * @return unsigned int - El numero de bloque medio luego de una division de bloques de 2 a 3.
 		 */
 		unsigned int obtener_bloque_medio() const throw();
+
+		/**
+		 * Establece el numero de clave para reemplazar la clave interna eliminada
+		 * @param numero_bloque - El numero de clave interna nueva
+		 */
+		void establecer_clave_interna(const Registro::puntero& registro_clave_interna) throw();
+		/**
+		 * Obtiene el numero de clave para reemplazar la clave interna eliminada
+		 * @return unsigned int - El numero de clave interna nueva
+		 */
+		const Registro::puntero& obtener_clave_interna() const throw();
 	private:
 		/**
 		 * Almacena el registro con la clave de dato media luego de una division de bloques para el split simple.
@@ -102,6 +113,10 @@ class ResultadoInsercion {
 		 * Almacena el numero de bloque medio luego de una division de bloques de 2 a 3.
 		 */
 		unsigned int bloque_medio;
+		/**
+		 * Almacena el numero de bloque medio luego de una division de bloques de 2 a 3.
+		 */
+		Registro::puntero clave_interna_actualizada;
 };
 
 #endif /** RESULTADO_INSERCION_HPP */

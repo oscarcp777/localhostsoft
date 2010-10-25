@@ -1654,19 +1654,11 @@ int IndiceBSharp::insertar_bloque_interno(BloqueInternoBSharp::puntero& bloqueIn
 			std::cout<< std::endl;
 			bloqueInterno->reemplazar_componente(registroAReemplazar, resultado.obtener_registro_clave_media());
 
-//SACAR
-//			//Imprimir componentes bloque
-//			std::cout << "NUMERO BLOQUE: " << bloqueInterno->obtener_numero_bloque() << " ";
-//			std::cout << "NIVEL: " << bloqueInterno->obtener_nivel() << " ";
-//			std::cout << "COMPONENTES BLOQUE: ";
-//			actualComponente = bloqueInterno->primer_componente();
-//			while (actualComponente != finComponente) {
-//				Registro::puntero registro = (Registro::puntero) *actualComponente;
-//				this->imprimir_registro(registro, std::cout);
-//				++actualComponente;
-//			}
 			// Escribo bloque
-			this->estrategiaAlmacenamiento->escribir_bloque(bloqueInterno->obtener_numero_bloque(), bloqueInterno, this->archivoIndice);
+			if (bloqueInterno->obtener_numero_bloque() == 0)
+				this->estrategiaAlmacenamiento->escribir_bloque_raiz(bloqueInterno->obtener_numero_bloque(), bloqueInterno, this->archivoIndice);
+			else
+				this->estrategiaAlmacenamiento->escribir_bloque(bloqueInterno->obtener_numero_bloque(), bloqueInterno, this->archivoIndice);
 		}
 
 		// Verifico si hubo sobrelujo al insertar en el bloque hijo
@@ -2035,14 +2027,19 @@ int IndiceBSharp::remover_bloque_externo(BloqueExternoBSharp::puntero& bloqueExt
 
 	BloqueExternoBSharp::iterador_componentes actualComponente = bloqueExterno->primer_componente();
 	BloqueExternoBSharp::iterador_componentes finComponente = bloqueExterno->ultimo_componente();
+	bool esPrimero = true;
 	while (actualComponente != finComponente) {
 		Registro::puntero registroIterado = *actualComponente;
 		if (this->comparadorClave->es_igual(this->clave, registroIterado, registro)) {
 			bloqueExterno->remover_componente(actualComponente);
 			break;
 		}
+		esPrimero = false;
 		++actualComponente;
 	}
+	if (esPrimero)
+		resultado.establecer_clave_interna(*bloqueExterno->primer_componente());
+
 	// DONI
 	// Pregunto si hay underflow, si hay, intento fusionar y luego balancear
 	if (bloqueExterno->haySubflujo()){
@@ -2133,6 +2130,9 @@ int IndiceBSharp::remover_bloque_interno(BloqueInternoBSharp::puntero& bloqueInt
 		}
 
 		if (respuestaHijo == HAY_BALANCEO) {
+			if (this->comparadorClave->es_igual(this->clave, registroClave, Registro::puntero(*actualComponente)))
+				resultadoInsercion.establecer_clave_interna(NULL);
+
 			Registro::puntero registroMayorAReemplazar;
 			Registro::puntero registroMenorAReemplazar;
 //			std::cout << "Actual: ";
@@ -2165,10 +2165,15 @@ int IndiceBSharp::remover_bloque_interno(BloqueInternoBSharp::puntero& bloqueInt
 			std::cout<< std::endl;
 			bloqueInterno->reemplazar_componente(registroMayorAReemplazar, resultadoInsercion.obtener_registro_clave_der());
 			// Escribo bloque
-			this->estrategiaAlmacenamiento->escribir_bloque(bloqueInterno->obtener_numero_bloque(), bloqueInterno, this->archivoIndice);
+			if (bloqueInterno->obtener_numero_bloque() == 0)
+				this->estrategiaAlmacenamiento->escribir_bloque_raiz(bloqueInterno->obtener_numero_bloque(), bloqueInterno, this->archivoIndice);
+			else
+				this->estrategiaAlmacenamiento->escribir_bloque(bloqueInterno->obtener_numero_bloque(), bloqueInterno, this->archivoIndice);
 		}
 		// Verifico si hubo sobrelujo al insertar en el bloque hijo
 		if (respuestaHijo == HAY_SUBFLUJO) {
+			if (this->comparadorClave->es_igual(this->clave, registroClave, Registro::puntero(*actualComponente)))
+							resultadoInsercion.establecer_clave_interna(NULL);
 
 			this->actualizar_fusion(bloqueInterno, resultadoInsercion);
 
@@ -2198,6 +2203,25 @@ int IndiceBSharp::remover_bloque_interno(BloqueInternoBSharp::puntero& bloqueInt
 				}
 		}
 	}
+	if (respuesta == ELIMINACION_CORRECTA)
+		if (this->comparadorClave->es_igual(this->clave, registroClave, Registro::puntero(*actualComponente))){
+			std::cout << "Registro Interno Eliminado: ";
+			this->imprimir_registro((Registro::puntero) *actualComponente, std::cout);
+			std::cout<< std::endl;
+			std::cout << "Registro Interno Nuevo: ";
+			this->imprimir_registro(resultadoInsercion.obtener_clave_interna(), std::cout);
+			std::cout<< std::endl;
+			bloqueInterno->reemplazar_componente((Registro::puntero)*actualComponente, resultadoInsercion.obtener_clave_interna());
+			// Escribo bloque
+			if (bloqueInterno->obtener_numero_bloque() == 0)
+				this->estrategiaAlmacenamiento->escribir_bloque_raiz(bloqueInterno->obtener_numero_bloque(), bloqueInterno, this->archivoIndice);
+			else
+				this->estrategiaAlmacenamiento->escribir_bloque(bloqueInterno->obtener_numero_bloque(), bloqueInterno, this->archivoIndice);
+
+			resultadoInsercion.establecer_clave_interna(NULL);
+
+		}
+
 	return respuesta;
 }
 

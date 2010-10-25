@@ -1,6 +1,7 @@
 #include "resultado_insercion.hpp"
 
 ResultadoInsercion::ResultadoInsercion() throw() {
+	this->clave_interna_actualizada = NULL;
 }
 
 ResultadoInsercion::~ResultadoInsercion() throw() {
@@ -45,5 +46,12 @@ unsigned int ResultadoInsercion::obtener_bloque_medio() const throw() {
 }
 void ResultadoInsercion::establecer_bloque_medio(unsigned int bloque_medio) throw() {
 	this->bloque_medio = bloque_medio;
+}
+
+const Registro::puntero& ResultadoInsercion::obtener_clave_interna() const throw() {
+	return this->clave_interna_actualizada;
+}
+void ResultadoInsercion::establecer_clave_interna(const Registro::puntero& clave_interna) throw() {
+	this->clave_interna_actualizada = clave_interna;
 }
 
