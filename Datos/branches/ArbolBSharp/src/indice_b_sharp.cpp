@@ -2204,14 +2204,17 @@ int IndiceBSharp::remover_bloque_interno(BloqueInternoBSharp::puntero& bloqueInt
 		}
 	}
 	if (respuesta == ELIMINACION_CORRECTA)
-		if (this->comparadorClave->es_igual(this->clave, registroClave, Registro::puntero(*actualComponente))){
+		BloqueInternoBSharp::iterador_componentes_constante actualComponenteAux = actualComponente;
+		if (!esPrimerComponente)
+			actualComponenteAux--;
+		if (this->comparadorClave->es_igual(this->clave, registroClave, Registro::puntero(*actualComponenteAux))){
 			std::cout << "Registro Interno Eliminado: ";
-			this->imprimir_registro((Registro::puntero) *actualComponente, std::cout);
+			this->imprimir_registro((Registro::puntero) *actualComponenteAux, std::cout);
 			std::cout<< std::endl;
 			std::cout << "Registro Interno Nuevo: ";
 			this->imprimir_registro(resultadoInsercion.obtener_clave_interna(), std::cout);
 			std::cout<< std::endl;
-			bloqueInterno->reemplazar_componente((Registro::puntero)*actualComponente, resultadoInsercion.obtener_clave_interna());
+			bloqueInterno->reemplazar_componente((Registro::puntero)*actualComponenteAux, resultadoInsercion.obtener_clave_interna());
 			// Escribo bloque
 			if (bloqueInterno->obtener_numero_bloque() == 0)
 				this->estrategiaAlmacenamiento->escribir_bloque_raiz(bloqueInterno->obtener_numero_bloque(), bloqueInterno, this->archivoIndice);
