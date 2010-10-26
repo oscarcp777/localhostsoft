@@ -212,7 +212,7 @@ void probarIndiceBSharpImprimir() {
 
 	IndiceBSharp::puntero indice = new IndiceBSharp("prueba-indice-imprimir", 64, esquema, clavePrimaria, comparadorClave);
 	//srand((unsigned) time(0));
-	int cantidad_insertar = 200; //rand() % RAND_MAX;
+	int cantidad_insertar = 5000; //rand() % RAND_MAX;
 	int vecInserts[cantidad_insertar];
 
 	std::string stream;
@@ -221,7 +221,7 @@ void probarIndiceBSharpImprimir() {
 		RegistroLongitudVariable::puntero registro = new RegistroLongitudVariable(clavePrimaria);
 
 
-		int id_agregar = rand() % 10000;
+		int id_agregar = rand() % 1000000;
 		vecInserts[counter]=id_agregar;
 		//indice->imprimir(std::cout);
 //		stream.append("SAN ").append(convertIntToString(id_agregar));
@@ -274,31 +274,31 @@ void probarIndiceBSharpImprimir() {
 //		std::cin >> opcion;
 //	} while (opcion == "SI");
 
-
-	//	std::string opcion;
-	//			do {
-	//				std::cout << "--------PRUEBA DE ELIMINACION-----" << std::endl;
-	//				int id;
-	//				std::cout << "Ingrese id a eliminar: ";
-	//				std::cin >> id;
-	//				std::cout << "Se va a eliminar el id: " << id << std::endl;
-	//				RegistroLongitudVariable::puntero registro = new RegistroLongitudVariable(clavePrimaria);
-	//				registro->agregar_campo("id", new CampoEntero(id));
-	//
-	//				indice->borrar_registro(registro);
-	//
-	//				std::cout << "Registro eliminado..." << std::endl;
-	//				indice->imprimir(std::cout);
-	//				std::cout << "Desea eliminar nuevamente? (SI / NO) " << std::endl;
-	//				std::cin >> opcion;
-	//			} while (opcion == "SI");
+//
+//		std::string opcion;
+//				do {
+//					std::cout << "--------PRUEBA DE ELIMINACION-----" << std::endl;
+//					int id;
+//					std::cout << "Ingrese id a eliminar: ";
+//					std::cin >> id;
+//					std::cout << "Se va a eliminar el id: " << id << std::endl;
+//					RegistroLongitudVariable::puntero registro = new RegistroLongitudVariable(clavePrimaria);
+//					registro->agregar_campo("id", new CampoEntero(id));
+//
+//					indice->borrar_registro(registro);
+//
+//					std::cout << "Registro eliminado..." << std::endl;
+//					indice->imprimir(std::cout);
+//					std::cout << "Desea eliminar nuevamente? (SI / NO) " << std::endl;
+//					std::cin >> opcion;
+//				} while (opcion == "SI");
 
 
 	for (int counter = 0; counter < cantidad_insertar; ++counter) {
 		RegistroLongitudVariable::puntero registro = new RegistroLongitudVariable(clavePrimaria);
 		int id_eliminar = vecInserts[counter];
-		if (counter >= 1)
-			indice->imprimir(std::cout);
+//		if (counter >= 266)
+//			indice->imprimir(std::cout);
 		std::cout << "----A Eliminar----";
 		std::cout << "ID: " << id_eliminar << std::endl;
 

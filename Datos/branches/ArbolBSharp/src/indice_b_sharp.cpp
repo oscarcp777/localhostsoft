@@ -593,9 +593,24 @@ bool IndiceBSharp::removerBloqueExternoLleno(BloqueExternoBSharp::puntero& bloqu
 
 	this->juntarListasComponentes(lista_registros,lista_registros_aux,registrosBloqueDerecho);
 
+
+	unsigned int peso_promedio = this->calcularPromedio(lista_registros.begin(), lista_registros.end());
+	bloqueIzquierdo->setPesoPromedio(peso_promedio);
+	bloqueCentro->setPesoPromedio(peso_promedio);
+	bloqueDerecho->setPesoPromedio(peso_promedio);
+
+	std::cout<<"LISTA ENTERA: "<< std::endl;
+					BloqueExternoBSharp::iterador_componentes actual3 = lista_registros.begin();
+					while (actual3 != lista_registros.end()){
+						Registro::puntero registroAux = static_cast<Registro::puntero>(*actual3);
+						imprimir_registro(registroAux,std::cout);
+						actual3++;
+					}
+					std::cout<<"FIN LISTA ENTERA: "<< std::endl;
+
 	// Llena bloque izquierdo
 	BloqueExternoBSharp::iterador_componentes componenteListaFinal = lista_registros.begin();
-	while (bloqueIzquierdo->puede_agregar_componente(*componenteListaFinal)){
+	while (bloqueIzquierdo->haySubflujo()){
 		bloqueIzquierdo->agregar_componente(*componenteListaFinal);
 		componenteListaFinal++;
 		cont++;
@@ -2038,7 +2053,8 @@ int IndiceBSharp::remover_bloque_externo(BloqueExternoBSharp::puntero& bloqueExt
 		++actualComponente;
 	}
 	if (esPrimero && bloqueExterno->cantidad_componentes() > 0)
-		resultado.establecer_clave_interna(*bloqueExterno->primer_componente());
+		resultado.establecer_clave_interna(this->extraer_clave(*bloqueExterno->primer_componente()));
+
 
 	// DONI
 	// Pregunto si hay underflow, si hay, intento fusionar y luego balancear
@@ -2194,14 +2210,12 @@ int IndiceBSharp::remover_bloque_interno(BloqueInternoBSharp::puntero& bloqueInt
 					bloqueSegundoHermano = NULL;
 				}
 				// Intento fusionar
-				this->imprimir(std::cout);
 				if (this->removerBloqueInternoLleno(bloqueInterno,bloquePrimerHermano,bloqueSegundoHermano, resultadoInsercion,registroPrimerPadre,registroSegundoPadre ))
 					respuesta = HAY_SUBFLUJO;
 				else{
 					// Si no se puede fusionar se balancea
 					if (primerHermano != 0 && segundoHermano != 0){
 						this->balancearBloquesInternosAlRemover(bloqueInterno,bloquePrimerHermano,bloqueSegundoHermano,resultadoInsercion,registroPrimerPadre,registroSegundoPadre);
-						this->imprimir(std::cout);
 					}
 					respuesta = HAY_BALANCEO;
 					}
@@ -2209,7 +2223,7 @@ int IndiceBSharp::remover_bloque_interno(BloqueInternoBSharp::puntero& bloqueInt
 				}
 		}
 	}
-	if (respuesta == ELIMINACION_CORRECTA){
+	if (respuesta == ELIMINACION_CORRECTA && resultadoInsercion.obtener_clave_interna() != NULL){
 		BloqueInternoBSharp::iterador_componentes_constante actualComponenteAux = actualComponente;
 		if (this->comparadorClave->es_igual(this->clave, registroClave, Registro::puntero(*actualComponenteAux))){
 			std::cout << "Registro Interno Eliminado: ";
@@ -2430,7 +2444,9 @@ void IndiceBSharp::actualizar_fusion(BloqueInternoBSharp::puntero& bloquePadre, 
 		claveAnterior = actualClave;
 		++actualClave;
 	}
-
+	std::cout << "(fusion)Componente eliminado: ";
+	this->imprimir_registro((Registro::puntero) *actualClave, std::cout);
+	std::cout<< std::endl;
 	bloquePadre->remover_componente(actualClave);
 
 	Registro::puntero registroAReemplazar =  (Registro::puntero) *claveAnterior;
