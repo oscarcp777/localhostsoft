@@ -18,14 +18,14 @@ Block::Block(unsigned int maxLong, unsigned int numBlock, unsigned int level) th
 	this->numBlock=numBlock;
 	this->level= level;
 	this->factory= new FactoryOfRegistry();
-	this->nextNode=-1;
+	this->nextNode=NEXT_BLOCK_INVALID;
 }
 Block::Block(unsigned int sizeBlock,int typeElement,bool indexed){
 	this->maxLong=sizeBlock;
 	this->indexed=indexed;
 	this->typeElement=typeElement;
 	this->factory= new FactoryOfRegistry();
-	this->nextNode=-1;
+	this->nextNode=NEXT_BLOCK_INVALID;
 }
 Block::Block(){
 	this->factory= new FactoryOfRegistry();

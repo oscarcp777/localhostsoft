@@ -6,30 +6,42 @@
  */
 
 #include "BitOutput.h"
+#include <math.h>
+#include <cmath>
 #include "../src.datos.exception/eCompression.h"
 
 static unsigned long ALL_ONES_LONG = ~0l;
 
 static char ZERO_BYTE = (char) 0;
+BitOutput* BitOutput::instanceUnique=NULL;
+BitOutput* BitOutput::getInstance(){
 
-BitOutput::BitOutput(ByteArrayBuffer* out) {
+	if(!BitOutput::instanceUnique){
+		BitOutput::instanceUnique= new BitOutput();
+	}
+	return BitOutput::instanceUnique;
+}
+BitOutput::BitOutput(BitArrayBufferCompression* out) {
 	mOut = out;
+	this->reset();
+}
+int BitOutput::getBytesCompressed(){
+ return this->mOut->getNextByte();
+}
+BitOutput::BitOutput() {
 	this->reset();
 }
 
 BitOutput::~BitOutput() {
-	// TODO Auto-generated destructor stub
+	delete this->mOut;
 }
 
 void BitOutput::writeUnary(int n) throw(){
-
 	// fit in buffer
 	int numZeros = n - 1;
 	if (numZeros <= this->mNextBitIndex) {
 		this->mNextByte = this->mNextByte << numZeros;
 		this->mNextBitIndex -= numZeros;
-	   // System.out.println(" mNextBitIndex "+mNextBitIndex +" mNextByte "+mNextByte);
-	   //System.out.println(" mNextBitIndex "+ Integer.toString(mNextBitIndex,2) +" mNextByte "+Integer.toString(mNextByte,2));
 	    this->writeTrue();
 	    return;
 	}
@@ -88,15 +100,9 @@ void BitOutput::flush() throw(){
 	    int n= this->mNextByte << this->mNextBitIndex;
 	    this->mOut->write(n); // shift to fill //TODO PENSAR LO DEL BUFFER
 
-//	    System.out.println("mNextBitIndex "+n +" mNextByte "+Integer.toString(n,2));
-//	    System.out.println("mNextBitIndex "+mNextBitIndex +" mNextByte "+mNextByte);
-//	    System.out.println("mNextBitIndex "+ Integer.toString(mNextBitIndex,2) +" mNextByte "+Integer.toString(mNextByte,2));
 
 	    this->reset();
 	}
-//    System.out.println("mNextBitIndex "+mNextBitIndex +"mNextByte "+mNextByte);
-//    System.out.println("mNextBitIndex "+ Integer.toString(mNextBitIndex,2) +"mNextByte "+Integer.toString(mNextByte,2));
-
 
     }
 
@@ -114,9 +120,6 @@ void BitOutput::writeBit(bool bit) throw(){
 	} else {
 		this->mNextByte = (this->mNextByte | 1) << 1;
 	    --this->mNextBitIndex;
-	    //System.out.println("mNextBitIndex "+mNextBitIndex +" mNextByte "+mNextByte);
-	    //System.out.println("mNextBitIndex "+ Integer.toString(mNextBitIndex,2) +" mNextByte "+Integer.toString(mNextByte,2));
-
 	}
  }
 
@@ -204,4 +207,16 @@ int BitOutput::mostSignificantPowerOfTwo(long n) {
 	if (n >> (sum | 4) != 0) sum = (sum | 4);
 	if (n >> (sum | 2) != 0) sum = (sum | 2);
 	return (n >> (sum | 1) != 0) ? (sum | 1) : sum;
+}
+int BitOutput::getOcupedBytes(int value){
+	//	1 + 2|log 2 (2 x )| + |log( x)|
+	 long cantBytes=0;
+	double cantBit= 1+2*abs(log(2*value))+abs(log(value));
+//   cout<<"bits :"<<cantBit<<" el numero : "<<value<<endl;
+   if(cantBit>4&&cantBit<8)
+	   cantBytes=1;
+   else
+    cantBytes=cantBit/8;
+//    cout<<"bytes: "<<cantBytes<<" el numero : "<<value<<"--"<< BitOutput::getInstance()->contBytes<<endl;
+    return cantBytes;
 }

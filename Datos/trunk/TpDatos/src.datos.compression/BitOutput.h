@@ -7,11 +7,13 @@
 
 #ifndef BITOUTPUT_H_
 #define BITOUTPUT_H_
-#include "../src.datos.storage/ByteArrayBuffer.h"
+#include "../src.datos.storage/BitArrayBufferCompression.h"
+#include <iostream>
+using namespace std;
 
 class BitOutput {
 public:
-	BitOutput(ByteArrayBuffer* out);
+	BitOutput(BitArrayBufferCompression* out);
 	virtual ~BitOutput();
 	void writeUnary(int n) throw();
 	void writeGamma(long n) throw();
@@ -29,12 +31,15 @@ public:
 	long sliceBits(long n, int leastSignificantBit, int numBits) throw();
 	long sliceBits2(long n, int leastSignificantBit, int numBits);
 	int mostSignificantPowerOfTwo(long n);
-
+	int getBytesCompressed();
+    static BitOutput* getInstance();
+    static int getOcupedBytes(int value);
 private:
 	int mNextByte;
     int mNextBitIndex;
-    ByteArrayBuffer* mOut;
-
+    BitArrayBufferCompression* mOut;
+	static BitOutput* instanceUnique;
+	BitOutput();
 };
 
 #endif /* BITOUTPUT_H_ */

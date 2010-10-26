@@ -8,6 +8,7 @@
 #ifndef BLOCKDATAMANAGER_H_
 #define BLOCKDATAMANAGER_H_
 #include "../src.datos.models/Block.h"
+#include "../src.datos.models/CompressedBlock.h"
 #include "ContainerInsertDataBlock.h"
 #include "../src.datos.models/Registry.h"
 #include "../src.datos.models/RegClassification.h"
@@ -36,6 +37,8 @@ public:
 	 void loadListRegistry(list<KeyInteger*> &listRegistry, list<Registry*>::iterator itBegin,list<Registry*>::iterator itEnd);
 	 void loadListInfoPerDocBlockData(RegInvertedIndex* regIndex,unsigned  int numBlock,ContainerInsertDataBlock* container);
 	 void loadListInfoPerDoc(list<InfoPerDoc*> &listRegistry, list<Registry*>::iterator itBegin,list<Registry*>::iterator itEnd);
+	 CompressedBlock* readDataBlockCompressed(unsigned int numBlock,ContainerInsertDataBlock* container);
+	 void writeDataBlockCompressed(CompressedBlock* block ,unsigned int numBlock,ContainerInsertDataBlock* container);
 private:
 	 Mail*  validedSizeMail(Mail* mail,ContainerInsertDataBlock* container);
 };

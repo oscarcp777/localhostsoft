@@ -40,6 +40,7 @@
 #define INSERTION_OK 0
 #define OVERFLOW 1
 #define BALANCE 2
+#define NEXT_BLOCK_INVALID -1
 
 
 #define FROM 1

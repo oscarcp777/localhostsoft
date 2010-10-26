@@ -8,6 +8,7 @@
 #ifndef KEYINTEGER_H_
 #define KEYINTEGER_H_
 #include "Key.h"
+
 class KeyInteger :public Key{
 public:
 	KeyInteger(int value);
@@ -23,7 +24,9 @@ public:
 		int compareTo(Registry* registry);
 		Registry* clone();
 		Registry* cloneRegKey();
-
+		void packCompressed(BitOutput* compressor);
+		void unPackCompressed(BitInput* compressor);
+		unsigned int getlongBytesCompressed();
 	private:
 		int value;
 };

@@ -59,3 +59,12 @@ Registry* KeyInteger::clone(){
 	return new KeyInteger(this->value);
 
 }
+unsigned int KeyInteger::getlongBytesCompressed(){
+  return BitOutput::getOcupedBytes(this->value);
+}
+void KeyInteger::packCompressed(BitOutput* compressor){
+	compressor->writeDelta(this->value);
+}
+void KeyInteger::unPackCompressed(BitInput* compressor){
+  this->value=compressor->readDelta();
+}

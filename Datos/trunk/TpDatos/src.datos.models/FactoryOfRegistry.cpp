@@ -36,7 +36,7 @@ Registry* FactoryOfRegistry::createRegistry(int type){
 		break;
 	case TYPE_REG_SELECTION: return new RegSelection();
 			break;
-	case TYPE_KEY_INTEGER: return new KeyInteger(-1);
+	case TYPE_KEY_INTEGER: return new KeyInteger();
 				break;
 	case TYPE_KEY_STRING: return new KeyString("");
 					break;

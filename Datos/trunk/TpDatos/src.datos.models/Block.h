@@ -72,14 +72,15 @@ protected:
     list<Registry*> regList;
 	int nextNode;
 	int typeElement;
+protected:
+	 bool indexed;
+	 FactoryOfRegistry* factory;
 private:
 
-    bool indexed;
     unsigned int freeSize;
     unsigned int numBlock;
     unsigned int level;
     unsigned int maxLong;
-    FactoryOfRegistry* factory;
     unsigned int averageWeight;
 };
 

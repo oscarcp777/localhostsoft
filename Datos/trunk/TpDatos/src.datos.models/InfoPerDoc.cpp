@@ -13,55 +13,74 @@ InfoPerDoc::InfoPerDoc() {
 InfoPerDoc::~InfoPerDoc() {
 	// TODO Auto-generated destructor stub
 }
-
+unsigned int InfoPerDoc::getlongBytesCompressed(){
+	int sizeBusy=0;
+	KeyInteger* key =(KeyInteger*)this->getKey();
+	sizeBusy+=key->getlongBytesCompressed();
+	int cantElement=this->listOfPositions.size();
+	sizeBusy+=BitOutput::getOcupedBytes(cantElement);
+	list<KeyInteger*>::iterator it;
+		for(it = this->listOfPositions.begin() ; it != this->listOfPositions.end() ; it++){
+			KeyInteger* key=(KeyInteger*)*it;
+			sizeBusy+=key->getlongBytesCompressed();
+		}
+     return sizeBusy;
+}
 Registry* InfoPerDoc::clone(){
-     return NULL;
+	return NULL;
 }
 bool InfoPerDoc::equals(Registry* comp){
-	  return NULL;
+	return NULL;
 }
 void InfoPerDoc::pack(Buffer* buffer){
-	this->getKey()->pack(buffer);
-	unsigned int size=this->listOfPositions.size();
-	buffer->packField(&size,sizeof(size));
-	list<KeyInteger*>::iterator it;
-	for(it = this->listOfPositions.begin() ; it != this->listOfPositions.end() ; it++){
-		KeyInteger* key=(KeyInteger*)*it;
-		key->pack(buffer);
-	}
+
 }
 void InfoPerDoc::unPack(Buffer* buffer){
-	this->setKey(new KeyInteger(-1));
-	this->getKey()->unPack(buffer);
-	unsigned int numberElements=0;
-	buffer->unPackField(&numberElements,sizeof(numberElements));
-		for(unsigned int i=0; i<numberElements; i++){
-			this->listOfPositions.push_back(new KeyInteger());
-		}
+
+}
+void InfoPerDoc::packCompressed(BitOutput* compressor){
+	KeyInteger* key =(KeyInteger*)this->getKey();
+	key->packCompressed(compressor);
+	unsigned int size=this->listOfPositions.size();
+	compressor->writeDelta(size);
 	list<KeyInteger*>::iterator it;
 	for(it = this->listOfPositions.begin() ; it != this->listOfPositions.end() ; it++){
 		KeyInteger* key=(KeyInteger*)*it;
-		key->unPack(buffer);
+		key->packCompressed(compressor);
+	}
+}
+void InfoPerDoc::unPackCompressed(BitInput* compressor){
+	this->setKey(new KeyInteger());
+	KeyInteger* key =(KeyInteger*)this->getKey();
+	key->unPackCompressed(compressor);
+	unsigned int numberElements=compressor->readDelta();
+	for(unsigned int i=0; i<numberElements; i++){
+		this->listOfPositions.push_back(new KeyInteger());
+	}
+	list<KeyInteger*>::iterator it;
+	for(it = this->listOfPositions.begin() ; it != this->listOfPositions.end() ; it++){
+		KeyInteger* key=(KeyInteger*)*it;
+		key->unPackCompressed(compressor);
 	}
 }
 int InfoPerDoc::getLongBytes(){
 	return this->getSize();
 }
 Registry* InfoPerDoc::cloneRegKey(){
-	 return NULL;
+	return NULL;
 }
 int InfoPerDoc::compareTo(Registry* registry){
 	KeyInteger* key=NULL;
-		if(registry->getKey()==NULL){
-			key=(KeyInteger*)registry;
-		}
-		else{
-			key=(KeyInteger*)registry->getKey();
-		}
-		return this->getKey()->compareTo(key);
+	if(registry->getKey()==NULL){
+		key=(KeyInteger*)registry;
+	}
+	else{
+		key=(KeyInteger*)registry->getKey();
+	}
+	return this->getKey()->compareTo(key);
 }
 unsigned int InfoPerDoc::getSize(){
-   return ((KeyInteger*)this->getKey())->getLongBytes()+this->listOfPositions.size()*sizeof(unsigned int);
+	return ((KeyInteger*)this->getKey())->getLongBytes()+this->listOfPositions.size()*sizeof(unsigned int);
 }
 
 void InfoPerDoc::addPosition(KeyInteger* pos){

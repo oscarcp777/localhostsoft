@@ -8,14 +8,14 @@
 #ifndef BITOUTPUTSTREAM_H_
 #define BITOUTPUTSTREAM_H_
 #include <string>
-#include "../src.datos.storage/ByteArrayBuffer.h"
+#include "../src.datos.storage/BitArrayBufferCompression.h"
 using namespace std;
 
 class BitOutputStream {
 public:
 	BitOutputStream();
 	virtual ~BitOutputStream();
-	string toString(ByteArrayBuffer* buffer);
+	string toString(BitArrayBufferCompression* buffer);
 	void close() throw();
 
 private:

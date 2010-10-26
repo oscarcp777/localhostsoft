@@ -75,7 +75,7 @@ bool IteratorBSharp::hasNext() throw(){
 	aux++;
 	if (aux != endComp) {
 		return true;
-	}else if (this->currentNode->getNextBlock() != -1){
+	}else if (this->currentNode->getNextBlock() != NEXT_BLOCK_INVALID){
 		return true;
 	}
 

@@ -54,11 +54,6 @@ Registry* KeyString::clone(){
 int KeyString::compareTo(Registry* registry){
 	KeyString* key=(KeyString*)registry;
 	int result=this->value.compare(key->getValue());
-//	if(result < 0)
-//		return -1;
-//	else if(result > 0)
-//		return 1;
-//	else
 		return result;
 }
 Registry* KeyString::cloneRegKey(){

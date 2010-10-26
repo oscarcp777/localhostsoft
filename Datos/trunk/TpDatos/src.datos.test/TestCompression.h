@@ -8,7 +8,7 @@
 #ifndef TESTCOMPRESSION_H_
 #define TESTCOMPRESSION_H_
 #include <iostream>
-#include <bitset>
+#include "../src.datos.utils/Define.h"
 using namespace std;
 
 class TestCompression {

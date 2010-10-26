@@ -7,12 +7,12 @@
 
 #ifndef BITINPUT_H_
 #define BITINPUT_H_
-#include "../src.datos.storage/ByteArrayBuffer.h"
+#include "../src.datos.storage/BitArrayBufferCompression.h"
 
 
 class BitInput {
 public:
-	BitInput(ByteArrayBuffer* in);
+	BitInput(BitArrayBufferCompression* in);
 	virtual ~BitInput();
 	void close() throw();
 	bool endOfStream();
@@ -29,11 +29,15 @@ public:
 	void checkGamma(int numBits) throw();
 	void checkDelta(long numBits) throw();
 	void notEndOfStream() throw();
+	void setBuffer(BitArrayBufferCompression* buffer);
+	static BitInput* getInstance(BitArrayBufferCompression* buffer);
 private:
-	ByteArrayBuffer* mIn;
+	BitArrayBufferCompression* mIn;
     int mNextByte; // implied = 0;
     int mNextBitIndex;
     bool mEndOfStream;
+    static BitInput* instanceUnique;
+    BitInput();
 };
 
 #endif /* BITINPUT_H_ */

@@ -16,7 +16,7 @@ BitOutputStream::~BitOutputStream() {
 	// TODO Auto-generated destructor stub
 }
 
-string BitOutputStream::toString(ByteArrayBuffer* buffer) {
+string BitOutputStream::toString(BitArrayBufferCompression* buffer) {
 	char* bytes = buffer->getData();
 	string sb ="";
 	for (int i = 0; i < buffer->getNextByte(); ++i) {

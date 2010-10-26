@@ -11,13 +11,25 @@
 static char ZERO_BYTE = (char) 0;
 
 static unsigned int ALL_ONES_INT = ~0;
+BitInput* BitInput::instanceUnique=NULL;
+BitInput* BitInput::getInstance(BitArrayBufferCompression* buffer){
 
-BitInput::BitInput(ByteArrayBuffer* in) {
+	if(!BitInput::instanceUnique){
+		BitInput::instanceUnique= new BitInput(buffer);
+	}else
+		BitInput::instanceUnique->mIn=buffer;
+
+	return BitInput::instanceUnique;
+}
+BitInput::BitInput(BitArrayBufferCompression* in) {
 	this->mEndOfStream = false;
 	this->mIn = in;
 	this->readAhead();
 }
-
+BitInput::BitInput() {
+	this->mEndOfStream = false;
+	this->readAhead();
+}
 BitInput::~BitInput() {
 	// TODO Auto-generated destructor stub
 }
@@ -178,7 +190,9 @@ void BitInput::readAhead() throw(){
         mNextBitIndex = 7;
     }
 
-
+void BitInput::setBuffer(BitArrayBufferCompression* buffer){
+ this->mIn=buffer;
+}
 void BitInput::notEndOfStream() throw(){
 	if (endOfStream())
 		throw eCompression("End of stream reached prematurely");

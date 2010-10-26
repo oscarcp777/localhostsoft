@@ -142,30 +142,11 @@ void IndexBSharp::writeBlock(Node* node, int numBlock) throw () {
 	this->buffer->clear();
 	node->pack(this->buffer);
 	this->binaryFile->write(this->buffer->getData(),this->buffer->getMaxBytes(),numBlock*this->buffer->getMaxBytes());
-	//	cout<<"escribe bloque "<< node->getNumBlock()<<endl;
-	//			buffer->init();
-	//			int var2=this->sizeBlock/4;
-	//				for (int var = 0;var<= var2; ++var) {
-	//				       int num;
-	//				       buffer->unPackField(&num,sizeof(num));
-	//				       cout<<" | "<<num;
-	//					}
-	//					cout<<"fin del bloque "<<endl;
 }
 Node* IndexBSharp::readNode(unsigned int numBlock) throw () {
 	this->buffer->clear();
 	if (this->binaryFile->read(buffer->getData(),this->buffer->getMaxBytes(),this->buffer->getMaxBytes()* numBlock)) {
 		Node* node = readNodeBytes(buffer);
-		//		cout<<"lee bloque "<< node->getNumBlock()<<endl;
-		//		buffer->init();
-		//		int var2=this->sizeBlock/4;
-		//			for (int var = 0;var<= var2; ++var) {
-		//			       int num;
-		//			       buffer->unPackField(&num,sizeof(num));
-		//			       cout<<" | "<<num;
-		//				}
-		//				cout<<"fin del bloque "<<endl;
-
 		return node;
 	} else {
 		return NULL;

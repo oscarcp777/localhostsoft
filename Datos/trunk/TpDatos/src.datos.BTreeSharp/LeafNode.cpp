@@ -8,7 +8,7 @@
 #include "LeafNode.h"
 
 LeafNode::LeafNode(int typeElement,unsigned int maxLong, unsigned int numBlock, unsigned int level) throw():Node(maxLong,numBlock,level){
-    this->nextNode=-1;
+    this->nextNode=NEXT_BLOCK_INVALID;
    this->typeElement=typeElement;
    this->setMaxLong(maxLong);
    this->setNumBlock(numBlock);
@@ -16,6 +16,7 @@ LeafNode::LeafNode(int typeElement,unsigned int maxLong, unsigned int numBlock, 
    this->blockDataManager= new BlockDataManager();
 }
 LeafNode::LeafNode(int typeElement,unsigned int maxLong){
+	this->nextNode=NEXT_BLOCK_INVALID;
 	this->typeElement=typeElement;
 	this->setMaxLong(maxLong);
 	this->blockDataManager= new BlockDataManager();

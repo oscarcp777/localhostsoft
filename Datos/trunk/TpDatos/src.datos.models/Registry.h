@@ -9,6 +9,8 @@
 #define REGISTRY_H_
 #include "../src.datos.storage/Buffer.h"
 #include "../src.datos.utils/Define.h"
+#include "../src.datos.compression/BitInput.h"
+#include "../src.datos.compression/BitOutput.h"
 class Key;
 
 class Registry {

@@ -7,6 +7,7 @@
 
 #include "BlockDataManager.h"
 #include "../src.datos.models/KeyInteger.h"
+#include "../src.datos.storage/BitArrayBufferCompression.h"
 
 BlockDataManager::BlockDataManager() {
 	// TODO Auto-generated constructor stub
@@ -17,29 +18,29 @@ BlockDataManager::~BlockDataManager() {
 	// TODO Auto-generated destructor stub
 }
 Registry* BlockDataManager::insertInfoPerDoc(RegInvertedIndex* registryNew,RegInvertedIndex* registryFind,ContainerInsertDataBlock* container){
-	Block* blockIucs;
+	CompressedBlock* blockInfoPerDoc;
 	unsigned int numBlock=0;
 	if(registryFind!=NULL){
 		numBlock=registryFind->getNumBlock();
-		blockIucs=this->readBlockData(numBlock,container);
-			while(blockIucs->getNextBlock()!=-1){
-				numBlock=blockIucs->getNextBlock();
-				delete blockIucs;
-				blockIucs=this->readBlockData(numBlock,container);
+		blockInfoPerDoc=this->readDataBlockCompressed(numBlock,container);
+			while(blockInfoPerDoc->getNextBlock()!=NEXT_BLOCK_INVALID){
+				numBlock=blockInfoPerDoc->getNextBlock();
+				delete blockInfoPerDoc;
+				blockInfoPerDoc=this->readDataBlockCompressed(numBlock,container);
 
 			}
 
-		if(blockIucs->posibleToAgregateComponent(registryNew->getInfoPerDoc())){
-			blockIucs->addReg(registryNew->getInfoPerDoc());
+		if(blockInfoPerDoc->posibleToAgregateRegCompressed(registryNew->getInfoPerDoc())){
+			blockInfoPerDoc->addReg(registryNew->getInfoPerDoc());
 
-			this->writeBlockData(blockIucs,numBlock,container);
+			this->writeDataBlockCompressed(blockInfoPerDoc,numBlock,container);
 			registryNew->clearInfoPerDoc();
 			delete registryNew;
 			return NULL;
 		}else{
 			registryNew= (RegInvertedIndex*)this->insertInvertedIndexBlockNew(registryNew,container);
-			blockIucs->setNextBlock(registryNew->getNumBlock());
-			this->writeBlockData(blockIucs,numBlock,container);
+			blockInfoPerDoc->setNextBlock(registryNew->getNumBlock());
+			this->writeDataBlockCompressed(blockInfoPerDoc,numBlock,container);
 			registryNew->clearInfoPerDoc();
 			delete registryNew;
 			return NULL;
@@ -56,7 +57,7 @@ Registry* BlockDataManager::insertIucInBlockData(RegClassification* registryNew,
 	if(registryFind!=NULL){
 		numBlock=registryFind->getNumBlock();
 		blockIucs=this->readBlockData(numBlock,container);
-			while(blockIucs->getNextBlock()!=-1){
+			while(blockIucs->getNextBlock()!=NEXT_BLOCK_INVALID){
 				numBlock=blockIucs->getNextBlock();
 				delete blockIucs;
 				blockIucs=this->readBlockData(numBlock,container);
@@ -97,15 +98,16 @@ void  BlockDataManager::loadListInfoPerDoc(list<InfoPerDoc*> &listRegistry, list
 }
 void BlockDataManager::loadListInfoPerDocBlockData(RegInvertedIndex* regIndex,unsigned  int numBlock,ContainerInsertDataBlock* container){
 	list<InfoPerDoc*> listInfoPerDoc;
-	Block* blockInfoPerDoc;
+	CompressedBlock* blockInfoPerDoc;
 	int newNumBlock=0;
-	blockInfoPerDoc=this->readBlockData(numBlock,container);
+	regIndex->setNumBlock(numBlock);
+	blockInfoPerDoc=this->readDataBlockCompressed(numBlock,container);
 	loadListInfoPerDoc(listInfoPerDoc,blockInfoPerDoc->iteratorBegin(),blockInfoPerDoc->iteratorEnd());
 	blockInfoPerDoc->clearListRegistry();
 	newNumBlock=blockInfoPerDoc->getNextBlock();
-		while(newNumBlock!=-1){
+		while(newNumBlock!=NEXT_BLOCK_INVALID){
 			delete blockInfoPerDoc;
-			blockInfoPerDoc=this->readBlockData(newNumBlock,container);
+			blockInfoPerDoc=this->readDataBlockCompressed(newNumBlock,container);
 			loadListInfoPerDoc(listInfoPerDoc,blockInfoPerDoc->iteratorBegin(),blockInfoPerDoc->iteratorEnd());
 			blockInfoPerDoc->clearListRegistry();
 			newNumBlock=blockInfoPerDoc->getNextBlock();
@@ -124,7 +126,7 @@ void BlockDataManager::loadListIucBlockData(RegClassification* regClas,unsigned 
 	loadListRegistry(listIucs,blockIucs->iteratorBegin(),blockIucs->iteratorEnd());
 	blockIucs->clearListRegistry();
 	newNumBlock=blockIucs->getNextBlock();
-		while(newNumBlock!=-1){
+		while(newNumBlock!=NEXT_BLOCK_INVALID){
 			delete blockIucs;
 			blockIucs=this->readBlockData(newNumBlock,container);
 			loadListRegistry(listIucs,blockIucs->iteratorBegin(),blockIucs->iteratorEnd());
@@ -182,10 +184,10 @@ Registry* BlockDataManager::insertIucBlockNew(RegClassification* registry,Contai
 }
 Registry* BlockDataManager::insertInvertedIndexBlockNew(RegInvertedIndex* registry,ContainerInsertDataBlock* container){
 	unsigned int numblock=container->getFreeBlockController()->searchFreeBlock();
-	Block* blockIucNew= new Block(container->getSizeBlockData(),container->getTypeElementData(),container->getIndexed());
+	CompressedBlock* blockIucNew= new CompressedBlock(container->getSizeBlockData(),container->getTypeElementData(),container->getIndexed());
 	blockIucNew->addReg(((RegInvertedIndex*)registry)->getInfoPerDoc());
 	((RegInvertedIndex*)registry)->setNumBlock(numblock);
-	this->writeBlockData(blockIucNew,numblock,container);
+	this->writeDataBlockCompressed(blockIucNew,numblock,container);
 	registry->clearInfoPerDoc();
 	return registry;
 }
@@ -198,8 +200,23 @@ Registry* BlockDataManager::insertMailBlockNew(RegPrimary* registry,ContainerIns
 	((RegPrimary*)registry)->setMail(NULL);
 	return registry;
 }
+CompressedBlock* BlockDataManager::readDataBlockCompressed(unsigned int numBlock,ContainerInsertDataBlock* container){
+	BitArrayBufferCompression* buffer= new BitArrayBufferCompression(container->getSizeBlockData());
+	container->getBinaryFile()->read(buffer->getData(),container->getSizeBlockData(),container->getSizeBlockData()*numBlock);
+	CompressedBlock* block = new CompressedBlock(container->getSizeBlockData(),container->getTypeElementData(),container->getIndexed());
+	block->unPackCompressed(buffer);
+	delete buffer;
+	return block;
+}
+void BlockDataManager::writeDataBlockCompressed(CompressedBlock* block ,unsigned int numBlock,ContainerInsertDataBlock* container){
+	BitArrayBufferCompression* buffer= new BitArrayBufferCompression(container->getSizeBlockData());
+	block->packCompressed(buffer);
+	container->getBinaryFile()->write(buffer->getData(),container->getSizeBlockData(),container->getSizeBlockData()*numBlock);
+	delete block;
+	block=NULL;
+}
 Block* BlockDataManager::readBlockData(unsigned int numBlock,ContainerInsertDataBlock* container){
-	Buffer* buffer= new Buffer(container->getSizeBlockData());
+	BitArrayBufferCompression* buffer= new BitArrayBufferCompression(container->getSizeBlockData());
 	container->getBinaryFile()->read(buffer->getData(),container->getSizeBlockData(),container->getSizeBlockData()*numBlock);
 	Block* block = new Block(container->getSizeBlockData(),container->getTypeElementData(),container->getIndexed());
 	block->unPack(buffer);
