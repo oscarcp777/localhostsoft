@@ -36,10 +36,12 @@
 #define TYPE_REG_INVERTED_INDEX 7
 #define TYPE_INFO_PER_DOC 8
 
-#define DATA 1
+#define DATA 0
 #define INSERTION_OK 0
 #define OVERFLOW 1
 #define BALANCE 2
+#define CORRECT_REMOVE 3
+#define UNDERFLOW 4
 #define NEXT_BLOCK_INVALID -1
 
 
