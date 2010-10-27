@@ -97,12 +97,14 @@ void Consultation::compareConsultResaults(list<RegInvertedIndex*> listRegInvInd,
 	list<RegInvertedIndex*>::iterator it;
 	list<RegInvertedIndex*>::iterator itSecondary;
 	list<InfoPerDoc*>::iterator itInfoPerDoc;
+	list<InfoPerDoc*>::iterator lastInfoPerDoc;
+	list<InfoPerDoc*>::iterator auxIt;
 	list<InfoPerDoc*>::iterator itInfoPerDocSecondary;
 	list<int> intersectionIucs;
 	list<int>::iterator itNum;
 	list<InfoPerDoc*> sameIucInfoPerDoc;
 	bool posibleMatch = true;
-
+	bool correctDistances = true;
 	//primero hago la interseccion, es decir busco q documentos contienen todos los terminos
 	it = listRegInvInd.begin();
 		for(itInfoPerDoc =(*it)->getBeginListInfoPerDoc(); itInfoPerDoc != (*it)->getEndListInfoPerDoc(); itInfoPerDoc++){
@@ -119,7 +121,7 @@ void Consultation::compareConsultResaults(list<RegInvertedIndex*> listRegInvInd,
 				}
 			}
 			if(posibleMatch){
-				cout<<"el IUC: "<<((KeyInteger*)(*itInfoPerDoc)->getKey())->getValue()<<" es candidato"<<endl;
+				//cout<<"el IUC: "<<((KeyInteger*)(*itInfoPerDoc)->getKey())->getValue()<<" es candidato"<<endl;
 				intersectionIucs.push_back(((KeyInteger*)(*itInfoPerDoc)->getKey())->getValue());
 			}
 		}
@@ -136,9 +138,28 @@ void Consultation::compareConsultResaults(list<RegInvertedIndex*> listRegInvInd,
 				}
 			}
 		}
-		//TODO aca tengo q comparar las disatancias entre los info per doc de la lista sameIucInfoPerDoc
+		//aca tengo q comparar las disatancias entre los info per doc de la lista sameIucInfoPerDoc
 		//si las distancias dan correctas entonces agrego el numero de iuc a listOfIucs(el q me pasan por parametro)
+//		cout<<"***********************************"<<endl;
+//		for(auxIt = sameIucInfoPerDoc.begin(); auxIt != sameIucInfoPerDoc.end(); auxIt++){
+//					(*auxIt)->print(cout);
+//		}
+
+		lastInfoPerDoc = sameIucInfoPerDoc.end();
+		lastInfoPerDoc--;
+			for(itInfoPerDoc = sameIucInfoPerDoc.begin(); itInfoPerDoc != lastInfoPerDoc; itInfoPerDoc++ ){
+			auxIt = itInfoPerDoc;
+			auxIt++;
+			if(!(*itInfoPerDoc)->compareDistance(*auxIt,1)){
+				correctDistances = false;
+				break;
+			}
+		}
+		if(correctDistances)
+			(*listOfIucs).push_back(((KeyInteger*)(*itInfoPerDoc)->getKey())->getValue());
 	}
+
+
 
 
 

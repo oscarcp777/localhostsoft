@@ -14,7 +14,7 @@
 #define SERVER "pop.gmail.com"// "pop.mail.yahoo.com"
 #define PORT  995 // 995 para gmail, 110 para yahoo
 #define CONNECT 0 // 1 se conecta a la cuenta, 0 baja de un archivo
-#define MAILSFILE "./files/mailsChico"
+#define MAILSFILE "./files/mailsMediano"
 #define PATHFILES "files/storage/"
 #define STOP_WORDS_FILE "./files/stopwords.txt"
 
@@ -36,7 +36,7 @@
 #define TYPE_REG_INVERTED_INDEX 7
 #define TYPE_INFO_PER_DOC 8
 
-#define DATA 0
+#define DATA 1
 #define INSERTION_OK 0
 #define OVERFLOW 1
 #define BALANCE 2

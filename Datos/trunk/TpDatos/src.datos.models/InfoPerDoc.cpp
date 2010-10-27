@@ -99,9 +99,11 @@ bool InfoPerDoc::compareDistance(InfoPerDoc* infoPerDoc, int distance){
 	int pos;
 	int posSecundary;
 	for(it = this->listOfPositions.begin(); it != this->listOfPositions.end(); it++){
-		pos = ((KeyInteger*)(*it)->getKey())->getValue();
+		pos = ((KeyInteger*)(*it))->getValue();
+		//cout<<"POS: "<<pos<<endl;
 		for(itSecondary= infoPerDoc->getBeginListPositions(); itSecondary != infoPerDoc->getEndListPositions(); itSecondary++){
-			posSecundary = ((KeyInteger*)(*itSecondary)->getKey())->getValue();
+			posSecundary = ((KeyInteger*)(*itSecondary))->getValue();
+			//cout<<"posSecundary: "<<posSecundary<<endl;
 			if(abs(pos - posSecundary) == distance)
 				return true;
 		}

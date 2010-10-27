@@ -17,7 +17,7 @@
 
 using namespace std;
 
-int main(int argc,char** argv) {
+int main12345(int argc,char** argv) {
 
 	TestBSharp* test = new TestBSharp();
 //	test->testInsert();

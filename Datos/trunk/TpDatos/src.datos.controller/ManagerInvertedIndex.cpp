@@ -86,9 +86,13 @@ void ManagerInvertedIndex::writeOrUpdateInvertedIndex(IndexBSharp* indexBSharp){
 
 void ManagerInvertedIndex::removeStopWords(){
 	vector<string>::iterator it;
+	vector<string>::iterator aux;
 	for(it= this->currentWords->getWordsBegin(); it != this->currentWords->getWordsEnd(); it++ ){
-		if(this->stopWords->contains(*it))
-			this->currentWords->removeWord(it);
+		if(this->stopWords->contains(*it)){
+			aux = it;
+			it--;
+			this->currentWords->removeWord(aux);
+		}
 	}
 }
 void ManagerInvertedIndex::removeStopWordsFromVector(vector<string>* words){
