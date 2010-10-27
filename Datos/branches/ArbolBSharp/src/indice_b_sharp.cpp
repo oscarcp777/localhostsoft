@@ -594,20 +594,6 @@ bool IndiceBSharp::removerBloqueExternoLleno(BloqueExternoBSharp::puntero& bloqu
 	this->juntarListasComponentes(lista_registros,lista_registros_aux,registrosBloqueDerecho);
 
 
-	unsigned int peso_promedio = this->calcularPromedio(lista_registros.begin(), lista_registros.end());
-	bloqueIzquierdo->setPesoPromedio(peso_promedio);
-	bloqueCentro->setPesoPromedio(peso_promedio);
-	bloqueDerecho->setPesoPromedio(peso_promedio);
-
-	std::cout<<"LISTA ENTERA: "<< std::endl;
-					BloqueExternoBSharp::iterador_componentes actual3 = lista_registros.begin();
-					while (actual3 != lista_registros.end()){
-						Registro::puntero registroAux = static_cast<Registro::puntero>(*actual3);
-						imprimir_registro(registroAux,std::cout);
-						actual3++;
-					}
-					std::cout<<"FIN LISTA ENTERA: "<< std::endl;
-
 	// Llena bloque izquierdo
 	BloqueExternoBSharp::iterador_componentes componenteListaFinal = lista_registros.begin();
 	while (bloqueIzquierdo->haySubflujo()){
@@ -772,7 +758,7 @@ bool IndiceBSharp::removerBloqueInternoLleno(BloqueInternoBSharp::puntero& bloqu
 	bloqueIzquierdo->agregar_rama(*ramaListaFinal);
 	ramaListaFinal++;
 
-	while (bloqueIzquierdo->puede_agregar_componente(*componenteListaFinal)){
+	while (bloqueIzquierdo->haySubflujo()){
 		bloqueIzquierdo->agregar_componente(*componenteListaFinal);
 		bloqueIzquierdo->agregar_rama(*ramaListaFinal);
 		componenteListaFinal++;
@@ -1093,14 +1079,14 @@ bool IndiceBSharp::balancearBloquesInternosAlRemover(BloqueInternoBSharp::punter
 	lista_registros.insert(lista_registros.begin() + posicion_insercion, registroSegundoPadre);
 
 
-	std::cout<<"LISTA ENTERA: "<< std::endl;
-	BloqueInternoBSharp::iterador_componentes actual3 = lista_registros.begin();
-	while (actual3 != lista_registros.end()){
-		Registro::puntero registroAux = static_cast<Registro::puntero>(*actual3);
-		imprimir_registro(registroAux,std::cout);
-		actual3++;
-	}
-	std::cout<<"FIN LISTA ENTERA: "<< std::endl;
+//	std::cout<<"LISTA ENTERA: "<< std::endl;
+//	BloqueInternoBSharp::iterador_componentes actual3 = lista_registros.begin();
+//	while (actual3 != lista_registros.end()){
+//		Registro::puntero registroAux = static_cast<Registro::puntero>(*actual3);
+//		imprimir_registro(registroAux,std::cout);
+//		actual3++;
+//	}
+//	std::cout<<"FIN LISTA ENTERA: "<< std::endl;
 
 	BloqueInternoBSharp::iterador_componentes componenteListaFinal = lista_registros.begin();
 	BloqueInternoBSharp::iterador_rama ramaListaFinal = lista_ramas.begin();
@@ -2196,6 +2182,10 @@ int IndiceBSharp::remover_bloque_interno(BloqueInternoBSharp::puntero& bloqueInt
 		if (respuestaHijo == HAY_SUBFLUJO) {
 			if (this->comparadorClave->es_igual(this->clave, registroClave, Registro::puntero(*actualComponente)))
 							resultadoInsercion.establecer_clave_interna(NULL);
+
+			// Dejo actual componente en una posicion valida
+			if (esUltimoComponente)
+				actualComponente--;
 
 			this->actualizar_fusion(bloqueInterno, resultadoInsercion);
 
