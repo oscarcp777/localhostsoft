@@ -26,6 +26,13 @@ public:
 	 */
 	virtual bool isUnderflow(unsigned int sizeMinumum) throw() = 0;
 	virtual unsigned int getMetadata() = 0;
+	virtual bool isUnderflowRemove() throw();
+	unsigned int getAverageWeight();
+	void setAverageWeight(unsigned int weight);
+
+
+private:
+	unsigned int averageWeight;
 
 };
 

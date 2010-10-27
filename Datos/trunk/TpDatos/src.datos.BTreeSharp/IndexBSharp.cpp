@@ -7,6 +7,7 @@
 
 #include "IndexBSharp.h"
 #include "../src.datos.exception/eNotSpace.h"
+#include "../src.datos.exception/eLostReg.h"
 bool comparatorRegistry( Registry* reg1, Registry* reg2) {
 	int compare= reg1->compareTo(reg2);
 	return (compare< 0);
@@ -51,7 +52,7 @@ IndexBSharp::IndexBSharp(const std::string& nameFile, unsigned int sizeBlock,int
 		this->initContainerDataBlock(nameFile,sizeBlock,typeElement,TYPE_KEY_INTEGER,true);
 	if(typeElement==TYPE_REG_INVERTED_INDEX)
 			this->initContainerDataBlock(nameFile,sizeBlock,typeElement,TYPE_INFO_PER_DOC,true);
-	this->readBlockRoot();
+	this->readNode(0);
 }
 unsigned int IndexBSharp::averageEstimate(
 		list<Registry*>::iterator iteratorBegin,
@@ -103,9 +104,6 @@ void IndexBSharp::addRegistry(Registry* registry) throw(){
 }
 //}
 
-void IndexBSharp::deleteRegistry(Registry* registry) throw () {
-
-}
 Registry* IndexBSharp::searchRegistry(Registry* registry) throw () {
 	if (this->rootNode->isLeaf()) {
 		LeafNode* leafNode = static_cast<LeafNode*> (this->rootNode);
@@ -123,35 +121,41 @@ void IndexBSharp::createBlockRoot() throw () {
 	// Instancia un nuevo bloque raiz
 	this->rootNode = new LeafNode(this->typeElement, 2 * this->sizeBlock, 0, 0);
 	// Ecscribe bloque raiz
-	this->writeBlockRoot();
+	this->writeNode(this->rootNode, 0);
 }
-void IndexBSharp::readBlockRoot() throw(){
-	this->bufferRoot->clear();
-	if(this->binaryFile->read(this->bufferRoot->getData(),this->bufferRoot->getMaxBytes(),0)){
-		this->rootNode = readNodeBytes(this->bufferRoot);
-	} else {
-		this->createBlockRoot();
+
+
+void IndexBSharp::writeNode(Node* node, int numBlock) throw () {
+	if (numBlock == 0){
+		this->bufferRoot->clear();
+		this->rootNode->pack(this->bufferRoot);
+		this->binaryFile->write(this->bufferRoot->getData(),this->bufferRoot->getMaxBytes(),0);
+	}else{
+		this->buffer->clear();
+		node->pack(this->buffer);
+		this->binaryFile->write(this->buffer->getData(),this->buffer->getMaxBytes(),numBlock*this->buffer->getMaxBytes());
 	}
-}
-void IndexBSharp::writeBlockRoot() throw(){
-	this->bufferRoot->clear();
-	this->rootNode->pack(this->bufferRoot);
-	this->binaryFile->write(this->bufferRoot->getData(),this->bufferRoot->getMaxBytes(),0);
-}
-void IndexBSharp::writeBlock(Node* node, int numBlock) throw () {
-	this->buffer->clear();
-	node->pack(this->buffer);
-	this->binaryFile->write(this->buffer->getData(),this->buffer->getMaxBytes(),numBlock*this->buffer->getMaxBytes());
 }
 Node* IndexBSharp::readNode(unsigned int numBlock) throw () {
-	this->buffer->clear();
-	if (this->binaryFile->read(buffer->getData(),this->buffer->getMaxBytes(),this->buffer->getMaxBytes()* numBlock)) {
-		Node* node = readNodeBytes(buffer);
-		return node;
-	} else {
-		return NULL;
+	if (numBlock == 0){
+		this->bufferRoot->clear();
+		if(this->binaryFile->read(this->bufferRoot->getData(),this->bufferRoot->getMaxBytes(),0)){
+			this->rootNode = readNodeBytes(this->bufferRoot);
+		} else {
+			this->createBlockRoot();
+		}
+		return this->rootNode;
+	}else{
+		this->buffer->clear();
+		if (this->binaryFile->read(buffer->getData(),this->buffer->getMaxBytes(),this->buffer->getMaxBytes()* numBlock)) {
+			Node* node = readNodeBytes(buffer);
+			return node;
+		} else {
+			return NULL;
+		}
 	}
 }
+
 Node* IndexBSharp::readNodeBytes(Buffer* buffer) throw () {
 	unsigned int levelNode;
 	if (buffer->getData() != NULL) {
@@ -259,11 +263,11 @@ void IndexBSharp::splitLeafRoot(ContainerInsertion* container,	Registry* registr
 	// Escribe el bloque raiz
 	delete this->rootNode;
 	this->rootNode = newRoot;
-	this->writeBlockRoot();
+	this->writeNode(this->rootNode, 0);
 
-	this->writeBlock(newLeftNode, newLeftNode->getNumBlock());
-	this->writeBlock(newRightNode, newRightNode->getNumBlock());
-	this->writeBlock(newCenterNode, newCenterNode->getNumBlock());
+	this->writeNode(newLeftNode, newLeftNode->getNumBlock());
+	this->writeNode(newRightNode, newRightNode->getNumBlock());
+	this->writeNode(newCenterNode, newCenterNode->getNumBlock());
 	delete newCenterNode;
 	delete newLeftNode;
 	delete newRightNode;
@@ -387,11 +391,11 @@ void IndexBSharp::splitInternalRoot(ContainerInsertion* container) throw () {
 	// Escribe el bloque raiz
 	delete this->rootNode;
 	this->rootNode = newRoot;
-	this->writeBlockRoot();
+	this->writeNode(this->rootNode, 0);
 
-	this->writeBlock(newLeftNode, newLeftNode->getNumBlock());
-	this->writeBlock(newRightNode, newRightNode->getNumBlock());
-	this->writeBlock(newCenterNode, newCenterNode->getNumBlock());
+	this->writeNode(newLeftNode, newLeftNode->getNumBlock());
+	this->writeNode(newRightNode, newRightNode->getNumBlock());
+	this->writeNode(newCenterNode, newCenterNode->getNumBlock());
 
 	delete newLeftNode;
 	delete newRightNode;
@@ -549,8 +553,8 @@ bool IndexBSharp::balanceLeafNode(Registry* reg, LeafNode* actualNode,LeafNode* 
 	     cout<<"###########################################################"<<endl;
 	     throw eNotSpace("ERROR EN EL BALANCELEAFNODE SE PÉRDIERON REGISTROS !!!!!!");
 	    }
-		this->writeBlock(leftNode, leftNode->getNumBlock());
-		this->writeBlock(rightNode, rightNode->getNumBlock());
+		this->writeNode(leftNode, leftNode->getNumBlock());
+		this->writeNode(rightNode, rightNode->getNumBlock());
 		return true;
 	}
 
@@ -561,12 +565,8 @@ void IndexBSharp::insertLeafNodeNotFull(LeafNode* leafNode, Registry* registry) 
 	leafNode->addReg(registry);
 	leafNode->sortListRegistry();
 
-	if (leafNode->getNumBlock() == 0)
-		this->writeBlockRoot();
-
-	else
-		// Escribe bloque en disco
-		this->writeBlock(leafNode, leafNode->getNumBlock());
+	// Escribe bloque en disco
+	this->writeNode(leafNode, leafNode->getNumBlock());
 
 }
 void IndexBSharp::advanceListPointer(list<Registry*>::iterator& iterator,unsigned int countAdvance){
@@ -664,9 +664,9 @@ void IndexBSharp::insertLeafNodeFull(LeafNode* leafNode, LeafNode* brotherNode,	
 	newLeafNode->setNextBlock(rightNode->getNextBlock());
 	rightNode->setNextBlock(newLeafNode->getNumBlock());
 
-	this->writeBlock(leftNode, leftNode->getNumBlock());
-	this->writeBlock(rightNode, rightNode->getNumBlock());
-	this->writeBlock(newLeafNode, newLeafNode->getNumBlock());
+	this->writeNode(leftNode, leftNode->getNumBlock());
+	this->writeNode(rightNode, rightNode->getNumBlock());
+	this->writeNode(newLeafNode, newLeafNode->getNumBlock());
 
 	container->setLeftBlock(leftNode->getNumBlock());
 	container->setMediumBlock(rightNode->getNumBlock());
@@ -820,9 +820,9 @@ bool IndexBSharp::balanceInternalNode(InternalNode* internalNode, InternalNode* 
 			     throw eNotSpace("ERROR EN EL BALANCELEAFNODE SE PÉRDIERON REGISTROS O RAMAS !!!!!!");
 		}
 		// Escribe bloque izquierdo
-		this->writeBlock(leftNode, leftNode->getNumBlock());
+		this->writeNode(leftNode, leftNode->getNumBlock());
 		// Escribe bloque derecho
-		this->writeBlock(rightNode, rightNode->getNumBlock());
+		this->writeNode(rightNode, rightNode->getNumBlock());
 		fatherReg = NULL;
 		return true;
 	}
@@ -890,7 +890,7 @@ int IndexBSharp::insertInternalNode(InternalNode* internalNode,
 			internalNode->replaceRegistry(replaceReg, container->getRegMidleKey());
 			delete replaceReg;
 			// Escribo bloque
-			this->writeBlock(internalNode,internalNode->getNumBlock());
+			this->writeNode(internalNode,internalNode->getNumBlock());
 			if (fatherRegistry != NULL)
 				delete fatherRegistry;
 
@@ -957,10 +957,7 @@ void IndexBSharp::insertInternalNodeNotFull(InternalNode* internalNode,
 	}
 	internalNode->addBranch(iterator,rightBlock);
 	// Escribo bloque
-	if (internalNode->getNumBlock() == 0)
-		this->writeBlockRoot();
-	else
-		this->writeBlock(internalNode, internalNode->getNumBlock());
+	this->writeNode(internalNode, internalNode->getNumBlock());
 }
 
 bool IndexBSharp::insertInternalNodeFull(InternalNode* internalNode,InternalNode* brothersNode, Registry* registryKey,
@@ -1105,11 +1102,11 @@ bool IndexBSharp::insertInternalNodeFull(InternalNode* internalNode,InternalNode
 	       throw eNotSpace("ERROR EN EL SPLIT SE PÉRDIERON RAMAS !!!!!!");
 	   }
 	// Escribe bloque a dividir en disco
-	this->writeBlock(leftNode,leftNode->getNumBlock());
+	this->writeNode(leftNode,leftNode->getNumBlock());
 	// Escribe bloque a dividir en disco
-	this->writeBlock(rightNode,rightNode->getNumBlock());
+	this->writeNode(rightNode,rightNode->getNumBlock());
 	// Escribe bloque nuevo
-	this->writeBlock(newInternalNode,newInternalNode->getNumBlock());
+	this->writeNode(newInternalNode,newInternalNode->getNumBlock());
 
 	// Establezco bloque izquierdo en resultado de insercion
 	container->setLeftBlock(leftNode->getNumBlock());
@@ -1378,5 +1375,966 @@ void IndexBSharp::printListReg(std::ostream& outStream,list<Registry*>::iterator
 	outStream <<count;
 	outStream << " ";
 	outStream <<endl;
+	}
+}
+
+bool IndexBSharp::removeLeafNodeEmpty(LeafNode* currentNode,LeafNode* firstBrotherNode, LeafNode* secondBrotherNode,ContainerInsertion* container){
+
+
+	unsigned int count=0;
+
+	if (firstBrotherNode == NULL || secondBrotherNode == NULL)
+			return false;
+
+
+	// Crea contenedor de componentes para almacenar los registros de los bloques
+	list<Registry*> regList;
+
+	Registry* currentReg = *(currentNode->iteratorBegin());
+
+	//Registro menor bloque primer hermano
+	Registry* firstBrotherReg = (*(firstBrotherNode->iteratorBegin()));
+
+	//Registro menor bloque segundo hermano
+	Registry* secondBrotherReg = (*(secondBrotherNode->iteratorBegin()));
+
+	LeafNode*  leftNode;
+	LeafNode* centerNode;
+	LeafNode* rigthNode;
+	list<Registry*> leftNodeReg;
+	list<Registry*> centerNodeReg;
+	list<Registry*> rigthNodeReg;
+
+	//Diferencio orden bloques
+	if (currentReg->compareTo(firstBrotherReg) <0)
+		if (currentReg->compareTo(secondBrotherReg) < 0){
+			leftNode = currentNode;
+			if (firstBrotherReg->compareTo(secondBrotherReg) < 0){
+				centerNode = firstBrotherNode;
+				rigthNode = secondBrotherNode;
+			}else{
+				centerNode = secondBrotherNode;
+				rigthNode = firstBrotherNode;
+			}
+		}else{
+			leftNode = secondBrotherNode;
+			centerNode = currentNode;
+			rigthNode = firstBrotherNode;
+		}
+	else
+		if (currentReg->compareTo(secondBrotherReg) < 0){
+			leftNode = firstBrotherNode;
+			centerNode = currentNode;
+			rigthNode = secondBrotherNode;
+		}else{
+			rigthNode = currentNode;
+			if (firstBrotherReg->compareTo(secondBrotherReg) < 0){
+				leftNode = firstBrotherNode;
+				centerNode = secondBrotherNode;
+			}else{
+				leftNode = secondBrotherNode;
+				centerNode = firstBrotherNode;
+			}
+		}
+
+	leftNode->transferRegistry(leftNodeReg);
+	centerNode->transferRegistry(centerNodeReg);
+	rigthNode->transferRegistry(rigthNodeReg);
+
+	this->listRegistry.clear();// TODO OJO ESTA LA AGREGAMOS NOSOTROS
+	this->mergeComponentList(this->listRegistry,leftNodeReg,centerNodeReg);
+	this->mergeComponentList(regList,this->listRegistry,rigthNodeReg);
+
+	// Llena bloque izquierdo
+	list<Registry*>::iterator iterListReg = regList.begin();
+	while (leftNode->isUnderflowRemove()){
+		leftNode->addComponent(*iterListReg);
+		iterListReg++;
+		count++;
+	}
+
+	// Llena bloque centro
+	container->setRegMidleKey(this->extractKey(*iterListReg));
+	while (iterListReg != regList.end()){
+			if (centerNode->posibleToAgregateComponent(*iterListReg))
+				centerNode->addComponent(*iterListReg);
+			else
+				break;
+			iterListReg++;
+			count++;
+	}
+
+	if (iterListReg != regList.end()){
+		leftNode->clearListRegistry();
+		list<Registry*>::iterator nodeRegList = leftNodeReg.begin();
+		while (nodeRegList != leftNodeReg.end()){
+			leftNode->addComponent(*nodeRegList);
+			nodeRegList++;
+		}
+		centerNode->clearListRegistry();
+		nodeRegList = centerNodeReg.begin();
+		while (nodeRegList != centerNodeReg.end()){
+			centerNode->addComponent(*nodeRegList);
+			nodeRegList++;
+		}
+		rigthNode->clearListRegistry();
+		nodeRegList = rigthNodeReg.begin();
+		while (nodeRegList != rigthNodeReg.end()){
+			rigthNode->addComponent(*nodeRegList);
+			nodeRegList++;
+		}
+		leftNodeReg.clear();
+		centerNodeReg.clear();
+		rigthNodeReg.clear();
+		return false;
+	}
+	else{
+		// Enlaza a los bloques
+		centerNode->setNextBlock(rigthNode->getNextBlock());
+		container->setRightBlock(rigthNode->getNumBlock());
+		// Marco segundo bloque como borrado
+		this->freeBlockController->writeFreeBlock(rigthNode->getNumBlock());
+		// Escribo primer bloque
+		this->writeNode(leftNode, leftNode->getNumBlock());
+		// Escribo primer bloque
+		this->writeNode(centerNode, centerNode->getNumBlock());
+
+		return true;
+	}
+}
+
+bool IndexBSharp::balanceLeafNodeRemove(LeafNode* currentNode,LeafNode* firstBrotherNode, LeafNode* secondBrotherNode,ContainerInsertion* container)throw(){
+
+	unsigned int count=0;
+
+	if (firstBrotherNode == NULL || secondBrotherNode == NULL)
+			return false;
+
+
+	// Crea contenedor de componentes para almacenar los registros de los bloques
+	list<Registry*> regList;
+
+	Registry* currentReg = *(currentNode->iteratorBegin());
+
+	//Registro menor bloque primer hermano
+	Registry* firstBrotherReg = (*(firstBrotherNode->iteratorBegin()));
+
+	//Registro menor bloque segundo hermano
+	Registry* secondBrotherReg = (*(secondBrotherNode->iteratorBegin()));
+
+	LeafNode*  leftNode;
+	LeafNode* centerNode;
+	LeafNode* rigthNode;
+	list<Registry*> leftNodeReg;
+	list<Registry*> centerNodeReg;
+	list<Registry*> rigthNodeReg;
+
+	//Diferencio orden bloques
+	if (currentReg->compareTo(firstBrotherReg) <0)
+		if (currentReg->compareTo(secondBrotherReg) < 0){
+			leftNode = currentNode;
+			if (firstBrotherReg->compareTo(secondBrotherReg) < 0){
+				centerNode = firstBrotherNode;
+				rigthNode = secondBrotherNode;
+			}else{
+				centerNode = secondBrotherNode;
+				rigthNode = firstBrotherNode;
+			}
+		}else{
+			leftNode = secondBrotherNode;
+			centerNode = currentNode;
+			rigthNode = firstBrotherNode;
+		}
+	else
+		if (currentReg->compareTo(secondBrotherReg) < 0){
+			leftNode = firstBrotherNode;
+			centerNode = currentNode;
+			rigthNode = secondBrotherNode;
+		}else{
+			rigthNode = currentNode;
+			if (firstBrotherReg->compareTo(secondBrotherReg) < 0){
+				leftNode = firstBrotherNode;
+				centerNode = secondBrotherNode;
+			}else{
+				leftNode = secondBrotherNode;
+				centerNode = firstBrotherNode;
+			}
+		}
+
+	leftNode->transferRegistry(leftNodeReg);
+	centerNode->transferRegistry(centerNodeReg);
+	rigthNode->transferRegistry(rigthNodeReg);
+
+	this->listRegistry.clear();// TODO OJO ESTA LA AGREGAMOS NOSOTROS
+	this->mergeComponentList(this->listRegistry,leftNodeReg,centerNodeReg);
+	this->mergeComponentList(regList,this->listRegistry,rigthNodeReg);
+
+
+	unsigned int averageWeight = this->averageEstimate(regList.begin(), regList.end());
+	leftNode->setAverageWeight(averageWeight);
+	centerNode->setAverageWeight(averageWeight);
+	rigthNode->setAverageWeight(averageWeight);
+
+	list<Registry*>::iterator iterRegFinalList = regList.begin();
+	while (leftNode->isUnderflow((averageWeight*regList.size())/3)){
+		leftNode->addComponent(*iterRegFinalList);
+		iterRegFinalList++;
+		count++;
+	}
+
+	// Establece el elemento izq a subir en el resultado
+	container->setLeftRegKey(this->extractKey(*iterRegFinalList));
+	while (centerNode->isUnderflow((averageWeight*regList.size())/3)){
+			centerNode->addComponent(*iterRegFinalList);
+			iterRegFinalList++;
+			count++;
+	}
+	// Establece el elemento izq a subir en el resultado
+	container->setRightRegKey(this->extractKey(*iterRegFinalList));
+	while (iterRegFinalList != regList.end()){
+		if (rigthNode->posibleToAgregateComponent(*iterRegFinalList))
+			rigthNode->addComponent(*iterRegFinalList);
+		else
+			break;
+		iterRegFinalList++;
+		count++;
+	}
+
+	if(count!=regList.size()){
+		  throw eLostReg("Se perdio al menos un registro");
+	}
+
+	// Escribe bloque izquierdo
+	this->writeNode(leftNode,leftNode->getNumBlock());
+	// Escribe bloque centro
+	this->writeNode(centerNode, centerNode->getNumBlock());
+	// Escribe bloque derecho
+	this->writeNode(rigthNode, rigthNode->getNumBlock());
+
+	return true;
+
+}
+bool IndexBSharp::balanceInternalNodeRemove(InternalNode* currentNode,InternalNode* firstBrotherNode, InternalNode* secondBrotherNode,ContainerInsertion* container,Registry* regFirstFather, Registry* regSecondFather) throw(){
+	unsigned int count=0;
+
+	if (firstBrotherNode == NULL || secondBrotherNode == NULL)
+			return false;
+
+
+	// Crea contenedor de componentes para almacenar los registros de los bloques
+	list<Registry*> regList;
+
+	Registry* currentReg = *(currentNode->iteratorBegin());
+
+	//Registro menor bloque primer hermano
+	Registry* firstBrotherReg = (*(firstBrotherNode->iteratorBegin()));
+
+	//Registro menor bloque segundo hermano
+	Registry* secondBrotherReg = (*(secondBrotherNode->iteratorBegin()));
+
+	InternalNode*  leftNode;
+	InternalNode* centerNode;
+	InternalNode* rigthNode;
+	list<Registry*> leftNodeReg;
+	list<Registry*> centerNodeReg;
+	list<Registry*> rigthNodeReg;
+
+	// Crea contenedor de ramas para insertar la rama nueva...
+	vector<int> branchList;
+	vector<int> branchListLeftNode;
+	vector<int> branchListCenterNode;
+	vector<int> branchListRightNode;
+
+	//Diferencio orden bloques
+	if (currentReg->compareTo(firstBrotherReg) <0)
+		if (currentReg->compareTo(secondBrotherReg) < 0){
+			leftNode = currentNode;
+			if (firstBrotherReg->compareTo(secondBrotherReg) < 0){
+				centerNode = firstBrotherNode;
+				rigthNode = secondBrotherNode;
+			}else{
+				centerNode = secondBrotherNode;
+				rigthNode = firstBrotherNode;
+			}
+		}else{
+			leftNode = secondBrotherNode;
+			centerNode = currentNode;
+			rigthNode = firstBrotherNode;
+		}
+	else
+		if (currentReg->compareTo(secondBrotherReg) < 0){
+			leftNode = firstBrotherNode;
+			centerNode = currentNode;
+			rigthNode = secondBrotherNode;
+		}else{
+			rigthNode = currentNode;
+			if (firstBrotherReg->compareTo(secondBrotherReg) < 0){
+				leftNode = firstBrotherNode;
+				centerNode = secondBrotherNode;
+			}else{
+				leftNode = secondBrotherNode;
+				centerNode = firstBrotherNode;
+			}
+		}
+
+	leftNode->transferRegistry(leftNodeReg);
+	centerNode->transferRegistry(centerNodeReg);
+	rigthNode->transferRegistry(rigthNodeReg);
+
+	this->listRegistry.clear();// TODO OJO ESTA LA AGREGAMOS NOSOTROS
+	this->mergeComponentList(this->listRegistry,leftNodeReg,centerNodeReg);
+	this->mergeComponentList(regList,this->listRegistry,rigthNodeReg);
+
+
+	leftNode->transferBranchs(branchListLeftNode);
+	centerNode->transferBranchs(branchListCenterNode);
+	rigthNode->transferBranchs(branchListRightNode);
+
+
+	this->mergeBranchList(this->branchList,branchListLeftNode,branchListCenterNode);
+	this->mergeBranchList(branchList,this->branchList,branchListRightNode);
+
+	regList.push_back(regFirstFather);
+	regList.push_back(regSecondFather);
+	regList.sort(comparatorRegistry);
+
+	// Llena bloque izquierdo
+	list<Registry*>::iterator iterRegFinalList = regList.begin();
+	vector<int>::iterator iterBranchFinalList = branchList.begin();
+
+	unsigned int averageWeight = this->averageEstimate(regList.begin(), regList.end());
+	leftNode->setAverageWeight(averageWeight);
+	centerNode->setAverageWeight(averageWeight);
+	rigthNode->setAverageWeight(averageWeight);
+
+	leftNode->addBranch(*iterBranchFinalList);
+	iterBranchFinalList++;
+
+
+	while (leftNode->isUnderflow((averageWeight*regList.size())/3)){
+		leftNode->addComponent(*iterRegFinalList);
+		iterRegFinalList++;
+		leftNode->addBranch(*iterBranchFinalList);
+		iterBranchFinalList++;
+		count++;
+	}
+
+	centerNode->addBranch(*iterBranchFinalList);
+	iterBranchFinalList++;
+
+	// Establece el elemento izq a subir en el resultado
+	container->setLeftRegKey(this->extractKey(*iterRegFinalList));
+	iterRegFinalList++;
+	count++;
+	while (centerNode->isUnderflow((averageWeight*regList.size())/3)){
+			centerNode->addComponent(*iterRegFinalList);
+			centerNode->addBranch(*iterBranchFinalList);
+			iterBranchFinalList++;
+			iterRegFinalList++;
+			count++;
+	}
+	// Establece el elemento izq a subir en el resultado
+	container->setRightRegKey(this->extractKey(*iterRegFinalList));
+	iterRegFinalList++;
+	rigthNode->addBranch(*iterBranchFinalList);
+	iterBranchFinalList++;
+	count++;
+	while (iterRegFinalList != regList.end()){
+		if (rigthNode->posibleToAgregateComponent(*iterRegFinalList)){
+			rigthNode->addComponent(*iterRegFinalList);
+			rigthNode->addBranch(*iterBranchFinalList);
+		}
+		else
+			break;
+		iterRegFinalList++;
+		iterBranchFinalList++;
+		count++;
+	}
+
+
+	if(count!=regList.size()){
+		throw eLostReg("Se perdio al menos un registro");
+	}
+
+	std::cout<<"Si se puede hacer balanceo externo"<<std::endl;
+	// Escribe bloque izquierdo
+	this->writeNode(leftNode, leftNode->getNumBlock());
+	// Escribe bloque centro
+	this->writeNode(centerNode, centerNode->getNumBlock());
+	// Escribe bloque derecho
+	this->writeNode(rigthNode, rigthNode->getNumBlock());
+
+	return true;
+
+}
+bool IndexBSharp::removeInternalNodeEmpty(InternalNode* currentNode,InternalNode* firstBrotherNode, InternalNode* secondBrotherNode,ContainerInsertion* container,Registry* regFirstFather, Registry* regSecondFather){
+
+	unsigned int count=0;
+
+		if (firstBrotherNode == NULL || secondBrotherNode == NULL)
+				return false;
+		// Crea contenedor de componentes para almacenar los registros de los bloques
+		list<Registry*> regList;
+
+		Registry* currentReg = *(currentNode->iteratorBegin());
+
+		//Registro menor bloque primer hermano
+		Registry* firstBrotherReg = (*(firstBrotherNode->iteratorBegin()));
+
+		//Registro menor bloque segundo hermano
+		Registry* secondBrotherReg = (*(secondBrotherNode->iteratorBegin()));
+
+		InternalNode*  leftNode;
+		InternalNode* centerNode;
+		InternalNode* rigthNode;
+		list<Registry*> leftNodeReg;
+		list<Registry*> centerNodeReg;
+		list<Registry*> rigthNodeReg;
+
+	// Crea contenedor de ramas para insertar la rama nueva...
+		vector<int> branchList;
+		vector<int> branchListLeftNode;
+		vector<int> branchListCenterNode;
+		vector<int> branchListRightNode;
+
+		//Diferencio orden bloques
+		if (currentReg->compareTo(firstBrotherReg) <0)
+			if (currentReg->compareTo(secondBrotherReg) < 0){
+				leftNode = currentNode;
+				if (firstBrotherReg->compareTo(secondBrotherReg) < 0){
+					centerNode = firstBrotherNode;
+					rigthNode = secondBrotherNode;
+				}else{
+					centerNode = secondBrotherNode;
+					rigthNode = firstBrotherNode;
+				}
+			}else{
+				leftNode = secondBrotherNode;
+				centerNode = currentNode;
+				rigthNode = firstBrotherNode;
+			}
+		else
+			if (currentReg->compareTo(secondBrotherReg) < 0){
+				leftNode = firstBrotherNode;
+				centerNode = currentNode;
+				rigthNode = secondBrotherNode;
+			}else{
+				rigthNode = currentNode;
+				if (firstBrotherReg->compareTo(secondBrotherReg) < 0){
+					leftNode = firstBrotherNode;
+					centerNode = secondBrotherNode;
+				}else{
+					leftNode = secondBrotherNode;
+					centerNode = firstBrotherNode;
+				}
+			}
+
+		leftNode->transferRegistry(leftNodeReg);
+		centerNode->transferRegistry(centerNodeReg);
+		rigthNode->transferRegistry(rigthNodeReg);
+
+		this->listRegistry.clear();// TODO OJO ESTA LA AGREGAMOS NOSOTROS
+		this->mergeComponentList(this->listRegistry,leftNodeReg,centerNodeReg);
+		this->mergeComponentList(regList,this->listRegistry,rigthNodeReg);
+
+
+	leftNode->transferBranchs(branchListLeftNode);
+	centerNode->transferBranchs(branchListCenterNode);
+	rigthNode->transferBranchs(branchListRightNode);
+
+
+	this->mergeBranchList(this->branchList,branchListLeftNode,branchListCenterNode);
+
+	this->mergeBranchList(branchList,this->branchList,branchListRightNode);
+
+	regList.push_back(regFirstFather);
+	regList.push_back(regSecondFather);
+	regList.sort(comparatorRegistry);
+
+
+	// Llena bloque izquierdo
+	list<Registry*>::iterator iterRegFinalList = regList.begin();
+	vector<int>::iterator iterBranchFinalList = branchList.begin();
+
+	leftNode->addBranch(*iterBranchFinalList);
+		iterBranchFinalList++;
+
+
+	while (leftNode->isUnderflowRemove()){
+			leftNode->addComponent(*iterRegFinalList);
+			leftNode->addBranch(*iterBranchFinalList);
+			iterRegFinalList++;
+			iterBranchFinalList++;
+			count++;
+	}
+
+	centerNode->addBranch(*iterBranchFinalList);
+		iterBranchFinalList++;
+		// Establece el elemento medio a subir en el resultado de insercion
+//		Registro::puntero copia = resultado.obtener_registro_clave_media();
+		container->setRegMidleKey(this->extractKey(*iterRegFinalList));
+		iterRegFinalList++;
+		count++;
+
+	while (iterRegFinalList != regList.end()){
+			if (centerNode->posibleToAgregateComponent(*iterRegFinalList)){
+				centerNode->addComponent(*iterRegFinalList);
+				centerNode->addBranch(*iterBranchFinalList);
+			}
+			else
+				break;
+			iterRegFinalList++;
+			iterBranchFinalList++;
+			count++;
+	}
+
+
+	if (iterRegFinalList != regList.end()){
+		leftNode->clearListRegistry();
+		list<Registry*>::iterator iterRegNodeList = leftNodeReg.begin();
+
+		while (iterRegNodeList != leftNodeReg.end()){
+			leftNode->addComponent(*iterRegNodeList);
+			iterRegNodeList++;
+		}
+		centerNode->clearListRegistry();
+		iterRegNodeList = centerNodeReg.begin();
+		while (iterRegNodeList != centerNodeReg.end()){
+			centerNode->addComponent(*iterRegNodeList);
+			iterRegNodeList++;
+		}
+
+		rigthNode->clearListRegistry();
+		iterRegNodeList = rigthNodeReg.begin();
+		while (iterRegNodeList != rigthNodeReg.end()){
+			rigthNode->addComponent(*iterRegNodeList);
+			iterRegNodeList++;
+		}
+
+		leftNodeReg.clear();
+		centerNodeReg.clear();
+		rigthNodeReg.clear();
+
+		leftNode->clearBranch();
+		vector<int>::iterator iterBranchNodeList = branchListLeftNode.begin();
+
+		while (iterBranchNodeList != branchListLeftNode.end()){
+			leftNode->addBranch(*iterBranchNodeList);
+			iterBranchNodeList++;
+		}
+		centerNode->clearBranch();
+		iterBranchNodeList = branchListCenterNode.begin();
+		while (iterBranchNodeList != branchListCenterNode.end()){
+			centerNode->addBranch(*iterBranchNodeList);
+			iterBranchNodeList++;
+		}
+
+		rigthNode->clearBranch();
+		iterBranchNodeList = branchListRightNode.begin();
+		while (iterBranchNodeList != branchListRightNode.end()){
+			rigthNode->addBranch(*iterBranchNodeList);
+			iterBranchNodeList++;
+		}
+
+		branchListLeftNode.clear();
+		branchListCenterNode.clear();
+		branchListRightNode.clear();
+
+//		resultado.establecer_registro_clave_media(copia);
+
+		return false;
+	}
+	else{
+		// Enlaza a los bloques
+		centerNode->setNextBlock(rigthNode->getNextBlock());
+		container->setRightBlock(rigthNode->getNumBlock());
+
+		// Marco segundo bloque como borrado
+		this->freeBlockController->writeFreeBlock(rigthNode->getNumBlock());
+		// Escribo primer bloque
+		this->writeNode(leftNode,leftNode->getNumBlock());
+		// Escribo primer bloque
+		this->writeNode(centerNode, centerNode->getNumBlock());
+		return true;
+	}
+}
+void IndexBSharp::searchBranchSisters(InternalNode* internalNode, Registry* reg, int *r1, int *r2) throw() {
+	list<Registry*>::iterator currentReg= internalNode->iteratorBegin();
+	list<Registry*>::iterator finalReg = internalNode->iteratorEnd();
+	unsigned int sisterBranch = 0;
+	unsigned int branchPos = 0;
+
+	while (currentReg != finalReg) {
+			if (reg->compareTo(*currentReg) < 0) {
+				break;
+			}
+			++currentReg;
+			++branchPos;
+	}
+	int sisterBranch2;
+	// Si es el ultimo componente las ramas son las dos anteriores
+	if (currentReg == finalReg) {
+		sisterBranch = branchPos - 1;
+		sisterBranch2 = branchPos - 2;
+	}
+	else{
+		// Si es el primer componente las ramas son las dos posteriores
+		if (branchPos ==  0){
+			sisterBranch = branchPos + 1;
+			sisterBranch2 = branchPos + 2;
+		}else{
+			// Si esta en el medio son las ramas anterior y posterior
+			sisterBranch = branchPos - 1;
+			sisterBranch2 = branchPos + 1;
+		}
+	}
+
+	*r1 = internalNode->getBranch(sisterBranch);
+	*r2 = internalNode->getBranch(sisterBranch2);
+}
+int IndexBSharp::removeInternalNode(InternalNode* internalNode, Registry* regKey,
+		ContainerInsertion* balanceContainer, ContainerInsertion* insertionContainer, unsigned int firstBrother, unsigned int secondBrother, Registry* regFirstFather, Registry* regSecondFather) throw() {
+	// Considero que no hay subflujo al remover en el bloque interno
+	int answer = CORRECT_REMOVE;
+	// Busco la rama por la cual borrar
+	int branchToRemove = this->searchBranch(internalNode, regKey);
+	int branchOne,branchTwo;
+	this->searchBranchSisters(internalNode,regKey, &branchOne,&branchTwo);
+	std::cout<<"Rama : "<< branchToRemove<<std::endl;
+	std::cout<<"Rama Hermana1: "<< branchOne<<std::endl;
+	std::cout<<"Rama Hermana2: "<< branchTwo<<std::endl;
+	bool isLastReg= false;
+
+
+	//Obtengo elemento actual del bloque por el cual bajo a la rama siguiente
+	list<Registry*>::iterator currentReg = internalNode->iteratorBegin();
+	list<Registry*>::iterator lastReg = internalNode->iteratorEnd();
+	while (currentReg != lastReg) {
+		if (regKey->compareTo(*currentReg) < 0) {
+			break;
+		}
+		currentReg++;
+	}
+
+
+	if (currentReg ==  lastReg)
+		isLastReg=true;
+
+	if (currentReg !=  internalNode->iteratorBegin())
+			currentReg--;
+
+
+	// Leo el bloque por el cual borrar
+	Node* nodeRemoveBranch= this->readNode(branchToRemove);
+
+	if (nodeRemoveBranch != NULL) {
+		// Considero que no hay subflujo al remover en el bloque hijo
+		int childAnswer = CORRECT_REMOVE;
+		if (nodeRemoveBranch->isLeaf()) {
+			LeafNode* leafNodeRemove = (LeafNode*) nodeRemoveBranch;
+			// Remuevo en el bloque externo hijo
+			childAnswer = this->removeLeafNode(leafNodeRemove, regKey, insertionContainer, branchOne, branchTwo);
+		} else {
+			Registry* regFirstFather;
+			Registry* regSecondFather;
+			list<Registry*>::iterator currentRegAux = currentReg;
+			if (isLastReg){
+				regSecondFather = *currentRegAux;
+				regFirstFather =  *(--currentRegAux);
+			}else{
+				regFirstFather = *currentRegAux;
+				regSecondFather = *(++currentRegAux);
+			}
+			InternalNode* internalNodeRemove = (InternalNode*)nodeRemoveBranch;
+
+			// Remuevo en el bloque interno hijo
+			childAnswer = this->removeInternalNode(internalNodeRemove, regKey, balanceContainer,insertionContainer, branchOne, branchTwo,regFirstFather, regSecondFather);
+		}
+
+		if (childAnswer == BALANCE) {
+			if (regKey->compareTo(*currentReg) == 0)
+				insertionContainer->setInternalKey(NULL);
+
+			Registry* biggerRegToReplace;
+			Registry* smallerRegToReplace;
+
+			vector<int>::iterator finalBranch = internalNode->lastBranch();
+			list<Registry*>::iterator currentRegAux = currentReg;
+
+			if (isLastReg){
+
+				biggerRegToReplace =   *currentRegAux;
+				smallerRegToReplace =  *(--currentRegAux);
+			}else{
+				smallerRegToReplace =   *currentRegAux;
+				biggerRegToReplace =   *(++currentRegAux);
+
+			}
+
+			internalNode->replaceRegistry(smallerRegToReplace,insertionContainer->getLeftRegKey());
+
+			internalNode->replaceRegistry(biggerRegToReplace, insertionContainer->getRightRegKey());
+			// Escribo bloque
+			this->writeNode(internalNode, internalNode->getNumBlock());
+		}
+		// Verifico si hubo sobrelujo al insertar en el bloque hijo
+		if (childAnswer == UNDERFLOW) {
+			if (regKey->compareTo(*currentReg) == 0)
+							insertionContainer->setInternalKey(NULL);
+
+			// Dejo actual componente en una posicion valida
+			if (isLastReg)
+				currentReg--;
+
+			this->updateFusion(internalNode, insertionContainer);
+
+			if (internalNode->isUnderflowRemove()){
+				// Leo bloques hermanos
+				InternalNode* firstBrotherNode;
+				InternalNode* secondBrotherNode;
+				if (firstBrother != 0 && secondBrother != 0){
+					firstBrotherNode = (InternalNode*)this->readNode(firstBrother);
+					secondBrotherNode = (InternalNode*)this->readNode(secondBrother);
+				}else{
+					firstBrotherNode = NULL;
+					secondBrotherNode = NULL;
+				}
+				// Intento fusionar
+				if (this->removeInternalNodeEmpty(internalNode,firstBrotherNode,secondBrotherNode, insertionContainer,regFirstFather,regSecondFather))
+					answer = UNDERFLOW;
+				else{
+					// Si no se puede fusionar se balancea
+					if (firstBrother != 0 && secondBrother != 0){
+						this->balanceInternalNodeRemove(internalNode,firstBrotherNode,secondBrotherNode,insertionContainer,regFirstFather,regSecondFather);
+					}
+					answer = BALANCE;
+					}
+
+				}
+		}
+	}
+	if (answer == CORRECT_REMOVE && insertionContainer->getInternalKey() != NULL){
+		list<Registry*>::iterator currentRegAux = currentReg;
+		if (regKey->compareTo(*currentRegAux) == 0){
+			internalNode->replaceRegistry(*currentRegAux, insertionContainer->getInternalKey());
+			// Escribo bloque
+			this->writeNode(internalNode,internalNode->getNumBlock());
+
+			insertionContainer->setInternalKey(NULL);
+
+		}
+	}
+	return answer;
+}
+
+int IndexBSharp::removeLeafNode(LeafNode* leafNode, Registry* regKey,
+		ContainerInsertion* insertionContainer, unsigned int firstBrother, unsigned int secondBrother) throw() {
+
+	// Consideramos que no hay subflujo
+	int answer = CORRECT_REMOVE;
+
+	list<Registry*>::iterator currentReg = leafNode->iteratorBegin();
+	list<Registry*>::iterator lastReg = leafNode->iteratorEnd();
+	bool isFirst = true;
+	while (currentReg != lastReg) {
+		Registry* iterReg  = *currentReg;
+		if (iterReg->compareTo(regKey) == 0) {
+			leafNode->removeReg(currentReg);
+			break;
+		}
+		isFirst = false;
+		++currentReg;
+	}
+	if (isFirst && (leafNode->getNumElements() > 0))
+		insertionContainer->setInternalKey(this->extractKey((*leafNode->iteratorBegin())));
+
+
+	// DONI
+	// Pregunto si hay underflow, si hay, intento fusionar y luego balancear
+	if (leafNode->isUnderflowRemove()){
+		// Leo bloques hermanos
+		LeafNode* firstBrotherNode;
+		LeafNode* secondBrotherNode;
+		if (firstBrother != 0 && secondBrother != 0){
+			firstBrotherNode = (LeafNode*) this->readNode(firstBrother);
+			secondBrotherNode = (LeafNode*) this->readNode(secondBrother);
+		}else{
+			firstBrotherNode = NULL;
+			secondBrotherNode = NULL;
+		}
+		// Intento fusionar
+		if (this->removeLeafNodeEmpty(leafNode,firstBrotherNode,secondBrotherNode, insertionContainer))
+			answer = UNDERFLOW;
+		else{
+			// Si no se puede fusionar se balancea
+			if (firstBrother != 0 && secondBrother != 0)// TODO VER
+				this->balanceLeafNodeRemove(leafNode,firstBrotherNode,secondBrotherNode,insertionContainer);
+			answer = BALANCE;
+		}
+	}
+
+	if (answer == CORRECT_REMOVE){
+		// Actualizo espacio en disco
+		this->writeNode(leafNode, leafNode->getNumBlock());
+	}
+
+	return answer;
+
+}
+
+void IndexBSharp::updateFusion(InternalNode* fatherNode, ContainerInsertion* insertionContainer) throw() {
+	vector<int>::iterator currentBranch = fatherNode->firstBranch();
+	vector<int>::iterator lastBranch = fatherNode->lastBranch();
+	int removeBranchPos = 0;
+
+	while (currentBranch != lastBranch) {
+		if (*currentBranch == (int)insertionContainer->getRightBlock()) {
+			fatherNode->removeBranch(*currentBranch);
+			break;
+		}
+		++removeBranchPos;
+		++currentBranch;
+	}
+	list<Registry*>::iterator currentKey = fatherNode->iteratorBegin();
+	list<Registry*>::iterator previousKey = fatherNode->iteratorBegin();
+	for (int countKeys = 0; countKeys < removeBranchPos - 1; ++countKeys) {
+		previousKey = currentKey;
+		++currentKey;
+	}
+
+	fatherNode->removeReg(currentKey);
+
+	Registry* regToReplace =   *previousKey;
+	fatherNode->replaceRegistry(regToReplace, insertionContainer->getRegMidleKey());
+	// Escribo bloque padre en disco...
+	this->writeNode(fatherNode, fatherNode->getNumBlock());
+}
+void IndexBSharp::manageRootUnderflow() throw() {
+	if (!this->rootNode->isLeaf()) {
+		InternalNode* internalRootNode = (InternalNode*)this->rootNode;
+		if (internalRootNode->getNumElements() == 1){
+			if (internalRootNode->getLevel() == 1){
+				unsigned int count=0;
+				LeafNode* newRoot = new LeafNode(2*this->sizeBlock, 0);
+
+				vector<int>::iterator currentBranch = internalRootNode->firstBranch();
+				LeafNode* firstChildNode = (LeafNode*)this->readNode(*currentBranch);
+				LeafNode* secondChildNode = (LeafNode*)this->readNode(*(++currentBranch));
+
+				list<Registry*> leftNodeRegs;
+				list<Registry*> rightNodeRegs;
+
+				firstChildNode->transferRegistry(leftNodeRegs);
+				secondChildNode->transferRegistry(rightNodeRegs);
+
+				// Crea contenedor de componentes para insertar ordenado el registro...
+				list<Registry*> regList;
+
+
+				this->mergeComponentList(regList,leftNodeRegs,rightNodeRegs);
+
+
+				list<Registry*>::iterator finalListReg = regList.begin();
+				while (finalListReg != regList.end()){
+					if (newRoot->posibleToAgregateComponent(*finalListReg))
+						newRoot->addComponent(*finalListReg);
+					else
+						break;
+					finalListReg++;
+					count++;
+				}
+
+				if(count!=regList.size()){
+					throw eLostReg("Se perdio al menos un registro");
+				}
+
+				this->rootNode = newRoot;
+
+				this->freeBlockController->writeFreeBlock(firstChildNode->getNumBlock());
+				this->freeBlockController->writeFreeBlock(secondChildNode->getNumBlock());
+
+				this->writeNode(this->rootNode, 0);
+
+				////////////////
+			}
+			else{
+				unsigned int count=0;
+				InternalNode* newRoot = new InternalNode(2*this->sizeBlock, this->rootNode->getLevel() - 1);
+
+				vector<int>::iterator currentBranch = internalRootNode->firstBranch();
+				InternalNode* firstChildNode = (InternalNode*) this->readNode(*currentBranch);
+				InternalNode* secondChildNode = (InternalNode*) this->readNode(*(++currentBranch));
+
+				list<Registry*> leftNodeRegs;
+				list<Registry*> rightNodeRegs;
+				vector<int> leftNodeBranchs;
+				vector<int> rightNodeBranchs;
+
+
+				firstChildNode->transferRegistry(leftNodeRegs);
+				secondChildNode->transferRegistry(rightNodeRegs);
+				firstChildNode->transferBranchs(leftNodeBranchs);
+				secondChildNode->transferBranchs(rightNodeBranchs);
+
+				// Crea contenedor de componentes para insertar ordenado el registro...
+				list<Registry*> regList;
+				vector<int> branchList;
+
+				Registry* fatherReg = (*(internalRootNode->iteratorBegin()));
+
+				this->mergeComponentList(regList,leftNodeRegs,rightNodeRegs);
+
+				regList.push_back(fatherReg);
+				regList.sort(comparatorRegistry);
+
+				this->mergeBranchList(branchList,leftNodeBranchs,rightNodeBranchs);
+
+				list<Registry*>::iterator finalListReg = regList.begin();
+				vector<int>::iterator finalListBranch = branchList.begin();
+				newRoot->addBranch(*finalListBranch);
+				finalListBranch++;
+				while (finalListReg != regList.end()){
+					if (newRoot->posibleToAgregateComponent(*finalListReg)){
+						newRoot->addComponent(*finalListReg);
+						newRoot->addBranch(*finalListBranch);
+					}
+					else
+						break;
+					finalListReg++;
+					finalListBranch++;
+					count++;
+				}
+
+				if(count!=regList.size()){
+					throw eLostReg("Se perdio al menos un registro");
+				}
+
+				this->rootNode = newRoot;
+
+				this->freeBlockController->writeFreeBlock(firstChildNode->getNumBlock());
+				this->freeBlockController->writeFreeBlock(secondChildNode->getNumBlock());
+
+				this->writeNode(this->rootNode, 0);
+			}
+
+			///////////////
+		}
+	}
+}
+void IndexBSharp::deleteRegistry(Registry* reg) throw() {
+	ContainerInsertion balanceContainer;
+	ContainerInsertion insertionContainer;
+	int answer = CORRECT_REMOVE;
+	if (this->rootNode->isLeaf()) {
+		LeafNode* leafNode = (LeafNode*)this->rootNode;
+		answer = this->removeLeafNode(leafNode, reg, &insertionContainer, 0, 0);
+	} else {
+		Registry* aux = NULL;
+		InternalNode* internalNode = (InternalNode*)this->rootNode;
+		answer = this->removeInternalNode(internalNode, reg, &balanceContainer,&insertionContainer, 0, 0, aux, aux);
+	}
+
+	if (answer == BALANCE) {
+		this->manageRootUnderflow();
 	}
 }

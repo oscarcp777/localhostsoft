@@ -52,6 +52,18 @@ public:
     Registry* getRightRegKey();
     void setLeftRegKey(Registry* leftRegKey);
     void setRightRegKey(Registry* rightRegKey);
+
+
+    /**
+     * Establece el numero de clave para reemplazar la clave interna eliminada
+     * @param numero_bloque - El numero de clave interna nueva
+     */
+    void setInternalKey(Registry* internalKey) throw();
+    /**
+     * Obtiene el numero de clave para reemplazar la clave interna eliminada
+     * @return unsigned int - El numero de clave interna nueva
+     */
+    Registry* getInternalKey() const throw();
 private:
 	/**
 	 * Almacena el registro con la clave de dato media luego de una division de bloques.
@@ -78,6 +90,10 @@ private:
 	 * Almacena el numero de bloque medio luego de una division de bloques de 2 a 3.
 	 */
 	unsigned int mediumBlock;
+	/**
+	 * Almacena el numero de bloque medio luego de una division de bloques de 2 a 3.
+	 */
+	Registry* internalKey;
 
 };
 

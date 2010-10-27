@@ -17,9 +17,9 @@
 
 using namespace std;
 
-int main3646(int argc,char** argv) {
+int main(int argc,char** argv) {
 
-//	TestBSharp* test = new TestBSharp();
+	TestBSharp* test = new TestBSharp();
 //	test->testInsert();
 //	test->testsearch();
 //	test->testInsertAndSearch();
@@ -28,7 +28,8 @@ int main3646(int argc,char** argv) {
 //	test->testInsertAndSearchRegClassification();
 //	test->testInsertMails();
 //	test->testPrint();
-//	delete test;
+	test->testInsertAndDelete();
+	delete test;
 /*
 	//TEST STORAGE
    TestStorage* teststorage = new TestStorage();
@@ -59,10 +60,10 @@ int main3646(int argc,char** argv) {
 //	delete myTest;
 //*********************************************************************
 
-	TestManagerInvertedIndex* myTest = new TestManagerInvertedIndex();
+//	TestManagerInvertedIndex* myTest = new TestManagerInvertedIndex();
 //	myTest->testInsert();
-	myTest->testSearch();
-	delete myTest;
+//	myTest->testSearch();
+//	delete myTest;
 
 	return 0;
 }

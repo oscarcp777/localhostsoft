@@ -247,4 +247,6 @@ int Block::getTipeKey(int typeElement){
         	return TYPE_KEY_STRING;
     return typeElement;
 }
-
+void Block::removeReg(list<Registry*>::iterator it){
+	this->regList.erase(it);
+}

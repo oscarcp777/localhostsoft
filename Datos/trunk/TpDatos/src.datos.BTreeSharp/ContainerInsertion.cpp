@@ -71,7 +71,12 @@ void ContainerInsertion::setRightRegKey(Registry *rightRegKey)
 {
     this->rightRegKey = rightRegKey;
 }
-
+void ContainerInsertion::setInternalKey(Registry* internalKey) throw(){
+	this->internalKey = internalKey;
+}
+Registry* ContainerInsertion::getInternalKey() const throw(){
+	   return this->internalKey;
+}
 
 
 

@@ -23,6 +23,7 @@ public:
 	void testInsertRegSelection();
 	void testInsertAndSearchRegClassification();
 	void testPrint();
+	void testInsertAndDelete();
 };
 
 #endif /* TESTBSHARP_H_ */

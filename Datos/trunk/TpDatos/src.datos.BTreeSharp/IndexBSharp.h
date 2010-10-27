@@ -27,10 +27,10 @@ public:
 	 * Agrega un registro en el indice b sharp.
 	 */
 	 void addRegistry(Registry* registry) throw();
-	/**
-	 * Remueve un registro en el indice b sharp.
-	 */
-	 void deleteRegistry(Registry* registry) throw();
+	 /**
+	 	 * Borra un registro en el indice b sharp.
+	 	 */
+	 void deleteRegistry(Registry* reg) throw();
 	/**
 	 * Busca un registro en el indice b sharp.
 	 */
@@ -64,14 +64,6 @@ private:
 		 * Crea el bloque raiz del indice b sharp.
 		 */
 		void createBlockRoot() throw();
-		/**
-		 * Lee el bloque raiz del indice b sharp.
-		 */
-		void readBlockRoot() throw();
-		/**
-		 * Escribe el bloque raiz del indice b sharp.
-		 */
-		void writeBlockRoot() throw();
 		/**
 		 * Maneja el sobreflujo al dividirse el nodo raiz del indice b sharp.
 		 */
@@ -167,7 +159,7 @@ private:
 		/**
 		 *escribwe un bloque en disco
 		 */
-		void writeBlock(Node* node,int position=-1) throw();
+		void writeNode(Node* node,int position=-1) throw();
 		void advanceListPointer(list<Registry*>::iterator& iterator,unsigned int countAdvance);
 		void advanceVectorPointer(vector<int>::iterator& iterator,unsigned int countAdvance);
 		void mergeComponentList(list<Registry*> &listRegistry, list<Registry*> &listLeftNode,list<Registry*> &listRightNode);
@@ -186,6 +178,20 @@ private:
 		 * Calcula el peso promedio de los registros contenidos en los bloques a ser divididos
 		 */
 		unsigned int averageEstimate(list<Registry*>::iterator iteratorBegin,list<Registry*>::iterator iteratorEnd) throw() ;
+
+
+		// metodos de la baja
+		bool removeLeafNodeEmpty(LeafNode* currentNode,LeafNode* firstBrotherNode, LeafNode* secondBrotherNode,ContainerInsertion* container);
+		bool balanceLeafNodeRemove(LeafNode* currentNode,LeafNode* firstBrotherNode, LeafNode* secondBrotherNode,ContainerInsertion* container)throw();
+		bool removeInternalNodeEmpty(InternalNode* currentNode,InternalNode* firstBrotherNode, InternalNode* secondBrotherNode,ContainerInsertion* container,Registry* regFirstFather, Registry* regSecondFather);
+		bool balanceInternalNodeRemove(InternalNode* currentNode,InternalNode* firstBrotherNode, InternalNode* secondBrotherNode,ContainerInsertion* container,Registry* regFirstFather, Registry* regSecondFather)throw();
+		int removeInternalNode(InternalNode* internalNode, Registry* regKey,
+				ContainerInsertion* balanceContainer, ContainerInsertion* insertionContainer, unsigned int firstBrother, unsigned int secondBrother, Registry* regFirstFather, Registry* regSecondFather) throw();
+		void searchBranchSisters(InternalNode* internalNode, Registry* reg, int *r1, int *r2) throw();
+		void updateFusion(InternalNode* fatherNode, ContainerInsertion* insertionContainer) throw();
+		int removeLeafNode(LeafNode* leafNode, Registry* regKey,ContainerInsertion* insertionContainer, unsigned int firstBrother, unsigned int secondBrother) throw();
+		void manageRootUnderflow() throw();
+
 		/**
 		 * Almacena la longitud de los bloques del indice b sharp.
 		 */

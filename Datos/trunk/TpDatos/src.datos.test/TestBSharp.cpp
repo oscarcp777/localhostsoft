@@ -44,7 +44,45 @@ void TestBSharp::testInsert(){
 
 
 }
+void TestBSharp::testInsertAndDelete(){
+	/* initialize random seed: */
+	int cantidad_insertar = 200;
+	int vecInserts[cantidad_insertar];
+	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTree.dat",BLOCK_SIZE,TYPE_REG_PRIMARY);
+	for (int var =0; var < cantidad_insertar; ++var) {
+		RegPrimary* regPrimary = new RegPrimary();
+		int keyInt=rand()%10000;
+		vecInserts[var]=keyInt;
+		KeyInteger* key= new KeyInteger(keyInt);
+		regPrimary->setKey(key);
+		regPrimary->setNumberBlock(var);
+		cout<<" Inserto el : ";
+		regPrimary->print(cout);
+		indexBSharp->addRegistry(regPrimary);
 
+	}
+	indexBSharp->print(std::cout);
+	for (int var =0; var < cantidad_insertar; ++var) {
+			RegPrimary* regPrimary = new RegPrimary();
+			int keyInt = vecInserts[var];
+			KeyInteger* key= new KeyInteger(keyInt);
+			regPrimary->setKey(key);
+			regPrimary->setNumberBlock(var);
+			if (var >= 61)
+							indexBSharp->print(std::cout);
+			std::cout << "----A Eliminar----";
+					std::cout << "ID: " << keyInt << std::endl;
+
+			indexBSharp->deleteRegistry(regPrimary);
+
+			std::cout << "VAR: " << var << " REGISTRO ELIMINADO id: " << keyInt << std::endl;
+		}
+	indexBSharp->print(std::cout);
+
+	delete indexBSharp;
+	cout<<" esto es una manteca bambino!!!"<<endl;
+
+}
 void TestBSharp::testInsertAndSearch(){
 	int cantidadAInsertar = 10000;
 	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTreeInsertandSearch.dat",BLOCK_SIZE,TYPE_REG_PRIMARY);

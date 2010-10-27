@@ -64,6 +64,7 @@ public:
     void setNextBlock(int numero_bloque);
     bool getIndexed() const;
     void setIndexed(bool indexed);
+    void removeReg(list<Registry*>::iterator it);
 protected:
     /**
      * metodo que dice cual es el tipo de clave que usa el registro
