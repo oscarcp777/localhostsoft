@@ -24,8 +24,10 @@ public:
     unsigned int searchFreeBlock() throw ();
     unsigned int getCounterBlock() const;
     void setCounterBlock(unsigned int counterBlock);
-
+    void print(std::ostream& streamSalida);
+    void writeFreeBlock();
 private:
+    void loadNumBlockFree();
     BinaryFile* binaryFile;
 	vector<unsigned int> vectorFreeBlock;
 	unsigned int counterBlock;

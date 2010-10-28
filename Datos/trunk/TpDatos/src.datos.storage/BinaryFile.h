@@ -24,6 +24,7 @@ public:
 	void open(string fileName);
 	void clear();
 	bool isCreated(string fileName);
+	int sizeFile();
 
 };
 
