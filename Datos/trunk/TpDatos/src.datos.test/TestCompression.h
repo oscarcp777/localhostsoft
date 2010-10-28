@@ -18,6 +18,7 @@ public:
 	void testUnario();
 	void testGamma();
 	void testDelta();
+	void testDelta2();
 };
 
 #endif /* TESTCOMPRESSION_H_ */

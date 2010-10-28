@@ -147,3 +147,32 @@ void TestCompression::testGamma(){
 	delete bo;
 	delete bi;
 }
+void TestCompression::testDelta2(){
+	BitOutputStream* bits = new BitOutputStream();
+	BitArrayBufferCompression* buffer= new BitArrayBufferCompression(512);
+	BitOutput* bo = new BitOutput(buffer);
+	int size=1;
+	buffer->packField(&size,sizeof(size));
+	size=-1;
+	buffer->packField(&size,sizeof(size));
+	bo->writeDelta(6);
+	bo->writeDelta(1);
+	bo->writeDelta(126);
+	bo->flush();
+	cout<<"BITS DEL BUFFER :"<<bits->toString(buffer)<<endl;
+	buffer->init();
+	buffer->unPackField(&size,sizeof(size));
+	cout<<size<<endl;
+	buffer->unPackField(&size,sizeof(size));
+	cout<<size<<endl;
+	BitInput* bi=new BitInput(buffer);
+	int result=bi->readDelta();
+	cout<<"NUMERO QUE LEYO DEL BUFFER :"<<result<<endl;
+	result=bi->readDelta();
+	cout<<"NUMERO QUE LEYO DEL BUFFER :"<<result<<endl;
+	result=bi->readDelta();
+	cout<<"NUMERO QUE LEYO DEL BUFFER :"<<result<<endl;
+	delete bits;
+	delete bo;
+	delete bi;
+}

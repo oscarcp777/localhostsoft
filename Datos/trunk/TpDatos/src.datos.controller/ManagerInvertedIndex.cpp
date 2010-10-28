@@ -79,7 +79,8 @@ void ManagerInvertedIndex::writeOrUpdateInvertedIndex(IndexBSharp* indexBSharp){
 	map<string,RegInvertedIndex*>::iterator it;
 	for(it = this->regMap.begin() ; it != this->regMap.end(); it++){
 		regInvertedIndex = (*it).second;
-			indexBSharp->addRegistry(regInvertedIndex);//se agrega al indice
+		regInvertedIndex->print(cout);
+		indexBSharp->addRegistry(regInvertedIndex);//se agrega al indice
 		}
 }
 

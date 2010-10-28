@@ -8,7 +8,7 @@
 #include "RegInvertedIndex.h"
 
 RegInvertedIndex::RegInvertedIndex() {
-	// TODO Auto-generated constructor stub
+ this->numBlock=NEXT_BLOCK_INVALID;
 
 }
 InfoPerDoc* RegInvertedIndex::getInfoPerDoc()

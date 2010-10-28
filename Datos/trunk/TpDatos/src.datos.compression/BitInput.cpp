@@ -48,7 +48,7 @@ bool BitInput::endOfStream(){
 
 bool BitInput::readBit() throw(){
 	bool result;
-		switch (mNextBitIndex--) {
+	switch (mNextBitIndex--) {
         case 0:
             result = ((mNextByte & 1) != 0);
             readAhead();
@@ -99,7 +99,7 @@ int BitInput::readUnary() throw(){
 
 
 
-long BitInput::readGamma() throw(){
+int BitInput::readGamma() throw(){
         int numBits = readUnary();
         if (numBits > 63)
         	throw eCompression("Gamma code binary part must be <= 63 bits");
@@ -110,25 +110,25 @@ long BitInput::readGamma() throw(){
 
 
 
-long BitInput::readDelta() throw() {
-        long numBits = readGamma();
+int BitInput::readDelta() throw() {
+        int numBits = readGamma();
         checkDelta(numBits);
         if (numBits > 63l)
         	throw eCompression("Delta code must use <= 63 bits for fixed portion");
-
-        return readRest((int)numBits-1,1l);
+        int valor = readRest((int)numBits-1,1l);
+		return valor;
     }
 
 
 
-long BitInput::readBinary(int numBits) throw(){
+int BitInput::readBinary(int numBits) throw(){
         if (numBits > 63)
-        	throw eCompression("Cannot read more than 63 bits into positive long");
+        	throw eCompression("Cannot read more than 63 bits into positive int");
 
         if (numBits < 1)
         	throw eCompression("Number of bits to read must be > 0");
 
-        long result = readBit() ? 1l : 0l;
+        int result = readBit() ? 1l : 0l;
         return readRest(numBits-1,result);
 }
 
@@ -136,7 +136,7 @@ long BitInput::readBinary(int numBits) throw(){
 
 
 
-long BitInput::readRest(int numBits, long result) throw(){
+int BitInput::readRest(int numBits, int result) throw(){
         /* simple working version:
            while (--numBits >= 0) {
            notEndOfStream();
@@ -199,11 +199,11 @@ void BitInput::notEndOfStream() throw(){
 }
 
 
-long BitInput::leastSignificantBits2(int n, int numBits){
+int BitInput::leastSignificantBits2(int n, int numBits){
     return (ALL_ONES_INT >> (32-numBits)) & n;
 }
 
-long BitInput::sliceBits2(int n, int leastSignificantBit, int numBits){
+int BitInput::sliceBits2(int n, int leastSignificantBit, int numBits){
         return leastSignificantBits2(((unsigned int) n) >>/*>TODO*/ leastSignificantBit,
                                      numBits);
 }
@@ -214,7 +214,7 @@ void BitInput::checkGamma(int numBits) throw(){
 
  }
 
-void BitInput::checkDelta(long numBits) throw(){
+void BitInput::checkDelta(int numBits) throw(){
         if (numBits <= 63l) return;
         throw eCompression("Delta code binary part must be <= 63 bits");
  }

@@ -30,7 +30,7 @@ void CompressedBlock::packCompressed(BitArrayBufferCompression* buffer){
 	this->packMetadata(buffer);
 	this->packListRegistryCompressed();
 	this->compressorBitOutput->flush();
-//	cout<<"cantidad de bytes que se escribe en disco buffer :"<<buffer->getNextByte()<<endl;
+	cout<<"cantidad de bytes que se escribe en disco buffer :"<<buffer->getNextByte()<<endl;
 
 }
 void CompressedBlock::unPackCompressed(BitArrayBufferCompression* buffer){
@@ -55,15 +55,31 @@ void CompressedBlock::packMetadataCompressed(){
 	if(this->indexed)
 		this->compressorBitOutput->writeDelta(this->nextNode);
 }
-
+void CompressedBlock::unPackListRegistryCompressed( int numberElements, int typeElement){
+	list<Registry*>::iterator iterRegistry;
+	for(int i=0; i<numberElements; i++){
+		this->regList.push_back(factory->createRegistry(typeElement));
+	}
+	for (iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
+		InfoPerDoc* reg=(InfoPerDoc*)*iterRegistry;
+		//cout<<"############################ unPackListRegistryCompressed ############################################"<<endl;
+		reg->unPackCompressed(this->compressorBitInput);
+		//reg->print(cout);
+		//cout<<"########################################################################"<<endl;
+	}
+}
 void CompressedBlock::packListRegistryCompressed(){
 	list<Registry*>::iterator iterRegistry;
 
 	for (iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
 		InfoPerDoc* reg=(InfoPerDoc*)*iterRegistry;
 		reg->packCompressed(this->compressorBitOutput);
+		//cout<<"############################## packListRegistryCompressed ##########################################"<<endl;
+		//reg->print(cout);
+
 //		cout<<"cantidad de bytes en buffer :"<<this->compressorBitOutput->getBytesCompressed()<<endl;
 //		cout<<"getlongBytesCompressed :"<<reg->getlongBytesCompressed()<<endl;
+//		cout<<"########################################################################"<<endl;
 	}
 }
 unsigned int CompressedBlock::getSizeRegCompressed(){
@@ -87,14 +103,5 @@ bool CompressedBlock::posibleToAgregateRegCompressed(InfoPerDoc* registry){
 	return (this->getOcupedLongCompressed() + registry->getlongBytesCompressed() <= this->getMaxLong());
 
 }
-void CompressedBlock::unPackListRegistryCompressed( int numberElements, int typeElement){
-	list<Registry*>::iterator iterRegistry;
-	for(int i=0; i<numberElements; i++){
-		this->regList.push_back(factory->createRegistry(typeElement));
-	}
-	for (iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
-		InfoPerDoc* reg=(InfoPerDoc*)*iterRegistry;
-		reg->unPackCompressed(this->compressorBitInput);
-	}
-}
+
 

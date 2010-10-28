@@ -36,7 +36,7 @@ string BitArrayBufferCompression::toString(){
 }
 
 int BitArrayBufferCompression::read(){
-	  char field='0';
+	  int field;
 	  this->unPackField(&field,sizeof(char));
 	  return field;
 }

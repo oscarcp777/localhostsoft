@@ -143,8 +143,8 @@ Mail* BlockDataManager::validedSizeMail(Mail* mail,ContainerInsertDataBlock* con
 
 	if(mail->getSize()>container->getSizeBlockData()){
 		string messsage=mail->getMessage();
-		cout<<mail->getSize()<<endl;
-		cout<<messsage.size()<<endl;
+		//cout<<mail->getSize()<<endl;
+		//cout<<messsage.size()<<endl;
 		unsigned int sizeMaxMessage =container->getSizeBlockData()-((mail->getSize()-messsage.size())+sizeof(unsigned int));
 		messsage=messsage.substr(0,sizeMaxMessage);
 		mail->setMessage(messsage);

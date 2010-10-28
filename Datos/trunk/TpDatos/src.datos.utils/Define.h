@@ -13,7 +13,7 @@
  */
 #define SERVER "pop.gmail.com"// "pop.mail.yahoo.com"
 #define PORT  995 // 995 para gmail, 110 para yahoo
-#define CONNECT 0 // 1 se conecta a la cuenta, 0 baja de un archivo
+#define CONNECT 1 // 1 se conecta a la cuenta, 0 baja de un archivo
 #define MAILSFILE "./files/mailsMediano"
 #define PATHFILES "files/storage/"
 #define STOP_WORDS_FILE "./files/stopwords.txt"
@@ -24,7 +24,7 @@
 #define DEBUG 0
 #define NUM_FIELDS_MAILS 6
 #define NUM_FIELDS_REG_PRIMARY 2
-#define BLOCK_SIZE 512
+#define BLOCK_SIZE 1024
 #define BLOCK_SIZE_MAILS 32768
 //TODO IMPORTANTE NO MODIFICAR ENTE ORDEN
 #define TYPE_REG_PRIMARY 1

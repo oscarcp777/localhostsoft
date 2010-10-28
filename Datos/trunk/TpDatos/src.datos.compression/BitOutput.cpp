@@ -10,7 +10,7 @@
 #include <cmath>
 #include "../src.datos.exception/eCompression.h"
 
-static unsigned long ALL_ONES_LONG = ~0l;
+static unsigned int ALL_ONES_LONG = ~0l;
 
 static char ZERO_BYTE = (char) 0;
 BitOutput* BitOutput::instanceUnique=NULL;
@@ -62,7 +62,7 @@ void BitOutput::writeUnary(int n) throw(){
 	this->writeTrue();
  }
 
-void BitOutput::writeBinary(long n, int numBits) throw(){
+void BitOutput::writeBinary(int n, int numBits) throw(){
 	int k = this->mostSignificantPowerOfTwo(n);
 	if (k >= numBits) {
 	  throw eCompression("Number will not fit into number of bits");
@@ -70,7 +70,7 @@ void BitOutput::writeBinary(long n, int numBits) throw(){
 	this->writeLowOrderBits(numBits,n);
 }
 
-void BitOutput::writeGamma(long n) throw(){
+void BitOutput::writeGamma(int n) throw(){
 	if (n == 1l) {
 	    this->writeTrue();
 	    return;
@@ -80,7 +80,7 @@ void BitOutput::writeGamma(long n) throw(){
 	this->writeLowOrderBits(k,n);
     }
 
-void BitOutput::writeDelta(long n) throw(){
+void BitOutput::writeDelta(int n) throw(){
 	int numBits = this->mostSignificantPowerOfTwo(n); // 1 to 63
 	if (numBits > 63) {
 		throw eCompression("numBits too large");
@@ -96,15 +96,14 @@ void BitOutput::close() throw(){
 
 void BitOutput::flush() throw(){
 	if (mNextBitIndex < 7) {
-
-	    int n= this->mNextByte << this->mNextBitIndex;
+		int n= this->mNextByte << this->mNextBitIndex;
 	    this->mOut->write(n); // shift to fill //TODO PENSAR LO DEL BUFFER
 
 
 	    this->reset();
 	}
 
-    }
+}
 
 
 void BitOutput::writeBit(bool bit) throw(){
@@ -134,7 +133,7 @@ void BitOutput::writeFalse() throw(){
 }
 
 // writes out k lowest bits
-void BitOutput::writeLowOrderBits(int numBits, long n) throw(){
+void BitOutput::writeLowOrderBits(int numBits, int n) throw(){
 	/* simple version that works:
 	   while (--numBits >= 0)
 	   writeBit(((ONE << numBits) & n) != 0);
@@ -175,14 +174,14 @@ void BitOutput::reset() {
 	this->mNextBitIndex = 7;
 }
 
-long BitOutput::leastSignificantBits(long n, int numBits) throw() {
+int BitOutput::leastSignificantBits(int n, int numBits) throw() {
 	if (numBits < 1 || numBits > 64)
 			throw eCompression("Number of bits must be between 1 and 64 inclusive");
 
 	return this->leastSignificantBits2(n,numBits);
  }
 
-long BitOutput::sliceBits(long n, int leastSignificantBit, int numBits) throw(){
+int BitOutput::sliceBits(int n, int leastSignificantBit, int numBits) throw(){
 	if (leastSignificantBit < 0 || leastSignificantBit > 63)
 		throw eCompression("Least significant bit must be between 0 and 63");
 
@@ -192,25 +191,26 @@ long BitOutput::sliceBits(long n, int leastSignificantBit, int numBits) throw(){
 	return this->sliceBits2(n,leastSignificantBit,numBits);
 }
 
-long BitOutput::leastSignificantBits2(long n, int numBits) {
+int BitOutput::leastSignificantBits2(int n, int numBits) {
 	return (ALL_ONES_LONG >> (64-numBits)) & n;
 }
 
-long BitOutput::sliceBits2(long n, int leastSignificantBit, int numBits){
+int BitOutput::sliceBits2(int n, int leastSignificantBit, int numBits){
 	return leastSignificantBits2(((unsigned int) n) >> leastSignificantBit,numBits);
 }
 
-int BitOutput::mostSignificantPowerOfTwo(long n) {
-	int sum = (n >> 32 != 0) ? 32 : 0;
+int BitOutput::mostSignificantPowerOfTwo(int n) {
+	int sum = 0;
 	if (n >> (sum | 16) != 0) sum = (sum | 16);
 	if (n >> (sum | 8) != 0) sum = (sum | 8);
 	if (n >> (sum | 4) != 0) sum = (sum | 4);
 	if (n >> (sum | 2) != 0) sum = (sum | 2);
 	return (n >> (sum | 1) != 0) ? (sum | 1) : sum;
 }
+
 int BitOutput::getOcupedBytes(int value){
 	//	1 + 2|log 2 (2 x )| + |log( x)|
-	 long cantBytes=0;
+	 int cantBytes=0;
 	double cantBit= 1+2*abs(log(2*value))+abs(log(value));
 //   cout<<"bits :"<<cantBit<<" el numero : "<<value<<endl;
    if(cantBit>4&&cantBit<8)

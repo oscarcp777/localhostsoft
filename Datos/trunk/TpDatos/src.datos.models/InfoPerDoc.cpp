@@ -41,7 +41,7 @@ void InfoPerDoc::unPack(Buffer* buffer){
 void InfoPerDoc::packCompressed(BitOutput* compressor){
 	KeyInteger* key =(KeyInteger*)this->getKey();
 	key->packCompressed(compressor);
-	unsigned int size=this->listOfPositions.size();
+	int size=this->listOfPositions.size();
 	compressor->writeDelta(size);
 	list<KeyInteger*>::iterator it;
 	for(it = this->listOfPositions.begin() ; it != this->listOfPositions.end() ; it++){
@@ -53,8 +53,8 @@ void InfoPerDoc::unPackCompressed(BitInput* compressor){
 	this->setKey(new KeyInteger());
 	KeyInteger* key =(KeyInteger*)this->getKey();
 	key->unPackCompressed(compressor);
-	unsigned int numberElements=compressor->readDelta();
-	for(unsigned int i=0; i<numberElements; i++){
+	int numberElements=compressor->readDelta();
+	for(int i=0; i<numberElements; i++){
 		this->listOfPositions.push_back(new KeyInteger());
 	}
 	list<KeyInteger*>::iterator it;
@@ -111,7 +111,7 @@ bool InfoPerDoc::compareDistance(InfoPerDoc* infoPerDoc, int distance){
 	return false;
 }
 int InfoPerDoc::print(ostream& outStream){
-	outStream<<"IUC: ";
+	outStream<<"infoPerDoc IUC: ";
 	this->getKey()->print(outStream);
 	list<KeyInteger*>::iterator it;
 	outStream<<"pos: ";
