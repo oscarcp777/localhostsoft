@@ -24,7 +24,7 @@ public:
 	void unPack(Buffer* buffer);
 	void packMetadata(Buffer* buffer);
 	int unPackMetadata(Buffer* buffer);
-	void deleteBlockData(Registry* registry,ContainerInsertDataBlock* container);
+	int deleteBlockData(Registry* registry,ContainerInsertDataBlock* container);
 
 	/**
 	 * Obtiene la longitud ocupada en bytes del bloque.
@@ -65,7 +65,7 @@ private:
 	 /**
 	  *  borra un Mail en un bloque de datos, el bloque puede ser uno existe o uno nuevo
 	  */
-	 void deleteBlockMails(Registry* registry,ContainerInsertDataBlock* container);
+	 int deleteBlockMails(Registry* registry,ContainerInsertDataBlock* container);
 	 /**
 	  *  borra un Iuc en un bloque de datos, el bloque puede ser uno existe o uno nuevo
 	  */

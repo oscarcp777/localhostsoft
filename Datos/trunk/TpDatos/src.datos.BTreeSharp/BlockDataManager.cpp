@@ -253,7 +253,7 @@ void BlockDataManager::deleteBlockIndexed(int numberBlock,ContainerInsertDataBlo
 	}
 	delete blockIucs;
 }
-void BlockDataManager::deleteMailInBlockData(int numberBlock ,RegPrimary* registry,ContainerInsertDataBlock* container){
+int BlockDataManager::deleteMailInBlockData(int numberBlock ,RegPrimary* registry,ContainerInsertDataBlock* container){
 
 		Block* blockMails=this->readBlockData(numberBlock,container);
 		Registry* reg=NULL;
@@ -263,9 +263,18 @@ void BlockDataManager::deleteMailInBlockData(int numberBlock ,RegPrimary* regist
               break;
 			}
 		}
-		if(reg!=NULL)
+		if(reg!=NULL){
 		blockMails->removeReg(reg);
+		if(blockMails->getNumElements()==0){
+			container->getFreeBlockController()->writeFreeBlock(numberBlock);
+			return BLOCK_EMPTY;
+		}
+		}
 		else
 			cout<<"no se pudo remover no existe el mail en el bloque"<<endl;
+		KeyInteger* key=(KeyInteger*)((Mail*)(*blockMails->iteratorBegin()))->getKey();
+		registry->setKey(key);
 		this->writeBlockData(blockMails,numberBlock,container);
+
+		return CORRECT_REMOVE;
 }

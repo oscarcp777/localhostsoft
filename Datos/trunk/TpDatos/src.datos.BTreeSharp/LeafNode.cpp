@@ -33,18 +33,19 @@ unsigned int LeafNode::getOcupedLong() throw(){
 unsigned int LeafNode::getMetadata(){
      return sizeof(unsigned int)*4;
 }
-void LeafNode::deleteBlockData(Registry* registry,ContainerInsertDataBlock* container){
+int LeafNode::deleteBlockData(Registry* registry,ContainerInsertDataBlock* container){
 
 	if(container->getTypeElement()==TYPE_REG_PRIMARY){
-		deleteBlockMails( registry, container);
+		return deleteBlockMails( registry, container);
 	}
 	if(container->getTypeElement()==TYPE_REG_CLASSIFICATION){
 //		deleteBlockRegClassification( registry, container);
 	}
 	if(container->getTypeElement()==TYPE_REG_INVERTED_INDEX){
 //		deleteBlockRegInvertedIndex( registry, container);
-	}
 
+	}
+	return 0;
 }
 Registry* LeafNode::insertBlockData(Registry* registry,ContainerInsertDataBlock* container){
 
@@ -74,11 +75,11 @@ Registry* LeafNode::searchRegistryBlockData(Registry* registry,ContainerInsertDa
 }
 
 
-void LeafNode::deleteBlockMails(Registry* registry,ContainerInsertDataBlock* container){
+int LeafNode::deleteBlockMails(Registry* registry,ContainerInsertDataBlock* container){
 	int numberBlock=this->searchNumberBlockMail((RegPrimary*)registry);
 	if(numberBlock==NEXT_BLOCK_INVALID)
-	return ;
-    this->blockDataManager->deleteMailInBlockData(numberBlock,(RegPrimary*)registry,container);
+	return CORRECT_REMOVE;
+   return this->blockDataManager->deleteMailInBlockData(numberBlock,(RegPrimary*)registry,container);
 }
 void LeafNode::deleteBlockDataIndexed(Registry* registry,ContainerInsertDataBlock* container){
 	int numberBlock=this->searchNumberBlockMail((RegPrimary*)registry);
