@@ -16,10 +16,9 @@ public:
 	TestCompression();
 	virtual ~TestCompression();
 	void testUnario();
+	
 	void testGamma();
 	void testDelta();
-	void testDelta2();
-	void testFreeBlockController();
 };
 
 #endif /* TESTCOMPRESSION_H_ */
