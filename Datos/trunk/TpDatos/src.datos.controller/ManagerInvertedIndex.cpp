@@ -42,7 +42,7 @@ void ManagerInvertedIndex::loadMessageWords(Mail* mail, IndexBSharp* indexBSharp
 	this->removeDirtyWords();
 	int count = 1;
 
-//	this->currentWords->print();
+	this->currentWords->print();
 
 	for(it= this->currentWords->getWordsBegin(); it != this->currentWords->getWordsEnd(); it++ ){
 
@@ -50,7 +50,7 @@ void ManagerInvertedIndex::loadMessageWords(Mail* mail, IndexBSharp* indexBSharp
 
 		if(regInvertedIndex == NULL){//aparicion termino por primera vez
 			regInvertedIndex = new RegInvertedIndex();
-			regInvertedIndex->setKey(new KeyString(*it));
+			regInvertedIndex->setKey(new KeyString(validateSize(*it)));
 			infoPerDoc = new InfoPerDoc();
 			KeyInteger* key=(KeyInteger*)mail->getKey()->clone();
 			infoPerDoc->setKey(key);
@@ -109,7 +109,9 @@ void ManagerInvertedIndex::removeStopWordsFromVector(vector<string>* words){
 void ManagerInvertedIndex::removeDirtyWords(){
 	vector<string>::iterator it;
 	for(it= this->currentWords->getWordsBegin(); it != this->currentWords->getWordsEnd(); it++ ){
-		if(this->dirtyWords->contains(*it))
+		string token=*it;
+		cout<<token<<endl;
+		if(this->dirtyWords->contains(token))
 			this->currentWords->removeWord(it);
 	}
 }
@@ -118,6 +120,12 @@ void ManagerInvertedIndex::loadDirtyWords(){
 	this->dirtyWords->addWord(" ");
 	this->dirtyWords->addWord("\n");
 	this->dirtyWords->addWord("\t");
+	this->dirtyWords->addWord("<");
+	this->dirtyWords->addWord(">");
+	this->dirtyWords->addWord(":");
+	this->dirtyWords->addWord(";");
+	this->dirtyWords->addWord("=");
+	this->dirtyWords->addWord("-");
 }
 map<string,RegInvertedIndex*>::iterator ManagerInvertedIndex::getIteratorBegin(){
 	return this->regMap.begin();
@@ -133,4 +141,11 @@ void  ManagerInvertedIndex::printMap(std::ostream& outStream){
 		((*it).second)->print(outStream);
 	}
 
+}
+string ManagerInvertedIndex::validateSize(string word){
+	unsigned int maxSize = BLOCK_SIZE*0.3;
+	if(word.size() >= maxSize){
+		word = word.substr(0,maxSize-1);
+	}
+	return word;
 }
