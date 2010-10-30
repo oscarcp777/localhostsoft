@@ -189,10 +189,14 @@ void TestBSharp::testsearch(){
 }void TestBSharp::testInsertMails(){
 	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTreeMails.dat",BLOCK_SIZE,TYPE_REG_PRIMARY);
 	RegPrimary* regPrimary = new RegPrimary();
-	KeyInteger* key= new KeyInteger(1);
+	regPrimary->setNumberBlock(500);
+	KeyInteger* key= new KeyInteger(2);
 	regPrimary->setKey(key);
-	indexBSharp->searchRegistry(regPrimary);
-	regPrimary->print(cout);
+	RegPrimary* regPrimary200=(RegPrimary*)indexBSharp->searchRegistry(regPrimary);
+	if(regPrimary200!=NULL)
+	regPrimary200->print(cout);
+	delete regPrimary;
+	delete indexBSharp;
 	return;
 	Mail* mail1 = new Mail();
 	Mail* mail2= new Mail();
@@ -229,7 +233,7 @@ void TestBSharp::testsearch(){
 
 	mail5->setDate("2/5/1985");
 	mail5->setFrom("santy");
-	mail5->setMessage("auto: 207 compact full full full full fullfullfull full full fullfullfull full fullfullfull fullfullfullfullfullfull");
+	mail5->setMessage("auto: 207 compact full full full full full full full full full full full full full full full full full full full full full full");
 	mail5->setSubject("Campeon 2010");
 	mail5->setTo("BUBU");
 

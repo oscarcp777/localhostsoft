@@ -68,3 +68,10 @@ void KeyInteger::packCompressed(BitOutput* compressor){
 void KeyInteger::unPackCompressed(BitInput* compressor){
   this->value=compressor->readDelta();
 }
+
+void KeyInteger::setValue(int value)
+{
+    this->value = value;
+}
+
+

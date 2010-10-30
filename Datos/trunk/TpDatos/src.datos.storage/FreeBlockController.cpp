@@ -13,7 +13,7 @@ FreeBlockController::~FreeBlockController()throw(){
 	this->binaryFile->close();
 	delete this->binaryFile;
 }
-FreeBlockController::FreeBlockController(string nameFile,unsigned int counterBlock) throw() {
+FreeBlockController::FreeBlockController(string nameFile, int counterBlock) throw() {
 	this->binaryFile = new BinaryFile();
 	if(!this->binaryFile->isCreated(nameFile)){
 		this->binaryFile->create(nameFile);
@@ -59,7 +59,7 @@ unsigned int FreeBlockController::searchFreeBlock() throw() {
 		return numBlock;
 	}
 	else{
-		unsigned int nextBlock=++counterBlock;
+		int nextBlock=++counterBlock;
 		return nextBlock;
 	}
 

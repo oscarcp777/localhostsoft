@@ -19,6 +19,7 @@ public:
 	void testGamma();
 	void testDelta();
 	void testDelta2();
+	void testFreeBlockController();
 };
 
 #endif /* TESTCOMPRESSION_H_ */

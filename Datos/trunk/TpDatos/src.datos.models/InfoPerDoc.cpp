@@ -29,6 +29,26 @@ unsigned int InfoPerDoc::getlongBytesCompressed(){
 Registry* InfoPerDoc::clone(){
 	return NULL;
 }
+void InfoPerDoc::chancePositionForDistancesAndReverse(bool reverse){
+	list<KeyInteger*>::iterator it=this->listOfPositions.begin();
+	KeyInteger* first=(KeyInteger*)*it;
+	int firstPosition=first->getValue();
+	it++;
+		for(; it != this->listOfPositions.end() ; it++){
+			KeyInteger* reg=(KeyInteger*)*it;
+			int value=reg->getValue();
+			if(!reverse){
+			reg->setValue(value-firstPosition);
+			firstPosition=value;
+			}
+			else{
+			reg->setValue(value+firstPosition);
+			firstPosition=reg->getValue();
+			}
+//			cout<<"########### este es el valor guardado :"<<reg->getValue()<<endl;
+		}
+}
+
 bool InfoPerDoc::equals(Registry* comp){
 	return NULL;
 }
@@ -111,7 +131,7 @@ bool InfoPerDoc::compareDistance(InfoPerDoc* infoPerDoc, int distance){
 	return false;
 }
 int InfoPerDoc::print(ostream& outStream){
-	outStream<<"infoPerDoc IUC: ";
+	outStream<<"IUC: ";
 	this->getKey()->print(outStream);
 	list<KeyInteger*>::iterator it;
 	outStream<<"pos: ";

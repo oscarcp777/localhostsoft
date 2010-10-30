@@ -12,6 +12,7 @@
 #include "../src.datos.compression/BitInput.h"
 #include "../src.datos.compression/BitOutputStream.h"
 #include "../src.datos.storage/BinaryFile.h"
+#include "../src.datos.storage/FreeBlockController.h"
 
 TestCompression::TestCompression() {
 	// TODO Auto-generated constructor stub
@@ -20,6 +21,23 @@ TestCompression::TestCompression() {
 
 TestCompression::~TestCompression() {
 	// TODO Auto-generated destructor stub
+}
+void TestCompression::testFreeBlockController(){
+	FreeBlockController* free= new FreeBlockController("test",-1);
+	int max=10;
+	for (int var = 0; var < max; ++var) {
+		free->writeFreeBlock(var);
+	}
+	free->print(cout);
+	delete free;
+	free= new FreeBlockController("test",-1);
+	free->print(cout);
+	for (int var = 0; var < max; ++var) {
+		cout<<"Bloque libre :"<<free->searchFreeBlock()<<endl;
+	}
+	free->print(cout);
+	delete free;
+
 }
 void TestCompression::testUnario(){
 	BitOutputStream* bits = new BitOutputStream();
@@ -138,6 +156,7 @@ void TestCompression::testGamma(){
 	bo->flush();
 	cout<<"EL 5 EN Gamma :00101000"<<endl;
 	cout<<"BITS DEL BUFFER :"<<bits->toString(buffer)<<endl;
+	cout<<"BITS DEL BUFFER :"<<bits->toString(buffer)<<endl;
 	buffer->init();
 	BitInput* bi=new BitInput(buffer);
 	long result=bi->readGamma();
@@ -148,31 +167,37 @@ void TestCompression::testGamma(){
 	delete bi;
 }
 void TestCompression::testDelta2(){
+	BinaryFile* file =new BinaryFile();
+	file->create("testCompresion");
 	BitOutputStream* bits = new BitOutputStream();
-	BitArrayBufferCompression* buffer= new BitArrayBufferCompression(512);
-	BitOutput* bo = new BitOutput(buffer);
-	int size=1;
+	BitArrayBufferCompression* buffer= new BitArrayBufferCompression(1024);
+	int size=12;
 	buffer->packField(&size,sizeof(size));
 	size=-1;
 	buffer->packField(&size,sizeof(size));
-	bo->writeDelta(6);
-	bo->writeDelta(1);
-	bo->writeDelta(126);
+	BitOutput* bo = new BitOutput(buffer);
+
+		bo->writeDelta(6);
+		bo->writeDelta(1);
+		bo->writeDelta(126);
+
+
 	bo->flush();
 	cout<<"BITS DEL BUFFER :"<<bits->toString(buffer)<<endl;
-	buffer->init();
-	buffer->unPackField(&size,sizeof(size));
-	cout<<size<<endl;
-	buffer->unPackField(&size,sizeof(size));
-	cout<<size<<endl;
+	file->write(buffer->getData(),buffer->getMaxBytes(),0);
+	buffer->clear();
+	file->read(buffer->getData(),buffer->getMaxBytes(),0);
+		buffer->unPackField(&size,sizeof(size));
+		cout<<size<<endl;
+		buffer->unPackField(&size,sizeof(size));
+		cout<<size<<endl;
 	BitInput* bi=new BitInput(buffer);
-	int result=bi->readDelta();
-	cout<<"NUMERO QUE LEYO DEL BUFFER :"<<result<<endl;
-	result=bi->readDelta();
-	cout<<"NUMERO QUE LEYO DEL BUFFER :"<<result<<endl;
-	result=bi->readDelta();
-	cout<<"NUMERO QUE LEYO DEL BUFFER :"<<result<<endl;
+	for (int var = 1; var < 4; ++var) {
+		int num=bi->readDelta();
+		cout<<num<<endl;
+	}
 	delete bits;
+	delete buffer;
 	delete bo;
 	delete bi;
 }

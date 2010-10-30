@@ -28,14 +28,14 @@ void TestManagerInvertedIndex::testInsert(){
 	mail->setKey(key);
 	mail->setDate("27/8/2009");
 	mail->setFrom("richy@lalala.com.ar");
-	mail->setMessage("Hola CARACAS mundo borra la ARGENTINA siguiente stop word ARGENTINA aqui ahi ahì CARACAS lo mas fragil mundo de la locura ARGENTINA trabajo ser trabajan ARGENTINA voy al mundia de brasil ARGENTINA");
+	mail->setMessage(" ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA");
 	mail->setSubject("trabajo practico");
 	mail->setTo("yogui");
 
 	mail2->setKey(key2);
 	mail2->setDate("27/8/2009");
 	mail2->setFrom("richy@lalala.com.ar");
-	mail2->setMessage("ARGENTINA CARACAS brasil ARGENTINA");
+	mail2->setMessage("ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA ARGENTINA");
 	mail2->setSubject("trabajo practico");
 	mail2->setTo("yogui");
 
@@ -51,9 +51,9 @@ void TestManagerInvertedIndex::testInsert(){
 
 }
 void TestManagerInvertedIndex::testSearch(){
-	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/rdubini.IndSecundario.Invertido",BLOCK_SIZE,TYPE_REG_INVERTED_INDEX);
+	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTree.dat",BLOCK_SIZE,TYPE_REG_INVERTED_INDEX);
 	RegInvertedIndex* regInvertedIndex= new RegInvertedIndex();
-	regInvertedIndex->setKey(new KeyString("group"));
+	regInvertedIndex->setKey(new KeyString("ARGENTINA"));
 	regInvertedIndex=(RegInvertedIndex*)indexBSharp->searchRegistry(regInvertedIndex);
 	regInvertedIndex->print(cout);
 	delete indexBSharp;

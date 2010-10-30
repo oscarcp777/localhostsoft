@@ -231,3 +231,41 @@ void BlockDataManager::writeBlockData(Block* block ,unsigned int numBlock,Contai
 	block=NULL;
 	delete buffer;
 }
+
+
+void BlockDataManager::deleteBlockIndexed(int numberBlock,ContainerInsertDataBlock* container){
+	Block* blockIucs;
+	int newNumBlock=0;
+	if(container->getTypeElement()==TYPE_REG_CLASSIFICATION)
+		blockIucs=this->readBlockData(numberBlock,container);
+	if(container->getTypeElement()==TYPE_REG_INVERTED_INDEX)
+		blockIucs=this->readDataBlockCompressed(numberBlock,container);
+	container->getFreeBlockController()->writeFreeBlock(numberBlock);
+	newNumBlock=blockIucs->getNextBlock();
+	while(newNumBlock!=NEXT_BLOCK_INVALID){
+		delete blockIucs;
+		if(container->getTypeElement()==TYPE_REG_CLASSIFICATION)
+			blockIucs=this->readBlockData(newNumBlock,container);
+		if(container->getTypeElement()==TYPE_REG_INVERTED_INDEX)
+			blockIucs=this->readDataBlockCompressed(newNumBlock,container);
+		container->getFreeBlockController()->writeFreeBlock(numberBlock);
+		newNumBlock=blockIucs->getNextBlock();
+	}
+	delete blockIucs;
+}
+void BlockDataManager::deleteMailInBlockData(int numberBlock ,RegPrimary* registry,ContainerInsertDataBlock* container){
+
+		Block* blockMails=this->readBlockData(numberBlock,container);
+		Registry* reg=NULL;
+		for(list<Registry*>::iterator iterRegistry = blockMails->iteratorBegin(); iterRegistry != blockMails->iteratorEnd(); iterRegistry++){
+		     reg=*iterRegistry;
+			if(registry->equals(reg)){
+              break;
+			}
+		}
+		if(reg!=NULL)
+		blockMails->removeReg(reg);
+		else
+			cout<<"no se pudo remover no existe el mail en el bloque"<<endl;
+		this->writeBlockData(blockMails,numberBlock,container);
+}

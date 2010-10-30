@@ -18,7 +18,7 @@ using namespace std;
 
 class FreeBlockController {
 public:
-    FreeBlockController(string  fileName,unsigned int counterBlock) throw ();
+    FreeBlockController(string  fileName,int counterBlock) throw ();
     virtual ~FreeBlockController() throw ();
     void writeFreeBlock(unsigned int numBlock) throw ();
     unsigned int searchFreeBlock() throw ();
@@ -30,7 +30,7 @@ private:
     void loadNumBlockFree();
     BinaryFile* binaryFile;
 	vector<unsigned int> vectorFreeBlock;
-	unsigned int counterBlock;
+	int counterBlock;
 
 
 };
