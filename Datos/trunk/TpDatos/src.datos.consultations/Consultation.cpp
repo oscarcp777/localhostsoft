@@ -46,10 +46,7 @@ void Consultation::consultSecondaryIndex(IndexConfig* indexConfig,list<int>* lis
 	}
 	if(indexConfig->getTypeSecundaryIndex().compare(TYPE_INVERTED_INDEX) == 0){
 			secondaryIndex = new IndexBSharp(PATHFILES+indexConfig->getFileName(),BLOCK_SIZE/*TODO indexConfig->getBlockSize()*/,TYPE_REG_INVERTED_INDEX);
-			secondaryIndex->print(cout);
 			ManagerInvertedIndex* managerInvertedIndex = new ManagerInvertedIndex();
-			cout<<"Consulta: "<<endl;
-			cout<<filterValue<<endl;
 			vector<string> words;
 			vector<string>::iterator itWords;
 			StringUtils::Tokenize(filterValue,words," ");
@@ -76,7 +73,7 @@ void Consultation::consultSecondaryIndex(IndexConfig* indexConfig,list<int>* lis
 
 			delete managerInvertedIndex;
 	}
-	else{
+	else if (indexConfig->getTypeSecundaryIndex().compare(TYPE_CLASSIFICATION) == 0){
 		secondaryIndex = new IndexBSharp(PATHFILES+indexConfig->getFileName(),BLOCK_SIZE/*TODO indexConfig->getBlockSize()*/,TYPE_REG_CLASSIFICATION);
 		RegClassification* searchReg = new RegClassification();
 		searchReg->setKey(new KeyString(filterValue));
