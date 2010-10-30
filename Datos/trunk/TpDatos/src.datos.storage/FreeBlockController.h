@@ -18,18 +18,19 @@ using namespace std;
 
 class FreeBlockController {
 public:
-    FreeBlockController(string  fileName,unsigned int counterBlock) throw ();
+    FreeBlockController(string  fileName,int counterBlock) throw ();
     virtual ~FreeBlockController() throw ();
     void writeFreeBlock(unsigned int numBlock) throw ();
     unsigned int searchFreeBlock() throw ();
-    unsigned int getCounterBlock() const;
+    unsigned int getCounterBlock() const; 
     void setCounterBlock(unsigned int counterBlock);
-    
-
+    void print(std::ostream& streamSalida);
+    void writeFreeBlock();
 private:
+    void loadNumBlockFree();
     BinaryFile* binaryFile;
 	vector<unsigned int> vectorFreeBlock;
-	unsigned int counterBlock;
+	int counterBlock;
 
 
 };

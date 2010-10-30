@@ -1773,7 +1773,7 @@ bool IndexBSharp::balanceInternalNodeRemove(InternalNode* currentNode,InternalNo
 		throw eLostReg("Se perdio al menos un registro");
 	}
 
-	std::cout<<"Si se puede hacer balanceo externo"<<std::endl;
+//	std::cout<<"Si se puede hacer balanceo externo"<<std::endl;
 	// Escribe bloque izquierdo
 	this->writeNode(leftNode, leftNode->getNumBlock());
 	// Escribe bloque centro
@@ -2174,6 +2174,17 @@ int IndexBSharp::removeLeafNode(LeafNode* leafNode, Registry* regKey,
 
 	// Consideramos que no hay subflujo
 	int answer = CORRECT_REMOVE;
+	    if(DATA==1){
+			if(this->typeElement==TYPE_REG_PRIMARY||this->typeElement==TYPE_REG_CLASSIFICATION||this->typeElement==TYPE_REG_INVERTED_INDEX){
+				answer= leafNode->deleteBlockData(regKey,this->containerInsertDataBlock);
+			}
+		    if(CORRECT_REMOVE==answer){
+				return answer;
+			}
+
+		}
+
+
 
 
 	list<Registry*>::iterator currentReg = leafNode->iteratorBegin();

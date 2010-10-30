@@ -24,9 +24,10 @@ public:
 	void unPack(Buffer* buffer);
 	void packMetadata(Buffer* buffer);
 	int unPackMetadata(Buffer* buffer);
-	
+	int deleteBlockData(Registry* registry,ContainerInsertDataBlock* container);
 
 	/**
+	 * 
 	 * Obtiene la longitud ocupada en bytes del bloque.
 	 */
 	 unsigned int getOcupedLong() throw();
@@ -48,7 +49,8 @@ private:
 	 // Los metodos siguientes fueron agregados al BSharp para darle la funcionalidad de un secuence set
 	 // segun se necesite
 
-
+      int searchNumberBlockMail(Registry* registry);
+      int searchNumberBlock(Registry* registry,ContainerInsertDataBlock* container);
 	 /**
 	  *  Inserta un Mail en un bloque de datos, el bloque puede ser uno existe o uno nuevo
 	  */
@@ -58,12 +60,17 @@ private:
 	  */
 	 Registry* insertBlockRegClassification(Registry* registry,ContainerInsertDataBlock* container);
 	 Registry* insertBlockRegInvertedIndex(Registry* registry,ContainerInsertDataBlock* container);
-	 Registry* insertMailBlockNew(Registry* registry,ContainerInsertDataBlock* container);
-	 Registry* insertIucBlockNew(Registry* registry,ContainerInsertDataBlock* container);
 	 Registry* searchBlockMails(Registry* registry,ContainerInsertDataBlock* container);
 	 Registry* searchBlockRegClassification(Registry* registry,ContainerInsertDataBlock* container);
 	 Registry* searchBlockRegInvertedIndex(Registry* registry,ContainerInsertDataBlock* container);
-
+	 /**
+	  *  borra un Mail en un bloque de datos, el bloque puede ser uno existe o uno nuevo
+	  */
+	 int deleteBlockMails(Registry* registry,ContainerInsertDataBlock* container);
+	 /**
+	  *  borra un Iuc en un bloque de datos, el bloque puede ser uno existe o uno nuevo
+	  */
+	 void deleteBlockDataIndexed(Registry* registry,ContainerInsertDataBlock* container);
 };
 
 #endif /* LEAFNODE_H_ */

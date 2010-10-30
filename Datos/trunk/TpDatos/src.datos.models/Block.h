@@ -65,15 +65,16 @@ public:
     bool getIndexed() const;
     void setIndexed(bool indexed);
     void removeReg(list<Registry*>::iterator it);
+    void removeReg(Registry* registry);
 protected:
     /**
+     * 
      * metodo que dice cual es el tipo de clave que usa el registro
      */
 	int getTipeKey(int typeElement);
     list<Registry*> regList;
 	int nextNode;
 	int typeElement;
-	
 protected:
 	 bool indexed;
 	 FactoryOfRegistry* factory;

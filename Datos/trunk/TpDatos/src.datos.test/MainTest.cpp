@@ -26,10 +26,10 @@ int main(int argc,char** argv) {
 //	test->testInsertRegClassification();
 //	test->testsearchRegClassification();
 //	test->testInsertAndSearchRegClassification();
-//	test->testInsertMails();
+	test->testInsertMails();
 //	test->testPrint();
-	test->testInsertAndDelete();
-//	delete test;
+//	test->testInsertAndDelete();
+	delete test;
 /*
 	//TEST STORAGE
    TestStorage* teststorage = new TestStorage();

@@ -63,8 +63,8 @@ void TestBSharp::testInsertAndDelete(){
 		KeyInteger* key= new KeyInteger((*it).second);
 		regPrimary->setKey(key);
 		regPrimary->setNumberBlock(var);
-		cout<<" Inserto el : "<<i++;
-		regPrimary->print(cout);
+//		cout<<" Inserto el : "<<i++;
+//		regPrimary->print(cout);
 		indexBSharp->addRegistry(regPrimary);
 		var++;
 		}
@@ -79,8 +79,8 @@ i=0;
 		RegPrimary* regPrimary = new RegPrimary();
 		KeyInteger* key= new KeyInteger((*it).second);
 		regPrimary->setKey(key);
-		cout<<" Deleteo el : "<<i<<" ";
-		regPrimary->print(cout);
+//		cout<<" Deleteo el : "<<i<<" ";
+//		regPrimary->print(cout);
 		indexBSharp->deleteRegistry(regPrimary);
 	}
 	RegPrimary* regPrimary = new RegPrimary();
@@ -219,10 +219,16 @@ void TestBSharp::testsearch(){
 }void TestBSharp::testInsertMails(){
 	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTreeMails.dat",BLOCK_SIZE,TYPE_REG_PRIMARY);
 	RegPrimary* regPrimary = new RegPrimary();
-	KeyInteger* key= new KeyInteger(1);
+	KeyInteger* key= new KeyInteger(2);
 	regPrimary->setKey(key);
-	indexBSharp->searchRegistry(regPrimary);
+//	indexBSharp->deleteRegistry(regPrimary);
+	RegPrimary* regP=(RegPrimary*)indexBSharp->searchRegistry(regPrimary);
+
+	if(regP!=NULL)
 	regPrimary->print(cout);
+	else
+		cout<<"no esta el registro "<<endl;
+	indexBSharp->print(cout);
 	return;
 	Mail* mail1 = new Mail();
 	Mail* mail2= new Mail();

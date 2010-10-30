@@ -26,8 +26,9 @@ public:
 	bool posibleToAgregateRegCompressed(InfoPerDoc* registry);
 	unsigned int getOcupedLongCompressed();
 	unsigned int getSizeRegCompressed();
-	
+	void chancePositionForDistancesAndReverse(bool reverse);
 private:
+
 	BitInput* compressorBitInput;
 	BitOutput* compressorBitOutput;
 };

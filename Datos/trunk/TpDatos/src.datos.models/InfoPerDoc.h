@@ -36,9 +36,8 @@ public:
 	bool compareDistance(InfoPerDoc* infoPerDoc, int distance);
 	list<KeyInteger*>::iterator getBeginListPositions();
 	list<KeyInteger*>::iterator getEndListPositions();
-	
-
-private:
+	void chancePositionForDistancesAndReverse(bool reverse);
+private: 
 
 	list<KeyInteger*> listOfPositions;
 };

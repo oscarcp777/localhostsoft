@@ -12,9 +12,9 @@ IndexConfig::IndexConfig() {
 	this->condition =0;
 	this->value="";
 	this->typeSecundaryIndex ="";
-	this->lastIuc = 0;
 
 }
+
 
 IndexConfig::~IndexConfig() {
 
@@ -104,12 +104,5 @@ void IndexConfig::print(){
 	cout<<"Type Secondary: " << this->getTypeSecundaryIndex()<< endl;
 	cout<<"Condition: " << this->getCondition()<< endl;
 	cout<<"Value: " << this->getValue() << endl;
-}
-
-void IndexConfig::setLastIuc(int lastIuc){
-	this->lastIuc =lastIuc;
-}
-int IndexConfig::getLastIuc(){
-	return this->lastIuc;
 }
 
