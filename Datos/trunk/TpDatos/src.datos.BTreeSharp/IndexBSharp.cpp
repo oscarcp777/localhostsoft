@@ -39,7 +39,7 @@ IndexBSharp::IndexBSharp(const std::string& nameFile, unsigned int sizeBlock,int
 	this->binaryFile = new BinaryFile();
 	if (!this->binaryFile->isCreated(nameFile)) {
 		this->binaryFile->create(nameFile);
-		this->freeBlockController = new FreeBlockController(nameFile+".fr",-1);
+		this->freeBlockController = new FreeBlockController(nameFile+".fr",1);
 	}else{
 		this->binaryFile->open(nameFile);
 		this->freeBlockController = new FreeBlockController(nameFile+".fr",this->binaryFile->getCountBlockInFile(sizeBlock)-1);
@@ -2133,9 +2133,10 @@ int IndexBSharp::removeLeafNode(LeafNode* leafNode, Registry* regKey,
 
 	// Consideramos que no hay subflujo
 	int answer = CORRECT_REMOVE;
+	int  resultDeleteBlockData;
 	if(DATA==1){
 		if(this->typeElement==TYPE_REG_PRIMARY||this->typeElement==TYPE_REG_CLASSIFICATION||this->typeElement==TYPE_REG_INVERTED_INDEX){
-			leafNode->deleteBlockData(regKey,this->containerInsertDataBlock);
+			resultDeleteBlockData=leafNode->deleteBlockData(regKey,this->containerInsertDataBlock);
 		}
 		if(this->typeElement==TYPE_REG_PRIMARY)
 			return CORRECT_REMOVE;
