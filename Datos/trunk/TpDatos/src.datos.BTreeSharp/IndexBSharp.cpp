@@ -2130,20 +2130,9 @@ int IndexBSharp::removeInternalNode(InternalNode* internalNode, Registry* regKey
 int IndexBSharp::removeLeafNode(LeafNode* leafNode, Registry* regKey,
 		ContainerInsertion* insertionContainer, unsigned int firstBrother, unsigned int secondBrother) throw() {
 
-
 	// Consideramos que no hay subflujo
+	
 	int answer = CORRECT_REMOVE;
-	int  resultDeleteBlockData;
-	if(DATA==1){
-		if(this->typeElement==TYPE_REG_PRIMARY||this->typeElement==TYPE_REG_CLASSIFICATION||this->typeElement==TYPE_REG_INVERTED_INDEX){
-			resultDeleteBlockData=leafNode->deleteBlockData(regKey,this->containerInsertDataBlock);
-		}
-		if(this->typeElement==TYPE_REG_PRIMARY)
-			return CORRECT_REMOVE;
-	}
-
-
-
 
 	list<Registry*>::iterator currentReg = leafNode->iteratorBegin();
 	list<Registry*>::iterator lastReg = leafNode->iteratorEnd();

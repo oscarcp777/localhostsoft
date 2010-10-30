@@ -31,8 +31,11 @@ public:
     void setCondition(int condition);
     void setValue(string value);
     void print();
+    void setLastIuc(int lastIuc);
+    int getLastIuc();
 
 private:
+    int lastIuc;
     string filterName;
 	string fileName;
 	string userName;

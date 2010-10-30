@@ -39,8 +39,7 @@ public:
 	 void loadListInfoPerDoc(list<InfoPerDoc*> &listRegistry, list<Registry*>::iterator itBegin,list<Registry*>::iterator itEnd);
 	 CompressedBlock* readDataBlockCompressed(unsigned int numBlock,ContainerInsertDataBlock* container);
 	 void writeDataBlockCompressed(CompressedBlock* block ,unsigned int numBlock,ContainerInsertDataBlock* container);
-	 int deleteMailInBlockData(int numberBlock,RegPrimary* registry,ContainerInsertDataBlock* container);
-	 void deleteBlockIndexed(int numberBlock,ContainerInsertDataBlock* container);
+	 
 private:
 	 Mail*  validedSizeMail(Mail* mail,ContainerInsertDataBlock* container);
 };

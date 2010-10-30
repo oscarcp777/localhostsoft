@@ -47,10 +47,8 @@ bool File::read(char* buffer, int tamanio, int pos){
 	if (this->file.is_open()) {
 		if(pos>=0)
 			this->file.seekg(pos, std::ios_base::beg);
-		else
-		this->file.seekp(0, std::ios_base::end);
-
 		this->file.read(buffer,tamanio);
+		
 	}
 	else {
 		/* arroja una excepción porque el file no está abierto */

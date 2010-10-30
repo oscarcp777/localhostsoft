@@ -143,8 +143,9 @@ Mail* BlockDataManager::validedSizeMail(Mail* mail,ContainerInsertDataBlock* con
 
 	if(mail->getSize()>container->getSizeBlockData()){
 		string messsage=mail->getMessage();
-		//cout<<mail->getSize()<<endl;
-		//cout<<messsage.size()<<endl;
+		cout<<mail->getSize()<<endl;
+		cout<<messsage.size()<<endl;
+		
 		unsigned int sizeMaxMessage =container->getSizeBlockData()-((mail->getSize()-messsage.size())+sizeof(unsigned int));
 		messsage=messsage.substr(0,sizeMaxMessage);
 		mail->setMessage(messsage);
@@ -230,51 +231,4 @@ void BlockDataManager::writeBlockData(Block* block ,unsigned int numBlock,Contai
 	delete block;
 	block=NULL;
 	delete buffer;
-}
-
-
-void BlockDataManager::deleteBlockIndexed(int numberBlock,ContainerInsertDataBlock* container){
-	Block* blockIucs;
-	int newNumBlock=0;
-	if(container->getTypeElement()==TYPE_REG_CLASSIFICATION)
-		blockIucs=this->readBlockData(numberBlock,container);
-	if(container->getTypeElement()==TYPE_REG_INVERTED_INDEX)
-		blockIucs=this->readDataBlockCompressed(numberBlock,container);
-	container->getFreeBlockController()->writeFreeBlock(numberBlock);
-	newNumBlock=blockIucs->getNextBlock();
-	while(newNumBlock!=NEXT_BLOCK_INVALID){
-		delete blockIucs;
-		if(container->getTypeElement()==TYPE_REG_CLASSIFICATION)
-			blockIucs=this->readBlockData(newNumBlock,container);
-		if(container->getTypeElement()==TYPE_REG_INVERTED_INDEX)
-			blockIucs=this->readDataBlockCompressed(newNumBlock,container);
-		container->getFreeBlockController()->writeFreeBlock(numberBlock);
-		newNumBlock=blockIucs->getNextBlock();
-	}
-	delete blockIucs;
-}
-int BlockDataManager::deleteMailInBlockData(int numberBlock ,RegPrimary* registry,ContainerInsertDataBlock* container){
-
-		Block* blockMails=this->readBlockData(numberBlock,container);
-		Registry* reg=NULL;
-		for(list<Registry*>::iterator iterRegistry = blockMails->iteratorBegin(); iterRegistry != blockMails->iteratorEnd(); iterRegistry++){
-		     reg=*iterRegistry;
-			if(registry->equals(reg)){
-              break;
-			}
-		}
-		if(reg!=NULL){
-		blockMails->removeReg(reg);
-		if(blockMails->getNumElements()==0){
-			container->getFreeBlockController()->writeFreeBlock(numberBlock);
-			return BLOCK_EMPTY;
-		}
-		}
-		else
-			cout<<"no se pudo remover no existe el mail en el bloque"<<endl;
-		KeyInteger* key=(KeyInteger*)((Mail*)(*blockMails->iteratorBegin()))->getKey();
-		registry->setKey(key);
-		this->writeBlockData(blockMails,numberBlock,container);
-
-		return CORRECT_REMOVE;
 }

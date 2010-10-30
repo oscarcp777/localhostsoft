@@ -27,7 +27,7 @@ public:
 		void packCompressed(BitOutput* compressor);
 		void unPackCompressed(BitInput* compressor);
 		unsigned int getlongBytesCompressed();
-       void setValue(int value);
+		
 	private:
 		int value;
 };
