@@ -17,9 +17,9 @@
 
 using namespace std;
 
-int mainOLD(int argc,char** argv) {
+int main(int argc,char** argv) {
 
-//	TestBSharp* test = new TestBSharp();
+	TestBSharp* test = new TestBSharp();
 //	test->testInsert();
 //	test->testsearch();
 //	test->testInsertAndSearch();
@@ -28,7 +28,7 @@ int mainOLD(int argc,char** argv) {
 //	test->testInsertAndSearchRegClassification();
 //	test->testInsertMails();
 //	test->testPrint();
-//	test->testInsertAndDelete();
+	test->testInsertAndDelete();
 //	delete test;
 /*
 	//TEST STORAGE
@@ -53,9 +53,9 @@ int mainOLD(int argc,char** argv) {
 
 
 //**********************TEST MANAGER INVERTED INDEX*******************
-	TestCompression* myTest = new TestCompression();
-	myTest->testDelta2();
-	delete myTest;
+//	TestCompression* myTest = new TestCompression();
+//	myTest->testDelta2();
+//	delete myTest;
 //*********************************************************************
 
 //	TestManagerInvertedIndex* myTest = new TestManagerInvertedIndex();

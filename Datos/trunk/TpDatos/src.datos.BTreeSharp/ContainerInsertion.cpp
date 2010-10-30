@@ -11,12 +11,14 @@ ContainerInsertion::ContainerInsertion() {
     this->leftRegKey=NULL;
     this->rightRegKey=NULL;
     this->midleRegKey=NULL;
+    this->internalKey=NULL;
 }
 
 ContainerInsertion::~ContainerInsertion() {
 	this->leftRegKey=NULL;
 	this->rightRegKey=NULL;
 	this->midleRegKey=NULL;
+	this->internalKey=NULL;
 }
 Registry* ContainerInsertion::getRegMidleKey()throw() {
 	return this->midleRegKey;

@@ -16,6 +16,7 @@
 #include "../src.datos.models/KeyString.h"
 #include <cstdlib>
 #include<sstream>
+#include <map>
 TestBSharp::TestBSharp() {
 	// TODO Auto-generated constructor stub
 
@@ -46,37 +47,66 @@ void TestBSharp::testInsert(){
 }
 void TestBSharp::testInsertAndDelete(){
 	/* initialize random seed: */
-	int cantidad_insertar = 200;
-	int vecInserts[cantidad_insertar];
+	int cantidad_insertar = 50000;
+	map<int,int> vecInserts;
+//	std::map vecInserts[cantidad_insertar];
 	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTree.dat",BLOCK_SIZE,TYPE_REG_PRIMARY);
 	for (int var =0; var < cantidad_insertar; ++var) {
+		int keyInt=rand()%1000000;
+		vecInserts[keyInt] = keyInt;
+	}
+	int i=0;
+	std::map<int,int>::iterator it;
+	int var = 0;
+	for(it = vecInserts.begin() ; it != vecInserts.end(); it++){
 		RegPrimary* regPrimary = new RegPrimary();
-		int keyInt=rand()%10000;
-		vecInserts[var]=keyInt;
-		KeyInteger* key= new KeyInteger(keyInt);
+		KeyInteger* key= new KeyInteger((*it).second);
 		regPrimary->setKey(key);
 		regPrimary->setNumberBlock(var);
-		cout<<" Inserto el : ";
+		cout<<" Inserto el : "<<i++;
 		regPrimary->print(cout);
 		indexBSharp->addRegistry(regPrimary);
-
-	}
-	indexBSharp->print(std::cout);
-	for (int var =0; var < cantidad_insertar; ++var) {
-			RegPrimary* regPrimary = new RegPrimary();
-			int keyInt = vecInserts[var];
-			KeyInteger* key= new KeyInteger(keyInt);
-			regPrimary->setKey(key);
-			regPrimary->setNumberBlock(var);
-			if (var >= 61)
-							indexBSharp->print(std::cout);
-			std::cout << "----A Eliminar----";
-					std::cout << "ID: " << keyInt << std::endl;
-
-			indexBSharp->deleteRegistry(regPrimary);
-
-			std::cout << "VAR: " << var << " REGISTRO ELIMINADO id: " << keyInt << std::endl;
+		var++;
 		}
+
+	indexBSharp->print(std::cout);
+
+i=0;
+	for(it = (vecInserts.end())-- ; it != vecInserts.begin(); it--){
+		i++;
+//		if (i >=3018)
+//			indexBSharp->print(std::cout);
+		RegPrimary* regPrimary = new RegPrimary();
+		KeyInteger* key= new KeyInteger((*it).second);
+		regPrimary->setKey(key);
+		cout<<" Deleteo el : "<<i<<" ";
+		regPrimary->print(cout);
+		indexBSharp->deleteRegistry(regPrimary);
+	}
+	RegPrimary* regPrimary = new RegPrimary();
+	KeyInteger* key= new KeyInteger((*it).second);
+	regPrimary->setKey(key);
+	cout<<" Deleteo el : ";
+	regPrimary->print(cout);
+	indexBSharp->deleteRegistry(regPrimary);
+
+	//	for (int var = cantidad_insertar-1; var >= 0; --var) {
+	//			RegPrimary* regPrimary = new RegPrimary();
+	//			int keyInt = vecInserts[var];
+	//			KeyInteger* key= new KeyInteger(keyInt);
+	//			regPrimary->setKey(key);
+	//			regPrimary->setNumberBlock(var);
+	////			if (var >= 491){
+	////				std::cout <<"";
+	////				indexBSharp->print(std::cout);
+	////			}
+	//			std::cout << "----A Eliminar----";
+	//					std::cout << "ID: " << keyInt << std::endl;
+	//
+	//			indexBSharp->deleteRegistry(regPrimary);
+	//
+	//			std::cout << "VAR: " << var << " REGISTRO ELIMINADO id: " << keyInt << std::endl;
+	//		}
 	indexBSharp->print(std::cout);
 
 	delete indexBSharp;
@@ -84,7 +114,7 @@ void TestBSharp::testInsertAndDelete(){
 
 }
 void TestBSharp::testInsertAndSearch(){
-	int cantidadAInsertar = 10000;
+	int cantidadAInsertar = 50000;
 	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTreeInsertandSearch.dat",BLOCK_SIZE,TYPE_REG_PRIMARY);
 	indexBSharp->print(std::cout);
 	int vecInserts[cantidadAInsertar];
@@ -98,7 +128,7 @@ void TestBSharp::testInsertAndSearch(){
 		indexBSharp->addRegistry(regPrimary);
 		vecInserts[var]=keyInt;
 	}
-	for (int var =0; var < cantidadAInsertar; ++var) {
+	for (int var = cantidadAInsertar - 1; var >= 0; --var) {
 		RegPrimary* regPrimary = new RegPrimary();
 		KeyInteger* key= new KeyInteger(vecInserts[var]);
 		regPrimary->setKey(key);
@@ -189,14 +219,10 @@ void TestBSharp::testsearch(){
 }void TestBSharp::testInsertMails(){
 	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTreeMails.dat",BLOCK_SIZE,TYPE_REG_PRIMARY);
 	RegPrimary* regPrimary = new RegPrimary();
-	regPrimary->setNumberBlock(500);
-	KeyInteger* key= new KeyInteger(2);
+	KeyInteger* key= new KeyInteger(1);
 	regPrimary->setKey(key);
-	RegPrimary* regPrimary200=(RegPrimary*)indexBSharp->searchRegistry(regPrimary);
-	if(regPrimary200!=NULL)
-	regPrimary200->print(cout);
-	delete regPrimary;
-	delete indexBSharp;
+	indexBSharp->searchRegistry(regPrimary);
+	regPrimary->print(cout);
 	return;
 	Mail* mail1 = new Mail();
 	Mail* mail2= new Mail();
@@ -233,7 +259,7 @@ void TestBSharp::testsearch(){
 
 	mail5->setDate("2/5/1985");
 	mail5->setFrom("santy");
-	mail5->setMessage("auto: 207 compact full full full full full full full full full full full full full full full full full full full full full full");
+	mail5->setMessage("auto: 207 compact full full full full fullfullfull full full fullfullfull full fullfullfull fullfullfullfullfullfull");
 	mail5->setSubject("Campeon 2010");
 	mail5->setTo("BUBU");
 

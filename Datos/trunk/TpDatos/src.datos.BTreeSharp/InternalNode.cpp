@@ -57,9 +57,8 @@ void InternalNode::addBranch(std::vector<int>::iterator pos,unsigned int branch)
 	this->branchList.insert(pos, branch);
 }
 
-void InternalNode::removeBranch(int branch) throw(){
-
-	std::remove(this->firstBranch(), this->lastBranch(), branch);
+void InternalNode::removeBranch(std::vector<int>::iterator branch) throw(){
+	this->branchList.erase(branch);
 }
 
 void InternalNode::transferBranchs(std::vector<int>& branchList) throw(){

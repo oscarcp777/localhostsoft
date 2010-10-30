@@ -42,7 +42,7 @@ public:
 	/**
 	 * Remueve una rama del bloque interno b sharp.
 	 */
-	void removeBranch(int branch) throw();
+	void removeBranch(std::vector<int>::iterator branch) throw();
 	/**
 	 * Transfiere todas las ramas del indice b sharp al contenedor de ramas.
 	 */

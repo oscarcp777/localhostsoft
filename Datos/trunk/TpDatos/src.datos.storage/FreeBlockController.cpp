@@ -30,12 +30,18 @@ void FreeBlockController::writeFreeBlock(unsigned int numBlock) throw() {
 }
 
 unsigned int FreeBlockController::searchFreeBlock() throw() {
-	if(this->vectorFreeBlock.size()!=0)
-	return this->vectorFreeBlock.back();
-	else{
-		unsigned int nextBlock=++counterBlock;
+//	if(this->vectorFreeBlock.size()!=0){
+//		unsigned int numBlock=this->vectorFreeBlock.back();
+//		this->vectorFreeBlock.pop_back();
+//		this->writeFreeBlock();
+//		return numBlock;
+//	}
+//	else{
+//		int nextBlock=++counterBlock;
+//		return nextBlock;
+//	}
+	int nextBlock=++counterBlock;
 		return nextBlock;
-	}
 
 }
 

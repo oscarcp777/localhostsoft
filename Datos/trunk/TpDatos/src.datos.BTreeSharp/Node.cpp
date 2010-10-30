@@ -31,8 +31,8 @@ unsigned int Node::getAverageWeight(){
 	else{
 		list<Registry*>::iterator currentReg = this->iteratorBegin();
 		list<Registry*>::iterator lastReg = this->iteratorEnd();
-		unsigned int totalWeight = 0;
-		unsigned int count = 0;
+		int totalWeight = 0;
+		int count = 0;
 		while (currentReg != lastReg){
 			totalWeight += (*currentReg)->getLongBytes();
 			currentReg++;
