@@ -23,6 +23,7 @@ void TestStorageController::testConnectAndCreatePrimaryIndex(){
 	string userName = "Datos.2c2010";
 	string pass = "75067506";
 	IndexConfig* configIndex = new IndexConfig();
+
 	controller->generatePrimaryIndex((char*)userName.c_str(),(char*)pass.c_str(),configIndex);
 	delete controller;
 }

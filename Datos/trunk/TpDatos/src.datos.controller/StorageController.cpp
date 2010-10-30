@@ -25,6 +25,8 @@ void StorageController::addMail(char* message){
 	regPrimary->setKey((KeyInteger*)mail->getKey()->clone());
 	regPrimary->setMail(mail);
 	this->primaryIndex->addRegistry(regPrimary);
+	/////
+	////actualizar los secundarios
 
 }
 Mail* StorageController::generateMail(char* message){
@@ -47,6 +49,15 @@ IndexBSharp* StorageController::generatePrimaryIndex(char* userName, char* passw
 	configIndex->setTypeIndex(TYPE_PRIMARY);
 	configIndex->setUserName(user);
 	configIndex->setFilterName(TYPE_PRIMARY+user);
+	if(configIndex->getLastIuc() != 0){
+		this->numberOfIuc = configIndex->getLastIuc();
+	}
 	connection((char*)user.c_str(),(char*)pass.c_str(),this);
+	//guardo el ultimo IUC
+	configIndex->setLastIuc(this->numberOfIuc);
 	return this->primaryIndex;
 }
+
+
+
+

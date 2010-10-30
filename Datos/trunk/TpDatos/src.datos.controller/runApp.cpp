@@ -14,7 +14,6 @@ using namespace std;
 
 
 void printResult(Controller* control){
-
 		list<int>::iterator it;
 		for(it= control->iteratorBeginListOfIucs(); it != control->iteratorEndListOfIucs(); it++){
 			cout<<"IUC: "<<*it<<endl;
@@ -24,52 +23,55 @@ void printResult(Controller* control){
 		for(it2= control->iteratorBeginListOfMails(); it2 != control->iteratorEndListOfMails(); it2++){
 			(*it2)->print(cout);
 		}
-
 }
 
 
 int main(int argc,char** argv){
 
-	//----- ./Aplicacion -c email pass
+	//----- ./Aplicacion -c
 	//----- ./Aplicacion -f stringAbuscar
 	//----- ./Application -si email TYPE_CLASSIFICATION/TYPE_SELECTION CONDITION (VALOR) filterName
 	//----- ./Application -li filterName
-		Controller* control = new Controller();
+	std::string userMail("Datos.2c2010");
+//	std::cout << "Ingrese su cuenta de correo: ";
+//	std::cin >> userMail;
+	std::string userPass("75067506");
+//	std::cout << "Ingrese su contraseña: ";
+//	std::cin >> userPass;
+
+	Controller* control = new Controller(userMail);
+	control->addEmail(userMail);
+	control->addPass(userPass);
 
 		/*Analisis de argumentos*/
 		if(argc>1){
-		if ((strcmp(argv[1],"-c")==0) && (argc == 4)){
-			std::string strPass = argv[3];
-			std::string strEmail = argv[2];
-			control->addEmail(strEmail);
-			control->addPass(strPass);
+		if ((strcmp(argv[1],"-c")==0) && (argc == 2)){
 			control->createPrimaryIndex();
-
 		}else if ((strcmp(argv[1],"-f") == 0) && (argc == 3)){
 			std::string strSearch(argv[2]);
 			control->searchMails(strSearch);
 			printResult(control);
-		}else if (strcmp(argv[1],"-si") == 0 && (argc > 4)){
+		}else if((strcmp(argv[1],"-d") == 0) && (argc == 3)){
+			int iuc = atoi(argv[2]);
+			control->deleteIuc(iuc);
+		}else if (strcmp(argv[1],"-si") == 0 && (argc > 3)){
 			IndexConfig* configOne = new IndexConfig();
-			std::string strEmail(argv[2]);
-			configOne->setUserName(strEmail);
+			configOne->setUserName(userMail);
 			configOne->setTypeIndex("Secundario");
-			std::string typeSecondaryIndex(argv[3]);
+			std::string typeSecondaryIndex(argv[2]);
 			configOne->setTypeSecundaryIndex(typeSecondaryIndex);
-			configOne->setCondition(atoi(argv[4]));
-			if((typeSecondaryIndex.compare("Clasificacion") == 0 ) && (argc == 6)){
-				std::string filterName(argv[5]);
+			configOne->setCondition(atoi(argv[3]));
+			if((typeSecondaryIndex.compare("Clasificacion") == 0 ) && (argc == 5)){
+				std::string filterName(argv[4]);
 				configOne->setFilterName(filterName);
-				//configOne->print();////////////////////////////print
-
-			}else if((typeSecondaryIndex.compare("Seleccion") == 0) && (argc == 7)){
-				std::string value(argv[5]);
+			}else if((typeSecondaryIndex.compare("Seleccion") == 0) && (argc == 6)){
+				std::string value(argv[4]);
 				configOne->setValue(value);
-				std::string filterName(argv[6]);
+				std::string filterName(argv[5]);
 				configOne->setFilterName(filterName);
 			}
 			else if(typeSecondaryIndex.compare("Invertido") == 0){
-				std::string filterName(argv[4]);
+				std::string filterName(argv[3]);
 				configOne->setFilterName(filterName);
 			}
 			control->addSecondIndex(configOne);
@@ -144,7 +146,6 @@ int main(int argc,char** argv){
 					cout<<"IUC: "<<*it2<<endl;
 				}
 				cout<<"*******************Fin busqueda..."<<endl<<endl;
-
 			}
 		}else{
 				puts("Argumentos invalidos");

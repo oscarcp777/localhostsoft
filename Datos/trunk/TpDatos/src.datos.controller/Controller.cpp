@@ -6,7 +6,9 @@
  */
 
 #include "Controller.h"
+#include "../src.datos.models/RegSelection.h"
 #include "../src.datos.consultations/Consultation.h"
+#include "ManagerInvertedIndex.h"
 #include "../src.datos.utils/Define.h"
 
 Controller::Controller() {
@@ -14,6 +16,18 @@ Controller::Controller() {
 	this->primaryTree = NULL;
 	this->loadIndexNames();
 	this->search = NULL;
+}
+Controller::Controller(std::string userMail) {
+	string fileName= "";
+			fileName+=PATHFILES;
+			fileName+=userMail+".dat";
+	this->fileNameAccount = fileName;
+	this->strEmail = userMail;
+	this->programFile = new TextFile();
+	this->primaryTree = NULL;
+	this->loadIndexNames();
+	this->search = NULL;
+
 }
 
 Controller::~Controller() {
@@ -49,47 +63,49 @@ void Controller::loadInfoIndex(std::string linea,IndexConfig* index){
 	StringUtils::Tokenize(linea, tokens,"|");
 
 	int size=tokens.size();
-	if (size == 5){
-		index->setBlockSize(atoi(tokens.at(0).c_str()));
-		index->setFilterName(tokens.at(1));
-		index->setFileName(tokens.at(2));
-		index->setUserName(tokens.at(3));
-		index->setTypeIndex(tokens.at(4));
-	}
 	if (size == 6){
-		index->setBlockSize(atoi(tokens.at(0).c_str()));
-		index->setFilterName(tokens.at(1));
-		index->setFileName(tokens.at(2));
-		index->setUserName(tokens.at(3));
-		index->setTypeIndex(tokens.at(4));
-		index->setTypeSecundaryIndex(tokens.at(5));
+		index->setLastIuc(atoi(tokens.at(0).c_str()));
+		index->setBlockSize(atoi(tokens.at(1).c_str()));
+		index->setFilterName(tokens.at(2));
+		index->setFileName(tokens.at(3));
+		index->setUserName(tokens.at(4));
+		index->setTypeIndex(tokens.at(5));
 	}
 	if (size == 7){
-		index->setBlockSize(atoi(tokens.at(0).c_str()));
-		index->setFilterName(tokens.at(1));
-		index->setFileName(tokens.at(2));
-		index->setUserName(tokens.at(3));
-		index->setTypeIndex(tokens.at(4));
-		index->setTypeSecundaryIndex(tokens.at(5));
-		index->setCondition(atoi(tokens.at(6).c_str()));
+		index->setLastIuc(atoi(tokens.at(0).c_str()));
+		index->setBlockSize(atoi(tokens.at(1).c_str()));
+		index->setFilterName(tokens.at(2));
+		index->setFileName(tokens.at(3));
+		index->setUserName(tokens.at(4));
+		index->setTypeIndex(tokens.at(5));
+		index->setTypeSecundaryIndex(tokens.at(6));
 	}
 	if (size == 8){
-		index->setBlockSize(atoi(tokens.at(0).c_str()));
-		index->setFilterName(tokens.at(1));
-		index->setFileName(tokens.at(2));
-		index->setUserName(tokens.at(3));
-		index->setTypeIndex(tokens.at(4));
-		index->setTypeSecundaryIndex(tokens.at(5));
-		index->setCondition(atoi(tokens.at(6).c_str()));
-		index->setValue(tokens.at(7));
+		index->setLastIuc(atoi(tokens.at(0).c_str()));
+		index->setBlockSize(atoi(tokens.at(1).c_str()));
+		index->setFilterName(tokens.at(2));
+		index->setFileName(tokens.at(3));
+		index->setUserName(tokens.at(4));
+		index->setTypeIndex(tokens.at(5));
+		index->setTypeSecundaryIndex(tokens.at(6));
+		index->setCondition(atoi(tokens.at(7).c_str()));
+	}
+	if (size == 9){
+		index->setLastIuc(atoi(tokens.at(0).c_str()));
+		index->setBlockSize(atoi(tokens.at(1).c_str()));
+		index->setFilterName(tokens.at(2));
+		index->setFileName(tokens.at(3));
+		index->setUserName(tokens.at(4));
+		index->setTypeIndex(tokens.at(5));
+		index->setTypeSecundaryIndex(tokens.at(6));
+		index->setCondition(atoi(tokens.at(7).c_str()));
+		index->setValue(tokens.at(8));
 	}
 
 }
 void Controller::loadIndexNames(){
-	string fileName= "";
-	fileName+=PATHFILES;
-	fileName+="config.dat";
-	this->programFile->open(fileName);
+
+	this->programFile->open(this->fileNameAccount);
 	std::string linea = "";
 	this->programFile->read(linea);
 	int i=0;
@@ -144,12 +160,11 @@ void Controller::setSearch(Search* search){
 void Controller::addIndexToFile(IndexConfig* index){
 
 	if(!searchIndex(index->getFilterName())){
-		string fileName= "";
-		fileName+=PATHFILES;
-		fileName+="config.dat";
-		this->programFile->open(fileName);
+
+		this->programFile->open(this->fileNameAccount);
+		std::string lastIuc = StringUtils::convertirAString(index->getLastIuc());
 		std::string sizeBlock = StringUtils::convertirAString(index->getBlockSize());
-		std::string aux= sizeBlock+"|"+ index->getFilterName()+"|"+ index->getFileName()+"|"+index->getUserName() + "|"+index->getTypeIndex();
+		std::string aux= lastIuc + "|"+ sizeBlock+"|"+ index->getFilterName()+"|"+ index->getFileName()+"|"+index->getUserName() + "|"+index->getTypeIndex();
 		if(index->getTypeSecundaryIndex() != "")
 			aux = aux +"|"+index->getTypeSecundaryIndex();
 		if( index->getCondition() != 0){
@@ -163,36 +178,184 @@ void Controller::addIndexToFile(IndexConfig* index){
 		this->programFile->close();
 	}
 }
+void Controller::overWriteFile(){
+
+	remove(this->fileNameAccount.c_str());
+	this->programFile->open(this->fileNameAccount);
+	IndexConfig* index;
+	list<IndexConfig*>::iterator current = this->indexes.begin();
+	while(current != this->indexes.end()){//recorro la lista de todos lo indices que tiene el programa
+		index = (IndexConfig*)*current;
+		std::string lastIuc = StringUtils::convertirAString(index->getLastIuc());
+		std::string sizeBlock = StringUtils::convertirAString(index->getBlockSize());
+		std::string aux= lastIuc + "|"+ sizeBlock+"|"+ index->getFilterName()+"|"+ index->getFileName()+"|"+index->getUserName() + "|"+index->getTypeIndex();
+		if(index->getTypeSecundaryIndex() != "")
+			aux = aux +"|"+index->getTypeSecundaryIndex();
+		if( index->getCondition() != 0){
+			std::string valor = StringUtils::convertirAString(index->getCondition());
+			aux = aux +"|"+valor;
+		}
+		if( index->getValue() != "")
+			aux = aux +"|"+index->getValue();
+
+		this->programFile->write(aux);
+		current++;
+	}
+	this->programFile->end();
+	this->programFile->close();
+
+}
 void Controller::addSecondIndex(IndexConfig* indexConfig) {
-	//crea un archivo del indice secundario vacio, agrega en la lista de indices y genera un boton por el indice
-	IndexController* indexController = new IndexController();
-	indexController->generateSecondaryIndex(this->primaryTree,indexConfig);
-	this->addIndexToFile(indexConfig);
-	this->indexes.push_back(indexConfig);
 
-	delete indexController;
+	if(this->searchIndex(indexConfig->getFilterName())){
+		cout<<"No se puede crear, ya existe el indice con nombre: "<<indexConfig->getFilterName()<<endl;
+	}else{
+		//crea un archivo del indice secundario vacio, agrega en la lista de indices y genera un boton por el indice
+		IndexController* indexController = new IndexController();
+		indexController->generateSecondaryIndex(this->primaryTree,indexConfig);
+		this->addIndexToFile(indexConfig);
+		this->indexes.push_back(indexConfig);
+		delete indexController;
+	}
+}
 
+void Controller::updateIndexesDelete(Mail* mail){
+
+	std::string value;
+	IndexBSharp* secondaryIndex;
+	list<IndexConfig*>::iterator current = this->indexes.begin();
+	while(current != this->indexes.end()){//recorro la lista de todos lo indices que tiene el programa
+		if(TYPE_SELECTION == (*current)->getTypeSecundaryIndex()){
+			secondaryIndex = new IndexBSharp(PATHFILES+(*current)->getFileName(),(*current)->getBlockSize(),TYPE_REG_SELECTION);
+			RegSelection* regSelection = new RegSelection();
+			regSelection->setKey((Key*)mail->getKey()->clone());
+			//secondaryIndex->deleteRegistry(regSelection);/////////////////////////DELETE
+			secondaryIndex->print(cout);
+			delete secondaryIndex;
+		}
+		if(TYPE_CLASSIFICATION == (*current)->getTypeSecundaryIndex() ){
+			secondaryIndex = new IndexBSharp(PATHFILES+(*current)->getFileName(),(*current)->getBlockSize(),TYPE_REG_CLASSIFICATION);
+			RegClassification* regClassification = new RegClassification();
+			KeyString* key = new KeyString((*current)->getValue());
+			regClassification->setKey(key);
+			regClassification->addIuc((KeyInteger*) mail->getKey()->clone());
+			//secondaryIndex->deleteRegistry(regClassification);///////////////////////DELETE
+			secondaryIndex->print(cout);
+			delete secondaryIndex;
+		}
+		if(TYPE_INVERTED_INDEX == (*current)->getTypeSecundaryIndex()){
+			IndexBSharp* secondaryIndex = new IndexBSharp(PATHFILES+(*current)->getFileName(),(*current)->getBlockSize(),TYPE_REG_INVERTED_INDEX);
+			//ManagerInvertedIndex* manager = new ManagerInvertedIndex();
+			//manager->deleteMessageWords(mail,secondaryIndex);
+			delete secondaryIndex;
+		}
+		current++;
+	}
+}
+
+void Controller::updateIndexes(Mail* mail){
+	int condition;
+	std::string value;
+	IndexBSharp* secondaryIndex;
+	list<IndexConfig*>::iterator current = this->indexes.begin();
+	while(current != this->indexes.end()){//recorro la lista de todos lo indices que tiene el programa
+		if(TYPE_SELECTION == (*current)->getTypeSecundaryIndex()){
+			condition = (*current)->getCondition();
+			value = (*current)->getValue();
+			if(mail->containCondition(condition,value)){
+				secondaryIndex = new IndexBSharp(PATHFILES+(*current)->getFileName(),(*current)->getBlockSize(),TYPE_REG_SELECTION);
+				RegSelection* regSelection = new RegSelection();
+				regSelection->setKey((Key*)mail->getKey()->clone());
+				secondaryIndex->addRegistry(regSelection);
+				secondaryIndex->print(cout);
+				delete secondaryIndex;
+			}
+		}
+		if(TYPE_CLASSIFICATION == (*current)->getTypeSecundaryIndex() ){
+			condition = (*current)->getCondition();
+			secondaryIndex = new IndexBSharp(PATHFILES+(*current)->getFileName(),(*current)->getBlockSize(),TYPE_REG_CLASSIFICATION);
+			RegClassification* regClassification = new RegClassification();
+			KeyString* key = new KeyString(mail->getCondition(condition));
+			regClassification->setKey(key);
+			regClassification->addIuc((KeyInteger*) mail->getKey()->clone());
+			secondaryIndex->addRegistry(regClassification);
+			secondaryIndex->print(cout);
+			delete secondaryIndex;
+		}
+		if(TYPE_INVERTED_INDEX == (*current)->getTypeSecundaryIndex()){
+			IndexBSharp* secondaryIndex = new IndexBSharp(PATHFILES+(*current)->getFileName(),(*current)->getBlockSize(),TYPE_REG_INVERTED_INDEX);
+			ManagerInvertedIndex* manager = new ManagerInvertedIndex();
+			manager->loadMessageWords(mail,secondaryIndex);
+			delete secondaryIndex;
+		}
+		current++;
+	}
 }
 
 int Controller::createPrimaryIndex() {
+	StorageController* storage = new StorageController();
+	IndexConfig* configIndex = new IndexConfig();
+	configIndex->setUserName(this->strEmail);
 	if (this->primaryTree == NULL){
-		StorageController* storage = new StorageController();
-		IndexConfig* configIndex = new IndexConfig();
-
 		this->primaryTree = storage->generatePrimaryIndex((char*)this->strEmail.c_str(),(char*)this->strPass.c_str(),configIndex);
 		this->addIndexToFile(configIndex);
 		this->indexes.push_back(configIndex);
-		this->primaryTree->print(cout);
-		delete storage;
-
+		this->primaryTree->print(cout);//////////////////////////////////////////////
 	}else{
-		cout<<"Ya exite un arbol primario"<<endl;
+		//busco si el arbol primario ya existe, si existe configIndex tiene seteado el ultimo IUC
+		if(this->searchPrimaryIndex(configIndex)){
+			int iuc = configIndex->getLastIuc();
+			this->primaryTree = storage->generatePrimaryIndex((char*)this->strEmail.c_str(),(char*)this->strPass.c_str(),configIndex);
+			this->primaryTree->print(cout);/////////////////////////////////////////
+			list<IndexConfig*>::iterator current = this->indexes.begin();
+			int result = 1;
+			string auxEmail;
+			//actualizo en la lista de indices el primario, con el ultimo iuc
+			while((current != this->indexes.end())&& result != 0){//recorro la lista de todos lo indices que tiene el programa
+				auxEmail = (*current)->getUserName();
+				result =auxEmail.compare(configIndex->getUserName());
+				if (result == 0){
+					(*current)->setLastIuc(configIndex->getLastIuc());
+					break;
+				}
+				current++;
+			}
+			this->overWriteFile();
+			//int lastIuc = configIndex->getLastIuc();//no lo necesito
+			IteratorBSharp* it = this->primaryTree->getIterator();
+			RegPrimary* regPrimary = new RegPrimary;
+			regPrimary->setKey(new KeyInteger(iuc));
+			RegPrimary* regPrimaryIter = (RegPrimary*) it->next();
+			//me ubico en la posicion del primer iuc nuevo
+			while(it->hasNext() && ((regPrimaryIter->getMail()->getIuc()) != iuc)){
+				regPrimaryIter =(RegPrimary*) it->next();
+			}
+
+			Mail* mail;
+			mail = regPrimaryIter->getMail();
+			this->updateIndexes(mail);//actualizo secundarios
+			cout<<"Iuc de mail nuevo: "<<  regPrimaryIter->getMail()->getIuc() <<endl;
+			while (it->hasNext()){
+				regPrimaryIter = (RegPrimary*)it->next();
+				mail = regPrimaryIter->getMail();
+				cout<<"Iuc de mail nuevo: "<<  regPrimaryIter->getMail()->getIuc() <<endl;
+				this->updateIndexes(mail);
+			}
+			delete it;
+		}
 	}
+	delete storage;
 	return 0;
 }
 
 
 int Controller::loadSecondIndex(IndexConfig* indexConfig){
+
+//	if(this->searchIndex(indexConfig->getFilterName())){
+//		cout<<"Ya fue cargado el indice "<<indexConfig->getFilterName()<<endl;
+//		return 1;
+//	}else{
+
 	Classification* classification = new Classification();
 	if(this->primaryTree == NULL)
 		this->createPrimaryIndex();
@@ -200,6 +363,8 @@ int Controller::loadSecondIndex(IndexConfig* indexConfig){
 
  	delete classification;
 	return 0;
+
+//	}
 }
 void Controller::convertStringToListOfInt(Search* search,std::string str){
 
@@ -209,7 +374,6 @@ void Controller::convertStringToListOfInt(Search* search,std::string str){
 	for (int i = 0; i < size; ++i) {
 		search->setIuc(atoi(tokens.at(i).c_str()));
 	}
-
 }
 Search* Controller::parseStrSearch(std::string strSearch){
 	std::string aux;
@@ -311,7 +475,23 @@ bool Controller::searchIndex(std::string index){
 	}
 	return false;
 }
+bool Controller::searchPrimaryIndex(IndexConfig* indexConfig){
 
+	std::string auxEmail = indexConfig->getUserName();
+	int result = -1;
+	list<IndexConfig*>::iterator current = this->indexes.begin();
+	while((current != this->indexes.end())&& result != 0){//recorro la lista de todos lo indices que tiene el programa
+		auxEmail = (*current)->getUserName();
+		result =auxEmail.compare(indexConfig->getUserName());
+			if (result == 0){
+				indexConfig->setLastIuc((*current)->getLastIuc());
+
+				return true;
+			}
+		current++;
+	}
+	return false;
+}
 IndexConfig* Controller::loadIndexConfig(std::string index){
 
 	std::string auxIndex;
@@ -379,8 +559,16 @@ int Controller::strSearchValidation(std::string strSearch){
 	return result;
 }
 
+void Controller::deleteIuc(int iuc){
+	RegPrimary* regPrimary = new RegPrimary();
+	KeyInteger* key= new KeyInteger(iuc);
+	regPrimary->setKey(key);
+	RegPrimary* reg = (RegPrimary*) this->primaryTree->searchRegistry(regPrimary);
+	Mail* mail = reg->getMail();
+	this->updateIndexesDelete(mail);
+	this->primaryTree->deleteRegistry(regPrimary);
 
-
+}
 
 
 

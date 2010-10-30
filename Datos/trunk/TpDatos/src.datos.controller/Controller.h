@@ -25,6 +25,7 @@
 
 class Controller {
 private:
+	std::string fileNameAccount;
 	TextFile* programFile;
 	std::string strEmail;
 	std::string strPass;
@@ -39,6 +40,7 @@ private:
 
 public:
 	Controller();
+	Controller(std::string userMail);
 	virtual ~Controller();
 	Search* getSearch();
 	void setSearch(Search* search);
@@ -51,6 +53,8 @@ public:
 	void addEmail(std::string email);
 	void addPass(std::string pass);
 	void printIndexNames();
+	void updateIndexes(Mail* mail);
+	void updateIndexesDelete(Mail* mail);
 	int createPrimaryIndex();
 	list<int>::iterator iteratorBeginListOfIucs();
 	list<int>::iterator iteratorEndListOfIucs();
@@ -59,9 +63,12 @@ public:
 	list<int> getListOfIUCS();
 	list<Mail*> getListOfMails();
 	bool searchIndex(std::string index);
+	bool searchPrimaryIndex(IndexConfig* indexConfig);
 	IndexConfig* loadIndexConfig(std::string index);
 	int strSearchValidation(std::string strSearch);
 	void clearListsIucs();
+	void deleteIuc(int iuc);
+	void overWriteFile();
 
 
 };

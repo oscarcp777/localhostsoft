@@ -25,7 +25,7 @@ void printResult245(Controller* control){
 
 }
 
-int main123(int argc,char** argv){
+int main12345678(int argc,char** argv){
 
 	//----- ./Aplicacion -c email pass
 	//----- ./Aplicacion -f stringAbuscar
