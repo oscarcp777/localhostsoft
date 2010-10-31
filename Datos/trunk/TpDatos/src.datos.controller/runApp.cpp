@@ -50,11 +50,11 @@ void calculateIntersection(unsigned int numSearchs, list<int>* listIucs){
 
 void printResult(Controller* control){
 
-		list<int>::iterator it;
-		unsigned int numSearchs = control->getSearch()->getNumOfIndex();
-
+	list<int>::iterator it;
+	unsigned int numSearchs = control->getSearch()->getNumOfIndex();
+	if (numSearchs > 1){
 		calculateIntersection(numSearchs, control->getListOfIucs());
-		cout<<"RESULTADO "<<endl;
+		cout<< "RESULTADO "<<endl;
 		for(it= control->iteratorBeginListOfIucs(); it != control->iteratorEndListOfIucs(); it++){
 			cout<<"IUC: "<<*it<<endl;
 		}
@@ -63,6 +63,7 @@ void printResult(Controller* control){
 		for(it2= control->iteratorBeginListOfMails(); it2 != control->iteratorEndListOfMails(); it2++){
 			(*it2)->print(cout);
 		}
+	}
 }
 
 
@@ -72,12 +73,12 @@ int main(int argc,char** argv){
 	//----- ./Aplicacion -f stringAbuscar
 	//----- ./Application -si email TYPE_CLASSIFICATION/TYPE_SELECTION CONDITION (VALOR) filterName
 	//----- ./Application -li filterName
-	std::string userMail("Datos.2c2010");
-//	std::cout << "Ingrese su cuenta de correo: ";
-//	std::cin >> userMail;
-	std::string userPass("75067506");
-//	std::cout << "Ingrese su contraseña: ";
-//	std::cin >> userPass;
+	std::string userMail;
+	std::cout << "Ingrese su cuenta de correo: ";
+	std::cin >> userMail;
+	std::string userPass;
+	std::cout << "Ingrese su contraseña: ";
+	std::cin >> userPass;
 
 	Controller* control = new Controller(userMail);
 	control->addEmail(userMail);

@@ -63,43 +63,47 @@ void Controller::loadInfoIndex(std::string linea,IndexConfig* index){
 	StringUtils::Tokenize(linea, tokens,"|");
 
 	int size=tokens.size();
-	if (size == 6){//PRIMARIO
-		index->setLastIuc(atoi(tokens.at(0).c_str()));
-		index->setBlockSize(atoi(tokens.at(1).c_str()));
-		index->setFilterName(tokens.at(2));
-		index->setFileName(tokens.at(3));
-		index->setUserName(tokens.at(4));
-		index->setTypeIndex(tokens.at(5));
+	if (size == 7){//PRIMARIO
+		index->setLoaded(atoi(tokens.at(0).c_str()));
+		index->setLastIuc(atoi(tokens.at(1).c_str()));
+		index->setBlockSize(atoi(tokens.at(2).c_str()));
+		index->setFilterName(tokens.at(3));
+		index->setFileName(tokens.at(4));
+		index->setUserName(tokens.at(5));
+		index->setTypeIndex(tokens.at(6));
 	}
-	if (size == 7){//INVERTIDO
-		index->setLastIuc(atoi(tokens.at(0).c_str()));
-		index->setBlockSize(atoi(tokens.at(1).c_str()));
-		index->setFilterName(tokens.at(2));
-		index->setFileName(tokens.at(3));
-		index->setUserName(tokens.at(4));
-		index->setTypeIndex(tokens.at(5));
-		index->setTypeSecundaryIndex(tokens.at(6));
+	if (size == 8){//INVERTIDO
+		index->setLoaded(atoi(tokens.at(0).c_str()));
+		index->setLastIuc(atoi(tokens.at(1).c_str()));
+		index->setBlockSize(atoi(tokens.at(2).c_str()));
+		index->setFilterName(tokens.at(3));
+		index->setFileName(tokens.at(4));
+		index->setUserName(tokens.at(5));
+		index->setTypeIndex(tokens.at(6));
+		index->setTypeSecundaryIndex(tokens.at(7));
 	}
-	if (size == 8){//CLASIFICACION
-		index->setLastIuc(atoi(tokens.at(0).c_str()));
-		index->setBlockSize(atoi(tokens.at(1).c_str()));
-		index->setFilterName(tokens.at(2));
-		index->setFileName(tokens.at(3));
-		index->setUserName(tokens.at(4));
-		index->setTypeIndex(tokens.at(5));
-		index->setTypeSecundaryIndex(tokens.at(6));
-		index->setCondition(atoi(tokens.at(7).c_str()));
+	if (size == 9){//CLASIFICACION
+		index->setLoaded(atoi(tokens.at(0).c_str()));
+		index->setLastIuc(atoi(tokens.at(1).c_str()));
+		index->setBlockSize(atoi(tokens.at(2).c_str()));
+		index->setFilterName(tokens.at(3));
+		index->setFileName(tokens.at(4));
+		index->setUserName(tokens.at(5));
+		index->setTypeIndex(tokens.at(6));
+		index->setTypeSecundaryIndex(tokens.at(7));
+		index->setCondition(atoi(tokens.at(8).c_str()));
 	}
-	if (size == 9){//SELECCION
-		index->setLastIuc(atoi(tokens.at(0).c_str()));
-		index->setBlockSize(atoi(tokens.at(1).c_str()));
-		index->setFilterName(tokens.at(2));
-		index->setFileName(tokens.at(3));
-		index->setUserName(tokens.at(4));
-		index->setTypeIndex(tokens.at(5));
-		index->setTypeSecundaryIndex(tokens.at(6));
-		index->setCondition(atoi(tokens.at(7).c_str()));
-		index->setValue(tokens.at(8));
+	if (size == 10){//SELECCION
+		index->setLoaded(atoi(tokens.at(0).c_str()));
+		index->setLastIuc(atoi(tokens.at(1).c_str()));
+		index->setBlockSize(atoi(tokens.at(2).c_str()));
+		index->setFilterName(tokens.at(3));
+		index->setFileName(tokens.at(4));
+		index->setUserName(tokens.at(5));
+		index->setTypeIndex(tokens.at(6));
+		index->setTypeSecundaryIndex(tokens.at(7));
+		index->setCondition(atoi(tokens.at(8).c_str()));
+		index->setValue(tokens.at(9));
 	}
 
 }
@@ -123,6 +127,7 @@ void Controller::loadIndexNames(){
 	}
 	this->programFile->close();
 }
+
 void Controller::printIndexNames(){
 	list<IndexConfig*>::iterator current = this->indexes.begin();
 
@@ -160,11 +165,11 @@ void Controller::setSearch(Search* search){
 void Controller::addIndexToFile(IndexConfig* index){
 
 	if(!searchIndex(index->getFilterName())){
-
 		this->programFile->open(this->fileNameAccount);
+		std::string loaded = StringUtils::convertirAString(index->isLoaded());
 		std::string lastIuc = StringUtils::convertirAString(index->getLastIuc());
 		std::string sizeBlock = StringUtils::convertirAString(index->getBlockSize());
-		std::string aux= lastIuc + "|"+ sizeBlock+"|"+ index->getFilterName()+"|"+ index->getFileName()+"|"+index->getUserName() + "|"+index->getTypeIndex();
+		std::string aux= loaded+ "|"+ lastIuc + "|"+ sizeBlock+"|"+ index->getFilterName()+"|"+ index->getFileName()+"|"+index->getUserName() + "|"+index->getTypeIndex();
 		if(index->getTypeSecundaryIndex() != "")
 			aux = aux +"|"+index->getTypeSecundaryIndex();
 		if( index->getCondition() != 0){
@@ -186,9 +191,10 @@ void Controller::overWriteFile(){
 	list<IndexConfig*>::iterator current = this->indexes.begin();
 	while(current != this->indexes.end()){//recorro la lista de todos lo indices que tiene el programa
 		index = (IndexConfig*)*current;
+		std::string loaded = StringUtils::convertirAString(index->isLoaded());
 		std::string lastIuc = StringUtils::convertirAString(index->getLastIuc());
 		std::string sizeBlock = StringUtils::convertirAString(index->getBlockSize());
-		std::string aux= lastIuc + "|"+ sizeBlock+"|"+ index->getFilterName()+"|"+ index->getFileName()+"|"+index->getUserName() + "|"+index->getTypeIndex();
+		std::string aux= loaded+ "|"+lastIuc + "|"+ sizeBlock+"|"+ index->getFilterName()+"|"+ index->getFileName()+"|"+index->getUserName() + "|"+index->getTypeIndex();
 		if(index->getTypeSecundaryIndex() != "")
 			aux = aux +"|"+index->getTypeSecundaryIndex();
 		if( index->getCondition() != 0){
@@ -220,7 +226,6 @@ void Controller::addSecondIndex(IndexConfig* indexConfig) {
 }
 
 void Controller::updateIndexesDelete(Mail* mail){
-
 	std::string value;
 	IndexBSharp* secondaryIndex;
 	list<IndexConfig*>::iterator current = this->indexes.begin();
@@ -298,6 +303,7 @@ int Controller::createPrimaryIndex() {
 	configIndex->setUserName(this->strEmail);
 	if (this->primaryTree == NULL){
 		this->primaryTree = storage->generatePrimaryIndex((char*)this->strEmail.c_str(),(char*)this->strPass.c_str(),configIndex);
+		configIndex->setLoaded(true);
 		this->addIndexToFile(configIndex);
 		this->indexes.push_back(configIndex);
 		this->primaryTree->print(cout);//////////////////////////////////////////////
@@ -348,23 +354,34 @@ int Controller::createPrimaryIndex() {
 	return 0;
 }
 
-
 int Controller::loadSecondIndex(IndexConfig* indexConfig){
-
-//	if(this->searchIndex(indexConfig->getFilterName())){
-//		cout<<"Ya fue cargado el indice "<<indexConfig->getFilterName()<<endl;
-//		return 1;
-//	}else{
-
+	if(this->getIndex(indexConfig->getFilterName())->isLoaded()){
+		cout<<"Ya fue cargado el indice "<<indexConfig->getFilterName()<<endl;
+		return 1;
+	}else{
 	Classification* classification = new Classification();
 	if(this->primaryTree == NULL)
 		this->createPrimaryIndex();
  	classification->loadSecondaryIndex(indexConfig,this->primaryTree->getIterator());
 
+ 		std::string index(indexConfig->getFilterName());
+ 		std::string auxIndex;
+ 		int result = -1;
+ 		list<IndexConfig*>::iterator current = this->indexes.begin();
+ 		while((current != this->indexes.end())&& result != 0){//recorro la lista de todos lo indices que tiene el programa
+ 			auxIndex = (*current)->getFilterName();
+ 			result =auxIndex.compare(index);
+ 				if (result == 0){
+ 					(*current)->setLoaded(true);//lo seteo como cargado
+ 				}
+ 			current++;
+ 		}
+
+ 	this->overWriteFile();
  	delete classification;
 	return 0;
 
-//	}
+	}
 }
 void Controller::convertStringToListOfInt(Search* search,std::string str){
 
@@ -463,6 +480,22 @@ list<Mail*>::iterator Controller::iteratorBeginListOfMails(){
 }
 list<Mail*>::iterator Controller::iteratorEndListOfMails(){
 	return this->listOfMails.end();
+}
+
+IndexConfig* Controller::getIndex(std::string index){
+
+	std::string auxIndex;
+	int result = -1;
+	list<IndexConfig*>::iterator current = this->indexes.begin();
+	while((current != this->indexes.end())&& result != 0){//recorro la lista de todos lo indices que tiene el programa
+		auxIndex = (*current)->getFilterName();
+		result =auxIndex.compare(index);
+			if (result == 0){
+				return (*current);
+			}
+		current++;
+	}
+	return NULL;
 }
 
 bool Controller::searchIndex(std::string index){

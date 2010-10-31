@@ -56,6 +56,7 @@ public:
 	void updateIndexes(Mail* mail);
 	void updateIndexesDelete(Mail* mail);
 	int createPrimaryIndex();
+	IndexConfig* getIndex(std::string index);
 	list<int>::iterator iteratorBeginListOfIucs();
 	list<int>::iterator iteratorEndListOfIucs();
 	list<Mail*>::iterator iteratorBeginListOfMails();
