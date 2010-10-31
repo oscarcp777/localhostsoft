@@ -168,9 +168,9 @@ Registry* LeafNode::searchNumberBlock(Registry* registry,ContainerInsertDataBloc
 RegPrimary* LeafNode::searchNumberBlockMail(Registry* registry){
         if(this->regList.size()==1)
            return ((RegPrimary*)*this->regList.begin());
-
+        RegPrimary*  reg=NULL;
 		for (list<Registry*>::iterator iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
-			RegPrimary*  reg=(RegPrimary*)*iterRegistry;
+			  reg=(RegPrimary*)*iterRegistry;
 			if(registry->compareTo(reg)<0){
 				//si entro es menor al actual entonces retrocedo un reg que es donde debo insertar
 				iterRegistry--;
@@ -178,7 +178,7 @@ RegPrimary* LeafNode::searchNumberBlockMail(Registry* registry){
 				return reg;
 			}
 		}
-		return NULL;
+		return reg;
 }
 Registry* LeafNode::searchBlockMails(Registry* registry,ContainerInsertDataBlock* container){
 	Block* blockMails;
