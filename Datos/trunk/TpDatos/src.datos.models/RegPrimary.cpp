@@ -12,6 +12,7 @@
 
 RegPrimary::RegPrimary() {
 	this->mail = NULL;
+	this->numberBlock=-1;
 }
 
 RegPrimary::~RegPrimary() {

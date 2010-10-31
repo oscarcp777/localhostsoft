@@ -46,13 +46,13 @@ void TestBSharp::testInsert(){
 
 }
 void TestBSharp::testInsertAndDelete(){
-	/* initialize random seed: */
+
 	int cantidad_insertar = 50000;
 	map<int,int> vecInserts;
-//	std::map vecInserts[cantidad_insertar];
+	string max;
 	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTree.dat",BLOCK_SIZE,TYPE_REG_PRIMARY);
 	for (int var =0; var < cantidad_insertar; ++var) {
-		int keyInt=rand()%1000000;
+		int keyInt=rand()%100000;
 		vecInserts[keyInt] = keyInt;
 	}
 	int i=0;
@@ -63,56 +63,98 @@ void TestBSharp::testInsertAndDelete(){
 		KeyInteger* key= new KeyInteger((*it).second);
 		regPrimary->setKey(key);
 		regPrimary->setNumberBlock(var);
-//		cout<<" Inserto el : "<<i++;
-//		regPrimary->print(cout);
+		cout<<" Inserto el : "<<i++;
+		regPrimary->print(cout);
 		indexBSharp->addRegistry(regPrimary);
 		var++;
 		}
 
 	indexBSharp->print(std::cout);
 
-i=0;
-	for(it = (vecInserts.end())-- ; it != vecInserts.begin(); it--){
+	i=0;
+	for(it = --(vecInserts.end()) ; it != vecInserts.begin(); it--){
 		i++;
-//		if (i >=3018)
+//		if (i >=8)
 //			indexBSharp->print(std::cout);
 		RegPrimary* regPrimary = new RegPrimary();
 		KeyInteger* key= new KeyInteger((*it).second);
 		regPrimary->setKey(key);
-//		cout<<" Deleteo el : "<<i<<" ";
-//		regPrimary->print(cout);
+		cout<<" Deleteo el : "<<i<<" ";
+		regPrimary->print(cout);
 		indexBSharp->deleteRegistry(regPrimary);
 	}
+	i++;
 	RegPrimary* regPrimary = new RegPrimary();
 	KeyInteger* key= new KeyInteger((*it).second);
 	regPrimary->setKey(key);
-	cout<<" Deleteo el : ";
+	cout<<" Deleteo el : "<<i;
 	regPrimary->print(cout);
 	indexBSharp->deleteRegistry(regPrimary);
 
-	//	for (int var = cantidad_insertar-1; var >= 0; --var) {
-	//			RegPrimary* regPrimary = new RegPrimary();
-	//			int keyInt = vecInserts[var];
-	//			KeyInteger* key= new KeyInteger(keyInt);
-	//			regPrimary->setKey(key);
-	//			regPrimary->setNumberBlock(var);
-	////			if (var >= 491){
-	////				std::cout <<"";
-	////				indexBSharp->print(std::cout);
-	////			}
-	//			std::cout << "----A Eliminar----";
-	//					std::cout << "ID: " << keyInt << std::endl;
-	//
-	//			indexBSharp->deleteRegistry(regPrimary);
-	//
-	//			std::cout << "VAR: " << var << " REGISTRO ELIMINADO id: " << keyInt << std::endl;
-	//		}
+
 	indexBSharp->print(std::cout);
 
 	delete indexBSharp;
 	cout<<" esto es una manteca bambino!!!"<<endl;
 
 }
+
+void TestBSharp::testInsertAndDeleteVariable(){
+
+	int cantidad_insertar = 20;
+	map<string,string> vecInserts;
+	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTree.dat",BLOCK_SIZE,TYPE_REG_CLASSIFICATION);
+	for (int var =0; var < cantidad_insertar; ++var) {
+		string keyString=StringUtils::getPassword(15);
+		vecInserts[keyString] = keyString;
+	}
+	std::map<string,string>::iterator it;
+	int var = 0;
+	for(it = vecInserts.begin() ; it != vecInserts.end(); it++){
+		RegClassification* regClassif = new RegClassification();
+		KeyString* key= new KeyString((*it).second);
+		regClassif->setKey(key);
+		regClassif->setNumBlock(var);
+		cout<<" Inserto el : ";
+		regClassif->print(cout);
+		indexBSharp->addRegistry(regClassif);
+		var++;
+		}
+
+	indexBSharp->print(std::cout);
+
+	var=0;
+	for(it = --(vecInserts.end()) ; it != vecInserts.begin(); it--){
+//		if (var >=8)
+//			indexBSharp->print(std::cout);
+		RegClassification* regClassif = new RegClassification();
+		KeyString* key= new KeyString((*it).second);
+		regClassif->setKey(key);
+		if (var >= 1593)//2619//2970//3053
+			indexBSharp->print(std::cout);
+		cout<<" Deleteo el : "<<var<<" ";
+				regClassif->print(cout);
+		indexBSharp->deleteRegistry(regClassif);
+		var++;
+	}
+	RegClassification* regClassif = new RegClassification();
+	KeyString* key= new KeyString((*it).second);
+	regClassif->setKey(key);
+	cout<<" Deleteo el : "<<var;
+	regClassif->print(cout);
+	indexBSharp->deleteRegistry(regClassif);
+
+
+	indexBSharp->print(std::cout);
+
+	delete indexBSharp;
+	cout<<" esto es una manteca bambino!!!"<<endl;
+
+}
+
+
+
+
 void TestBSharp::testInsertAndSearch(){
 	int cantidadAInsertar = 50000;
 	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTreeInsertandSearch.dat",BLOCK_SIZE,TYPE_REG_PRIMARY);

@@ -181,15 +181,16 @@ private:
 
 
 		// metodos de la baja
-		bool removeLeafNodeEmpty(LeafNode* currentNode,LeafNode* firstBrotherNode, LeafNode* secondBrotherNode,ContainerInsertion* container);
-		bool balanceLeafNodeRemove(LeafNode* currentNode,LeafNode* firstBrotherNode, LeafNode* secondBrotherNode,ContainerInsertion* container)throw();
+		bool removeLeafNodeEmpty(LeafNode* currentNode,LeafNode* firstBrotherNode, LeafNode* secondBrotherNode,ContainerInsertion* container, Registry* regFirstFather, Registry* regSecondFather);
+		bool balanceLeafNodeRemove(LeafNode* currentNode,LeafNode* firstBrotherNode, LeafNode* secondBrotherNode,ContainerInsertion* container, Registry* regFirstFather, Registry* regSecondFather)throw();
 		bool removeInternalNodeEmpty(InternalNode* currentNode,InternalNode* firstBrotherNode, InternalNode* secondBrotherNode,ContainerInsertion* container,Registry* regFirstFather, Registry* regSecondFather);
 		bool balanceInternalNodeRemove(InternalNode* currentNode,InternalNode* firstBrotherNode, InternalNode* secondBrotherNode,ContainerInsertion* container,Registry* regFirstFather, Registry* regSecondFather)throw();
 		int removeInternalNode(InternalNode* internalNode, Registry* regKey,
-				ContainerInsertion* balanceContainer, ContainerInsertion* insertionContainer, unsigned int firstBrother, unsigned int secondBrother, Registry* regFirstFather, Registry* regSecondFather) throw();
+				ContainerInsertion* insertionContainer, unsigned int firstBrother, unsigned int secondBrother, Registry* regFirstFather, Registry* regSecondFather) throw();
 		void searchBranchSisters(InternalNode* internalNode, Registry* reg, int *r1, int *r2) throw();
 		void updateFusion(InternalNode* fatherNode, ContainerInsertion* insertionContainer) throw();
-		int removeLeafNode(LeafNode* leafNode, Registry* regKey,ContainerInsertion* insertionContainer, unsigned int firstBrother, unsigned int secondBrother) throw();
+		int removeLeafNode(LeafNode* leafNode, Registry* regKey,ContainerInsertion* insertionContainer, unsigned int firstBrother, unsigned int secondBrother,
+				Registry* regFirstFather, Registry* regSecondFather) throw();
 		void manageRootUnderflow() throw();
 
 		/**

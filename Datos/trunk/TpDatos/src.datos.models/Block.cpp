@@ -251,6 +251,8 @@ int Block::getTipeKey(int typeElement){
 }
 void Block::removeReg(list<Registry*>::iterator it){
 	this->regList.erase(it);
+	delete *it;
+	
 }
 void Block::removeReg(Registry* registry){
     this->regList.remove(registry);

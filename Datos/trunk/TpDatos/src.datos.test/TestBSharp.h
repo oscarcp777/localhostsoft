@@ -24,6 +24,7 @@ public:
 	void testInsertAndSearchRegClassification();
 	void testPrint();
 	void testInsertAndDelete();
+	void testInsertAndDeleteVariable();
 };
 
 #endif /* TESTBSHARP_H_ */
