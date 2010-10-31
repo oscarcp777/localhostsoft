@@ -33,8 +33,11 @@ public:
     void print();
     void setLastIuc(int lastIuc);
     int getLastIuc();
+    void setLoaded(bool loaded);
+    bool isLoaded();
 
 private:
+    bool loaded;
     int lastIuc;
     string filterName;
 	string fileName;

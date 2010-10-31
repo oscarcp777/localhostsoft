@@ -13,6 +13,7 @@ IndexConfig::IndexConfig() {
 	this->value="";
 	this->typeSecundaryIndex ="";
 	this->lastIuc = 0;
+	this->loaded = false;
 
 }
 
@@ -112,4 +113,9 @@ void IndexConfig::setLastIuc(int lastIuc){
 int IndexConfig::getLastIuc(){
 	return this->lastIuc;
 }
-
+void IndexConfig::setLoaded(bool loaded){
+	this->loaded = loaded;
+}
+bool IndexConfig::isLoaded(){
+	return this->loaded;
+}

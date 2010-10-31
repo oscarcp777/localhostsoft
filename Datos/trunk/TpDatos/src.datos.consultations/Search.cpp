@@ -10,11 +10,16 @@
 int Search::sizeOfListIndex(){
 	return this->listOfIndex.size();
 }
-void Search::setStrSearch(std::string strSearch){
-	this->strSearch = strSearch;
+void Search::pushStrSearch(std::string strSearch){
+	this->listStrSearch.push_back(strSearch);
 }
-std::string Search::getStrSearch(){
-	return this->strSearch;
+unsigned int Search::getNumOfIndex(){
+	return sizeOfIndexes;
+}
+std::string Search::popStrSearch(){
+	std::string str = *this->listStrSearch.begin();
+	this->listStrSearch.pop_front();
+	return str;
 }
 void Search::setIndex(std::string index){
 	this->listOfIndex.push_back(index);
@@ -29,7 +34,9 @@ std::string Search::getIndex(){
 void Search::setIuc(int iuc){
 	this->listOfIucs.push_back(iuc);
 }
-
+void Search::setNumOfIndex(int size){
+	this->sizeOfIndexes = size;
+}
 void Search::printIndexNames(){
 	list<string>::iterator current = this->listOfIndex.begin();
 	while(current != this->listOfIndex.end()){

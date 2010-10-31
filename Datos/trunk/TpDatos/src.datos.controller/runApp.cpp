@@ -11,10 +11,50 @@
 
 using namespace std;
 
+void calculateIntersection(unsigned int numSearchs, list<int>* listIucs){
+	list<int>::iterator it;
+	list<int>::iterator itAux;
+	list<int>::iterator itAux2;
+	bool halt;
+	list<int> finalList;
+	unsigned int count;
+	cout<<"numSearchs: "<<numSearchs<<endl;
+	(*listIucs).sort();
+	cout<<"IUC: ";
+	for(it= (*listIucs).begin(); it != (*listIucs).end(); it++){
+						cout<<*it<<", ";
+		}
+	cout<<endl;
+	for(it = (*listIucs).begin(); it != (*listIucs).end(); it++){
+		halt = false;
+		itAux2 = it;
+		itAux2++;
+		count = 1;
+		for(itAux = itAux2; ((itAux != (*listIucs).end())&& !halt); itAux++){
+			if(*it == *itAux){
+				count++;
+			}
+			else{
+				if(count == numSearchs){
+					finalList.push_back(*it);
+				}
+				halt = true;
+			}
+		}
+	}
 
+	(*listIucs).clear();
+	(*listIucs).merge(finalList);
+
+}
 
 void printResult(Controller* control){
+
 		list<int>::iterator it;
+		unsigned int numSearchs = control->getSearch()->getNumOfIndex();
+
+		calculateIntersection(numSearchs, control->getListOfIucs());
+		cout<<"RESULTADO "<<endl;
 		for(it= control->iteratorBeginListOfIucs(); it != control->iteratorEndListOfIucs(); it++){
 			cout<<"IUC: "<<*it<<endl;
 		}

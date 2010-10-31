@@ -15,8 +15,8 @@ using namespace std;
 class Search {
 public:
 	int sizeOfListIndex();
-	void setStrSearch(std::string strSearch);
-	std::string getStrSearch();
+	void pushStrSearch(std::string strSearch);
+	std::string popStrSearch();
 	void setIndex(std::string index);
 	std::string getIndex();
 	void setIuc(int iuc);
@@ -26,8 +26,11 @@ public:
 	list<int> getListOfIucs();
 	list<int>::iterator getIteratorBeginListOfIucs();
 	list<int>::iterator getIteratorEndListOfIucs();
+	unsigned int getNumOfIndex();
+	void setNumOfIndex(int size);
 private:
-	std::string strSearch;
+	int sizeOfIndexes;
+	list<string> listStrSearch;
 	list<string> listOfIndex;
 	list<int> listOfIucs;
 };

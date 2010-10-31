@@ -63,7 +63,7 @@ void Controller::loadInfoIndex(std::string linea,IndexConfig* index){
 	StringUtils::Tokenize(linea, tokens,"|");
 
 	int size=tokens.size();
-	if (size == 6){
+	if (size == 6){//PRIMARIO
 		index->setLastIuc(atoi(tokens.at(0).c_str()));
 		index->setBlockSize(atoi(tokens.at(1).c_str()));
 		index->setFilterName(tokens.at(2));
@@ -71,7 +71,7 @@ void Controller::loadInfoIndex(std::string linea,IndexConfig* index){
 		index->setUserName(tokens.at(4));
 		index->setTypeIndex(tokens.at(5));
 	}
-	if (size == 7){
+	if (size == 7){//INVERTIDO
 		index->setLastIuc(atoi(tokens.at(0).c_str()));
 		index->setBlockSize(atoi(tokens.at(1).c_str()));
 		index->setFilterName(tokens.at(2));
@@ -80,7 +80,7 @@ void Controller::loadInfoIndex(std::string linea,IndexConfig* index){
 		index->setTypeIndex(tokens.at(5));
 		index->setTypeSecundaryIndex(tokens.at(6));
 	}
-	if (size == 8){
+	if (size == 8){//CLASIFICACION
 		index->setLastIuc(atoi(tokens.at(0).c_str()));
 		index->setBlockSize(atoi(tokens.at(1).c_str()));
 		index->setFilterName(tokens.at(2));
@@ -90,7 +90,7 @@ void Controller::loadInfoIndex(std::string linea,IndexConfig* index){
 		index->setTypeSecundaryIndex(tokens.at(6));
 		index->setCondition(atoi(tokens.at(7).c_str()));
 	}
-	if (size == 9){
+	if (size == 9){//SELECCION
 		index->setLastIuc(atoi(tokens.at(0).c_str()));
 		index->setBlockSize(atoi(tokens.at(1).c_str()));
 		index->setFilterName(tokens.at(2));
@@ -393,14 +393,12 @@ Search* Controller::parseStrSearch(std::string strSearch){
 			filterName = aux.substr(0,pos);
 			filterValue = aux.substr(pos+1,(aux.length()-1)- pos);
 			this->convertStringToListOfInt(search,filterValue);
-			search->setStrSearch(filterValue);
+			search->pushStrSearch(filterValue);
 			search->setIndex(filterName);
-//			std::cout<<filterName<<std::endl;
-//			std::cout<<filterValue<<std::endl;
 			posInitial = strSearch.find("[",posFinal)+1;
 			posFinal = strSearch.find("]",posInitial);
 		}
-
+		search->setNumOfIndex(search->sizeOfListIndex());
 		return search;
 	} else return NULL;
 }
@@ -410,16 +408,20 @@ int Controller::searchMails(std::string strSearch){
 	this->search = this->parseStrSearch(strSearch);
 	std::string index;
 	std::string auxIndex;
-	int result = -1;
+	int result;
+	std::string subSearch;
+	bool find = false;
 	int cant = this->search->sizeOfListIndex();// tamaño de la lista de indices a buscar
-		for (int i = 0; i < cant; ++i) {
+	for (int i = 0; i < cant; ++i) {
+			result = -1;
 			auxIndex = this->search->getIndex();
 			list<IndexConfig*>::iterator current = this->indexes.begin();
-
+			subSearch = this->search->popStrSearch();
 			while((current != this->indexes.end())&& result != 0){//recorro la lista de todos lo indices que tiene el programa
 					index = (*current)->getFilterName();
 					result =auxIndex.compare(index);
 					if (result == 0){
+						find = true;
 						if((*current)->getTypeIndex().compare((char*)TYPE_PRIMARY) == 0){
 							//TODO falta devolverlo en algun lado y si son muchos iuc buscar muchos registros
 							//como me pasa facu el iuc para seterle la clave al regPrimary???
@@ -437,11 +439,14 @@ int Controller::searchMails(std::string strSearch){
 
 						}
 						else
-							consultation->consultSecondaryIndex(*current,&this->listOfIucs, this->search->getStrSearch());
+							consultation->consultSecondaryIndex(*current,&this->listOfIucs, subSearch);
 
 					}
 					current++;
 					}
+			if(!find){
+				cout<<"No existe el indice: "<< auxIndex<<endl;////
+			}
 		}
 		delete consultation;
 	return 0;
@@ -570,7 +575,9 @@ void Controller::deleteIuc(int iuc){
 
 }
 
-
+list<int>* Controller::getListOfIucs(){
+	return &this->listOfIucs;
+}
 
 
 

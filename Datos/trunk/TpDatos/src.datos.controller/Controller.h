@@ -69,6 +69,7 @@ public:
 	void clearListsIucs();
 	void deleteIuc(int iuc);
 	void overWriteFile();
+	list<int>* getListOfIucs();
 
 
 };
