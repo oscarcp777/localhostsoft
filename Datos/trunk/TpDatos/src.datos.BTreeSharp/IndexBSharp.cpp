@@ -1283,7 +1283,7 @@ void IndexBSharp::printRecursive(Node* currentNode, std::ostream& outStream,
 			outStream << " --EN BLOQUE HOJA--";
 			LeafNode* leafNode = (LeafNode*) currentNode;
 			outStream << "CON SIGUIENTE: " << leafNode->getNextBlock() << " ";
-
+//			leafNode->print(outStream,this->containerInsertDataBlock,this->typeElement);
 			outStream << std::endl;
 			outStream << std::endl;
 			outStream << std::endl;
@@ -1319,7 +1319,9 @@ void IndexBSharp::printRecursive(Node* currentNode, std::ostream& outStream,
 
 }
 void IndexBSharp::printRegistry(Registry* registry, std::ostream& outStream) throw () {
+	registry->setContainer(this->containerInsertDataBlock);
 	registry->print(outStream);
+
 }
 int IndexBSharp::getLongBytes(){
     return 10000;
@@ -2178,10 +2180,18 @@ int IndexBSharp::removeLeafNode(LeafNode* leafNode, Registry* regKey,
 			if(this->typeElement==TYPE_REG_PRIMARY||this->typeElement==TYPE_REG_CLASSIFICATION||this->typeElement==TYPE_REG_INVERTED_INDEX){
 				answer= leafNode->deleteBlockData(regKey,this->containerInsertDataBlock);
 			}
-		    if(CORRECT_REMOVE==answer){
+		    if(CORRECT_REMOVE==answer&&(this->typeElement==TYPE_REG_PRIMARY||this->typeElement==TYPE_REG_CLASSIFICATION)){
+		    	delete regKey;
 				return answer;
 			}
-
+		    if(BLOCK_EMPTY==answer&&this->typeElement==TYPE_REG_PRIMARY){
+		    	Registry* regfind=leafNode->searchNumberBlockMail(regKey);
+		    	regKey=regfind;
+		    	answer = CORRECT_REMOVE;
+		   	}
+		    if(BLOCK_EMPTY==answer&&this->typeElement==TYPE_REG_CLASSIFICATION){
+		    	answer = CORRECT_REMOVE;
+		    }
 		}
 
 

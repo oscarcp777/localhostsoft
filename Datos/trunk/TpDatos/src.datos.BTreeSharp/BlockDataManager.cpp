@@ -123,6 +123,7 @@ void BlockDataManager::loadListIucBlockData(RegClassification* regClas,unsigned 
 	Block* blockIucs;
 	int newNumBlock=0;
 	blockIucs=this->readBlockData(numBlock,container);
+	regClas->setNumBlock(numBlock);
 	loadListRegistry(listIucs,blockIucs->iteratorBegin(),blockIucs->iteratorEnd());
 	blockIucs->clearListRegistry();
 	newNumBlock=blockIucs->getNextBlock();
@@ -233,25 +234,31 @@ void BlockDataManager::writeBlockData(Block* block ,unsigned int numBlock,Contai
 }
 
 
-void BlockDataManager::deleteBlockIndexed(int numberBlock,ContainerInsertDataBlock* container){
-	Block* blockIucs;
-	int newNumBlock=0;
-	if(container->getTypeElement()==TYPE_REG_CLASSIFICATION)
-		blockIucs=this->readBlockData(numberBlock,container);
-	if(container->getTypeElement()==TYPE_REG_INVERTED_INDEX)
-		blockIucs=this->readDataBlockCompressed(numberBlock,container);
-	container->getFreeBlockController()->writeFreeBlock(numberBlock);
-	newNumBlock=blockIucs->getNextBlock();
-	while(newNumBlock!=NEXT_BLOCK_INVALID){
-		delete blockIucs;
-		if(container->getTypeElement()==TYPE_REG_CLASSIFICATION)
-			blockIucs=this->readBlockData(newNumBlock,container);
-		if(container->getTypeElement()==TYPE_REG_INVERTED_INDEX)
-			blockIucs=this->readDataBlockCompressed(newNumBlock,container);
-		container->getFreeBlockController()->writeFreeBlock(numberBlock);
-		newNumBlock=blockIucs->getNextBlock();
+int BlockDataManager::deleteIucInBlockData(int numberBlock,RegClassification* registry,ContainerInsertDataBlock* container){
+	Block* blockMails=this->readBlockData(numberBlock,container);
+	KeyInteger* reg=NULL;
+	bool find=false;
+	KeyInteger* keyFind=registry->getIuc();
+	for(list<Registry*>::iterator iterRegistry = blockMails->iteratorBegin(); iterRegistry != blockMails->iteratorEnd(); iterRegistry++){
+		reg=(KeyInteger*)*iterRegistry;
+		if(keyFind->equals(reg)){
+			find=true;
+			break;
+		}
 	}
-	delete blockIucs;
+	if(find){
+		blockMails->removeReg(reg);
+		if(blockMails->getNumElements()==0){
+			container->getFreeBlockController()->writeFreeBlock(numberBlock);
+			return BLOCK_EMPTY;
+		}
+		this->writeBlockData(blockMails,numberBlock,container);
+	}
+	else
+		cout<<"no se pudo remover no existe el mail en el bloque"<<endl;
+
+
+	return CORRECT_REMOVE;
 }
 int BlockDataManager::deleteMailInBlockData(int numberBlock ,RegPrimary* registry,ContainerInsertDataBlock* container){
 
@@ -267,6 +274,7 @@ int BlockDataManager::deleteMailInBlockData(int numberBlock ,RegPrimary* registr
 		blockMails->removeReg(reg);
 		if(blockMails->getNumElements()==0){
 			container->getFreeBlockController()->writeFreeBlock(numberBlock);
+			delete blockMails;
 			return BLOCK_EMPTY;
 		}
 		}

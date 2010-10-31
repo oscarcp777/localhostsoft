@@ -6,7 +6,7 @@
  */
 
 #include "RegInvertedIndex.h"
-
+#include "../src.datos.BTreeSharp/BlockDataManager.h"
 RegInvertedIndex::RegInvertedIndex() {
  this->numBlock=NEXT_BLOCK_INVALID;
 
@@ -83,18 +83,35 @@ unsigned int RegInvertedIndex::getSize(){
 Registry* RegInvertedIndex::cloneRegKey(){
 	return this->getKey()->clone();
 }
+
 int RegInvertedIndex::print(std::ostream& outStream){
 	outStream<<"key: ";
 	((KeyString*)this->key)->print(outStream);
-	outStream<<endl;
-	outStream<<"numBlock "<<numBlock<<endl;
+	outStream<<" : " ;
+	outStream<<"offset :"<<numBlock<<endl;
 	list<InfoPerDoc*>::iterator it;
-
-	for(it = this->infoPerDoc.begin() ; it != this->infoPerDoc.end() ; it++){
-		(*it)->print(outStream);
-
+	if(this->infoPerDoc.empty()){
+		if(DATA==1&&DATA_SHOW==1){
+			BlockDataManager* manager= new BlockDataManager();
+			manager->loadListInfoPerDocBlockData(this,this->numBlock,this->container);
+			delete manager;
+		}
 	}
-
+	int sizeCompressed=0;
+	int sizeNormal=0;
+	for(it = this->infoPerDoc.begin() ; it != this->infoPerDoc.end() ; it++){
+		InfoPerDoc* info=(InfoPerDoc*)(*it);
+		info->print(outStream);
+		sizeCompressed+=info->getlongBytesCompressed();
+		sizeNormal+=info->getLongBytes();
+	}
+	if(!this->infoPerDoc.empty()){
+		outStream << "-OCUPA : " << sizeCompressed;
+		outStream<<" BYTES ";
+		outStream << " (SIN COMPRIMIR OCUPARIA: " <<sizeNormal<<")";
+		outStream<<endl;
+	}
+	outStream<<endl;
 	return 0;
 }
 void RegInvertedIndex::clearInfoPerDoc(){

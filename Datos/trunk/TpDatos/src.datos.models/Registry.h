@@ -11,6 +11,7 @@
 #include "../src.datos.utils/Define.h"
 #include "../src.datos.compression/BitInput.h"
 #include "../src.datos.compression/BitOutput.h"
+#include "../src.datos.BTreeSharp/ContainerInsertDataBlock.h"
 class Key;
 
 class Registry {
@@ -28,8 +29,11 @@ public:
 	virtual int compareTo(Registry* registry) = 0;
 	virtual unsigned int getSize()=0;
 	virtual int print(std::ostream& outStream)=0;
+    ContainerInsertDataBlock *getContainer() const;
+    void setContainer(ContainerInsertDataBlock *container);
 protected:
 	Key* key;
+	ContainerInsertDataBlock* container;
 };
 
 #endif /* REGISTRY_H_ */

@@ -40,7 +40,7 @@ public:
 	 CompressedBlock* readDataBlockCompressed(unsigned int numBlock,ContainerInsertDataBlock* container);
 	 void writeDataBlockCompressed(CompressedBlock* block ,unsigned int numBlock,ContainerInsertDataBlock* container);
 	 int deleteMailInBlockData(int numberBlock,RegPrimary* registry,ContainerInsertDataBlock* container);
-	 void deleteBlockIndexed(int numberBlock,ContainerInsertDataBlock* container);
+	 int deleteIucInBlockData(int numberBlock,RegClassification* registry,ContainerInsertDataBlock* container);
 private:
 
 	 Mail*  validedSizeMail(Mail* mail,ContainerInsertDataBlock* container);

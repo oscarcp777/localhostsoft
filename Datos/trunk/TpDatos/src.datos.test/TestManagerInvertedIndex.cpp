@@ -17,8 +17,9 @@ TestManagerInvertedIndex::~TestManagerInvertedIndex() {
 	// TODO Auto-generated destructor stub
 }
 void TestManagerInvertedIndex::testInsert(){
-	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTree.dat",BLOCK_SIZE,TYPE_REG_INVERTED_INDEX);
-
+	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTreeIndexInverted.dat",BLOCK_SIZE,TYPE_REG_INVERTED_INDEX);
+	indexBSharp->print(cout);
+	return;
 	ManagerInvertedIndex* manager = new ManagerInvertedIndex();
 	Mail* mail = new Mail();
 	Mail* mail2 = new Mail();

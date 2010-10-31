@@ -24,7 +24,7 @@ TestCompression::~TestCompression() {
 }
 void TestCompression::testFreeBlockController(){
 	FreeBlockController* free= new FreeBlockController("test",-1);
-	int max=10;
+	int max=1;
 	for (int var = 0; var < max; ++var) {
 		free->writeFreeBlock(var);
 	}

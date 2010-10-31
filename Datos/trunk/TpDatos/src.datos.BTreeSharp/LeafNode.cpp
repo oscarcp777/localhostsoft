@@ -40,7 +40,7 @@ int LeafNode::deleteBlockData(Registry* registry,ContainerInsertDataBlock* conta
 		return deleteBlockMails( registry, container);
 	}
 	if(container->getTypeElement()==TYPE_REG_CLASSIFICATION){
-//		deleteBlockRegClassification( registry, container);
+		return deleteBlockRegClassification( registry, container);
 	}
 	if(container->getTypeElement()==TYPE_REG_INVERTED_INDEX){
 //		deleteBlockRegInvertedIndex( registry, container);
@@ -77,16 +77,16 @@ Registry* LeafNode::searchRegistryBlockData(Registry* registry,ContainerInsertDa
 
 
 int LeafNode::deleteBlockMails(Registry* registry,ContainerInsertDataBlock* container){
-	int numberBlock=this->searchNumberBlockMail((RegPrimary*)registry);
-	if(numberBlock==NEXT_BLOCK_INVALID)
+	RegPrimary* reg=this->searchNumberBlockMail((RegPrimary*)registry);
+	if(reg==NULL)
 	return CORRECT_REMOVE;
-   return this->blockDataManager->deleteMailInBlockData(numberBlock,(RegPrimary*)registry,container);
+   return this->blockDataManager->deleteMailInBlockData(reg->getNumberBlock(),(RegPrimary*)registry,container);
 }
-void LeafNode::deleteBlockDataIndexed(Registry* registry,ContainerInsertDataBlock* container){
-	int numberBlock=this->searchNumberBlockMail((RegPrimary*)registry);
-	if(numberBlock==NEXT_BLOCK_INVALID)
-	return ;
-    this->blockDataManager->deleteBlockIndexed(numberBlock,container);
+int LeafNode::deleteBlockRegClassification(Registry* registry,ContainerInsertDataBlock* container){
+     RegClassification* reg=(RegClassification*)this->searchNumberBlock(registry,container);
+	if(reg==NULL)
+	return CORRECT_REMOVE;
+	return this->blockDataManager->deleteIucInBlockData(reg->getNumBlock(),(RegClassification*)registry,container);
 }
 
 
@@ -133,52 +133,41 @@ Registry* LeafNode::insertBlockRegClassification(Registry* registry,ContainerIns
 return this->blockDataManager->insertIucInBlockData((RegClassification*)registry,(RegClassification*)registryFind,container);
 }
 Registry* LeafNode::searchBlockRegClassification(Registry* registry,ContainerInsertDataBlock* container){
-		int numberBlock=this->searchNumberBlock(registry,container);
-		if(numberBlock==NEXT_BLOCK_INVALID)
+	    RegClassification* reg=(RegClassification*)this->searchNumberBlock(registry,container);
+		if(reg==NULL)
 		return NULL;
-		this->blockDataManager->loadListIucBlockData((RegClassification*)registry,numberBlock,container);
+		this->blockDataManager->loadListIucBlockData((RegClassification*)registry,reg->getNumBlock(),container);
 		return registry;
 }
 Registry* LeafNode::searchBlockRegInvertedIndex(Registry* registry,ContainerInsertDataBlock* container){
-	int numberBlock=this->searchNumberBlock(registry,container);
-	if(numberBlock==NEXT_BLOCK_INVALID)
+	RegInvertedIndex* reg=(RegInvertedIndex*)this->searchNumberBlock(registry,container);
+	if(reg==NULL)
 		return NULL;
-	this->blockDataManager->loadListInfoPerDocBlockData((RegInvertedIndex*)registry,numberBlock,container);
+	this->blockDataManager->loadListInfoPerDocBlockData((RegInvertedIndex*)registry,reg->getNumBlock(),container);
 	return registry;
 
 }
-void LeafNode::printMails(std::ostream& outStream,Registry* reg, ContainerInsertDataBlock* container){
-	list<Registry*>::iterator iterRegistry;
-		Block* blockMails;
-		RegPrimary* regPrevious=(RegPrimary*)reg;
-		blockMails=this->blockDataManager->readBlockData(regPrevious->getNumberBlock(),container);
-		for(iterRegistry = blockMails->iteratorBegin(); iterRegistry != blockMails->iteratorEnd(); iterRegistry++){
-			reg=*iterRegistry;
-			((RegPrimary*)reg)->print(std::cout);
 
-		}
-
-}
-int LeafNode::searchNumberBlock(Registry* registry,ContainerInsertDataBlock* container){
+Registry* LeafNode::searchNumberBlock(Registry* registry,ContainerInsertDataBlock* container){
 	list<Registry*>::iterator iterRegistry;
 	for ( iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
 		Registry* reg=*iterRegistry;
 		if(registry->equals(reg)){
 			if(container->getTypeElement()==TYPE_REG_CLASSIFICATION){
 				RegClassification* regClas=(RegClassification*)*iterRegistry;
-				return regClas->getNumBlock();
+				return regClas;
 			}
 			if(container->getTypeElement()==TYPE_REG_INVERTED_INDEX){
 				RegInvertedIndex* regInvert=(RegInvertedIndex*)*iterRegistry;
-				return regInvert->getNumBlock();
+				return regInvert;
 			}
 		}
 	}
-	return -1;
+	return NULL;
 }
-int LeafNode::searchNumberBlockMail(Registry* registry){
+RegPrimary* LeafNode::searchNumberBlockMail(Registry* registry){
         if(this->regList.size()==1)
-           return ((RegPrimary*)*this->regList.begin())->getNumberBlock();
+           return ((RegPrimary*)*this->regList.begin());
 
 		for (list<Registry*>::iterator iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
 			RegPrimary*  reg=(RegPrimary*)*iterRegistry;
@@ -186,19 +175,19 @@ int LeafNode::searchNumberBlockMail(Registry* registry){
 				//si entro es menor al actual entonces retrocedo un reg que es donde debo insertar
 				iterRegistry--;
 				reg=(RegPrimary*)*iterRegistry;
-				return reg->getNumberBlock();
+				return reg;
 			}
 		}
-		return -1;
+		return NULL;
 }
 Registry* LeafNode::searchBlockMails(Registry* registry,ContainerInsertDataBlock* container){
 	Block* blockMails;
 	list<Registry*>::iterator iterRegistry;
-	int numberBlock=this->searchNumberBlockMail((RegPrimary*)registry);
-	if(numberBlock==NEXT_BLOCK_INVALID)
+	RegPrimary* reg=this->searchNumberBlockMail((RegPrimary*)registry);
+	if(reg==NULL)
 	return NULL;
-	blockMails=this->blockDataManager->readBlockData(numberBlock,container);
-	((RegPrimary*)registry)->setNumberBlock(numberBlock);
+	blockMails=this->blockDataManager->readBlockData(reg->getNumberBlock(),container);
+	((RegPrimary*)registry)->setNumberBlock(reg->getNumberBlock());
 	for(iterRegistry = blockMails->iteratorBegin(); iterRegistry != blockMails->iteratorEnd(); iterRegistry++){
 		Registry* reg=*iterRegistry;
 		if(registry->compareTo(reg) == 0){
@@ -258,6 +247,52 @@ int LeafNode::unPackMetadata(Buffer* buffer){
 	this->setNextBlock(nextNode);
 	return numElements;
 }
+void LeafNode::print(std::ostream& streamSalida,ContainerInsertDataBlock* containerInsertDataBlock,int typeElement){
+	if(DATA==1&&DATA_SHOW==1){
+		streamSalida << std::endl;
+		streamSalida << std::endl;
+		streamSalida << "##################################   DATOS DEL BLOQUE : #########################################";
+		streamSalida << std::endl;
+		if(typeElement==TYPE_REG_PRIMARY||typeElement==TYPE_REG_CLASSIFICATION||typeElement==TYPE_REG_INVERTED_INDEX){
+			for (list<Registry*>::iterator iterRegistry=this->regList.begin(); iterRegistry!=this->regList.end(); iterRegistry++){
+				Registry*  reg=*iterRegistry;
+				if(typeElement==TYPE_REG_PRIMARY){
+					this->printMails(streamSalida,reg,containerInsertDataBlock);
+				}
+				if(typeElement==TYPE_REG_CLASSIFICATION){
+					this->printDataRegClassification(streamSalida,reg,containerInsertDataBlock);
+				}
+				if(typeElement==TYPE_REG_INVERTED_INDEX){
+					this->printDataRegIndexInverted(streamSalida,reg,containerInsertDataBlock);
+				}
+			}
+		}
+		streamSalida << std::endl;
+		streamSalida << "##################################   FIN DE DATOS DEL BLOQUE : #########################################";
+		streamSalida << std::endl;
+	}
+}
+void LeafNode::printDataRegIndexInverted(std::ostream& streamSalida,Registry* reg,ContainerInsertDataBlock* containerInsertDataBlock){
 
+	RegInvertedIndex* regPrevious=(RegInvertedIndex*)reg;
+	this->blockDataManager->loadListInfoPerDocBlockData(regPrevious,regPrevious->getNumBlock(),containerInsertDataBlock);
+	regPrevious->print(streamSalida);
+}
+void LeafNode::printDataRegClassification(std::ostream& streamSalida,Registry* reg,ContainerInsertDataBlock* containerInsertDataBlock){
 
+	RegClassification* regPrevious=(RegClassification*)reg;
+	this->blockDataManager->loadListIucBlockData(regPrevious,regPrevious->getNumBlock(),containerInsertDataBlock);
+	regPrevious->print(streamSalida);
+}
+void LeafNode::printMails(std::ostream& outStream,Registry* reg, ContainerInsertDataBlock* container){
+	list<Registry*>::iterator iterRegistry;
+		Block* blockMails;
+		RegPrimary* regPrevious=(RegPrimary*)reg;
+		blockMails=this->blockDataManager->readBlockData(regPrevious->getNumberBlock(),container);
+		for(iterRegistry = blockMails->iteratorBegin(); iterRegistry != blockMails->iteratorEnd(); iterRegistry++){
+			Mail* mail=(Mail*)*iterRegistry;
+			mail->print(std::cout);
 
+		}
+
+}

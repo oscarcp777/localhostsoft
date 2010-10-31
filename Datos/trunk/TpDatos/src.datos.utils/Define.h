@@ -37,6 +37,7 @@
 #define TYPE_INFO_PER_DOC 8
 
 #define DATA 1
+#define DATA_SHOW 1
 #define BLOCK_EMPTY -1
 #define INSERTION_OK 0
 #define OVERFLOW 1

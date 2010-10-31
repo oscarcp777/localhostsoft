@@ -8,6 +8,7 @@
 #include "RegPrimary.h"
 #include "Key.h"
 #include "KeyInteger.h"
+#include "../src.datos.BTreeSharp/BlockDataManager.h"
 
 RegPrimary::RegPrimary() {
 	this->mail = NULL;
@@ -53,14 +54,31 @@ unsigned int RegPrimary::getSize(){
     return size;
 }
 int RegPrimary::print(std::ostream& outStream){
+	outStream<<"key: ";
 	this->getKey()->print(outStream);
-	outStream<<" | ";
-	outStream<<"numero Bloque: ";
+	outStream<<" : offset ";
 	outStream<<this->numberBlock;
 	outStream<<endl;
 	if(this->mail != NULL)
 		this->mail->print(outStream);
+
+	if(DATA==1&&DATA_SHOW==1){
+		BlockDataManager* manager= new BlockDataManager();
+		list<Registry*>::iterator iterRegistry;
+		Block* blockMails;
+		blockMails=manager->readBlockData(this->getNumberBlock(),this->container);
+		outStream<<"Iucs de los Mails: ";
+		for(iterRegistry = blockMails->iteratorBegin(); iterRegistry != blockMails->iteratorEnd(); iterRegistry++){
+			Mail* mail=(Mail*)*iterRegistry;
+			mail->getKey()->print(std::cout);
+
+		}
+		delete manager;
+	}
+	outStream<<endl;
+	outStream<<endl;
 	return 1;
+
 }
  int RegPrimary::getLongBytes(){
 	 return getSize();

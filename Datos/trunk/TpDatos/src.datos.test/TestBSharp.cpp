@@ -145,7 +145,7 @@ void TestBSharp::testInsertAndSearch(){
 	delete indexBSharp;
 }
 void TestBSharp::testInsertAndSearchRegClassification(){
-	int cantidadAInsertar = 50000;
+	int cantidadAInsertar = 1000;
 	vector<string> vec;
 	srand(time(NULL));
 	int j=0;
@@ -157,12 +157,13 @@ void TestBSharp::testInsertAndSearchRegClassification(){
 		KeyString* key= new KeyString(keyString);
 		regClassif->setKey(key);
 		regClassif->setNumBlock(var);
+		regClassif->addIuc(new KeyInteger(var));
 		cout<<"\n  Inserto el : "<<var<<" ";
 		//					regClassif->print(cout);
 		indexBSharp->addRegistry(regClassif);
 	}
 	indexBSharp->print(std::cout);
-
+   cout<<"inserto bien"<<endl;
 	for (std::vector<string>::iterator it=vec.begin(); it!=vec.end(); ++it) {
 		RegClassification* regClassif = new RegClassification();
 		KeyString* key= new KeyString(*it);
@@ -171,10 +172,12 @@ void TestBSharp::testInsertAndSearchRegClassification(){
 		if(regClassif == NULL){
 			cout<<"CLAVE: "<<key->getValue()<<" NO ENCONTRADA"<<endl;
 			j++;
+		}else{
+			regClassifind->print(cout);
 		}
 
 		delete regClassif;
-		delete regClassifind;
+//		delete regClassifind;
 	}
 	cout<<"No Se encontraron "<< j << " registros!" <<endl;
 	delete indexBSharp;
@@ -182,16 +185,22 @@ void TestBSharp::testInsertAndSearchRegClassification(){
 void TestBSharp::testsearchRegClassification(){
 	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTreeRegClassifi.dat",BLOCK_SIZE,TYPE_REG_CLASSIFICATION);
 	indexBSharp->print(cout);
+	return;
 	RegClassification* regClassif = new RegClassification();
-	KeyString* key= new KeyString("caceres.oscar7@gmail.com");
+	KeyString* key= new KeyString("3bmTRQYeUovy");
 	regClassif->setKey(key);
-	RegClassification* regFind = (RegClassification*)indexBSharp->searchRegistry(regClassif);
+	regClassif->addIuc(new KeyInteger(620));
+	RegClassification* regFind = NULL;
+//	regFind = (RegClassification*)indexBSharp->searchRegistry(regClassif);
+		indexBSharp->deleteRegistry(regClassif);
+//	indexBSharp->addRegistry(regClassif);lista de Iuc : (620)(678)
 	if(regFind == NULL)
-		cout<<"CLAVE: "<<key->getValue()<<" NO ENCONTRADA"<<endl;
+		cout<<"CLAVE: "<<"03g"<<" NO ENCONTRADA"<<endl;
 	else
 		regFind->print(std::cout);
-	delete regClassif;
-	delete regFind;
+//	delete regClassif;
+//	delete regFind;
+		indexBSharp->print(cout);
 	delete indexBSharp;
 
 }
@@ -217,18 +226,18 @@ void TestBSharp::testsearch(){
 	delete indexBSharp;
 
 }void TestBSharp::testInsertMails(){
-	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTreeMails.dat",BLOCK_SIZE,TYPE_REG_PRIMARY);
-	RegPrimary* regPrimary = new RegPrimary();
-	KeyInteger* key= new KeyInteger(2);
-	regPrimary->setKey(key);
-//	indexBSharp->deleteRegistry(regPrimary);
-	RegPrimary* regP=(RegPrimary*)indexBSharp->searchRegistry(regPrimary);
-
-	if(regP!=NULL)
-	regPrimary->print(cout);
-	else
-		cout<<"no esta el registro "<<endl;
+	IndexBSharp* indexBSharp = new IndexBSharp("files/santiagodonikian.IndPrimario",BLOCK_SIZE,TYPE_REG_PRIMARY);
 	indexBSharp->print(cout);
+	return;
+	int max=8;
+	for (int var =1; var <=max; ++var) {
+		RegPrimary* regPrimary = new RegPrimary();
+			KeyInteger* key= new KeyInteger(var);
+			regPrimary->setKey(key);
+			indexBSharp->deleteRegistry(regPrimary);
+	}
+	indexBSharp->print(cout);
+	delete indexBSharp;
 	return;
 	Mail* mail1 = new Mail();
 	Mail* mail2= new Mail();

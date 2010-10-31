@@ -24,3 +24,15 @@ void Registry::setKey(Key* key){
   this->key=key;
 }
 
+ContainerInsertDataBlock *Registry::getContainer() const
+{
+    return container;
+}
+
+void Registry::setContainer(ContainerInsertDataBlock *container)
+{
+    this->container = container;
+}
+
+
+

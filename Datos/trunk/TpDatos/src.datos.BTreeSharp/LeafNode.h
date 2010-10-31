@@ -25,7 +25,9 @@ public:
 	void packMetadata(Buffer* buffer);
 	int unPackMetadata(Buffer* buffer);
 	int deleteBlockData(Registry* registry,ContainerInsertDataBlock* container);
-
+	void print(std::ostream& streamSalida,ContainerInsertDataBlock* containerInsertDataBlock,int typeElement);
+	void printDataRegIndexInverted(std::ostream& streamSalida,Registry* reg,ContainerInsertDataBlock* containerInsertDataBlock);
+	void printDataRegClassification(std::ostream& streamSalida,Registry* reg,ContainerInsertDataBlock* containerInsertDataBlock);
 	/**
 	 * 
 	 * Obtiene la longitud ocupada en bytes del bloque.
@@ -43,14 +45,16 @@ public:
 	 bool posibleToAgregateComponent(Registry* registry)throw();
 	 unsigned int getMetadata();
 	 Registry* searchRegistryBlockData(Registry* registry,ContainerInsertDataBlock* container);
-	 void printMails(std::ostream& outStream,Registry* reg,ContainerInsertDataBlock* container);
+	 void printMails(std::ostream& outStream,Registry* reg, ContainerInsertDataBlock* container);
+	   RegPrimary* searchNumberBlockMail(Registry* registry);
+	   Registry* searchNumberBlock(Registry* registry,ContainerInsertDataBlock* container);
 private:
       BlockDataManager*  blockDataManager;
 	 // Los metodos siguientes fueron agregados al BSharp para darle la funcionalidad de un secuence set
 	 // segun se necesite
 
-      int searchNumberBlockMail(Registry* registry);
-      int searchNumberBlock(Registry* registry,ContainerInsertDataBlock* container);
+
+
 	 /**
 	  *  Inserta un Mail en un bloque de datos, el bloque puede ser uno existe o uno nuevo
 	  */
@@ -70,7 +74,7 @@ private:
 	 /**
 	  *  borra un Iuc en un bloque de datos, el bloque puede ser uno existe o uno nuevo
 	  */
-	 void deleteBlockDataIndexed(Registry* registry,ContainerInsertDataBlock* container);
+	 int deleteBlockRegClassification(Registry* registry,ContainerInsertDataBlock* container);
 };
 
 #endif /* LEAFNODE_H_ */

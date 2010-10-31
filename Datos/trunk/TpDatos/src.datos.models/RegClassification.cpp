@@ -6,6 +6,7 @@
  */
 
 #include "RegClassification.h"
+#include "../src.datos.BTreeSharp/BlockDataManager.h"
 #include "KeyString.h"
 
 RegClassification::RegClassification() {
@@ -60,18 +61,27 @@ unsigned int RegClassification::getSize(){
 	return key->getSize()+sizeof(this->numBlock);
 }
 int RegClassification::print(std::ostream& outStream){
+	outStream<<"key: ";
 	this->getKey()->print(outStream);
-	outStream<<" | ";
+	outStream<<" : offset ";
 	outStream<<this->numBlock;
 	outStream<<endl;
+	if(this->listIuc.empty()){
+		if(DATA==1&&DATA_SHOW==1){
+			BlockDataManager* manager= new BlockDataManager();
+			manager->loadListIucBlockData(this,this->numBlock,this->container);
+			delete manager;
+		}
+	}
 	if(!this->listIuc.empty()){
-		outStream<<"lista de Iuc : ";
+		outStream<<"Iucs : ";
 		for (list<KeyInteger*>::iterator it = this->listIuc.begin();it!=this->listIuc.end(); it++) {
 			KeyInteger* key=(KeyInteger*)*it;
 			key->print(outStream);
 		}
 	outStream<<endl;
 	}
+		outStream<<endl;
 	return 1;
 }
 int RegClassification::getLongBytes(){

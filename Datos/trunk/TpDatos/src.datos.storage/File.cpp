@@ -108,10 +108,10 @@ void File::write(char* buffer, int tamanio, int pos){
 	}
 
 }
-unsigned int File::getCountBlockInFile(int sizeBlock) throw() {
+int File::getCountBlockInFile(int sizeBlock) throw() {
 	this->file.seekp(0, std::ios_base::end);
-	unsigned int position = this->file.tellp();
-	unsigned int countBlock = position / sizeBlock;
+	 int position = this->file.tellp();
+	 int countBlock = position / sizeBlock;
 	return countBlock;
 }
 

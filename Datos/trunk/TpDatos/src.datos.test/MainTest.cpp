@@ -17,7 +17,7 @@
 
 using namespace std;
 
-int main1232145(int argc,char** argv) {
+int main(int argc,char** argv) {
 
 	TestBSharp* test = new TestBSharp();
 //	test->testInsert();
@@ -53,9 +53,9 @@ int main1232145(int argc,char** argv) {
 
 
 //**********************TEST MANAGER INVERTED INDEX*******************
-//	TestCompression* myTest = new TestCompression();
-//	myTest->testDelta2();
-//	delete myTest;
+//	TestCompression* mytest = new TestCompression();
+//	mytest->testFreeBlockController();
+//	delete mytest;
 //*********************************************************************
 
 //	TestManagerInvertedIndex* myTest = new TestManagerInvertedIndex();
