@@ -74,6 +74,7 @@ int RegPrimary::print(std::ostream& outStream){
 			mail->getKey()->print(std::cout);
 
 		}
+		delete blockMails;
 		delete manager;
 	}
 	outStream<<endl;

@@ -248,8 +248,11 @@ int BlockDataManager::deleteIucInBlockData(int numberBlock,RegClassification* re
 	}
 	if(find){
 		blockMails->removeReg(reg);
+		delete keyFind;
+		registry->clearListIuc();
 		if(blockMails->getNumElements()==0){
 			container->getFreeBlockController()->writeFreeBlock(numberBlock);
+			delete blockMails;
 			return BLOCK_EMPTY;
 		}
 		this->writeBlockData(blockMails,numberBlock,container);

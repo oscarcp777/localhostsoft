@@ -11,7 +11,7 @@ Node::Node(unsigned int maxLong, unsigned int numBlock, unsigned int level) thro
 	this->averageWeight = 0;
 }
 Node::Node(){
-
+	this->averageWeight = 0;
 }
 Node::~Node() throw(){
 	// TODO Auto-generated destructor stub
