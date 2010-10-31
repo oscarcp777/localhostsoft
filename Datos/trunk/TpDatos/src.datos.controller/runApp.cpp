@@ -18,13 +18,13 @@ void calculateIntersection(unsigned int numSearchs, list<int>* listIucs){
 	bool halt;
 	list<int> finalList;
 	unsigned int count;
-	cout<<"numSearchs: "<<numSearchs<<endl;
+	//cout<<"numSearchs: "<<numSearchs<<endl;
 	(*listIucs).sort();
-	cout<<"IUC: ";
-	for(it= (*listIucs).begin(); it != (*listIucs).end(); it++){
-						cout<<*it<<", ";
-		}
-	cout<<endl;
+//	cout<<"IUC: ";
+//	for(it= (*listIucs).begin(); it != (*listIucs).end(); it++){
+//						cout<<*it<<", ";
+//		}
+//	cout<<endl;
 	for(it = (*listIucs).begin(); it != (*listIucs).end(); it++){
 		halt = false;
 		itAux2 = it;
@@ -52,9 +52,10 @@ void printResult(Controller* control){
 
 	list<int>::iterator it;
 	unsigned int numSearchs = control->getSearch()->getNumOfIndex();
-	if (numSearchs > 1){
+	if (numSearchs > 1)
 		calculateIntersection(numSearchs, control->getListOfIucs());
-		cout<< "RESULTADO "<<endl;
+		//cout<< "RESULTADO "<<endl;
+
 		for(it= control->iteratorBeginListOfIucs(); it != control->iteratorEndListOfIucs(); it++){
 			cout<<"IUC: "<<*it<<endl;
 		}
@@ -63,7 +64,7 @@ void printResult(Controller* control){
 		for(it2= control->iteratorBeginListOfMails(); it2 != control->iteratorEndListOfMails(); it2++){
 			(*it2)->print(cout);
 		}
-	}
+
 }
 
 
@@ -73,12 +74,23 @@ int main(int argc,char** argv){
 	//----- ./Aplicacion -f stringAbuscar
 	//----- ./Application -si email TYPE_CLASSIFICATION/TYPE_SELECTION CONDITION (VALOR) filterName
 	//----- ./Application -li filterName
+
 	std::string userMail;
-	std::cout << "Ingrese su cuenta de correo: ";
-	std::cin >> userMail;
 	std::string userPass;
-	std::cout << "Ingrese su contraseña: ";
-	std::cin >> userPass;
+	if(strcmp(argv[1],"-t") != 0){//Si el comando no es el de test, pide usuario y pass
+
+		std::cout << "Ingrese su cuenta de correo: ";
+		std::cin >> userMail;
+		std::cout << "Ingrese su contraseña: ";
+		std::cin >> userPass;
+
+
+	}else{
+		userMail = "Test";
+		userPass = "pass";
+
+	}
+
 
 	Controller* control = new Controller(userMail);
 	control->addEmail(userMail);
@@ -126,21 +138,17 @@ int main(int argc,char** argv){
 		}else if((strcmp(argv[1],"-t")==0) && (argc == 2 )){
 			if(CONNECT == 0){
 				cout<<"*******************Creando indice primario...PrimarioTest"<<endl<<endl;
-				std::string strPass = "pass";
-				std::string strEmail = "Test";
-				control->addEmail(strEmail);
-				control->addPass(strPass);
 				control->createPrimaryIndex();
 				cout<<"*******************Indice primario creado exitosamente..."<<endl<<endl;
 
-				cout<<"*******************Creando y cargando indice secundario de seleccion...SEL_TEST  filtro FROM=chromium@googlecode.com"<<endl<<endl;
+				cout<<"*******************Creando y cargando indice secundario de seleccion...SEL_TEST  filtro FROM=michael.richters@gmail.com"<<endl<<endl;
 				IndexConfig* configSelection = new IndexConfig();
 				IndexConfig* config;
-				configSelection->setUserName(strEmail);
+				configSelection->setUserName(userMail);
 				configSelection->setTypeIndex("Secundario");
 				configSelection->setTypeSecundaryIndex("Seleccion");
 				configSelection->setCondition(1);
-				configSelection->setValue("chromium@googlecode.com");
+				configSelection->setValue("michael.richters@gmail.com");
 				configSelection->setFilterName("SEL_TEST");
 				control->addSecondIndex(configSelection);
 				config = control->loadIndexConfig("SEL_TEST");
@@ -149,7 +157,7 @@ int main(int argc,char** argv){
 
 				cout<<"*******************Creando indice secundario de clasificacion...CLAS_TEST"<<endl<<endl;
 				IndexConfig* configClasification = new IndexConfig();
-				configClasification->setUserName(strEmail);
+				configClasification->setUserName(userMail);
 				configClasification->setTypeIndex("Secundario");
 				configClasification->setTypeSecundaryIndex("Clasificacion");
 				configClasification->setCondition(1);
@@ -159,8 +167,18 @@ int main(int argc,char** argv){
 				control->loadSecondIndex(config);
 				cout<<"*******************Indice secundario de clasificacion creado exitosamente..."<<endl<<endl;
 
+				cout<<"*******************Creando indice invertido...INV_TEST"<<endl<<endl;
+				IndexConfig* configInvert = new IndexConfig();
+				configInvert->setUserName(userMail);
+				configInvert->setTypeIndex("Secundario");
+				configInvert->setTypeSecundaryIndex("Invertido");
+				configInvert->setFilterName("INV_TEST");
+				control->addSecondIndex(configInvert);
+				config = control->loadIndexConfig("INV_TEST");
+				control->loadSecondIndex(config);
+				cout<<"*******************Indice secundario de clasificacion creado exitosamente..."<<endl<<endl;
 
-				cout<<"*******************Busqueda sobre primario...[PrimarioTest=3,6,11]"<<endl;
+				cout<<"*******************Busqueda sobre primario...-f [PrimarioTest=3,6,11]"<<endl;
 				string parameters = "[PrimarioTest=3,6,11]";
 				control->searchMails(parameters);
 				list<Mail*>::iterator itPrimary;
@@ -169,7 +187,7 @@ int main(int argc,char** argv){
 				}
 				cout<<"*******************Fin busqueda..."<<endl<<endl;
 
-				cout<<"*******************Busqueda sobre secundario seleccion...[SEL_TEST=]..."<<endl<<endl;
+				cout<<"*******************Busqueda sobre secundario seleccion...-f [SEL_TEST=]..."<<endl<<endl;
 				control->searchMails("[SEL_TEST=]");
 
 				list<int>::iterator it;
@@ -179,8 +197,8 @@ int main(int argc,char** argv){
 				cout<<"*******************Fin busqueda..."<<endl<<endl;
 
 				control->clearListsIucs();
-				cout<<"*******************Busqueda sobre secundario clasificacion... [CLAS_TEST=chromium@googlecode.com]"<<endl;
-				control->searchMails("[CLAS_TEST=chromium@googlecode.com]");
+				cout<<"*******************Busqueda sobre secundario clasificacion...-f [CLAS_TEST=michael.richters@gmail.com]"<<endl;
+				control->searchMails("[CLAS_TEST=michael.richters@gmail.com]");
 
 				list<int>::iterator it2;
 				for(it2= control->iteratorBeginListOfIucs(); it2 != control->iteratorEndListOfIucs(); it2++){

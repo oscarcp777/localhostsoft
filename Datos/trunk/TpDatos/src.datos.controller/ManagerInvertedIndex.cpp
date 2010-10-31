@@ -42,7 +42,7 @@ void ManagerInvertedIndex::loadMessageWords(Mail* mail, IndexBSharp* indexBSharp
 	this->removeDirtyWords();
 	int count = 1;
 
-	this->currentWords->print();
+	//this->currentWords->print();
 
 	for(it= this->currentWords->getWordsBegin(); it != this->currentWords->getWordsEnd(); it++ ){
 
@@ -108,11 +108,14 @@ void ManagerInvertedIndex::removeStopWordsFromVector(vector<string>* words){
 }
 void ManagerInvertedIndex::removeDirtyWords(){
 	vector<string>::iterator it;
+	vector<string>::iterator aux;
 	for(it= this->currentWords->getWordsBegin(); it != this->currentWords->getWordsEnd(); it++ ){
 		string token=*it;
-		cout<<token<<endl;
-		if(this->dirtyWords->contains(token))
-			this->currentWords->removeWord(it);
+		if(this->dirtyWords->contains(token)){
+			aux = it;
+			it--;
+			this->currentWords->removeWord(aux);
+		}
 	}
 }
 void ManagerInvertedIndex::loadDirtyWords(){

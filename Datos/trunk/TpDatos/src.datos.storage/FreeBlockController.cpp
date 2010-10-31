@@ -62,7 +62,7 @@ unsigned int FreeBlockController::searchFreeBlock() throw() {
 	}
 	else{
 		int nextBlock=++counterBlock;
-		cout<<"nuevo bloque :"<<nextBlock<<endl;
+		//cout<<"nuevo bloque :"<<nextBlock<<endl;
 		return nextBlock;
 	}
 

@@ -54,7 +54,7 @@ void Classification::loadClassificationIndex(IndexConfig* indexConfig,IteratorBS
 		secondaryIndex->addRegistry(regClassification);
 
 	}
-	secondaryIndex->print(cout);
+	//secondaryIndex->print(cout);
 	delete secondaryIndex;
 	delete it;
 }
@@ -65,11 +65,11 @@ void Classification::loadInvertedIndex(IndexConfig* indexConfig,IteratorBSharp* 
 
 	while (it->hasNext()){
 		regPrimary = (RegPrimary*)it->next();
-		regPrimary->getMail()->print(cout);
+		//regPrimary->getMail()->print(cout);
 		manager->loadMessageWords(regPrimary->getMail(),secondaryIndex);
 
 	}
-	secondaryIndex->print(cout);
+	//secondaryIndex->print(cout);
 	delete secondaryIndex;
 	delete it;
 	delete manager;
@@ -89,7 +89,7 @@ void Classification::loadSelectionIndex(IndexConfig* indexConfig,IteratorBSharp*
 			secondaryIndex->addRegistry(regSelection);
 		}
 	}
-	secondaryIndex->print(cout);
+	//secondaryIndex->print(cout);
 	delete secondaryIndex;
 	delete it;
 }

@@ -35,15 +35,12 @@ void Consultation::consultSecondaryIndex(IndexConfig* indexConfig,list<int>* lis
 	RegSelection* regSelection;
 
 	if(indexConfig->getTypeSecundaryIndex().compare((char*)TYPE_SELECTION) == 0){
-		cout<<"SEL"<<endl;
 		secondaryIndex = new IndexBSharp(PATHFILES+indexConfig->getFileName(),BLOCK_SIZE/*TODO indexConfig->getBlockSize()*/,TYPE_REG_SELECTION);
 		iter = secondaryIndex->getIterator();
 		while(iter->hasNext()){
 			regSelection = 	(RegSelection*) iter->next();
-			cout<<((KeyInteger*)(regSelection->getKey()))->getValue()<<" ";
 			(*listOfIucs).push_back(((KeyInteger*)(regSelection->getKey()))->getValue());
 		}
-		cout<<endl;
 		delete iter;
 
 	}
@@ -56,11 +53,11 @@ void Consultation::consultSecondaryIndex(IndexConfig* indexConfig,list<int>* lis
 			managerInvertedIndex->removeStopWordsFromVector(&words);
 			list<RegInvertedIndex*> listRegInvInd;
 			RegInvertedIndex* reg = NULL;
-			cout<<"consulta sin stopWords: "<<endl;
-			for(itWords = words.begin(); itWords != words.end(); itWords++){
-				cout<<*itWords<<" ";
-			}
-			cout<<endl;
+			//cout<<"consulta sin stopWords: "<<endl;
+//			for(itWords = words.begin(); itWords != words.end(); itWords++){
+//				cout<<*itWords<<" ";
+//			}
+//			cout<<endl;
 			for(itWords = words.begin(); itWords != words.end(); itWords++){
 				RegInvertedIndex* regInvertedIndex= new RegInvertedIndex();
 				regInvertedIndex->setKey(new KeyString(*itWords));
@@ -77,7 +74,6 @@ void Consultation::consultSecondaryIndex(IndexConfig* indexConfig,list<int>* lis
 			delete managerInvertedIndex;
 	}
 	else if (indexConfig->getTypeSecundaryIndex().compare(TYPE_CLASSIFICATION) == 0){
-		cout<<"CLAS"<<endl;
 		secondaryIndex = new IndexBSharp(PATHFILES+indexConfig->getFileName(),BLOCK_SIZE/*TODO indexConfig->getBlockSize()*/,TYPE_REG_CLASSIFICATION);
 		RegClassification* searchReg = new RegClassification();
 		searchReg->setKey(new KeyString(filterValue));
@@ -85,7 +81,6 @@ void Consultation::consultSecondaryIndex(IndexConfig* indexConfig,list<int>* lis
 		list<KeyInteger* > auxList = searchReg->getIucs();
 		list<KeyInteger*>::iterator actual;
 		for (actual = auxList.begin(); actual	!= auxList.end(); ++actual){
-			cout<<(*actual)->getValue()<<" ";
 			(*listOfIucs).push_back((*actual)->getValue());
 		}
 		delete searchReg;
@@ -159,11 +154,10 @@ void Consultation::compareConsultResaults(list<RegInvertedIndex*> listRegInvInd,
 			}
 		}
 		if(correctDistances){
-			cout<<((KeyInteger*)(*itInfoPerDoc)->getKey())->getValue()<<" ";
 			(*listOfIucs).push_back(((KeyInteger*)(*itInfoPerDoc)->getKey())->getValue());
 		}
 	}
-	cout<<endl;
+
 
 
 

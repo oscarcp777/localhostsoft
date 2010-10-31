@@ -340,11 +340,9 @@ int Controller::createPrimaryIndex() {
 			Mail* mail;
 			mail = regPrimaryIter->getMail();
 			this->updateIndexes(mail);//actualizo secundarios
-			cout<<"Iuc de mail nuevo: "<<  regPrimaryIter->getMail()->getIuc() <<endl;
 			while (it->hasNext()){
 				regPrimaryIter = (RegPrimary*)it->next();
 				mail = regPrimaryIter->getMail();
-				cout<<"Iuc de mail nuevo: "<<  regPrimaryIter->getMail()->getIuc() <<endl;
 				this->updateIndexes(mail);
 			}
 			delete it;
