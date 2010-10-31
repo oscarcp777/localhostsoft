@@ -1631,7 +1631,6 @@ bool IndexBSharp::balanceLeafNodeRemove(LeafNode* currentNode,LeafNode* firstBro
 			std::cout<< "Bloques: "<<leftNode->getNumBlock()<<", "<<centerNode->getNumBlock()<<", "<<
 					rigthNode->getNumBlock()<<" no se pudieron balancear, queda bloque "<<
 					currentNode->getNumBlock()<<" en underflow"<<std::endl;
-			this->print(std::cout);
 		}
 
 		leftNode->clearListRegistry();
@@ -1826,12 +1825,11 @@ bool IndexBSharp::balanceInternalNodeRemove(InternalNode* currentNode,InternalNo
 
 	if (sizeOldLeftKey + sizeOldRightKey < sizeNewRightKey + sizeNewLeftKey){
 
-//		if (DEBUG){
+		if (DEBUG){
 			std::cout<< "Bloques: "<<leftNode->getNumBlock()<<", "<<centerNode->getNumBlock()<<", "<<
 					rigthNode->getNumBlock()<<" no se pudieron balancear, queda bloque "<<
 					currentNode->getNumBlock()<<" en underflow"<<std::endl;
-			this->print(std::cout);
-//		}
+		}
 
 		leftNode->clearListRegistry();
 		list<Registry*>::iterator iterRegNodeList = leftNodeReg.begin();
@@ -1894,7 +1892,6 @@ bool IndexBSharp::balanceInternalNodeRemove(InternalNode* currentNode,InternalNo
 			throw eLostReg("Se perdio al menos un registro");
 		}
 
-		std::cout<<"Si se puede hacer balanceo externo"<<std::endl;
 		// Escribe bloque izquierdo
 		this->writeNode(leftNode, leftNode->getNumBlock());
 		// Escribe bloque centro
@@ -2281,14 +2278,16 @@ int IndexBSharp::removeInternalNode(InternalNode* internalNode, Registry* regKey
 				// Intento fusionar
 				if (this->removeInternalNodeEmpty(internalNode,firstBrotherNode,secondBrotherNode, insertionContainer,regFirstFather,regSecondFather)){
 					answer = UNDERFLOW;
-//					this->print(cout);
 				}
 				else{
 					// Si no se puede fusionar se balancea
+					bool response;
 					if (firstBrother != 0 && secondBrother != 0){
-						this->balanceInternalNodeRemove(internalNode,firstBrotherNode,secondBrotherNode,insertionContainer,regFirstFather,regSecondFather);
+						response = this->balanceInternalNodeRemove(internalNode,firstBrotherNode,secondBrotherNode,insertionContainer,regFirstFather,regSecondFather);
 					}
-					answer = BALANCE;
+					if (response || firstBrotherNode == NULL)
+						answer = BALANCE;
+
 				}
 
 				}
