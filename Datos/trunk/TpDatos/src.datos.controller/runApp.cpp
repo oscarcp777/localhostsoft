@@ -178,8 +178,8 @@ int main(int argc,char** argv){
 				control->loadSecondIndex(config);
 				cout<<"*******************Indice secundario de clasificacion creado exitosamente..."<<endl<<endl;
 
-				cout<<"*******************Busqueda sobre primario...-f [PrimarioTest=3,6,11]"<<endl;
-				string parameters = "[PrimarioTest=3,6,11]";
+				cout<<"*******************Busqueda sobre primario...-f [PrimarioTest=3,10,15,20]"<<endl;
+				string parameters = "[PrimarioTest=3,10,15,20]";
 				control->searchMails(parameters);
 				list<Mail*>::iterator itPrimary;
 				for(itPrimary= control->iteratorBeginListOfMails(); itPrimary != control->iteratorEndListOfMails(); itPrimary++){
@@ -203,6 +203,26 @@ int main(int argc,char** argv){
 				list<int>::iterator it2;
 				for(it2= control->iteratorBeginListOfIucs(); it2 != control->iteratorEndListOfIucs(); it2++){
 					cout<<"IUC: "<<*it2<<endl;
+				}
+				cout<<"*******************Fin busqueda..."<<endl<<endl;
+
+				control->clearListsIucs();
+				cout<<"*******************Busqueda sobre invertido...-f [INV_TEST=UNIX sigue siendo un fenómeno]"<<endl;
+				control->searchMails("[INV_TEST=UNIX sigue siendo un fenómeno]");
+
+				list<int>::iterator it3;
+				for(it3= control->iteratorBeginListOfIucs(); it3 != control->iteratorEndListOfIucs(); it3++){
+					cout<<"IUC: "<<*it3<<endl;
+				}
+				cout<<"*******************Fin busqueda..."<<endl<<endl;
+
+				control->clearListsIucs();
+				cout<<"*******************Busqueda compuesta...-f [INV_TEST=el hardware y el software][SEL_TEST=][CLAS_TEST=michael.richters@gmail.com]"<<endl;
+				control->searchMails("[INV_TEST=el hardware y el software][SEL_TEST=][CLAS_TEST=michael.richters@gmail.com]");
+				calculateIntersection(3,control->getListOfIucs());
+				list<int>::iterator it4;
+				for(it4= control->iteratorBeginListOfIucs(); it4 != control->iteratorEndListOfIucs(); it4++){
+					cout<<"IUC: "<<*it4<<endl;
 				}
 				cout<<"*******************Fin busqueda..."<<endl<<endl;
 			}

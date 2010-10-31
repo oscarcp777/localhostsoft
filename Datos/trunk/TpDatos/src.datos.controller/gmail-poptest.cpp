@@ -84,7 +84,7 @@ int connection(char* username,char* password, StorageController* storageControll
 		libspopc_clean();
 	}
 	else{
-		cout<<"DESCARGANDO MAILS DE ARCHIVOS"<<endl;
+		cout<<"DESCARGANDO MAILS DE ARCHIVO"<<endl;
 		TextFile* file = new TextFile();
 		file->open(MAILSFILE);
 		std::string linea = "";
