@@ -75,8 +75,12 @@ int main(int argc,char** argv){
 	//----- ./Application -si email TYPE_CLASSIFICATION/TYPE_SELECTION CONDITION (VALOR) filterName
 	//----- ./Application -li filterName
 
-	std::string userMail;
+	std::string userMail("123");
+	std::cout << "Ingrese su cuenta de correo: ";
+//	std::cin >> userMail;
+	std::string userPass("123"); //5.
 	std::string userPass;
+	std::cout << "Ingrese su contraseña: ";
 	if(strcmp(argv[1],"-t") != 0){//Si el comando no es el de test, pide usuario y pass
 
 		std::cout << "Ingrese su cuenta de correo: ";

@@ -234,22 +234,28 @@ void Controller::updateIndexesDelete(Mail* mail){
 			secondaryIndex = new IndexBSharp(PATHFILES+(*current)->getFileName(),(*current)->getBlockSize(),TYPE_REG_SELECTION);
 			RegSelection* regSelection = new RegSelection();
 			regSelection->setKey((Key*)mail->getKey()->clone());
-			//secondaryIndex->deleteRegistry(regSelection);/////////////////////////DELETE
+			cout<<"***********INDICE: "<< (*current)->getFilterName() <<endl;
+			secondaryIndex->deleteRegistry(regSelection);/////////////////////////DELETE
 			secondaryIndex->print(cout);
 			delete secondaryIndex;
+			delete regSelection;
 		}
 		if(TYPE_CLASSIFICATION == (*current)->getTypeSecundaryIndex() ){
 			secondaryIndex = new IndexBSharp(PATHFILES+(*current)->getFileName(),(*current)->getBlockSize(),TYPE_REG_CLASSIFICATION);
 			RegClassification* regClassification = new RegClassification();
-			KeyString* key = new KeyString((*current)->getValue());
+			KeyString* key = new KeyString(mail->getCondition((*current)->getCondition()));
 			regClassification->setKey(key);
 			regClassification->addIuc((KeyInteger*) mail->getKey()->clone());
-			//secondaryIndex->deleteRegistry(regClassification);///////////////////////DELETE
+			key->print(cout);
+			cout<<"***********INDICE: "<< (*current)->getFilterName() <<endl;
+			secondaryIndex->deleteRegistry(regClassification);///////////////////////DELETE
 			secondaryIndex->print(cout);
 			delete secondaryIndex;
+
 		}
 		if(TYPE_INVERTED_INDEX == (*current)->getTypeSecundaryIndex()){
 			IndexBSharp* secondaryIndex = new IndexBSharp(PATHFILES+(*current)->getFileName(),(*current)->getBlockSize(),TYPE_REG_INVERTED_INDEX);
+			cout<<"***********INDICE: "<< (*current)->getFilterName() <<endl;
 			//ManagerInvertedIndex* manager = new ManagerInvertedIndex();
 			//manager->deleteMessageWords(mail,secondaryIndex);
 			delete secondaryIndex;
@@ -353,33 +359,40 @@ int Controller::createPrimaryIndex() {
 }
 
 int Controller::loadSecondIndex(IndexConfig* indexConfig){
-	if(this->getIndex(indexConfig->getFilterName())->isLoaded()){
-		cout<<"Ya fue cargado el indice "<<indexConfig->getFilterName()<<endl;
-		return 1;
+
+	if(this->indexes.size() != 0){
+
+		if(this->getIndex(indexConfig->getFilterName())->isLoaded()){
+			cout<<"Ya fue cargado el indice "<<indexConfig->getFilterName()<<endl;
+			return 1;
+		}else{
+			Classification* classification = new Classification();
+			if(this->primaryTree == NULL)
+				this->createPrimaryIndex();
+			classification->loadSecondaryIndex(indexConfig,this->primaryTree->getIterator());
+
+			std::string index(indexConfig->getFilterName());
+			std::string auxIndex;
+			int result = -1;
+			list<IndexConfig*>::iterator current = this->indexes.begin();
+			while((current != this->indexes.end())&& result != 0){//recorro la lista de todos lo indices que tiene el programa
+				auxIndex = (*current)->getFilterName();
+				result =auxIndex.compare(index);
+				if (result == 0){
+					(*current)->setLoaded(true);//lo seteo como cargado
+				}
+				current++;
+			}
+
+			this->overWriteFile();
+			delete classification;
+			return 0;
+
+		}
 	}else{
-	Classification* classification = new Classification();
-	if(this->primaryTree == NULL)
-		this->createPrimaryIndex();
- 	classification->loadSecondaryIndex(indexConfig,this->primaryTree->getIterator());
-
- 		std::string index(indexConfig->getFilterName());
- 		std::string auxIndex;
- 		int result = -1;
- 		list<IndexConfig*>::iterator current = this->indexes.begin();
- 		while((current != this->indexes.end())&& result != 0){//recorro la lista de todos lo indices que tiene el programa
- 			auxIndex = (*current)->getFilterName();
- 			result =auxIndex.compare(index);
- 				if (result == 0){
- 					(*current)->setLoaded(true);//lo seteo como cargado
- 				}
- 			current++;
- 		}
-
- 	this->overWriteFile();
- 	delete classification;
-	return 0;
-
+		cout<<"Debe crear el indice, antes de cargarlo "<<indexConfig->getFilterName()<<endl;
 	}
+	return 1;
 }
 void Controller::convertStringToListOfInt(Search* search,std::string str){
 
@@ -590,8 +603,6 @@ int Controller::strSearchValidation(std::string strSearch){
 //			std::cout<<" Error en el string de busqueda, incorrecta ubicacion de corchetes [ ] "<<std::endl;
 //		}
 //	}
-
-
 	return result;
 }
 
@@ -600,10 +611,17 @@ void Controller::deleteIuc(int iuc){
 	KeyInteger* key= new KeyInteger(iuc);
 	regPrimary->setKey(key);
 	RegPrimary* reg = (RegPrimary*) this->primaryTree->searchRegistry(regPrimary);
-	Mail* mail = reg->getMail();
-	this->updateIndexesDelete(mail);
-	this->primaryTree->deleteRegistry(regPrimary);
-
+	if(reg != NULL){
+		Mail* mail = reg->getMail();
+		this->updateIndexesDelete(mail);
+		this->primaryTree->deleteRegistry(regPrimary);
+		cout<<"***********INDICE: "<< "************ARBOL PRIMARIO"<<endl;
+		this->primaryTree->print(cout);
+	}else{
+		cout<<"El arbol primario no posee el IUC: "<< iuc<<endl;
+	}
+	delete regPrimary;
+	delete key;
 }
 
 list<int>* Controller::getListOfIucs(){
