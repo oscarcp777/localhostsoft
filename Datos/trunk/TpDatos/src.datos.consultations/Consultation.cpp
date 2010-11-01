@@ -59,18 +59,19 @@ void Consultation::consultSecondaryIndex(IndexConfig* indexConfig,list<int>* lis
 //				cout<<*itWords<<" ";
 //			}
 //			cout<<endl;
-			for(itWords = words.begin(); itWords != words.end(); itWords++){
-				RegInvertedIndex* regInvertedIndex= new RegInvertedIndex();
-				regInvertedIndex->setKey(new KeyString(*itWords));
-				reg = (RegInvertedIndex*)secondaryIndex->searchRegistry(regInvertedIndex);
-				if(reg != NULL)
-					listRegInvInd.push_back(reg);
+			if(words.size() > 0){
+				for(itWords = words.begin(); itWords != words.end(); itWords++){
+					RegInvertedIndex* regInvertedIndex= new RegInvertedIndex();
+					regInvertedIndex->setKey(new KeyString(*itWords));
+					reg = (RegInvertedIndex*)secondaryIndex->searchRegistry(regInvertedIndex);
+					if(reg != NULL)
+						listRegInvInd.push_back(reg);
+				}
+				if(listRegInvInd.size() == words.size()){
+					//la cantidad de terminos de la consulta tiene q ser igual a los Reg encontrados (es una condicion necesaria) sino no esta la frase
+					this->compareConsultResaults(listRegInvInd,listOfIucs);
+				}
 			}
-			if(listRegInvInd.size() == words.size()){
-			//la cantidad de terminos de la consulta tiene q ser igual a los Reg encontrados (es una condicion necesaria) sino no esta la frase
-				this->compareConsultResaults(listRegInvInd,listOfIucs);
-			}
-
 
 			delete managerInvertedIndex;
 	}
