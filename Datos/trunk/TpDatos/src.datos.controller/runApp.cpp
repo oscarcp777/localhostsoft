@@ -75,12 +75,9 @@ int main(int argc,char** argv){
 	//----- ./Application -si email TYPE_CLASSIFICATION/TYPE_SELECTION CONDITION (VALOR) filterName
 	//----- ./Application -li filterName
 
-	std::string userMail("123");
-	std::cout << "Ingrese su cuenta de correo: ";
-//	std::cin >> userMail;
-	std::string userPass("123"); //5.
+	std::string userMail;
 	std::string userPass;
-	std::cout << "Ingrese su contraseña: ";
+
 	if(strcmp(argv[1],"-t") != 0){//Si el comando no es el de test, pide usuario y pass
 
 		std::cout << "Ingrese su cuenta de correo: ";
@@ -229,6 +226,23 @@ int main(int argc,char** argv){
 					cout<<"IUC: "<<*it4<<endl;
 				}
 				cout<<"*******************Fin busqueda..."<<endl<<endl;
+
+
+				cout<<"*******************Borrar mail... -d 2"<<endl<<endl;
+				control->deleteIuc(2);
+				cout<<"*******************Fin Borrar mail..."<<endl<<endl;
+
+				cout<<"*******************Borrar mail... -d 8"<<endl<<endl;
+				control->deleteIuc(8);
+				cout<<"*******************Fin Borrar mail..."<<endl<<endl;
+
+				cout<<"*******************Borrar mail... -d 20"<<endl<<endl;
+				control->deleteIuc(20);
+				cout<<"*******************Fin Borrar mail..."<<endl<<endl;
+
+
+
+
 			}
 		}else{
 				puts("Argumentos invalidos");

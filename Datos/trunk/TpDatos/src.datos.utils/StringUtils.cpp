@@ -143,6 +143,8 @@ string StringUtils::removeCharacter(std::string cadena){
 	char comilla = '"';
 	char par1 = '(';
 	char par2 = ')';
+	char puntoComa = ';';
+	char dosPuntos = ':';
 	vector<char> vec;
 	vector<char>::iterator it = vec.begin();
 	vec.push_back(point);
@@ -150,6 +152,8 @@ string StringUtils::removeCharacter(std::string cadena){
 	vec.push_back(comilla);
 	vec.push_back(par1);
 	vec.push_back(par2);
+	vec.push_back(puntoComa);
+	vec.push_back(dosPuntos);
 
 	int i;
 	for(it = vec.begin(); it != vec.end(); it++){
@@ -161,8 +165,6 @@ string StringUtils::removeCharacter(std::string cadena){
 		}
 
 	}
-
-
 
 	return cadena;
 }
@@ -247,7 +249,40 @@ void StringUtils::Tokenize(const string& str, vector<string>& tokens, const stri
         pos = str.find_first_of(delimiters, lastPos);
     }
 }
-void StringUtils::TokenizeAndTrim(const string& str, vector<string>& tokens, const string& delimiters ){
+std::string StringUtils::toUpper(std::string word){
+	unsigned int i = 0;
+	std::string caracter;
+	while(i< word.size()){
+		caracter = word.at(i);
+		if(isalpha(*caracter.c_str())){
+			if(islower(*caracter.c_str())){
+				caracter = toupper(word.at(i));
+				word[i] = *caracter.c_str();
+				}
+		}
+		else{
+			if(caracter.compare("á")==0)
+				caracter = 'A';
+			else if (caracter.compare("é")==0)
+				caracter = 'E';
+
+			else if (caracter.compare("í")==0)
+				caracter = 'I';
+
+			else if (caracter.compare("ó")==0)
+				caracter = 'O';
+
+			else if (caracter.compare("ú")==0)
+				caracter = 'U';
+
+			word[i] = *caracter.c_str();
+			}
+		i++;
+		}
+
+	return word;
+}
+void StringUtils::TokenizeAndTrimAndUpper(const string& str, vector<string>& tokens, const string& delimiters ){
     // Skip delimiters at beginning.
     string::size_type lastPos = str.find_first_not_of(delimiters, 0);
     // Find first "non-delimiter".
@@ -258,7 +293,8 @@ void StringUtils::TokenizeAndTrim(const string& str, vector<string>& tokens, con
     	string var = str.substr(lastPos, pos - lastPos);
     	// Found a token, add it to the vector.
        var = trim(var);
-    	tokens.push_back(removeCharacter(var));
+       var = removeCharacter(var);
+       	tokens.push_back(toUpper(var));
         // Skip delimiters.  Note the "not_of"
         lastPos = str.find_first_not_of(delimiters, pos);
         // Find next "non-delimiter"

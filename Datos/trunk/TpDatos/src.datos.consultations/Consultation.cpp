@@ -49,6 +49,7 @@ void Consultation::consultSecondaryIndex(IndexConfig* indexConfig,list<int>* lis
 			ManagerInvertedIndex* managerInvertedIndex = new ManagerInvertedIndex();
 			vector<string> words;
 			vector<string>::iterator itWords;
+			filterValue = StringUtils::toUpper(filterValue);
 			StringUtils::Tokenize(filterValue,words," ");
 			managerInvertedIndex->removeStopWordsFromVector(&words);
 			list<RegInvertedIndex*> listRegInvInd;

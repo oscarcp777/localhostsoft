@@ -27,9 +27,10 @@ public:
 	static std::string actualizarCadena(string cadena,char char_reemplazable);
 	static string removeCharacter(std::string cadena);
 	static void Tokenize(const string& str, vector<string>& tokens, const string& delimiters );
-	static void TokenizeAndTrim(const string& str, vector<string>& tokens, const string& delimiters);
+	static void TokenizeAndTrimAndUpper(const string& str, vector<string>& tokens, const string& delimiters);
 	static int contadorTag(std::string cadena);
 	static  std::string convertirAString( int numero);
+	static std::string toUpper(std::string word);
 	static void sortVector(vector<int> &vector);
     static int countRead;
     static int countWrite;

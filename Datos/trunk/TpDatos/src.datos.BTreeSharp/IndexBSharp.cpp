@@ -69,6 +69,7 @@ unsigned int IndexBSharp::averageEstimate(
 	return averageEstimate;
 }
 IndexBSharp::~IndexBSharp() {
+	this->writeNode(this->rootNode,0);
 	this->binaryFile->close();
 	delete this->buffer;
 	delete this->bufferRoot;
@@ -2564,7 +2565,7 @@ void IndexBSharp::deleteRegistry(Registry* reg) throw() {
 		answer = this->removeInternalNode(internalNode, reg, &insertionContainer, 0, 0, aux, aux);
 	}
 
-	delete reg;
+
 	if (insertionContainer.getInternalKey()!=NULL)
 		delete insertionContainer.getInternalKey();
 

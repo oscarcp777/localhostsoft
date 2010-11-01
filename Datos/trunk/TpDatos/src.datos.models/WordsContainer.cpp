@@ -37,7 +37,7 @@ vector<string>::iterator WordsContainer::getWordsEnd(){
 
 void WordsContainer::parserMailWords(string message){
 	string delim = " ";
-	StringUtils::TokenizeAndTrim(message,this->words,delim);
+	StringUtils::TokenizeAndTrimAndUpper(message,this->words,delim);
 }
 
 void WordsContainer::removeWord(vector<string>::iterator it){

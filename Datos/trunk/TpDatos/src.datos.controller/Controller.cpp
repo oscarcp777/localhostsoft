@@ -234,11 +234,11 @@ void Controller::updateIndexesDelete(Mail* mail){
 			secondaryIndex = new IndexBSharp(PATHFILES+(*current)->getFileName(),(*current)->getBlockSize(),TYPE_REG_SELECTION);
 			RegSelection* regSelection = new RegSelection();
 			regSelection->setKey((Key*)mail->getKey()->clone());
-			cout<<"***********INDICE: "<< (*current)->getFilterName() <<endl;
+			cout<<"INDICE: "<< (*current)->getFilterName() <<endl;
 			secondaryIndex->deleteRegistry(regSelection);/////////////////////////DELETE
 			secondaryIndex->print(cout);
 			delete secondaryIndex;
-			delete regSelection;
+
 		}
 		if(TYPE_CLASSIFICATION == (*current)->getTypeSecundaryIndex() ){
 			secondaryIndex = new IndexBSharp(PATHFILES+(*current)->getFileName(),(*current)->getBlockSize(),TYPE_REG_CLASSIFICATION);
@@ -246,8 +246,7 @@ void Controller::updateIndexesDelete(Mail* mail){
 			KeyString* key = new KeyString(mail->getCondition((*current)->getCondition()));
 			regClassification->setKey(key);
 			regClassification->addIuc((KeyInteger*) mail->getKey()->clone());
-			key->print(cout);
-			cout<<"***********INDICE: "<< (*current)->getFilterName() <<endl;
+			cout<<"INDICE: "<< (*current)->getFilterName() <<endl;
 			secondaryIndex->deleteRegistry(regClassification);///////////////////////DELETE
 			secondaryIndex->print(cout);
 			delete secondaryIndex;
@@ -255,7 +254,7 @@ void Controller::updateIndexesDelete(Mail* mail){
 		}
 		if(TYPE_INVERTED_INDEX == (*current)->getTypeSecundaryIndex()){
 			IndexBSharp* secondaryIndex = new IndexBSharp(PATHFILES+(*current)->getFileName(),(*current)->getBlockSize(),TYPE_REG_INVERTED_INDEX);
-			cout<<"***********INDICE: "<< (*current)->getFilterName() <<endl;
+			//cout<<"INDICE: "<< (*current)->getFilterName() <<endl;
 			//ManagerInvertedIndex* manager = new ManagerInvertedIndex();
 			//manager->deleteMessageWords(mail,secondaryIndex);
 			delete secondaryIndex;
@@ -620,8 +619,7 @@ void Controller::deleteIuc(int iuc){
 	}else{
 		cout<<"El arbol primario no posee el IUC: "<< iuc<<endl;
 	}
-	delete regPrimary;
-	delete key;
+
 }
 
 list<int>* Controller::getListOfIucs(){
