@@ -378,6 +378,41 @@ string StringUtils::convertConditionIntToString(int condition){
 	}
 	return cond;
 }
+string StringUtils::chanceAccents(string str){
+	  int isa=str.find("á");
+	  int ise=str.find("é");
+	  int isi=str.find("í");
+	  int iso=str.find("ó");
+	  int isu=str.find("ú");
+	  int isA=str.find("Á");
+	  int isE=str.find("É");
+	  int isI=str.find("Í");
+	  int isO=str.find("Ó");
+	  int isU=str.find("Ú");
+	  if(isa!=-1||ise!=-1||isi!=-1||iso!=-1||isu!=-1||isA!=-1||isE!=-1||isI!=-1||isO!=-1||isU!=-1){
+		  if(isa!=-1)
+	      str.replace(str.begin()+isa,str.begin()+isa+2,"A");
+		  if(ise!=-1)
+	      str.replace(str.begin()+ise,str.begin()+ise+2,"E");
+		  if(isi!=-1)
+	      str.replace(str.begin()+isi,str.begin()+isi+2,"I");
+		  if(iso!=-1)
+	      str.replace(str.begin()+iso,str.begin()+iso+2,"O");
+		  if(isu!=-1)
+	      str.replace(str.begin()+isu,str.begin()+isu+2,"U");
+		  if(isA!=-1)
+	      str.replace(str.begin()+isA,str.begin()+isA+2,"A");
+		  if(isE!=-1)
+	      str.replace(str.begin()+isE,str.begin()+isE+2,"E");
+		  if(isI!=-1)
+	      str.replace(str.begin()+isI,str.begin()+isI+2,"I");
+		  if(isO!=-1)
+	      str.replace(str.begin()+isO,str.begin()+isO+2,"O");
+		  if(isU!=-1)
+	      str.replace(str.begin()+isU,str.begin()+isU+2,"U");
+	  }
+	  return str;
+}
 int StringUtils::convertConditionStringToInt(string cond){
 
 	if(cond.compare((char*)"From")==0)
