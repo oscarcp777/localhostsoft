@@ -12,6 +12,7 @@
 #include "TestStorageController.h"
 #include "TestCompression.h"
 #include "TestManagerInvertedIndex.h"
+#include "TestCriptography.h"
 
 
 
@@ -19,7 +20,7 @@ using namespace std;
 
 int main32145(int argc,char** argv) {
 
-	TestBSharp* test = new TestBSharp();
+//	TestBSharp* test = new TestBSharp();
 //	test->testInsert();
 //	test->testsearch();
 //	test->testInsertAndSearch();
@@ -28,9 +29,9 @@ int main32145(int argc,char** argv) {
 //	test->testInsertAndSearchRegClassification();
 //	test->testInsertMails();
 //	test->testPrint();
-	test->testInsertAndDelete();
+//	test->testInsertAndDelete();
 //	test->testInsertAndDeleteVariable();
-	delete test;
+//	delete test;
 /*
 	//TEST STORAGE
    TestStorage* teststorage = new TestStorage();
@@ -57,6 +58,12 @@ int main32145(int argc,char** argv) {
 //	TestCompression* myTest = new TestCompression();
 //	myTest->testDelta2();
 //	delete myTest;
+//*********************************************************************
+
+//**********************TEST CRIPTOGRAPHY******************************
+	TestCriptography* test = new TestCriptography();
+	test->unitTest();
+	delete test;
 //*********************************************************************
 
 //	TestManagerInvertedIndex* myTest = new TestManagerInvertedIndex();
