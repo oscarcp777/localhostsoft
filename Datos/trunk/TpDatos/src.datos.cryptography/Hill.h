@@ -48,7 +48,9 @@ public:
 	 */
 	void printKeyInvertedMatrix();
 
-
+	int H1(string word);
+	int H2(string word);
+	void buildKeyMatrix(string word);
 
 private:
 	/**
@@ -76,7 +78,8 @@ private:
 	 * @param vector Vector dado para realizar la operacion
 	 */
 	void mod128(int* vector);
-
+	int modL(int value);
+	int inverseModL(int num);
 	/**
 	 * Metodo que dado un mensaje y una matriz devuelve su conversion (tanto para encriptar como para desencriptar)
 	 *

@@ -13,11 +13,11 @@
  */
 #define SERVER "pop.gmail.com"// "pop.mail.yahoo.com"
 #define PORT  995 // 995 para gmail, 110 para yahoo
-#define CONNECT 0// 1 se conecta a la cuenta, 0 baja de un archivo
+#define CONNECT 1// 1 se conecta a la cuenta, 0 baja de un archivo
 #define MAILSFILE "./files/mailsChico"
 #define PATHFILES "files/storage/"
 #define STOP_WORDS_FILE "./files/stopwords.txt"
-
+#define CONST_L 256
 
 
 #define BOUNDARYMAIL "**********"

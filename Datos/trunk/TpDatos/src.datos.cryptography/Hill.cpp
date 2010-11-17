@@ -152,8 +152,50 @@ void Hill::mod128(int *vector){
 
 }
 
+int Hill::modL(int value){
+	int aux = value % CONST_L;
+	if (aux < 0)
+		aux = aux + CONST_L;
+	return aux;
+}
 
+int Hill::H1(string word){
+	return this->modL(word.size()*3); //TODO pensar una buena funcion, esta es fruta
+}
 
+int Hill::H2(string word){
+	return this->modL(word.size()*2); //TODO pensar una buena funcion, esta es fruta
+}
 
+int Hill::inverseModL(int num){
+	int i;
+	for(i=0; i<255; i++){
+		if(modL(num*i) == 1)
+			break;
+	}
+	return i;
+}
+void Hill::buildKeyMatrix(string word){
+	int h1 = H1(word);
+	int h2 = H2(word);
+	int aux = 1;
+	for(int i=0 ; i < this->keySize; i++){
+		for(int j=0; j < this->keySize; j++){
+			if(j >= i) //triangular superior
+				this->keyMatrix[i][j] = (h1*h2)*(i+j+1);
+			else
+				this->keyMatrix[i][j] = 0;
+		}
+	}
+
+	//corregir el elemento superior izquierdo, primero hago productoria de la diagonal menos el sup izq
+	for(int i=1 ; i < this->keySize; i++){
+		aux = aux* this->keyMatrix[i][i];
+	}
+	//a la productoria le hago inversa mod L
+	aux = inverseModL(aux);
+	//modifico el elemento superior izquierdo
+	this->keyMatrix[0][0] = aux;
+}
 
 
