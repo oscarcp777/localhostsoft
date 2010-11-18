@@ -8,6 +8,7 @@
 #include "GaussJordan.h"
 #include <math.h>
 
+
 using namespace std;
 GaussJordan::GaussJordan(int n, double** matriz, double** inversa) {
 	this->N = n;
@@ -17,9 +18,11 @@ GaussJordan::GaussJordan(int n, double** matriz, double** inversa) {
 
 GaussJordan::~GaussJordan() {
 }
+
+
 void GaussJordan::hallar_inversa(void)
 {
-	int cont,cont2, flag=0;
+	int cont,cont2;
 
 	escalonar_matriz();
 	generar_matriz_identidad(); //rellena la matriz identidad
@@ -53,42 +56,42 @@ void GaussJordan::hallar_inversa(void)
 /* no es valida y la matriz no tiena inversa */
 /*--------------------------------------------------------------*/
 
-
-for(cont=0;cont<N;cont++)
-{
-	for(cont2=0;cont2<N;cont2++)
-	{
-		if(cont==cont2)
-		{
-			if(matriz[cont][cont2]!=1) flag=1;
-		}
-		else
-		{
-			if(matriz[cont][cont2]!=0) flag=1;
-		}
-	}
-}
-
-
-
-if(flag==1)
-{
-	cout<<"La matriz no tiene inversa"<<endl;
-}
-else
-{
-	cout<<"La Matriz Inversa es :"<<endl;
-
-	for(cont=0;cont<N;cont++)
-	{
-		for(cont2=0;cont2<N;cont2++)
-		{
-			cout<<identidad[cont][cont2]<<" ";
-
-		}
-		cout<<endl;
-	}
-}
+//
+//for(cont=0;cont<N;cont++)
+//{
+//	for(cont2=0;cont2<N;cont2++)
+//	{
+//		if(cont==cont2)
+//		{
+//			if(matriz[cont][cont2]!=1) flag=1;
+//		}
+//		else
+//		{
+//			if(matriz[cont][cont2]!=0) flag=1;
+//		}
+//	}
+//}
+//
+//
+//
+//if(flag==1)
+//{
+//	cout<<"La matriz no tiene inversa"<<endl;
+//}
+//else
+//{
+//	cout<<"La Matriz Inversa es :"<<endl;
+//
+//	for(cont=0;cont<N;cont++)
+//	{
+//		for(cont2=0;cont2<N;cont2++)
+//		{
+//			cout<<identidad[cont][cont2]<<" ";
+//
+//		}
+//		cout<<endl;
+//	}
+//}
 
 }
 
@@ -174,7 +177,7 @@ void GaussJordan::multip_fila(int fila,double factor)
 	for(cont=0;cont<N;cont++)
 	{
 		matriz[fila][cont]=(matriz[fila][cont])*factor;
-		identidad[fila][cont]=(identidad[fila][cont])*factor;
+		identidad[fila][cont]= (identidad[fila][cont])*factor;
 	}
 }
 
@@ -186,7 +189,7 @@ void GaussJordan::sumar_fila_multip(int fila1,int fila2, double factor)
 	for(cont=0;cont<N;cont++)
 	{
 		matriz[fila1][cont]=(matriz[fila1][cont])+((matriz[fila2][cont])*factor);
-		identidad[fila1][cont]=(identidad[fila1][cont])+((identidad[fila2][cont])*factor);
+		identidad[fila1][cont]= (identidad[fila1][cont])+((identidad[fila2][cont])*factor);
 	}
 }
 
@@ -221,7 +224,7 @@ void GaussJordan::generar_matriz_identidad(void)
 	{
 		for(j=0;j<this->N;j++)
 		{
-			if(i==j) identidad[i][j]=1;
+			if(i==j) identidad[i][j]=129;
 			else identidad[i][j]=0;
 		}
 	}

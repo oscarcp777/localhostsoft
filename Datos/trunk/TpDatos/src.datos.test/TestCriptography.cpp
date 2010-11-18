@@ -35,11 +35,3 @@ void TestCriptography::unitTest(){
 
 }
 
-void TestCriptography::testTriangularMatrix(){
-
-	Hill* hill = new Hill(2,"claveNoUtilizadaAun");
-	hill->printKeyMatrix();
-	hill->printKeyInvertedMatrix();
-	delete hill;
-
-}

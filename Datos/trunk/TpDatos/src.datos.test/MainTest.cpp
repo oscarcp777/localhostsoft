@@ -62,8 +62,7 @@ int main(int argc,char** argv) {
 
 //**********************TEST CRIPTOGRAPHY******************************
 	TestCriptography* test = new TestCriptography();
-	//test->unitTest();
-	test->testTriangularMatrix();
+	test->unitTest();
 	delete test;
 //*********************************************************************
 

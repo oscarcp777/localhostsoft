@@ -9,6 +9,7 @@
 #define GAUSSJORDAN_H_
 #include <iostream>
 
+
 class GaussJordan {
 public:
 	GaussJordan(int n,double** matriz, double** inversa);
@@ -26,6 +27,7 @@ private:
 	void ceros_abajo(int fila_pivote, int columna_pivote);
 	void ceros_arriba(int fila_pivote, int columna_pivote);
 	void generar_matriz_identidad(void);
+
 };
 
 #endif /* GAUSSJORDAN_H_ */

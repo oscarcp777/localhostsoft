@@ -8,6 +8,8 @@
 #include "Hill.h"
 using namespace std;
 
+
+
 Hill::Hill(const int keySize, string clave) {
 	this->keySize = keySize;
 	this->keyMatrix = new double *[keySize];
@@ -19,20 +21,23 @@ Hill::Hill(const int keySize, string clave) {
 		this->keyInvertedMatrix[k] = new double[keySize];
 
 	//NOTA El det(keyMatrix) mod 128 = 1 para que funcione el metodo
-	// Armado matriz clave
-	// makeKey();//Falta implementar, aca van las funciones hash y el calculo
-	this->testMatrix2x2();
-	//this->buildKeyMatrix(clave);
-	GaussJordan* gaussJordan = new GaussJordan(this->keySize, this->keyMatrix, this->keyInvertedMatrix);
-	gaussJordan->hallar_inversa();
 
+	// Armado matriz clave
+	//this->buildKeyMatrix(clave);
+	this->testMatrix2x2();
 
 	// Armado matriz clave inversa
-	//makeKeyInverted();//aca se calcula la inversa con respecto a la anterior
-	//this->testInvertedMatrix2x2();
+	this->buildKeyInverted();
 
+
+	//this->buildKeyMatrix(clave); //TODO CAMBIAR......( el metodo hallar_inversa me modifica  la KeyMatrix, por eso la genero de nuevo, seria mejor hacer un memcpy o algo asi)
+	this->testMatrix2x2();
 }
-
+void Hill::buildKeyInverted(){
+	GaussJordan* gaussJordan = new GaussJordan(this->keySize, this->keyMatrix, this->keyInvertedMatrix);
+	gaussJordan->hallar_inversa();
+	delete gaussJordan;
+}
 void Hill::testMatrix2x2(){
 	//NOTA ver que 4x65 - 3 = 257, y 257 mod 128 = 1, verifica condicion
 	this->keyMatrix[0][0] = 2;
@@ -187,6 +192,7 @@ int Hill::inverseModL(int num){
 	}
 	return i;
 }
+
 void Hill::buildKeyMatrix(string word){
 	int h1 = H1(word);
 	int h2 = H2(word);
@@ -199,6 +205,7 @@ void Hill::buildKeyMatrix(string word){
 				this->keyMatrix[i][j] = 0;
 		}
 	}
+
 
 	//corregir el elemento superior izquierdo, primero hago productoria de la diagonal (sin el sup izq)
 	for(int i=1 ; i < this->keySize; i++){

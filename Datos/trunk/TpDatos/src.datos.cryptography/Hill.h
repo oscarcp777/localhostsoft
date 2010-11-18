@@ -49,9 +49,7 @@ public:
 	 */
 	void printKeyInvertedMatrix();
 
-	int H1(string word);
-	int H2(string word);
-	void buildKeyMatrix(string word);
+
 
 private:
 	/**
@@ -81,6 +79,11 @@ private:
 	void mod128(double* vector);
 	int modL(int value);
 	int inverseModL(int num);
+	int H1(string word);
+	int H2(string word);
+	void buildKeyMatrix(string word);
+	void buildKeyInverted();
+
 	/**
 	 * Metodo que dado un mensaje y una matriz devuelve su conversion (tanto para encriptar como para desencriptar)
 	 *
