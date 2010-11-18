@@ -21,11 +21,11 @@ Hill::Hill(const int keySize, string clave) {
 	//NOTA El det(keyMatrix) mod 128 = 1 para que funcione el metodo
 	// Armado matriz clave
 	// makeKey();//Falta implementar, aca van las funciones hash y el calculo
-	this->testMatrix2x2();
-
+	//this->testMatrix2x2();
+	this->buildKeyMatrix(clave);
 	// Armado matriz clave inversa
 	// makeKeyInverted();//aca se calcula la inversa con respecto a la anterior
-	this->testInvertedMatrix2x2();
+	//this->testInvertedMatrix2x2();
 
 }
 
@@ -160,16 +160,24 @@ int Hill::modL(int value){
 }
 
 int Hill::H1(string word){
-	return this->modL(word.size()*3); //TODO pensar una buena funcion, esta es fruta
+	int aux = this->modL(word.size()*3); //TODO pensar una buena funcion, esta es fruta
+	if(aux % 2 == 0)//tiene q ser impar, para asegurar q el producto de la diagonal sea impar
+		aux++;
+
+	return 153;//aux;
 }
 
 int Hill::H2(string word){
-	return this->modL(word.size()*2); //TODO pensar una buena funcion, esta es fruta
+	int aux = this->modL(word.size()*2); //TODO pensar una buena funcion, esta es fruta
+		if(aux % 2 == 0)//tiene q ser impar, para asegurar q el producto de la diagonal sea impar
+			aux++;
+
+		return 41;//aux;
 }
 
 int Hill::inverseModL(int num){
 	int i;
-	for(i=0; i<255; i++){
+	for(i=0; i<CONST_L-1; i++){
 		if(modL(num*i) == 1)
 			break;
 	}
@@ -182,13 +190,13 @@ void Hill::buildKeyMatrix(string word){
 	for(int i=0 ; i < this->keySize; i++){
 		for(int j=0; j < this->keySize; j++){
 			if(j >= i) //triangular superior
-				this->keyMatrix[i][j] = (h1*h2)*(i+j+1);
+				this->keyMatrix[i][j] = modL((h1*h2)*(i+j+1));
 			else
 				this->keyMatrix[i][j] = 0;
 		}
 	}
 
-	//corregir el elemento superior izquierdo, primero hago productoria de la diagonal menos el sup izq
+	//corregir el elemento superior izquierdo, primero hago productoria de la diagonal (sin el sup izq)
 	for(int i=1 ; i < this->keySize; i++){
 		aux = aux* this->keyMatrix[i][i];
 	}
@@ -196,6 +204,8 @@ void Hill::buildKeyMatrix(string word){
 	aux = inverseModL(aux);
 	//modifico el elemento superior izquierdo
 	this->keyMatrix[0][0] = aux;
+
 }
+
 
 

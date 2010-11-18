@@ -18,7 +18,7 @@
 
 using namespace std;
 
-int main32145(int argc,char** argv) {
+int main(int argc,char** argv) {
 
 //	TestBSharp* test = new TestBSharp();
 //	test->testInsert();
@@ -62,7 +62,7 @@ int main32145(int argc,char** argv) {
 
 //**********************TEST CRIPTOGRAPHY******************************
 	TestCriptography* test = new TestCriptography();
-	test->unitTest();
+	test->testTriangularMatrix();
 	delete test;
 //*********************************************************************
 

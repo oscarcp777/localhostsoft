@@ -89,6 +89,7 @@ private:
 	 */
 	string translate(string text, int** matrix);
 
+
 	//BORRAR
 	void testMatrix2x2();
 	void testInvertedMatrix2x2();

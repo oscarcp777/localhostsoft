@@ -23,6 +23,7 @@ public:
 	 * Prueba basica de ecriptacion, se encripta un msj con una matriz basica y luego se desencripta
 	 */
 	void unitTest();
+	void testTriangularMatrix();
 };
 
 #endif /* TESTCRIPTOGRAPHY_H_ */
