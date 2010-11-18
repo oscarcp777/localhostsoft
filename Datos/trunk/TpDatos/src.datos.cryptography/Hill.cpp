@@ -10,21 +10,25 @@ using namespace std;
 
 Hill::Hill(const int keySize, string clave) {
 	this->keySize = keySize;
-	this->keyMatrix = new int *[keySize];
+	this->keyMatrix = new double *[keySize];
 	for (int k=0; k<keySize; k++)
-		this->keyMatrix[k] = new int[keySize];
+		this->keyMatrix[k] = new double[keySize];
 
-	this->keyInvertedMatrix = new int *[keySize];
+	this->keyInvertedMatrix = new double *[keySize];
 	for (int k=0; k<keySize; k++)
-		this->keyInvertedMatrix[k] = new int[keySize];
+		this->keyInvertedMatrix[k] = new double[keySize];
 
 	//NOTA El det(keyMatrix) mod 128 = 1 para que funcione el metodo
 	// Armado matriz clave
 	// makeKey();//Falta implementar, aca van las funciones hash y el calculo
-	//this->testMatrix2x2();
-	this->buildKeyMatrix(clave);
+	this->testMatrix2x2();
+	//this->buildKeyMatrix(clave);
+	GaussJordan* gaussJordan = new GaussJordan(this->keySize, this->keyMatrix, this->keyInvertedMatrix);
+	gaussJordan->hallar_inversa();
+
+
 	// Armado matriz clave inversa
-	// makeKeyInverted();//aca se calcula la inversa con respecto a la anterior
+	//makeKeyInverted();//aca se calcula la inversa con respecto a la anterior
 	//this->testInvertedMatrix2x2();
 
 }
@@ -85,12 +89,12 @@ void Hill::printKeyInvertedMatrix(){
 	}
 }
 
-string Hill::translate(string text, int** matrix){
+string Hill::translate(string text, double** matrix){
 
 	string result;
 	unsigned int n = 0;
 	int j = 0;
-	int* textPart = new int[this->keySize];
+	double* textPart = new double[this->keySize];
 	char letter;
 
 	//FIX-ME este codigo comentado es para solucionar si el mensaje no es multiplo de el tamaño clave
@@ -107,7 +111,7 @@ string Hill::translate(string text, int** matrix){
 		textPart[j++] = int(c);
 		if (j >= this->keySize) {
 
-			int* multiplyResult = productVectorPerMatrix(textPart, matrix);
+			double* multiplyResult = productVectorPerMatrix(textPart, matrix);
 			mod128(multiplyResult);
 
 			for (int i = 0; i < this->keySize; i++) {
@@ -126,9 +130,9 @@ string Hill::translate(string text, int** matrix){
 
 
 
-int *Hill::productVectorPerMatrix(int *vector, int** matrix){
+double* Hill::productVectorPerMatrix(double *vector, double** matrix){
 
-	int* result = new int[this->keySize];
+	double* result = new double[this->keySize];
 	int i, j;
 
 	for (i = 0; i < this->keySize; i++) {
@@ -141,10 +145,10 @@ int *Hill::productVectorPerMatrix(int *vector, int** matrix){
 
 }
 
-void Hill::mod128(int *vector){
+void Hill::mod128(double *vector){
 
 	for (int i = 0; i < this->keySize; i++) {
-		int aux = vector[i] % 128;
+		int aux = (int)vector[i] % 128;
 		if (aux < 0) aux = aux + 128;
 		vector[i] = aux;
 		if (DEBUG) cout <<"en MOD:"<< vector[i]<<endl;

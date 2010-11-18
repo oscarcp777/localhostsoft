@@ -17,7 +17,7 @@
 #define MAILSFILE "./files/mailsChico"
 #define PATHFILES "files/storage/"
 #define STOP_WORDS_FILE "./files/stopwords.txt"
-#define CONST_L 256
+#define CONST_L 128
 
 
 #define BOUNDARYMAIL "**********"

@@ -10,6 +10,7 @@
 
 #include "Encryption.h"
 #include "../src.datos.utils/Define.h"
+#include "GaussJordan.h"
 
 class Hill: public Encryption {
 public:
@@ -56,12 +57,12 @@ private:
 	/**
 	 * Matriz clave de este metodo (para encriptar), su determinante mod 128 tiene que ser igual a 1
 	 */
-	int** keyMatrix;
+	double** keyMatrix;
 
 	/**
 	 * Matriz clave inversa de este metodo (para desencriptar)
 	 */
-	int** keyInvertedMatrix;
+	double** keyInvertedMatrix;
 
 	/**
 	 * Multiplica un vector por una matriz
@@ -70,14 +71,14 @@ private:
 	 * @param matrix Matriz dada para realizar el producto
 	 * @return int* Vector resultante del producto
 	 */
-	int* productVectorPerMatrix(int* vector, int** matrix);
+	double* productVectorPerMatrix(double* vector, double** matrix);
 
 	/**
 	 * Aplica mod 128 a todos los elementos del vector dado
 	 *
 	 * @param vector Vector dado para realizar la operacion
 	 */
-	void mod128(int* vector);
+	void mod128(double* vector);
 	int modL(int value);
 	int inverseModL(int num);
 	/**
@@ -87,7 +88,7 @@ private:
 	 * @param matrix Matriz a usar para la traduccion
 	 * @return devuelve el mensaje convertido (encriptado o desencriptado)
 	 */
-	string translate(string text, int** matrix);
+	string translate(string text, double** matrix);
 
 
 	//BORRAR
