@@ -23,15 +23,16 @@ Hill::Hill(const int keySize, string clave) {
 	//NOTA El det(keyMatrix) mod 128 = 1 para que funcione el metodo
 
 	// Armado matriz clave
-	//this->buildKeyMatrix(clave);
+//	this->buildKeyMatrix(clave);
 	this->testMatrix2x2();
 
 	// Armado matriz clave inversa
-	this->buildKeyInverted();
+//	this->buildKeyInverted();
+	this->testInvertedMatrix2x2();
 
 
 	//this->buildKeyMatrix(clave); //TODO CAMBIAR......( el metodo hallar_inversa me modifica  la KeyMatrix, por eso la genero de nuevo, seria mejor hacer un memcpy o algo asi)
-	this->testMatrix2x2();
+//	this->testMatrix2x2();
 }
 void Hill::buildKeyInverted(){
 	GaussJordan* gaussJordan = new GaussJordan(this->keySize, this->keyMatrix, this->keyInvertedMatrix);
@@ -39,18 +40,18 @@ void Hill::buildKeyInverted(){
 	delete gaussJordan;
 }
 void Hill::testMatrix2x2(){
-	//NOTA ver que 4x65 - 3 = 257, y 257 mod 128 = 1, verifica condicion
-	this->keyMatrix[0][0] = 2;
-	this->keyMatrix[0][1] = 1;
+	//NOTA ver que 4x65 - 3 = 257, y 257 mod 256 = 1, verifica condicion
+	this->keyMatrix[0][0] = 4;
+	this->keyMatrix[0][1] = 3;
 	this->keyMatrix[1][0] = 1;
 	this->keyMatrix[1][1] = 65;
 }
 
 void Hill::testInvertedMatrix2x2(){
 	this->keyInvertedMatrix[0][0] = 65;
-	this->keyInvertedMatrix[0][1] = -1;
+	this->keyInvertedMatrix[0][1] = -3;
 	this->keyInvertedMatrix[1][0] = -1;
-	this->keyInvertedMatrix[1][1] = 2;
+	this->keyInvertedMatrix[1][1] = 4;
 }
 
 Hill::~Hill() {
@@ -63,6 +64,13 @@ Hill::~Hill() {
 
 }
 
+Buffer* Hill::encrypt(char* messageToEncrypt,int size){
+	return this->translate(messageToEncrypt,size, this->keyMatrix);
+}
+
+Buffer* Hill::decrypt(char* messageToDecrypt,int size){
+	return this->translate(messageToDecrypt, size,this->keyInvertedMatrix);
+}
 string Hill::encrypt(string textToEncrypt){
 	return this->translate(textToEncrypt, this->keyMatrix);
 }
@@ -70,7 +78,6 @@ string Hill::encrypt(string textToEncrypt){
 string Hill::decrypt(string textToDecrypt){
 	return this->translate(textToDecrypt, this->keyInvertedMatrix);
 }
-
 
 void Hill::printKeyMatrix(){
 	string matrix;
@@ -93,7 +100,38 @@ void Hill::printKeyInvertedMatrix(){
 		cout << endl;
 	}
 }
+Buffer* Hill::translate(char* messageOriginal,int sizeText, double** matrix){
 
+	Buffer* result= new Buffer(sizeText);
+	int n = 0;
+	int j = 0;
+	double* textPart = new double[this->keySize];
+	char letter;
+
+	while (n < sizeText) {
+		char c = messageOriginal[n++];
+		if (DEBUG) cout << "letra "<<n<<": "<<int(c)<<endl;
+		textPart[j++] = int(c);
+		if (j >= this->keySize) {
+
+			double* multiplyResult = productVectorPerMatrix(textPart, matrix);
+			modL(multiplyResult);
+
+			for (int i = 0; i < this->keySize; i++) {
+				letter = char(multiplyResult[i]);
+				cout<<" escribo el char "<<n<<endl;
+				result->packField(&letter,sizeof(char));
+			}
+			j = 0;
+			delete []multiplyResult;
+		}
+	}
+	delete []textPart;
+//    delete text;
+	result->init();
+	return result;
+
+}
 string Hill::translate(string text, double** matrix){
 
 	string result;
@@ -117,7 +155,7 @@ string Hill::translate(string text, double** matrix){
 		if (j >= this->keySize) {
 
 			double* multiplyResult = productVectorPerMatrix(textPart, matrix);
-			mod128(multiplyResult);
+			modL(multiplyResult);
 
 			for (int i = 0; i < this->keySize; i++) {
 				letter = char(multiplyResult[i]);
@@ -150,11 +188,11 @@ double* Hill::productVectorPerMatrix(double *vector, double** matrix){
 
 }
 
-void Hill::mod128(double *vector){
+void Hill::modL(double *vector){
 
 	for (int i = 0; i < this->keySize; i++) {
-		int aux = (int)vector[i] % 128;
-		if (aux < 0) aux = aux + 128;
+		int aux = (int)vector[i] % CONST_L;
+		if (aux < 0) aux = aux + CONST_L;
 		vector[i] = aux;
 		if (DEBUG) cout <<"en MOD:"<< vector[i]<<endl;
 	}

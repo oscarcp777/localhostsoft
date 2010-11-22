@@ -10,6 +10,7 @@
 
 #include "Encryption.h"
 #include "../src.datos.utils/Define.h"
+#include "../src.datos.storage/Buffer.h"
 #include "GaussJordan.h"
 
 class Hill: public Encryption {
@@ -38,6 +39,21 @@ public:
 	 * @return string Texto desencriptado
 	 */
 	virtual string decrypt(string textToDecrypt);
+	/**
+	 * Metodo de encriptacion
+	 *
+	 * @param textToEncrypt Texto a ser encriptado
+	 * @return string Texto encriptado
+	 */
+	Buffer* encrypt(char* messageToEncrypt,int size);
+
+	/**
+	 * Metodo de encriptacion
+	 *
+	 * @param textToDecrypt Texto a ser desencriptado
+	 * @return string Texto desencriptado
+	 */
+	Buffer* decrypt(char* messageToDecrypt,int size);
 
 	/**
 	 * Muestra la matriz clave actual
@@ -76,7 +92,7 @@ private:
 	 *
 	 * @param vector Vector dado para realizar la operacion
 	 */
-	void mod128(double* vector);
+	void modL(double* vector);
 	int modL(int value);
 	int inverseModL(int num);
 	int H1(string word);
@@ -92,7 +108,7 @@ private:
 	 * @return devuelve el mensaje convertido (encriptado o desencriptado)
 	 */
 	string translate(string text, double** matrix);
-
+	Buffer* translate(char* messageOriginal,int sizeText, double** matrix);
 
 	//BORRAR
 	void testMatrix2x2();
