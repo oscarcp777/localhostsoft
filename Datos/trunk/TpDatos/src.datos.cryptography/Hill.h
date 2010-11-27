@@ -93,12 +93,12 @@ private:
 	 * @param vector Vector dado para realizar la operacion
 	 */
 	void modL(double* vector);
-	int modL(int value);
+	int modL(long int value);
 	int inverseModL(int num);
 	int H1(string word);
 	int H2(string word);
-	double buildKeyMatrix(string word);
-	void buildKeyInverted(double num);
+	long double buildKeyMatrix(string word);
+	void buildKeyInverted(long double num);
 
 	/**
 	 * Metodo que dado un mensaje y una matriz devuelve su conversion (tanto para encriptar como para desencriptar)

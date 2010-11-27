@@ -36,7 +36,7 @@ GaussJordan::~GaussJordan() {
 }
 
 
-void GaussJordan::hallar_inversa(double num)
+void GaussJordan::hallar_inversa(long double num)
 {
 	int cont,cont2;
 
@@ -72,42 +72,43 @@ void GaussJordan::hallar_inversa(double num)
 /* no es valida y la matriz no tiena inversa */
 /*--------------------------------------------------------------*/
 
-//
-//for(cont=0;cont<N;cont++)
-//{
-//	for(cont2=0;cont2<N;cont2++)
-//	{
-//		if(cont==cont2)
-//		{
-//			if(matriz[cont][cont2]!=1) flag=1;
-//		}
-//		else
-//		{
-//			if(matriz[cont][cont2]!=0) flag=1;
-//		}
-//	}
-//}
-//
-//
-//
-//if(flag==1)
-//{
-//	cout<<"La matriz no tiene inversa"<<endl;
-//}
-//else
-//{
-//	cout<<"La Matriz Inversa es :"<<endl;
-//
-//	for(cont=0;cont<N;cont++)
-//	{
-//		for(cont2=0;cont2<N;cont2++)
-//		{
-//			cout<<identidad[cont][cont2]<<" ";
-//
-//		}
-//		cout<<endl;
-//	}
-//}
+int flag = 0;
+
+for(cont=0;cont<N;cont++)
+{
+	for(cont2=0;cont2<N;cont2++)
+	{
+		if(cont==cont2)
+		{
+			if(matriz[cont][cont2]!=num) flag=1;
+		}
+		else
+		{
+			if(matriz[cont][cont2]!=0) flag=1;
+		}
+	}
+}
+
+
+
+if(flag==1)
+{
+	cout<<"La matriz no tiene inversa"<<endl;
+}
+else
+{
+	cout<<"La Matriz Inversa es :"<<endl;
+
+	for(cont=0;cont<N;cont++)
+	{
+		for(cont2=0;cont2<N;cont2++)
+		{
+			cout<<identidad[cont][cont2]<<" ";
+
+		}
+		cout<<endl;
+	}
+}
 
 }
 
@@ -233,7 +234,7 @@ void GaussJordan::ceros_abajo(int fila_pivote, int columna_pivote)
 
 }
 /*-------------------------------------------------------------------------*/
-void GaussJordan::generar_matriz_identidad(double num)
+void GaussJordan::generar_matriz_identidad(long double num)
 {
 	int i,j;
 	for(i=0;i<this->N;i++)

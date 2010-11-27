@@ -27,6 +27,8 @@ Hill::Hill(const int keySize, string clave) {
 	aux = this->buildKeyMatrix(clave);
 //	this->testMatrix2x2();
 	cout << "LLEGO " <<aux<< endl;
+	cout << this->modL(aux)<< endl;
+//	this->printKeyMatrix();
 	// Armado matriz clave inversa
 	this->buildKeyInverted(aux);
 	cout << "LLEGO " << endl;
@@ -36,7 +38,7 @@ Hill::Hill(const int keySize, string clave) {
 //	this->buildKeyMatrix(clave); //TODO CAMBIAR......( el metodo hallar_inversa me modifica  la KeyMatrix, por eso la genero de nuevo, seria mejor hacer un memcpy o algo asi)
 //	this->testMatrix2x2();
 }
-void Hill::buildKeyInverted(double num){
+void Hill::buildKeyInverted(long double num){
 	GaussJordan* gaussJordan = new GaussJordan(this->keySize, this->keyMatrix, this->keyInvertedMatrix);
 	gaussJordan->hallar_inversa(num);
 	delete gaussJordan;
@@ -160,9 +162,9 @@ string Hill::translate(string text, double** matrix){
 			for (int i = 0; i < this->keySize; i++) {
 				double aux = round(multiplyResult[i]);
 				int round = aux;
-				cout <<"Sin round: "<<multiplyResult[i]<<"  Con round: "<< round;
+				if (DEBUG) cout <<"Sin round: "<<multiplyResult[i]<<"  Con round: "<< round;
 				letter = char(round);
-				cout <<"letra: " << letter<<"-"<<endl;
+				if (DEBUG) cout <<"letra: " << letter<<"-"<<endl;
 				result.append(&letter,sizeof(char));
 			}
 			j = 0;
@@ -196,7 +198,8 @@ double* Hill::productVectorPerMatrix(double *vector, double** matrix){
 void Hill::modL(double *vector){
 
 	for (int i = 0; i < this->keySize; i++) {
-		int aux = (int)vector[i] % CONST_L;
+		long int toInt = (long int)vector[i];
+		int aux =  toInt % CONST_L;
 		if (aux < 0) aux = aux + CONST_L;
 		vector[i] = aux;
 		if (DEBUG) cout <<"en MOD:"<< vector[i]<<endl;
@@ -204,7 +207,7 @@ void Hill::modL(double *vector){
 
 }
 
-int Hill::modL(int value){
+int Hill::modL(long int value){
 	int aux = value % CONST_L;
 	if (aux < 0)
 		aux = aux + CONST_L;
@@ -236,10 +239,10 @@ int Hill::inverseModL(int num){
 	return i;
 }
 
-double Hill::buildKeyMatrix(string word){
+long double Hill::buildKeyMatrix(string word){
 	int h1 = H1(word);
 	int h2 = H2(word);
-	double aux = 1;
+	long double aux = 1;
 	for(int i=0 ; i < this->keySize; i++){
 		for(int j=0; j < this->keySize; j++){
 			if(j >= i) //triangular superior
@@ -254,12 +257,12 @@ double Hill::buildKeyMatrix(string word){
 		aux = aux* this->keyMatrix[i][i];
 	}
 	//a la productoria le hago inversa mod L
-	double aux2 = aux;
+	long double aux2 = aux;
 	aux = inverseModL(aux);
 	//modifico el elemento superior izquierdo
 	this->keyMatrix[0][0] = aux;
 
-	return round(aux2*aux);
+	return aux2*aux;
 }
 
 

@@ -21,11 +21,11 @@ void TestCriptography::unitTest(){
 
 	cout << "Prueba Encriptacion" << endl;
 
-	Hill* hill = new Hill(2,"claveNoUtilizadaAun");
+	Hill* hill = new Hill(8,"claveNoUtilizadaAun");
 	hill->printKeyMatrix();
 	hill->printKeyInvertedMatrix();
 
-	string textEncrypted = hill->encrypt("hola, anda todo joya, jejeje");
+	string textEncrypted = hill->encrypt("hola, anda todo joya, jejeje por favor que falle la puta madre  esto es un texto ultrapoderoso que testea toda encriptacion sisi");
 	cout << "Texto Encriptado: " << textEncrypted << endl;
 	string textDecrypted = hill->decrypt(textEncrypted);
 	cout << "Texto Desencriptado: " << textDecrypted << endl;
