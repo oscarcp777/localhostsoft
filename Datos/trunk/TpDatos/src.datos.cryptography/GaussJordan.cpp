@@ -7,25 +7,41 @@
 
 #include "GaussJordan.h"
 #include <math.h>
+#include <string.h>
 
 
 using namespace std;
 GaussJordan::GaussJordan(int n, double** matriz, double** inversa) {
 	this->N = n;
-	this->matriz = matriz;
 	this->identidad = inversa;
+
+	this->matriz = new double *[n];
+	for (int k=0; k<n; k++){
+		this->matriz[k] = new double[n];
+	}
+	for (int i = 0; i < this->N; i++) {
+		for (int j = 0; j < this->N; j++) {
+			this->matriz[i][j] = matriz[i][j];
+		}
+	}
+
+
+
 }
 
 GaussJordan::~GaussJordan() {
+	for (int k=0; k<this->N; k++)
+		delete []this->matriz[k];
+	delete []this->matriz;
 }
 
 
-void GaussJordan::hallar_inversa(void)
+void GaussJordan::hallar_inversa(double num)
 {
 	int cont,cont2;
 
 	escalonar_matriz();
-	generar_matriz_identidad(); //rellena la matriz identidad
+	generar_matriz_identidad(num); //rellena la matriz identidad
 
 
 	for(cont=0;cont<N;cont++) //recorre filas
@@ -217,14 +233,14 @@ void GaussJordan::ceros_abajo(int fila_pivote, int columna_pivote)
 
 }
 /*-------------------------------------------------------------------------*/
-void GaussJordan::generar_matriz_identidad(void)
+void GaussJordan::generar_matriz_identidad(double num)
 {
 	int i,j;
 	for(i=0;i<this->N;i++)
 	{
 		for(j=0;j<this->N;j++)
 		{
-			if(i==j) identidad[i][j]=129;
+			if(i==j) identidad[i][j]=num;
 			else identidad[i][j]=0;
 		}
 	}

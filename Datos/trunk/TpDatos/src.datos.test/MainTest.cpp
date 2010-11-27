@@ -63,7 +63,7 @@ int main(int argc,char** argv) {
 //**********************TEST CRIPTOGRAPHY******************************
 	TestCriptography* test = new TestCriptography();
     test->unitTest();
-	test->unitTestWithBuffer();
+//	test->unitTestWithBuffer();
 	delete test;
 //*********************************************************************
 

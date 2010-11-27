@@ -42,8 +42,8 @@ public:
 	/**
 	 * Metodo de encriptacion
 	 *
-	 * @param textToEncrypt Texto a ser encriptado
-	 * @return string Texto encriptado
+	 * @param textToEncrypt Buffer a ser encriptado
+	 * @return Buffer Buffer encriptado
 	 */
 	Buffer* encrypt(char* messageToEncrypt,int size);
 
@@ -83,7 +83,7 @@ private:
 	 *
 	 * @param vector Vector dado para realizar el producto
 	 * @param matrix Matriz dada para realizar el producto
-	 * @return int* Vector resultante del producto
+	 * @return double* Vector resultante del producto
 	 */
 	double* productVectorPerMatrix(double* vector, double** matrix);
 
@@ -97,15 +97,15 @@ private:
 	int inverseModL(int num);
 	int H1(string word);
 	int H2(string word);
-	void buildKeyMatrix(string word);
-	void buildKeyInverted();
+	double buildKeyMatrix(string word);
+	void buildKeyInverted(double num);
 
 	/**
 	 * Metodo que dado un mensaje y una matriz devuelve su conversion (tanto para encriptar como para desencriptar)
 	 *
 	 * @param text Mensaje a traducir
 	 * @param matrix Matriz a usar para la traduccion
-	 * @return devuelve el mensaje convertido (encriptado o desencriptado)
+	 * @return string Devuelve el mensaje convertido (encriptado o desencriptado)
 	 */
 	string translate(string text, double** matrix);
 	Buffer* translate(char* messageOriginal,int sizeText, double** matrix);

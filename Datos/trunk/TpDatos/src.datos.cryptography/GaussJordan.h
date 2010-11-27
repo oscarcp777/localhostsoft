@@ -14,7 +14,7 @@ class GaussJordan {
 public:
 	GaussJordan(int n,double** matriz, double** inversa);
 	virtual ~GaussJordan();
-	void hallar_inversa(void);
+	void hallar_inversa(double num);
 
 private:
 	int N;
@@ -26,7 +26,7 @@ private:
 	void sumar_fila_multip(int fila1,int fila2, double factor);
 	void ceros_abajo(int fila_pivote, int columna_pivote);
 	void ceros_arriba(int fila_pivote, int columna_pivote);
-	void generar_matriz_identidad(void);
+	void generar_matriz_identidad(double num);
 
 };
 
