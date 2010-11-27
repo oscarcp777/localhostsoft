@@ -41,7 +41,7 @@ void TestCriptography::unitTestWithBuffer(){
 	Hill* hill = new Hill(2,"clave");
 	hill->printKeyMatrix();
 	hill->printKeyInvertedMatrix();
-	Buffer*  buffer= new Buffer(16);
+	Buffer*  buffer= new Buffer(32);
 	int number=1;
 	buffer->packField(&number,sizeof(number));
 	number=5;
@@ -50,6 +50,10 @@ void TestCriptography::unitTestWithBuffer(){
 	buffer->packField(&number,sizeof(number));
 	number=200;
 	buffer->packField(&number,sizeof(number));
+	string str="mensaje";
+	int size=str.size();
+	buffer->packField(&size, sizeof(size));
+	buffer->packField(str.c_str(),size);
 	Buffer*  bufferCrypted = hill->encrypt(buffer->getData(),buffer->getMaxBytes());
 	Buffer*  bufferDecrypted = hill->decrypt(bufferCrypted->getData(),buffer->getMaxBytes());
 	number=0;
@@ -61,7 +65,13 @@ void TestCriptography::unitTestWithBuffer(){
 	cout << "Desencriptado: " << number <<" Original :"<<6<< endl;
 	bufferDecrypted->unPackField(&number,sizeof(number));
 	cout << "Desencriptado: " << number <<" Original :"<<200<< endl;
-
+	bufferDecrypted->unPackField(&size, sizeof(size));
+	string newSrt="";
+	bufferDecrypted->unPackFieldString(newSrt,size);
+	cout<<newSrt<<endl;
 	delete hill;
+	delete bufferDecrypted;
+	delete bufferCrypted;
+	delete buffer;
 
 }

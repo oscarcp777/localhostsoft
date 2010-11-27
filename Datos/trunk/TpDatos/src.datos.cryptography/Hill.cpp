@@ -23,8 +23,8 @@ Hill::Hill(const int keySize, string clave) {
 	//NOTA El det(keyMatrix) mod 128 = 1 para que funcione el metodo
 
 	// Armado matriz clave
-//	this->buildKeyMatrix(clave);
-	this->testMatrix2x2();
+	this->buildKeyMatrix(clave);
+//	this->testMatrix2x2();
 
 	// Armado matriz clave inversa
 //	this->buildKeyInverted();
@@ -119,7 +119,6 @@ Buffer* Hill::translate(char* messageOriginal,int sizeText, double** matrix){
 
 			for (int i = 0; i < this->keySize; i++) {
 				letter = char(multiplyResult[i]);
-				cout<<" escribo el char "<<n<<endl;
 				result->packField(&letter,sizeof(char));
 			}
 			j = 0;
@@ -127,7 +126,6 @@ Buffer* Hill::translate(char* messageOriginal,int sizeText, double** matrix){
 		}
 	}
 	delete []textPart;
-//    delete text;
 	result->init();
 	return result;
 
