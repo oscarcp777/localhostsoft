@@ -95,7 +95,7 @@ void IndexBSharp::addRegistry(Registry* registry) throw(){
 		answer = this->insertInternalNode(internalNode, registry, containerInsertion, 0, aux);
 	}
 
-	if (answer == OVERFLOW) {
+	if (answer == OVER_FLOW) {
 		if(this->rootNode->isLeaf())
 			this->splitLeafRoot(containerInsertion,registry);
 		else
@@ -431,7 +431,7 @@ int IndexBSharp::insertLeafNode(LeafNode* leafNode, Registry* registry,
 				container)) {
 			answer = BALANCE;
 		} else {
-			answer = OVERFLOW;
+			answer = OVER_FLOW;
 			if (sisterBranchNode != NULL) {
 				this->insertLeafNodeFull(leafNode, sisterBranchNode, registry,
 						container);
@@ -898,7 +898,7 @@ int IndexBSharp::insertInternalNode(InternalNode* internalNode,
 		}
 
 		// Verifico si hubo sobrelujo al insertar en el bloque hijo
-		if (childAnswer == OVERFLOW) {
+		if (childAnswer == OVER_FLOW) {
 			// Verifico si puedo agregar en el bloque interno
 			Registry* replaceReg = (Registry*)(*actualRegistry);
 			internalNode->replaceRegistry(replaceReg, container->getLeftRegKey());
@@ -926,7 +926,7 @@ int IndexBSharp::insertInternalNode(InternalNode* internalNode,
 					answer = BALANCE;
 				} else {
 					// Inserto en el bloque interno lleno
-					answer = OVERFLOW;
+					answer = OVER_FLOW;
 
 					// Si la rama hermana es nula el sobreflujo se da en la raiz, no inserto, la raiz se encarga
 					if (branchSisterNode != NULL) {

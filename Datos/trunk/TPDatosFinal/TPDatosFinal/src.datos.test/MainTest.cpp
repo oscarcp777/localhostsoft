@@ -13,12 +13,13 @@
 #include "TestCompression.h"
 #include "TestManagerInvertedIndex.h"
 #include "TestCriptography.h"
+#include "TestStorage.h"
 
 
 
 using namespace std;
 
-int main1232354456436() {
+int main() {
 
 //	TestBSharp* test = new TestBSharp();
 //	test->testInsert();
@@ -32,13 +33,13 @@ int main1232354456436() {
 //	test->testInsertAndDelete();
 //	test->testInsertAndDeleteVariable();
 //	delete test;
-/*
+///*
 	//TEST STORAGE
    TestStorage* teststorage = new TestStorage();
-   teststorage->testBlock();
+   teststorage->testParserMails();
    delete teststorage;
 
-*/
+//*/
 
 //***********************************************
    	//TEST MAIL BLOCK MANAGER
@@ -61,10 +62,10 @@ int main1232354456436() {
 //*********************************************************************
 
 //**********************TEST CRIPTOGRAPHY******************************
-	TestCriptography* test = new TestCriptography();
-    test->unitTest();
-//	test->unitTestWithBuffer();
-	delete test;
+//	TestCriptography* test = new TestCriptography();
+//    test->unitTest();
+////	test->unitTestWithBuffer();
+//	delete test;
 //*********************************************************************
 
 //	TestManagerInvertedIndex* myTest = new TestManagerInvertedIndex();

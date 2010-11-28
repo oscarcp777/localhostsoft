@@ -40,7 +40,7 @@
 #define DATA_SHOW 1
 #define BLOCK_EMPTY -1
 #define INSERTION_OK 0
-#define OVERFLOW 1
+#define OVER_FLOW 1
 #define BALANCE 2
 #define CORRECT_REMOVE 3
 #define UNDERFLOW 4

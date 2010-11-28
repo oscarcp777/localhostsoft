@@ -15,7 +15,9 @@ public:
 	TestStorage();
 	virtual ~TestStorage();
 	void testMails();
+	void testParserMails();
 	void testBlock();
+
 };
 
 #endif /* TESTSTORAGE_H_ */

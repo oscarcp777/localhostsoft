@@ -291,7 +291,7 @@ void LeafNode::printMails(std::ostream& outStream,Registry* reg, ContainerInsert
 		blockMails=this->blockDataManager->readBlockData(regPrevious->getNumberBlock(),container);
 		for(iterRegistry = blockMails->iteratorBegin(); iterRegistry != blockMails->iteratorEnd(); iterRegistry++){
 			Mail* mail=(Mail*)*iterRegistry;
-			mail->print(std::cout);
+			mail->print(outStream);
 
 		}
 

@@ -220,7 +220,7 @@ void Controller::addSecondIndex(IndexConfig* indexConfig) {
 	}else{
 		//crea un archivo del indice secundario vacio, agrega en la lista de indices y genera un boton por el indice
 		IndexController* indexController = new IndexController();
-		indexController->generateSecondaryIndex(this->primaryTree,indexConfig);
+		indexController->generateSecondaryIndex(indexConfig);
 		this->addIndexToFile(indexConfig);
 		this->indexes.push_back(indexConfig);
 		delete indexController;

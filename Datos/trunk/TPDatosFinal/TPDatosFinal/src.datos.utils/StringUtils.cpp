@@ -27,7 +27,15 @@ string StringUtils::getPassword(int cant) {
 }
 
  bool compare(int i,int j) { return (i<j); }
-
+ string StringUtils::replaceAll(string text,string charOld,string charNew){
+	 string string1=text;
+	   int position = string1.find(charOld);
+	    while ( position != -1/*string::npos*/ ){
+	       string1.replace( position, 1, charNew );
+	       position = string1.find(charOld, position + 1 );
+	    }
+	    return string1;
+ }
  void StringUtils::sortVector(vector<int> &vector){
 	 sort(vector.begin(), vector.end(), compare);
  }

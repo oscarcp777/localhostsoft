@@ -49,7 +49,7 @@ void IndexController::generateInvertedIndex(IndexConfig* indexConfig){
 	indexConfig->setFileName(fileName);
 	delete primaryIndex;
 }
-void IndexController::generateSecondaryIndex(IndexBSharp* primaryIndex,IndexConfig* indexConfig){
+void IndexController::generateSecondaryIndex(IndexConfig* indexConfig){
 
 	if(indexConfig->getTypeSecundaryIndex().compare((char*)TYPE_CLASSIFICATION) == 0)
 		this->generateClassificationIndex(indexConfig);
