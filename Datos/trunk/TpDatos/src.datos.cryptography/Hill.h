@@ -13,15 +13,25 @@
 #include "../src.datos.storage/Buffer.h"
 #include "GaussJordan.h"
 
+
 class Hill: public Encryption {
+
 public:
+
 	/**
-	 * Construye encriptador con un N y clave determinados
+	 * Singleton, metodo devuelve instancia unica de la clase
+	 */
+	static Hill *getInstance();
+
+	/**
+	 * Metodo que debe ser llamado luego de pedir por primera vez dicha instancia, setea tamaño y clave necesarias
+	 * para la encriptacion
 	 *
 	 * @param keySize  Tamaño clave (numero caracteres a encriptar/desencriptar por vez)
 	 * @param clave Clave utilizada para armar la matriz clave correspondiente a este metodo
 	 */
-	Hill(const int keySize, string clave);
+	void initialize(const int keySize, string clave);
+
 	virtual ~Hill();
 
 	/**
@@ -68,6 +78,17 @@ public:
 
 
 private:
+
+	/**
+	 * Instancia singleton de la clase
+	 */
+	static Hill *instance;
+
+	/**
+	 * Constructor privado (singleton) de la clase
+	 */
+	Hill();
+
 	/**
 	 * Matriz clave de este metodo (para encriptar), su determinante mod 128 tiene que ser igual a 1
 	 */
@@ -115,5 +136,7 @@ private:
 	void testInvertedMatrix2x2();
 
 };
+
+
 
 #endif /* HILL_H_ */

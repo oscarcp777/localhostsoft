@@ -18,12 +18,13 @@
 
 using namespace std;
 
-int main(int argc,char** argv) {
+int mainHH(int argc,char** argv) {
 
-//	TestBSharp* test = new TestBSharp();
+	TestBSharp* test = new TestBSharp();
+	Hill::getInstance()->initialize(ENCRYPTION_KEY_SIZE,"prueba");
 //	test->testInsert();
 //	test->testsearch();
-//	test->testInsertAndSearch();
+	test->testInsertAndSearch();
 //	test->testInsertRegClassification();
 //	test->testsearchRegClassification();
 //	test->testInsertAndSearchRegClassification();
@@ -31,7 +32,7 @@ int main(int argc,char** argv) {
 //	test->testPrint();
 //	test->testInsertAndDelete();
 //	test->testInsertAndDeleteVariable();
-//	delete test;
+	delete test;
 /*
 	//TEST STORAGE
    TestStorage* teststorage = new TestStorage();
@@ -61,10 +62,10 @@ int main(int argc,char** argv) {
 //*********************************************************************
 
 //**********************TEST CRIPTOGRAPHY******************************
-	TestCriptography* test = new TestCriptography();
-    test->unitTest();
+//	TestCriptography* test = new TestCriptography();
+//  test->unitTest();
 //	test->unitTestWithBuffer();
-	delete test;
+//	delete test;
 //*********************************************************************
 
 //	TestManagerInvertedIndex* myTest = new TestManagerInvertedIndex();

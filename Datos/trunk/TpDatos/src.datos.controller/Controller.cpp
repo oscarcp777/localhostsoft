@@ -17,17 +17,18 @@ Controller::Controller() {
 	this->loadIndexNames();
 	this->search = NULL;
 }
-Controller::Controller(std::string userMail) {
+Controller::Controller(std::string userMail, std::string pass) {
 	string fileName= "";
 			fileName+=PATHFILES;
 			fileName+=userMail+".dat";
 	this->fileNameAccount = fileName;
 	this->strEmail = userMail;
+	this->strPass = pass;
+	Hill::getInstance()->initialize(ENCRYPTION_KEY_SIZE,userMail.append(pass));
 	this->programFile = new TextFile();
 	this->primaryTree = NULL;
 	this->loadIndexNames();
 	this->search = NULL;
-
 }
 
 Controller::~Controller() {
@@ -48,9 +49,9 @@ Controller::~Controller() {
 	list<Mail*>::iterator itMails;
 	Mail* mail;
 	for (itMails=this->listOfMails.begin(); itMails!=this->listOfMails.end(); itMails++){
-			mail=*itMails;
-			delete mail;
-		}
+		mail=*itMails;
+		delete mail;
+	}
 
 }
 void Controller::clearListsIucs(){

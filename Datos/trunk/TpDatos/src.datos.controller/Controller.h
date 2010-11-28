@@ -16,6 +16,7 @@
 #include "StorageController.h"
 #include "IndexController.h"
 #include "../src.datos.classification/Classification.h"
+#include "../src.datos.cryptography/Hill.h"
 
 #include <vector>
 #include <stdlib.h>
@@ -40,7 +41,7 @@ private:
 
 public:
 	Controller();
-	Controller(std::string userMail);
+	Controller(std::string userMail, std::string pass);
 	virtual ~Controller();
 	Search* getSearch();
 	void setSearch(Search* search);

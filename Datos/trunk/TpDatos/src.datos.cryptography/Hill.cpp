@@ -9,9 +9,24 @@
 using namespace std;
 #include <math.h>
 
+Hill *Hill::instance = NULL;
+
+Hill::Hill() {
+
+}
+
+Hill::~Hill() {
+	for (int k=0; k<this->keySize; k++)
+			delete []this->keyMatrix[k];
+	delete []this->keyMatrix;
+	for (int k=0; k<this->keySize; k++)
+			delete []this->keyInvertedMatrix[k];
+	delete []this->keyInvertedMatrix;
+
+}
 
 
-Hill::Hill(const int keySize, string clave) {
+void Hill::initialize(const int keySize, string clave){
 	this->keySize = keySize;
 	this->keyMatrix = new double *[keySize];
 	for (int k=0; k<keySize; k++)
@@ -25,47 +40,22 @@ Hill::Hill(const int keySize, string clave) {
 	double aux;
 	// Armado matriz clave
 	aux = this->buildKeyMatrix(clave);
-//	this->testMatrix2x2();
-	cout << "LLEGO " <<aux<< endl;
-	cout << this->modL(aux)<< endl;
-//	this->printKeyMatrix();
 	// Armado matriz clave inversa
 	this->buildKeyInverted(aux);
-	cout << "LLEGO " << endl;
-//	this->testInvertedMatrix2x2();
-
-
-//	this->buildKeyMatrix(clave); //TODO CAMBIAR......( el metodo hallar_inversa me modifica  la KeyMatrix, por eso la genero de nuevo, seria mejor hacer un memcpy o algo asi)
-//	this->testMatrix2x2();
 }
+
+Hill *Hill::getInstance()
+{
+	 if (!Hill::instance)
+		Hill::instance = new Hill();
+	 return Hill::instance;
+}
+
+
 void Hill::buildKeyInverted(long double num){
 	GaussJordan* gaussJordan = new GaussJordan(this->keySize, this->keyMatrix, this->keyInvertedMatrix);
 	gaussJordan->hallar_inversa(num);
 	delete gaussJordan;
-}
-void Hill::testMatrix2x2(){
-	//NOTA ver que 4x65 - 3 = 257, y 257 mod 256 = 1, verifica condicion
-	this->keyMatrix[0][0] = 4;
-	this->keyMatrix[0][1] = 3;
-	this->keyMatrix[1][0] = 1;
-	this->keyMatrix[1][1] = 65;
-}
-
-void Hill::testInvertedMatrix2x2(){
-	this->keyInvertedMatrix[0][0] = 65;
-	this->keyInvertedMatrix[0][1] = -3;
-	this->keyInvertedMatrix[1][0] = -1;
-	this->keyInvertedMatrix[1][1] = 4;
-}
-
-Hill::~Hill() {
-	for (int k=0; k<this->keySize; k++)
-			delete []this->keyMatrix[k];
-	delete []this->keyMatrix;
-	for (int k=0; k<this->keySize; k++)
-			delete []this->keyInvertedMatrix[k];
-	delete []this->keyInvertedMatrix;
-
 }
 
 Buffer* Hill::encrypt(char* messageToEncrypt,int size){
