@@ -432,29 +432,34 @@ Search* Controller::parseStrSearch(std::string strSearch){
 	} else return NULL;
 }
 std::string Controller::getMails(std::string strListOfIucs){
-//		std::string strResult;
-//		vector<string> tokens;
-//		list<int> listOfIucs;
-//		StringUtils::Tokenize(strListOfIucs, tokens," ");
-//		int size=tokens.size();
-//		for (int i = 0; i < size; ++i) {
-//			listOfIucs.push_back(atoi(tokens.at(i).c_str()));
-//		}
-//		Mail* mail;
-//		 it = listOfIucs.begin();
-//		while(it != listOfIucs.end()){
-//			RegPrimary* regPrimary = new RegPrimary;
-//			regPrimary->setKey(new KeyInteger((int)*it));
-//			consultation->consultPrimaryIndex(*current,regPrimary);
-//			if(regPrimary->getMail() != NULL){
-//				mail = ((Mail*)regPrimary->getMail()->clone());
-//				result += mail->toString();
-//			}
-//			it++;
-//			delete regPrimary->getMail();
-//			delete regPrimary;
+		std::string strResult;
+		vector<string> tokens;
+		list<int> listOfIucs;
+		StringUtils::Tokenize(strListOfIucs, tokens," ");
+		int size=tokens.size();
+		for (int i = 0; i < size; ++i) {
+			listOfIucs.push_back(atoi(tokens.at(i).c_str()));
+		}
+		Mail* mail;
+		IndexConfig* indexConfig = new IndexConfig();
+				indexConfig = loadIndexConfig("Primario"+this->strEmail);
+		Consultation* consultation = new Consultation();
+		list<int>::iterator it = listOfIucs.begin();
+		while(it != listOfIucs.end()){
+			RegPrimary* regPrimary = new RegPrimary;
+			regPrimary->setKey(new KeyInteger((int)*it));
+			consultation->consultPrimaryIndex(indexConfig ,regPrimary);
+			if(regPrimary->getMail() != NULL){
+				mail = ((Mail*)regPrimary->getMail()->clone());
+				strResult += mail->toString();
+			}
+			it++;
+			delete regPrimary->getMail();
+			delete regPrimary;
 
-return strListOfIucs;
+
+}
+return strResult;
 }
 int Controller::searchMails(std::string strSearch){
 	Consultation* consultation = new Consultation();

@@ -23,6 +23,7 @@ Consultation::Consultation() {
 Consultation::~Consultation() {
 	// TODO Auto-generated destructor stub
 }
+
 void Consultation::consultPrimaryIndex(IndexConfig* indexConfig,RegPrimary* regPrimary){
 	IndexBSharp* primaryIndex = new IndexBSharp(PATHFILES+indexConfig->getFileName(),indexConfig->getBlockSize(),TYPE_REG_PRIMARY);
 	regPrimary = (RegPrimary*) primaryIndex->searchRegistry(regPrimary);

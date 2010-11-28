@@ -230,25 +230,27 @@
     {
     	Controller* control = new Controller(lineEdits[0]->text().toStdString());
 
-    	std::string strUser = "[Primario";
-		strUser += lineEdits[0]->text().toStdString();
-		strUser += "=";
-		std::string strSearch = lineEdits[3]->text().toStdString();
-    	strSearch += "]";
-
-    	cout<<strUser<<endl;
-    	cout<<strSearch<<endl;
-    	strUser+=strSearch;
-    	control->searchMails(strUser);
-
-    	control->getListOfMails();
-
-
-
-
-    	QString lineSearch((const char*)strUser.c_str());
-
-    	DialogMail dialogMail(lineSearch);
+//    	std::string strUser = "[Primario";
+//		strUser += lineEdits[0]->text().toStdString();
+//		strUser += "=";
+//		std::string strSearch = lineEdits[3]->text().toStdString();
+//    	strSearch += "]";
+//
+//    	cout<<strUser<<endl;
+//    	cout<<strSearch<<endl;
+//    	strUser+=strSearch;
+//    	control->searchMails(strUser);
+//
+//    	control->getListOfMails();
+//
+//
+//
+//
+//    	QString lineSearch((const char*)strUser.c_str());
+    	string result = control->getMails(lineEdits[3]->text().toStdString());
+    	QString resultQ ((const char*)result.c_str());
+    	cout<<result <<endl;
+    	DialogMail dialogMail(resultQ);
         dialogMail.exec();
         delete control;
 

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'tpdatosfinal.ui'
 **
-** Created: Sun Nov 28 07:43:11 2010
+** Created: Sun Nov 28 09:24:45 2010
 **      by: Qt User Interface Compiler version 4.7.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
