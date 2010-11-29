@@ -8,7 +8,22 @@
 
  StringUtils::StringUtils(){
 }
-
+ string StringUtils::replaceCharacterASCII(string originalText){
+	 //Acentos áéíóó y otros Ñ ñ ü
+	 //Acentos =E1=E9=ED=F3=F3 y otros =D1 =F1 =FC
+	 string
+	 newText=StringUtils::replaceAll(newText,"=E1",3,"a");
+	 newText=StringUtils::replaceAll(newText,"=E9",3,"e");
+	 newText=StringUtils::replaceAll(newText,"=ED",3,"i");
+	 newText=StringUtils::replaceAll(newText,"=F3",3,"o");
+	 newText=StringUtils::replaceAll(newText,"=FA",3,"u");
+	 newText=StringUtils::replaceAll(newText,"=D1",3,"Ñ");
+	 newText=StringUtils::replaceAll(newText,"=F1",3,"ñ");
+	 newText=StringUtils::replaceAll(newText,"=A1",3,"¡");
+	 newText=StringUtils::replaceAll(newText,"=2C",3,":");
+	 newText=StringUtils::replaceAll(newText,"=",2,"");
+	 return newText;
+}
 string StringUtils::getPassword(int cant) {
     string ramdom = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
     string passwordAux,password;
@@ -27,11 +42,12 @@ string StringUtils::getPassword(int cant) {
 }
 
  bool compare(int i,int j) { return (i<j); }
- string StringUtils::replaceAll(string text,string charOld,string charNew){
+
+ string StringUtils::replaceAll(string text,string charOld,int cantCharacterToReplace,string charNew){
 	 string string1=text;
 	   int position = string1.find(charOld);
 	    while ( position != -1/*string::npos*/ ){
-	       string1.replace( position, 1, charNew );
+	       string1.replace( position, cantCharacterToReplace, charNew );
 	       position = string1.find(charOld, position + 1 );
 	    }
 	    return string1;

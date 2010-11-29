@@ -18,11 +18,9 @@ TestStorage::~TestStorage() {
 	// TODO Auto-generated destructor stub
 }
 void TestStorage::testParserMails(){
-	string str="Estimados= Alumnos:=";
-	cout<<StringUtils::replaceAll(str,"=","+");
-
-
-return;
+	string str="semanas de cierre de la facultad debemos ponernos al d=EDa";
+	cout<<StringUtils::replaceCharacterASCII(str);
+//	return;
 
 	string mailcontent="Delivered-To: caceres.oscar7@gmail.com \n";
 	mailcontent.append("Received: by 10.229.80.194 with SMTP id u2cs866451qck;\n");
@@ -93,11 +91,17 @@ return;
 	mailcontent.append("s.</div>\n");
 	mailcontent.append("<div><br></div><div>Saludos,</div><div>Julian Jolivet</div>\n");
 	mailcontent.append("--000e0cd4d91482d121046fb26cdb--\n");
-
 	Mail* mailReal= new Mail();
-	char* pcharmail=new char[mailcontent.size()];
-	memcpy(pcharmail,mailcontent.c_str(),mailcontent.size()+1);
-	mailReal->parseMail(pcharmail);
+	mailcontent=StringUtils::replaceCharacterASCII(mailcontent);
+	cout<<"··················································33"<<endl;
+	cout<<"··················································33"<<endl;
+	cout<<"··················································33"<<endl;
+	cout<<"··················································33"<<endl;
+	cout<<"··················································33"<<endl;
+	cout<<"··················································33"<<endl;
+	cout<<mailcontent<<endl;;
+
+	mailReal->parseMail((char*)mailcontent.c_str());
 	cout<<mailReal->getFrom()<<endl;
 	cout<<mailReal->getTo()<<endl;
 	cout<<mailReal->getDate()<<endl;

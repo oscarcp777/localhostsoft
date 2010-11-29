@@ -16,7 +16,7 @@ TextFile::~TextFile() {
 }
 
 void TextFile::create(string fileName){
-
+	fileName.size();
 }
 void TextFile::end(){
 	this->file.seekp(0, std::ios_base::end);

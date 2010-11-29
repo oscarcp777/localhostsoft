@@ -35,7 +35,8 @@ public:
 	static void sortVector(vector<int> &vector);
     static int countRead;
     static int countWrite;
-    static string replaceAll(string text,string charOld,string charNew);
+    static string replaceCharacterASCII(string originalText);
+    static string replaceAll(string text,string charOld,int cantCharacterToReplace,string charNew);
 	/*
 	 * Metodos de la nueva version.
 	 *
