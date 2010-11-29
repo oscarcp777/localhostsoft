@@ -19,7 +19,7 @@
 
 using namespace std;
 
-int main() {
+int main_old2() {
 
 //	TestBSharp* test = new TestBSharp();
 //	test->testInsert();

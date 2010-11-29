@@ -64,6 +64,7 @@
 	void borrarClick();
 	void verClick();
     	void resguardarClick();
+    	void cargarClick();
     	void configurarClick();
     	void clasificarClick(QString texto);
 	void seleccionarClick(QString texto);

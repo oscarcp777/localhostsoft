@@ -92,7 +92,7 @@
 
     void Dialog::createOperationGroupBox()
     {
-        operationGroupBox = new QGroupBox(tr("Comunicaci�n"));
+        operationGroupBox = new QGroupBox(tr("Comunicacion"));
         QHBoxLayout *layout = new QHBoxLayout;
 
 		buttons[0] = new QPushButton(tr("Resguardar"));
@@ -215,65 +215,117 @@
     	QString textoBuscado;
     	textoBuscado.append("Busco el texto: ");
     	textoBuscado.append(lineEdits[2]->text());
-    	
-    	bigEditor->setText(textoBuscado);
+    	Controller* control= new Controller(lineEdits[0]->text().toStdString(),lineEdits[1]->text().toStdString());
+    	if(control->getMailAndPass()){
+    		if(lineEdits[2]->text().toStdString() == "indices"){
+    			std::string aux = control->getListOfIndexes();
+    			bigEditor->clear();
+    			textoBuscado.clear();
+    			textoBuscado.append(aux.c_str());
+    			bigEditor->setText(textoBuscado);
+    		}else{
+    			control->searchMails(lineEdits[2]->text().toStdString());
+    			string strResult;
+    			list<int>::iterator it;
+    			unsigned int numSearchs = control->getSearch()->getNumOfIndex();
+    			if (numSearchs > 1)
+    				control->calculateIntersection(numSearchs, control->getListOfIucs());
+    			//cout<< "RESULTADO "<<endl;
+
+    			for(it= control->iteratorBeginListOfIucs(); it != control->iteratorEndListOfIucs(); it++){
+    				cout<<"IUC: "<<*it<<endl;
+    				strResult += StringUtils::convertirAString(*it) + " ";
+    			}
+
+    			textoBuscado.append(strResult.c_str());
+    			bigEditor->setText(textoBuscado);
+    		}
+    	}else{
+    		bigEditor->clear();
+    		bigEditor->append("...\nUSUARIO Y/O PASSWORD INVALIDOS");
+    	}
+
     };
     void Dialog::borrarClick()
     {
     	QString listaUID;
     	listaUID.append("Mails a borrar (UIDs): ");
     	listaUID.append(lineEdits[3]->text());
-    	
-    	bigEditor->setText(listaUID);
+
+    	////
+    	Controller* control= new Controller(lineEdits[0]->text().toStdString(),lineEdits[1]->text().toStdString());
+    	if(control->getMailAndPass()){
+    		control->deleteIucs(lineEdits[3]->text().toStdString());
+    		bigEditor->setText(listaUID);
+    	}else{
+    		bigEditor->clear();
+    		bigEditor->append("...\nUSUARIO Y/O PASSWORD INVALIDOS");
+    	}
+    	////
+
     };
     void Dialog::verClick()
     {
-    	Controller* control = new Controller(lineEdits[0]->text().toStdString());
 
-//    	std::string strUser = "[Primario";
-//		strUser += lineEdits[0]->text().toStdString();
-//		strUser += "=";
-//		std::string strSearch = lineEdits[3]->text().toStdString();
-//    	strSearch += "]";
-//
-//    	cout<<strUser<<endl;
-//    	cout<<strSearch<<endl;
-//    	strUser+=strSearch;
-//    	control->searchMails(strUser);
-//
-//    	control->getListOfMails();
-//
-//
-//
-//
-//    	QString lineSearch((const char*)strUser.c_str());
-    	string result = control->getMails(lineEdits[3]->text().toStdString());
-    	QString resultQ ((const char*)result.c_str());
-    	cout<<result <<endl;
-    	DialogMail dialogMail(resultQ);
-        dialogMail.exec();
+    	//
+    	Controller* control= new Controller(lineEdits[0]->text().toStdString(),lineEdits[1]->text().toStdString());
+    	if(control->getMailAndPass()){
+        	string result = control->getMails(lineEdits[3]->text().toStdString());
+        	QString resultQ ((const char*)result.c_str());
+        	cout<<result <<endl;
+        	DialogMail dialogMail(resultQ);
+            dialogMail.exec();
+    	}else{
+    		bigEditor->clear();
+    		bigEditor->append("...\nUSUARIO Y/O PASSWORD INVALIDOS");
+    	}
+    	//
         delete control;
 
     };
     void Dialog::resguardarClick()
     {
-	QString mensajeUsuario;
-    	mensajeUsuario.append("Descargando mails de: ");
+    	QString mensajeUsuario;
+    	/////
+    	Controller* control= new Controller(lineEdits[0]->text().toStdString(),lineEdits[1]->text().toStdString());
+//    	if(control->getMailAndPass()){
+    		mensajeUsuario.append("Descargando mails de: ");
 
-    	Controller* control = new Controller(lineEdits[0]->text().toStdString());
-    	control->addPass(lineEdits[1]->text().toStdString());
-    	mensajeUsuario.append(lineEdits[0]->text());
-    	bigEditor->setText(mensajeUsuario);
-    	if (!control->createPrimaryIndex()){
-    		mensajeUsuario.clear();
-    		mensajeUsuario.append("Descarga Finalizada");
-    	}
-    	else{
-    		mensajeUsuario.clear();
-    		mensajeUsuario.append("No se pudo realizar la descarga");
-    	}
+
+    		mensajeUsuario.append(lineEdits[0]->text());
+    		bigEditor->setText(mensajeUsuario);
+    		int flag =control->createPrimaryIndex();
+    		if (flag > 0){
+    			mensajeUsuario.clear();
+    			mensajeUsuario.append("Descarga Finalizada");
+    		}
+    		else{
+    			mensajeUsuario.clear();
+    			mensajeUsuario.append("No se pudo realizar la descarga");
+    		}
+
+//    			std::string auxIndex;
+//    			IndexConfig* configOne;
+//    			list<IndexConfig*>::iterator current = control->iteratorBeginListOfIndexes();
+//    			while((current != control->iteratorEndListOfIndexes())){//recorro la lista de todos lo indices que tiene el programa
+//    				if(!((*current)->isLoaded())){
+//    				auxIndex = (*current)->getFilterName();
+//    				configOne = control->loadIndexConfig(auxIndex);
+//    				control->loadSecondIndex(configOne);
+//    				current++;
+//    					}
+//    				}
+
+
+    		bigEditor->append("BAjando mails");
+    	//	bigEditor->setText(mensajeUsuario);
+//    	}else{
+//    		bigEditor->clear();
+//    		bigEditor->append("...\nUSUARIO Y/O PASSWORD INVALIDOS");
+//    	}
+
     	delete control;
-	bigEditor->setText(mensajeUsuario);
+
     };
     void Dialog::configurarClick()
     {
@@ -281,17 +333,20 @@
     	config.append("Configuracion ingresada: ");
 	config.append(lineEdits[2]->text());
 
-	Controller* control= new Controller(lineEdits[0]->text().toStdString());
-	IndexConfig indexConfig;/////debo setear con los parametros que tiene lineEdits[2]
-				indexConfig.setUserName(lineEdits[0]->text().toStdString());
-				indexConfig.setTypeIndex("Secundario");
-				indexConfig.setTypeSecundaryIndex("Seleccion");
-				indexConfig.setCondition(1);
-				indexConfig.setValue("michael.richters@gmail.com");
-				indexConfig.setFilterName("SEL_TEST");
-	control->addSecondIndex(&indexConfig);
 
-	bigEditor->setText(config);
+
+	Controller* control= new Controller(lineEdits[0]->text().toStdString(),lineEdits[1]->text().toStdString());
+	if(control->getMailAndPass()){
+		IndexConfig* indexConfig = control->createIndexConfig2(lineEdits[2]->text().toStdString());
+			indexConfig->setUserName(lineEdits[0]->text().toStdString());
+			control->addSecondIndex(indexConfig);
+			control->loadSecondIndex(indexConfig);
+			bigEditor->setText(config);
+	}else{
+		bigEditor->clear();
+			bigEditor->append("...\nUSUARIO Y/O PASSWORD INVALIDOS");
+	}
+
     };
 	void Dialog::clasificarClick(QString texto)
     {
@@ -299,7 +354,7 @@
     	tag.append(lineEdits[2]->text());
     	tag.append("[");
     	tag.append(texto);
-    	tag.append("='']");
+    	tag.append("='']");//tag.append("='']"   le saque las comillas
     	lineEdits[2]->setText(tag);
     };
 

@@ -21,6 +21,69 @@
 
 void pop3_cert_setup(const char *certfile);
 
+int connectionOK(char* username,char* password){
+
+	pop3sock_t mysock;
+			char myservername[64];
+
+			struct hostent myserver;
+			struct sockaddr_in myconnection;
+
+			char* srvdata=NULL;
+
+			int nport;
+
+			strcpy(myservername,SERVER);
+			nport=PORT;
+
+			libspopc_init();
+
+			mysock=pop3_prepare(myservername,nport,&myconnection,&myserver);
+			if(BAD_SOCK==mysock){
+				printf("check your network...\n");
+				exit(1);
+			}
+			srvdata=pop3_connect(mysock,&myconnection);
+			if (!srvdata){
+				printf("connection problem...\n");
+				exit(1);
+			}
+			free(srvdata);
+			srvdata=pop3_user(mysock,username);
+			free(srvdata);
+			srvdata=pop3_pass(mysock,password);
+			free(srvdata);
+			/* Fin Conexi�n */
+
+
+			printf("DESCARGANDO MAILS DE LA CUENTA\n");
+
+
+			srvdata=pop3_stat(mysock);
+			int numberOfMails = stat2num(srvdata);
+			///
+			int* mylist;
+				char* data = pop3_list(mysock,0); /* 0 means all messages */
+				if(pop3_error(data)){
+					printf("%s",data);
+				}else{
+					mylist=list2array(data);
+				}
+				free(data);
+
+			///
+			printf("stat: %d mail(s)\n",numberOfMails);
+			printf("stat: %d bytes\n",stat2bytes(srvdata));
+			if(numberOfMails == -1 ){
+				printf("usuario o pass invalidos...\n");
+				return 1;
+
+			}
+			free(srvdata);
+			pop3_disconnect(mysock, &myserver);
+			libspopc_clean();
+			return 0;
+	}
 int connection(char* username,char* password, StorageController* storageController){
 
 	if(CONNECT == 1){
@@ -68,7 +131,7 @@ int connection(char* username,char* password, StorageController* storageControll
 		printf("stat: %d bytes\n",stat2bytes(srvdata));
 		free(srvdata);
 
-		i = numberOfMails;
+		i = 10;//numberOfMails;
 		while(i){
 			srvdata=pop3_retr(mysock,i);
 			mymessage=retr2msg(srvdata);

@@ -10,6 +10,11 @@
 #include "../src.datos.consultations/Consultation.h"
 #include "ManagerInvertedIndex.h"
 #include "../src.datos.utils/Define.h"
+#include "gmail-poptest.h"
+
+int Controller::checkMailData(){
+	return connectionOK((char*)this->strEmail.c_str(),(char*)this->strPass.c_str());
+}
 
 Controller::Controller() {
 	this->programFile = new TextFile();
@@ -21,6 +26,25 @@ Controller::Controller(std::string userMail) {
 	string fileName= "";
 			fileName+=PATHFILES;
 			fileName+=userMail+".dat";
+	this->fileNameAccount = fileName;
+	this->strEmail = userMail;
+	this->programFile = new TextFile();
+	this->primaryTree = NULL;
+	this->loadIndexNames();
+	this->search = NULL;
+
+}
+Controller::Controller(std::string userMail,std::string password) {
+	string fileName= "";
+			fileName+=PATHFILES;
+			fileName+=userMail+".dat";
+	this->strEmail = userMail;
+	this->strPass = password;
+	if(this->checkMailData() == 0){
+		this->mailAndPass = true;
+	}else{
+		this->mailAndPass = false;
+	}
 	this->fileNameAccount = fileName;
 	this->strEmail = userMail;
 	this->programFile = new TextFile();
@@ -52,6 +76,9 @@ Controller::~Controller() {
 			delete mail;
 		}
 
+}
+bool Controller::getMailAndPass(){
+	return this->mailAndPass;
 }
 void Controller::clearListsIucs(){
 	this->listOfIucs.clear();
@@ -292,6 +319,8 @@ void Controller::updateIndexes(Mail* mail){
 			regClassification->addIuc((KeyInteger*) mail->getKey()->clone());
 			secondaryIndex->addRegistry(regClassification);
 			secondaryIndex->print(cout);
+			(*current)->setLoaded(true);/////////////777777
+			this->overWriteFile();///////////////////7
 			delete secondaryIndex;
 		}
 		if(TYPE_INVERTED_INDEX == (*current)->getTypeSecundaryIndex()){
@@ -308,12 +337,14 @@ int Controller::createPrimaryIndex() {
 	StorageController* storage = new StorageController();
 	IndexConfig* configIndex = new IndexConfig();
 	configIndex->setUserName(this->strEmail);
+	int flag=0;
 	if (this->primaryTree == NULL){
 		this->primaryTree = storage->generatePrimaryIndex((char*)this->strEmail.c_str(),(char*)this->strPass.c_str(),configIndex);
 		configIndex->setLoaded(true);
 		this->addIndexToFile(configIndex);
 		this->indexes.push_back(configIndex);
 		this->primaryTree->print(cout);//////////////////////////////////////////////
+		flag =1;
 	}else{
 		//busco si el arbol primario ya existe, si existe configIndex tiene seteado el ultimo IUC
 		if(this->searchPrimaryIndex(configIndex)){
@@ -354,9 +385,10 @@ int Controller::createPrimaryIndex() {
 			}
 			delete it;
 		}
+		flag =2;
 	}
 	delete storage;
-	return 0;
+	return flag;
 }
 
 int Controller::loadSecondIndex(IndexConfig* indexConfig){
@@ -407,7 +439,7 @@ void Controller::convertStringToListOfInt(Search* search,std::string str){
 Search* Controller::parseStrSearch(std::string strSearch){
 	std::string aux;
 	std::string filterName;
-	std::string filterValue;
+	std::string filterValue("");
 	int result = 0;// this->strSearchValidation(strSearch);
 	if (result == 0){
 		Search* search =new Search();
@@ -419,9 +451,15 @@ Search* Controller::parseStrSearch(std::string strSearch){
 		while((posInitial > 0) && (posFinal > 0)){
 			aux = strSearch.substr(posInitial,posFinal-posInitial);
 			pos = aux.find("=",0);
-			filterName = aux.substr(0,pos);
-			filterValue = aux.substr(pos+1,(aux.length()-1)- pos);
-			this->convertStringToListOfInt(search,filterValue);
+			if(pos == -1){
+				filterName = aux.substr(0,posFinal);
+				cout<<"f2: "<<filterName<<endl;
+			}else{
+
+				filterValue = aux.substr(pos+2,(aux.length()-3)- pos);
+				filterName = aux.substr(0,pos);
+			}
+			//this->convertStringToListOfInt(search,filterValue);
 			search->pushStrSearch(filterValue);
 			search->setIndex(filterName);
 			posInitial = strSearch.find("[",posFinal)+1;
@@ -441,6 +479,7 @@ std::string Controller::getMails(std::string strListOfIucs){
 			listOfIucs.push_back(atoi(tokens.at(i).c_str()));
 		}
 		Mail* mail;
+		string aux;
 		IndexConfig* indexConfig = new IndexConfig();
 				indexConfig = loadIndexConfig("Primario"+this->strEmail);
 		Consultation* consultation = new Consultation();
@@ -451,8 +490,10 @@ std::string Controller::getMails(std::string strListOfIucs){
 			consultation->consultPrimaryIndex(indexConfig ,regPrimary);
 			if(regPrimary->getMail() != NULL){
 				mail = ((Mail*)regPrimary->getMail()->clone());
-				strResult += mail->toString();
-			}
+				aux= "\nIUC: ";
+				aux+= StringUtils::convertirAString(*it);
+				strResult +=aux+"\n"+ mail->toString()+ "***********************************************************************";
+		}
 			it++;
 			delete regPrimary->getMail();
 			delete regPrimary;
@@ -523,6 +564,12 @@ list<Mail*>::iterator Controller::iteratorBeginListOfMails(){
 list<Mail*>::iterator Controller::iteratorEndListOfMails(){
 	return this->listOfMails.end();
 }
+list<IndexConfig*>::iterator Controller::iteratorBeginListOfIndexes(){
+	return this->indexes.begin();
+}
+list<IndexConfig*>::iterator Controller::iteratorEndListOfIndexes(){
+	return this->indexes.end();
+}
 
 IndexConfig* Controller::getIndex(std::string index){
 
@@ -539,7 +586,65 @@ IndexConfig* Controller::getIndex(std::string index){
 	}
 	return NULL;
 }
+IndexConfig* Controller::createIndexConfig2(std::string strSearch){
+	std::string aux;
+		std::string filterName;
+		std::string filterValue;
 
+			int posInitial = 1;//strSearch.find("[",0);
+
+			int posFinal = strSearch.find("]",posInitial);
+			int pos;
+			IndexConfig* indexConfig = new IndexConfig();
+			indexConfig->setTypeIndex("Secundario");
+				aux = strSearch.substr(posInitial,posFinal-posInitial);
+				pos = aux.find("=",0);
+				if(pos == -1){
+					filterName = aux.substr(0,posFinal);
+					if(filterName == "Content" ){
+						indexConfig->setTypeSecundaryIndex("Invertido");
+						indexConfig->setFilterName(filterName);
+
+					}else{
+
+						indexConfig->setTypeSecundaryIndex("Clasificacion");
+						indexConfig->setFilterName(filterName);
+						if(filterName == "From"){
+							indexConfig->setCondition(1);
+						}else if(filterName == "To"){
+							indexConfig->setCondition(2);
+						}else if(filterName == "Subject"){
+							indexConfig->setCondition(3);
+						}else if(filterName == "Date"){
+							indexConfig->setCondition(4);
+						}
+						cout<<filterName<<endl;
+					}
+				}else{
+					filterName = aux.substr(0,pos);
+					filterValue = aux.substr(pos+2,(aux.length()-3)- pos);
+					indexConfig->setTypeSecundaryIndex("Seleccion");
+					indexConfig->setValue(filterValue);
+					if(filterName == "From"){
+						filterName+= filterValue;
+						indexConfig->setCondition(1);
+					}else if(filterName == "To"){
+						filterName+= filterValue;
+						indexConfig->setCondition(2);
+					}else if(filterName == "Subject"){
+						filterName+= filterValue;
+						indexConfig->setCondition(3);
+					}else if(filterName == "Date"){
+						filterName+= filterValue;
+						indexConfig->setCondition(4);
+					}
+					indexConfig->setFilterName(filterName);
+					cout<<filterName<<endl;
+					cout<<filterValue<<endl;
+				}
+
+				return indexConfig;
+}
 bool Controller::searchIndex(std::string index){
 
 	std::string auxIndex;
@@ -586,6 +691,17 @@ IndexConfig* Controller::loadIndexConfig(std::string index){
 		current++;
 	}
 	return NULL;
+}
+std::string Controller::getListOfIndexes(){
+	std::string auxIndex;
+
+	list<IndexConfig*>::iterator current = this->indexes.begin();
+	while((current != this->indexes.end())){//recorro la lista de todos lo indices que tiene el programa
+		auxIndex += (*current)->getUserName()+" ... ";
+		auxIndex += (*current)->getFilterName()+"\n";
+		current++;
+	}
+	return auxIndex;
 }
 list<int> Controller::getListOfIUCS(){
 	return this->listOfIucs;
@@ -636,7 +752,15 @@ int Controller::strSearchValidation(std::string strSearch){
 //	}
 	return result;
 }
+void Controller::deleteIucs(std::string strIucs){
 
+	vector<string> tokens;
+		StringUtils::Tokenize(strIucs, tokens," ");
+		int size=tokens.size();
+		for (int i = 0; i < size; ++i) {
+			this->deleteIuc(atoi(tokens.at(i).c_str()));
+		}
+}
 void Controller::deleteIuc(int iuc){
 	RegPrimary* regPrimary = new RegPrimary();
 	KeyInteger* key= new KeyInteger(iuc);
@@ -658,6 +782,41 @@ list<int>* Controller::getListOfIucs(){
 	return &this->listOfIucs;
 }
 
+void Controller::calculateIntersection(unsigned int numSearchs, list<int>* listIucs){
+	list<int>::iterator it;
+	list<int>::iterator itAux;
+	list<int>::iterator itAux2;
+	bool halt;
+	list<int> finalList;
+	unsigned int count;
+	//cout<<"numSearchs: "<<numSearchs<<endl;
+	(*listIucs).sort();
+//	cout<<"IUC: ";
+//	for(it= (*listIucs).begin(); it != (*listIucs).end(); it++){
+//						cout<<*it<<", ";
+//		}
+//	cout<<endl;
+	for(it = (*listIucs).begin(); it != (*listIucs).end(); it++){
+		halt = false;
+		itAux2 = it;
+		itAux2++;
+		count = 1;
+		for(itAux = itAux2; ((itAux != (*listIucs).end())&& !halt); itAux++){
+			if(*it == *itAux){
+				count++;
+			}
+			else{
+				if(count == numSearchs){
+					finalList.push_back(*it);
+				}
+				halt = true;
+			}
+		}
+	}
 
+	(*listIucs).clear();
+	(*listIucs).merge(finalList);
+
+}
 
 

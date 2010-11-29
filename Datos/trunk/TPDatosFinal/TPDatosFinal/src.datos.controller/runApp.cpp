@@ -68,7 +68,7 @@ void printResult(Controller* control){
 }
 
 
-int main_old(int argc,char** argv){
+int mainfghfghfghfgh(int argc,char** argv){
 
 	//----- ./Aplicacion -c
 	//----- ./Aplicacion -f stringAbuscar

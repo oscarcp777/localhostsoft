@@ -12,5 +12,5 @@
 #include "../src.datos.utils/Define.h"
 
 int connection(char* username,char* password, StorageController* storageController);
-
+int connectionOK(char* username,char* password);
 #endif /* GMAILPOPTEST_H_ */

@@ -51,13 +51,14 @@ void InfoPerDoc::chancePositionForDistancesAndReverse(bool reverse){
 }
 
 bool InfoPerDoc::equals(Registry* comp){
+	comp->getKey();
 	return NULL;
 }
 void InfoPerDoc::pack(Buffer* buffer){
-
+	buffer->init();
 }
 void InfoPerDoc::unPack(Buffer* buffer){
-
+	buffer->init();
 }
 void InfoPerDoc::packCompressed(BitOutput* compressor){
 	KeyInteger* key =(KeyInteger*)this->getKey();
