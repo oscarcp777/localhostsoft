@@ -193,13 +193,30 @@ string Mail::parserCampo(string textMail,string campo ){
 	return aux;
 }
 string Mail::parserMesssage(string textMail,string campo,string end){
-	int posInitial = 0;
-	int posFinal = 0;
+	int posInitial = -1;
+	int posFinal = -1;
+	int posAux = -1;
+	string endLine = "\n";
+	string content = "Content-Transfer-Encoding: quoted-printable";
+
 	posInitial = textMail.find(campo.c_str(),0);
 	posInitial+= campo.size();
+	posAux = textMail.find(endLine.c_str(),posInitial);
+	if(posAux > 0)
+		posInitial = posAux + endLine.size();
+
+	posAux = textMail.find(content.c_str(),posInitial);
+	if(posAux > 0){
+		if((posAux - posInitial < 10)){
+		posInitial = posAux + content.size();
+			posAux = textMail.find(endLine.c_str(),posInitial);
+			if(posAux > 0)
+				posInitial = posAux + endLine.size();
+		}
+	}
 	posFinal = textMail.find(end.c_str(),posInitial);
 	if(posInitial >= 0 && posFinal>=0 ){
-		return textMail.substr(posInitial+1,posFinal-(posInitial+1));
+		return textMail.substr(posInitial,posFinal-(posInitial+1));
 
 	}
 	return "";
@@ -211,14 +228,14 @@ void Mail::parseMail(char* text){
 	string to = "To: ";
 	string from = "From: ";
 	string subject = "Subject: ";
-	string message = "Content-Type: text/plain;";
+	string message = "Content-Type: text/plain; charset=ISO-8859-1";
 	string endLine = "\n";
 	string end = "\n--";
 
 	if(CONNECT == 1){
-		cout<<"*******************************************************************"<<endl;
-		cout<<text<<endl;
-		cout<<"*******************************************************************"<<endl;
+//		cout<<"*******************************************************************"<<endl;
+//		cout<<text<<endl;
+//		cout<<"*******************************************************************"<<endl;
 		this->setDate(this->parserCampo(textMail,endLine+date));
 		this->setTo(this->parserCampo(textMail,endLine+to));
 		this->setFrom(this->parserCampo(textMail,endLine+from));
