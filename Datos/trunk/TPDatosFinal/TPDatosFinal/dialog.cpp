@@ -24,7 +24,7 @@
     #include <QtGui>
 
     #include "dialog.h"
-
+#include "DialogHelp.h"
 
 	std::string botonesBusqueda[CANT_BOTONES] = {"From", "To", "Date", "Reply-To", "Content"};
 	using namespace std;
@@ -33,61 +33,69 @@
 
 
     	createMenu();
-        createLoginGroupBox();
-        createOperationGroupBox();
-        createClassificationGroupBox();
-        createSelectionGroupBox();
-        createSearchGroupBox();
-        createDeleteGroupBox();
+    	createLoginGroupBox();
+    	createOperationGroupBox();
+    	createClassificationGroupBox();
+    	createSelectionGroupBox();
+    	createSearchGroupBox();
+    	createDeleteGroupBox();
 
-        bigEditor = new QTextEdit;
-        bigEditor->setPlainText(tr("This widget takes up all the remaining space "
-                                   "in the top-level layout."));
-	bigEditor->setReadOnly(true);
-        
+    	bigEditor = new QTextEdit();
+//    	bigEditor->setReadOnly(true);
+    	bigEditor->setPlainText(tr("Informacion sobre la confguracion de los filtros de la applicacion "));
 
-        okButton = new QPushButton(tr("OK"));
-        cancelButton = new QPushButton(tr("Cancel"));
-        okButton->setDefault(true);
 
-        connect(okButton, SIGNAL(clicked()), this, SLOT(okClick()) );
-        connect(cancelButton, SIGNAL(clicked()), this, SLOT(reject()));
-        
-        connect(buttons[0], SIGNAL(clicked()), this, SLOT(resguardarClick()));
-        connect(buttons[1], SIGNAL(clicked()), this, SLOT(configurarClick()));
-        connect(buttons[2], SIGNAL(clicked()), this, SLOT(buscarClick()));
-	connect(buttons[3], SIGNAL(clicked()), this, SLOT(verClick()));
-	connect(buttons[4], SIGNAL(clicked()), this, SLOT(borrarClick()));
 
-        QHBoxLayout *buttonLayout = new QHBoxLayout;
-        buttonLayout->addStretch(1);
-        buttonLayout->addWidget(okButton);
-        buttonLayout->addWidget(cancelButton);
-		
-        QVBoxLayout *mainLayout = new QVBoxLayout;
-        mainLayout->setMenuBar(menuBar);
-        mainLayout->addWidget(loginGroupBox);
-        mainLayout->addWidget(operationGroupBox);
-        mainLayout->addWidget(classificationGroupBox);
-	mainLayout->addWidget(selectionGroupBox);
-        mainLayout->addWidget(searchGroupBox);
-	mainLayout->addWidget(deleteGroupBox);
-        mainLayout->addWidget(bigEditor);
-        mainLayout->addLayout(buttonLayout);
-        setLayout(mainLayout);
+    	okButton = new QPushButton(tr("OK"));
+    	cancelButton = new QPushButton(tr("Cancel"));
+    	okButton->setDefault(true);
 
-        setWindowTitle(tr("Basic Layouts"));
+    	connect(okButton, SIGNAL(clicked()), this, SLOT(okClick()) );
+    	connect(cancelButton, SIGNAL(clicked()), this, SLOT(reject()));
+
+    	connect(buttons[0], SIGNAL(clicked()), this, SLOT(resguardarClick()));
+    	connect(buttons[1], SIGNAL(clicked()), this, SLOT(configurarClick()));
+    	connect(buttons[2], SIGNAL(clicked()), this, SLOT(buscarClick()));
+    	connect(buttons[3], SIGNAL(clicked()), this, SLOT(verClick()));
+    	connect(buttons[4], SIGNAL(clicked()), this, SLOT(borrarClick()));
+    	connect(buttons[5], SIGNAL(clicked()), this, SLOT(cargarClick()));
+    	QHBoxLayout *buttonLayout = new QHBoxLayout;
+    	buttonLayout->addStretch(1);
+    	buttonLayout->addWidget(okButton);
+    	buttonLayout->addWidget(cancelButton);
+
+    	QVBoxLayout *mainLayout = new QVBoxLayout;
+    	mainLayout->setMenuBar(menuBar);
+    	mainLayout->addWidget(loginGroupBox);
+    	mainLayout->addWidget(operationGroupBox);
+    	mainLayout->addWidget(classificationGroupBox);
+    	mainLayout->addWidget(selectionGroupBox);
+    	mainLayout->addWidget(searchGroupBox);
+    	mainLayout->addWidget(deleteGroupBox);
+    	mainLayout->addWidget(bigEditor);
+    	mainLayout->addLayout(buttonLayout);
+    	setLayout(mainLayout);
+
+    	setWindowTitle(tr("Almacenamiento de Correos Electronicos"));
     }
+    void cargarClick(){
 
+    }
     void Dialog::createMenu()
     {
+    	 QPixmap newpix("image/Help-32.png");
+
+    	 ayuda = new QAction(newpix, "&Manual de Usuario", this);
+
         menuBar = new QMenuBar;
 
-        fileMenu = new QMenu(tr("&File"), this);
-        exitAction = fileMenu->addAction(tr("E&xit"));
+        fileMenu = new QMenu(tr("&Ayuda"), this);
+//        exitAction = fileMenu->addAction(tr("Manual de Usuario"));
         menuBar->addMenu(fileMenu);
+        fileMenu->addSeparator();
+        fileMenu->addAction(ayuda);
+        connect(ayuda, SIGNAL(triggered()), this, SLOT(verManual()));
 
-        connect(exitAction, SIGNAL(triggered()), this, SLOT(accept()));
     }
 
     void Dialog::createOperationGroupBox()
@@ -95,11 +103,12 @@
         operationGroupBox = new QGroupBox(tr("Comunicacion"));
         QHBoxLayout *layout = new QHBoxLayout;
 
-		buttons[0] = new QPushButton(tr("Resguardar"));
+		buttons[0] = new QPushButton(tr("Resguardar mails"));
 		layout->addWidget(buttons[0]);
 		buttons[1] = new QPushButton(tr("Configurar"));
 		layout->addWidget(buttons[1]);
-
+		buttons[5] = new QPushButton(tr("Resguardar filtros"));
+		layout->addWidget(buttons[5]);
         operationGroupBox->setLayout(layout);
     }
 
@@ -165,7 +174,7 @@
             buttons[i+10] = new QPushButton(tr(botonesBusqueda[i].c_str()));
             layout->addWidget(buttons[i+10]);
             mensaje.clear();
-            mensaje.append("Clasificaci�n ");
+            mensaje.append("Clasificacion ");
             connect(buttons[i+10], SIGNAL(clicked()), signalMapper, SLOT(map()));
             signalMapper->setMapping(buttons[i+10], buttons[i+10]->text());
         }
@@ -188,7 +197,7 @@
             buttons[i+10] = new QPushButton(tr(botonesBusqueda[i].c_str()));
             layout->addWidget(buttons[i+10]);
             mensaje.clear();
-            mensaje.append("Selecci�n ");
+            mensaje.append("Seleccion ");
             connect(buttons[i+10], SIGNAL(clicked()), signalMapper, SLOT(map()));
             signalMapper->setMapping(buttons[i+10], buttons[i+10]->text());
         }
@@ -204,12 +213,20 @@
     {
     	bigEditor->setText("ok");
     }
-
+    void Dialog::verManual(){
+    	DialogHelp dialogHelp;
+    	dialogHelp.exec();
+       }
     void Dialog::cancelClick()
     {
-    	printf("exit\n");
+    	cout<<"exit\n"<<endl;
 //    	exit;
     };
+    void Dialog::cargarClick()
+        {
+        	cout<<"cargarClick"<<endl;
+    //    	exit;
+        };
     void Dialog::buscarClick()
     {
     	QString textoBuscado;
@@ -244,7 +261,7 @@
     		bigEditor->clear();
     		bigEditor->append("...\nUSUARIO Y/O PASSWORD INVALIDOS");
     	}
-
+         delete control;
     };
     void Dialog::borrarClick()
     {

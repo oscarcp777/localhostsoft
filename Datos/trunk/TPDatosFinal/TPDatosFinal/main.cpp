@@ -4,8 +4,8 @@
 #include <iostream>
 int main(int argc, char *argv[])
 {
-	std::cout<<"hola mundo "<<std::endl;
-    QApplication a(argc, argv);
+    QApplication app(argc, argv);
     Dialog dialog;
-    return dialog.exec();
+    dialog.show();
+    return app.exec();
 }

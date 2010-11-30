@@ -240,7 +240,8 @@ void Mail::parseMail(char* text){
 		this->setTo(this->parserCampo(textMail,endLine+to));
 		this->setFrom(this->parserCampo(textMail,endLine+from));
 		this->setSubject(this->parserCampo(textMail,endLine+subject));
-		this->setMessage(this->parserMesssage(textMail,message,end));
+		string messageNew=StringUtils::replaceCharacterASCII(this->parserMesssage(textMail,message,end));
+		this->setMessage(messageNew);
 	}
 	else{
 		end = "¡¡END MAIL!!";

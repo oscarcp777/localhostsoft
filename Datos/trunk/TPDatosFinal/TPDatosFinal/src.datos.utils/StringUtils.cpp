@@ -12,7 +12,7 @@
 	 //Acentos áéíóó y otros Ñ ñ ü
 	 //Acentos =E1=E9=ED=F3=F3 y otros =D1 =F1 =FC
 	 string
-	 newText=StringUtils::replaceAll(newText,"=E1",3,"a");
+	 newText=StringUtils::replaceAll(originalText,"=E1",3,"a");
 	 newText=StringUtils::replaceAll(newText,"=E9",3,"e");
 	 newText=StringUtils::replaceAll(newText,"=ED",3,"i");
 	 newText=StringUtils::replaceAll(newText,"=F3",3,"o");
@@ -21,7 +21,8 @@
 	 newText=StringUtils::replaceAll(newText,"=F1",3,"ñ");
 	 newText=StringUtils::replaceAll(newText,"=A1",3,"¡");
 	 newText=StringUtils::replaceAll(newText,"=2C",3,":");
-	 newText=StringUtils::replaceAll(newText,"=",2,"");
+	 newText=StringUtils::replaceAll(newText,"=\n",2,"");
+	 newText=StringUtils::replaceAll(newText,"=",1,"");
 	 return newText;
 }
 string StringUtils::getPassword(int cant) {

@@ -497,7 +497,8 @@ std::string Controller::getMails(std::string strListOfIucs){
 			it++;
 			delete regPrimary->getMail();
 			delete regPrimary;
-
+       //TODO ver si se pude borrar     delete indexConfig;
+     //       delete consultation;
 
 }
 return strResult;
