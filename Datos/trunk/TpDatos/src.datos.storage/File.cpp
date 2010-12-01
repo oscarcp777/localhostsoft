@@ -25,11 +25,6 @@ bool File::read(std::string& datos){
 		/* lee del file una linea */
 		getline(this->file, datos);
 
-		if(ENCRYPTION){
-			//Desencripto texto
-			datos = Hill::getInstance()->decrypt(datos);
-		}
-
 		/* chequea si se ha producido un error */
 		if (this->file.fail()){
 			/* el archivo esta vacio */
@@ -92,12 +87,6 @@ void File::readInteger(int* num, int pos){
 
 
 int File::write(std::string registro){
-
-	if(ENCRYPTION){
-		//Encripto texto
-		registro = Hill::getInstance()->encrypt(registro);
-	}
-
 
 	if (this->file.is_open()) {
 		this->file << registro<<endl;
