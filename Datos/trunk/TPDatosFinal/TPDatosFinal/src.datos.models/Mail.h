@@ -42,7 +42,7 @@ public:
 	string getCondition(int condition);
 private:
 	string parserCampo(string textMail,string campo );
-	string parserMesssage(string textMail,string campo,string end);
+	string parserMesssage(string textMail,string end);
 	string from;
 	string to;
 	string subject;

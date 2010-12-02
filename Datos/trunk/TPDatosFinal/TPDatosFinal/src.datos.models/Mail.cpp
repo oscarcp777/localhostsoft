@@ -9,6 +9,7 @@
 #include "KeyInteger.h"
 #include "../src.datos.utils/StringUtils.h"
 #include "../src.datos.utils/Define.h"
+#include <list>
 using namespace std;
 Mail::Mail() {
 	// TODO Auto-generated constructor stub
@@ -192,33 +193,111 @@ string Mail::parserCampo(string textMail,string campo ){
 
 	return aux;
 }
-string Mail::parserMesssage(string textMail,string campo,string end){
+string Mail::parserMesssage(string textMail,string end){
 	int posInitial = -1;
 	int posFinal = -1;
+	int posContent = -1;
+	int posHTML = -1;
 	int posAux = -1;
 	string endLine = "\n";
-	string content = "Content-Transfer-Encoding: quoted-printable";
+	string textPlain = "Content-Type: text/plain;";
 
-	posInitial = textMail.find(campo.c_str(),0);
-	posInitial+= campo.size();
-	posAux = textMail.find(endLine.c_str(),posInitial);
-	if(posAux > 0)
-		posInitial = posAux + endLine.size();
+	string charset1 = "charset=ISO-8859-1";
+	string charset2 = "charset=iso-8859-1";
+	string charset3 = "charset=\"iso-8859-1";
+	string charset4 = "charset=\"Windows-1252\"";
+	list<string> charsetList;
+	charsetList.push_back(charset1);
+	charsetList.push_back(charset2);
+	charsetList.push_back(charset3);
+	charsetList.push_back(charset4);
+	list<string>::iterator itCharset;
 
-	posAux = textMail.find(content.c_str(),posInitial);
-	if(posAux > 0){
-		if((posAux - posInitial < 10)){
-		posInitial = posAux + content.size();
-			posAux = textMail.find(endLine.c_str(),posInitial);
-			if(posAux > 0)
-				posInitial = posAux + endLine.size();
+	string contentHTML = "Content-Type: text/html;";
+	string contentTransferEncoding = "Content-Transfer-Encoding:";
+	string content1 = "quoted-printable";
+	string content2 = "8bit";
+	list<string> contentList;
+	contentList.push_back(content1);
+	contentList.push_back(content2);
+	list<string>::iterator itContent;
+
+	//puede venir MIME-Version: 1.0 TODO
+	bool correct = false;
+
+	posInitial = textMail.find(textPlain.c_str(),0); // busco Content-Type: text/plain;
+	if(posInitial > 0){//si lo encuentra
+		for(itCharset = charsetList.begin(); itCharset != charsetList.end(); itCharset++){
+			posInitial = textMail.find((*itCharset).c_str(),posInitial); // busco los charsets
+					if(posInitial > 0){
+						posInitial+= (*itCharset).size();
+						correct = true;
+						break;
+					}
+		}
+
+	}
+	else if (posInitial < 0){
+		correct = false;
+	}
+
+	if(correct){//si encontro el Content-Type: text/plain; charset=ISO-8859-1 o Content-Type: text/plain; charset=iso-8859-1 o el q sea
+		correct = false;
+		posContent = textMail.find(contentTransferEncoding.c_str(),posInitial); //busco Content-Transfer-Encoding:
+		posHTML = textMail.find(contentHTML.c_str(),posInitial);//busco Content-Type: text/html;
+
+		if(posContent > 0){//si existe Content-Transfer-Encoding:
+			if(posHTML>0){//si existe Content-Type: text/html;
+				if(posContent < posHTML){ //si Content-Transfer-Encoding: quoted-printable ESTA ANTES QUE Content-Type: text/html;
+					posInitial = posContent + contentTransferEncoding.size();
+					for(itContent = contentList.begin(); itContent != contentList.end(); itContent++){
+						posInitial = textMail.find((*itContent).c_str(),posInitial); // busco los content (quoted-printable, 8bits, etc)
+						if(posInitial > 0){
+							posInitial+= (*itContent).size();
+							correct = true;
+							break;
+						}
+					}
+				}
+				else if(posContent > posHTML){
+					correct = true;
+				}
+			}
+			else if(posHTML<0) {//si no existe Content-Type: text/html; o posContent no es menor q posHTML
+				posInitial = posContent + contentTransferEncoding.size();
+				for(itContent = contentList.begin(); itContent != contentList.end(); itContent++){
+					posInitial = textMail.find((*itContent).c_str(),posInitial); // busco los content (quoted-printable, 8bits, etc)
+					if(posInitial > 0){
+						posInitial+= (*itContent).size();
+						correct = true;
+						break;
+					}
+				}
+
+			}
+
+		}
+		else if(posContent < 0){ //si no existe Content-Transfer-Encoding:
+			correct = true;
 		}
 	}
-	posFinal = textMail.find(end.c_str(),posInitial);
-	if(posInitial >= 0 && posFinal>=0 ){
-		return textMail.substr(posInitial,posFinal-(posInitial+1));
-
+	else if(!correct){
 	}
+
+
+
+	if(correct){
+		posAux = textMail.find(endLine.c_str(),posInitial);// busco el fin de linea
+		if(posAux > 0)
+			posInitial = posAux + endLine.size();
+
+		posFinal = textMail.find(end.c_str(),posInitial);
+		if(posFinal < 0 )// si no encuentra el \n-- es porque era el unico tag
+			posFinal = textMail.size();// entonces el mensaje es hasta el final del archivo
+		return textMail.substr(posInitial,posFinal-(posInitial+1));
+	}
+
+
 	return "";
 }
 
@@ -228,19 +307,19 @@ void Mail::parseMail(char* text){
 	string to = "To: ";
 	string from = "From: ";
 	string subject = "Subject: ";
-	string message = "Content-Type: text/plain; charset=ISO-8859-1";
+	string message = "Content-Type: text/plain;";
 	string endLine = "\n";
 	string end = "\n--";
 
 	if(CONNECT == 1){
-//		cout<<"*******************************************************************"<<endl;
-//		cout<<text<<endl;
-//		cout<<"*******************************************************************"<<endl;
+		cout<<"*******************************************************************"<<endl;
+		cout<<text<<endl;
+		cout<<"*******************************************************************"<<endl;
 		this->setDate(this->parserCampo(textMail,endLine+date));
 		this->setTo(this->parserCampo(textMail,endLine+to));
 		this->setFrom(this->parserCampo(textMail,endLine+from));
 		this->setSubject(this->parserCampo(textMail,endLine+subject));
-		string messageNew=StringUtils::replaceCharacterASCII(this->parserMesssage(textMail,message,end));
+		string messageNew=StringUtils::replaceCharacterASCII(this->parserMesssage(textMail,end));
 		this->setMessage(messageNew);
 	}
 	else{
@@ -250,12 +329,12 @@ void Mail::parseMail(char* text){
 		this->setTo(this->parserCampo(textMail,to));
 		this->setFrom(this->parserCampo(textMail,from));
 		this->setSubject(this->parserCampo(textMail,subject));
-		this->setMessage(this->parserMesssage(textMail,message,end));
+		this->setMessage(this->parserMesssage(textMail,end));
 	}
 }
 
 string Mail::toString(){
-		return ("FROM: "+ from +"\n"+"TO: " +to+"\n"+"DATE: "+date+"\n"+subject+"subject"+"\n"+"MESSAGE"+message+"\n");
+		return ("FROM: "+ from +"\n"+"TO: " +to+"\n"+"DATE: "+date+"\n"+"SUBJECT: "+subject+"\n"+"MESSAGE"+message+"\n");
 }
 int Mail::getIuc(){
 	return ((KeyInteger*)this->getKey())->getValue();
