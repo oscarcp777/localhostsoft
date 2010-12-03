@@ -199,13 +199,15 @@ string Mail::parserMesssage(string textMail,string end){
 	int posContent = -1;
 	int posHTML = -1;
 	int posAux = -1;
+	int posCharset = -1;
+
 	string endLine = "\n";
 	string textPlain = "Content-Type: text/plain;";
-
-	string charset1 = "charset=ISO-8859-1";
-	string charset2 = "charset=iso-8859-1";
-	string charset3 = "charset=\"iso-8859-1";
-	string charset4 = "charset=\"Windows-1252\"";
+	string charset = "charset";
+	string charset1 = "ISO-8859-1";
+	string charset2 = "iso-8859-1";
+	string charset3 = "Windows-1252";
+	string charset4 = "us-ascii";
 	list<string> charsetList;
 	charsetList.push_back(charset1);
 	charsetList.push_back(charset2);
@@ -227,10 +229,15 @@ string Mail::parserMesssage(string textMail,string end){
 
 	posInitial = textMail.find(textPlain.c_str(),0); // busco Content-Type: text/plain;
 	if(posInitial > 0){//si lo encuentra
+		posInitial+= textPlain.size();
+		posInitial = textMail.find(charset.c_str(),posInitial); // busco charset
+		posInitial += charset.size();
 		for(itCharset = charsetList.begin(); itCharset != charsetList.end(); itCharset++){
-			posInitial = textMail.find((*itCharset).c_str(),posInitial); // busco los charsets
-					if(posInitial > 0){
-						posInitial+= (*itCharset).size();
+			cout<<"BUSCO: "<<(*itCharset).c_str()<<endl;
+			posCharset = textMail.find((*itCharset).c_str(),posInitial); // busco tipo de charset
+					if(posCharset > 0){
+						cout<<"ENCONTRO: "<<*itCharset<<endl;
+						posInitial = posCharset + (*itCharset).size();
 						correct = true;
 						break;
 					}
@@ -251,9 +258,10 @@ string Mail::parserMesssage(string textMail,string end){
 				if(posContent < posHTML){ //si Content-Transfer-Encoding: quoted-printable ESTA ANTES QUE Content-Type: text/html;
 					posInitial = posContent + contentTransferEncoding.size();
 					for(itContent = contentList.begin(); itContent != contentList.end(); itContent++){
-						posInitial = textMail.find((*itContent).c_str(),posInitial); // busco los content (quoted-printable, 8bits, etc)
-						if(posInitial > 0){
-							posInitial+= (*itContent).size();
+						posAux = textMail.find((*itContent).c_str(),posInitial); // busco los content (quoted-printable, 8bits, etc)
+						if(posAux > 0){
+							cout<<"ENCONTRO: "<<*itContent<<endl;
+							posInitial = posAux + (*itContent).size();
 							correct = true;
 							break;
 						}
@@ -266,9 +274,10 @@ string Mail::parserMesssage(string textMail,string end){
 			else if(posHTML<0) {//si no existe Content-Type: text/html; o posContent no es menor q posHTML
 				posInitial = posContent + contentTransferEncoding.size();
 				for(itContent = contentList.begin(); itContent != contentList.end(); itContent++){
-					posInitial = textMail.find((*itContent).c_str(),posInitial); // busco los content (quoted-printable, 8bits, etc)
-					if(posInitial > 0){
-						posInitial+= (*itContent).size();
+					posAux = textMail.find((*itContent).c_str(),posInitial); // busco los content (quoted-printable, 8bits, etc)
+					if(posAux > 0){
+						cout<<"ENCONTRO: "<<*itContent<<endl;
+						posInitial= posAux + (*itContent).size();
 						correct = true;
 						break;
 					}
@@ -334,7 +343,7 @@ void Mail::parseMail(char* text){
 }
 
 string Mail::toString(){
-		return ("FROM: "+ from +"\n"+"TO: " +to+"\n"+"DATE: "+date+"\n"+"SUBJECT: "+subject+"\n"+"MESSAGE"+message+"\n");
+		return ("FROM: "+ from +"\n"+"TO: " +to+"\n"+"DATE: "+date+"\n"+"SUBJECT: "+subject+"\n"+"MESSAGE"+"\n"+message+"\n");
 }
 int Mail::getIuc(){
 	return ((KeyInteger*)this->getKey())->getValue();
