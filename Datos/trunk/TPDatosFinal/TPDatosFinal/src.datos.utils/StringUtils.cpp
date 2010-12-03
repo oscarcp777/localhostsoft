@@ -198,6 +198,10 @@ string StringUtils::trim(std::string cadena){
  string cadenaSinEspacios;
 string caracter;
 
+cout<<"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"<<endl;
+cout<<"CADENA Q LLEGA AL TRIM "<<endl;
+cout<<cadena<<endl;
+cout<<"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"<<endl;
 	while ( It != cadena.end() ){
 
 		caracter = *It;
@@ -317,7 +321,9 @@ void StringUtils::TokenizeAndTrimAndUpper(const string& str, vector<string>& tok
     {
     	string var = str.substr(lastPos, pos - lastPos);
     	// Found a token, add it to the vector.
+      cout<<"var antes del trim "<<var<<endl;
        var = trim(var);
+       cout<<"var despues del trim "<<var<<endl;
        var = removeCharacter(var);
        	tokens.push_back(toUpper(var));
         // Skip delimiters.  Note the "not_of"

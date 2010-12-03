@@ -56,6 +56,7 @@ public:
 	int searchMails(std::string strSearch);
 	void convertStringToListOfInt(Search* search,std::string str);
 	Search* parseStrSearch(std::string strSearch);
+	void createIndexes(std::string strSearch);
 	IndexConfig* createIndexConfig2(std::string str);
 	void addEmail(std::string email);
 	std::string getEmail();

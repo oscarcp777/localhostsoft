@@ -56,9 +56,6 @@ int connectionOK(char* username,char* password){
 			/* Fin Conexi�n */
 
 
-			printf("DESCARGANDO MAILS DE LA CUENTA\n");
-
-
 			srvdata=pop3_stat(mysock);
 			int numberOfMails = stat2num(srvdata);
 			///
@@ -131,7 +128,7 @@ int connection(char* username,char* password, StorageController* storageControll
 		printf("stat: %d bytes\n",stat2bytes(srvdata));
 		free(srvdata);
 
-		i = 10;//numberOfMails;
+		i = 15;//numberOfMails;
 		while(i){
 			srvdata=pop3_retr(mysock,i);
 			mymessage=retr2msg(srvdata);

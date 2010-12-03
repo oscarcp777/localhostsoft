@@ -436,6 +436,37 @@ void Controller::convertStringToListOfInt(Search* search,std::string str){
 		search->setIuc(atoi(tokens.at(i).c_str()));
 	}
 }
+void Controller::createIndexes(std::string strSearch){
+	std::string aux;
+	std::string filterName;
+	std::string filterValue("");
+	int posInitial;
+	int posFinal=0;
+
+
+	//
+	posInitial = strSearch.find("[",posFinal);
+	posFinal = strSearch.find("]",posInitial);
+	aux = strSearch.substr(posInitial,posFinal-posInitial);
+			IndexConfig* indexConfig = this->createIndexConfig2(aux);
+			indexConfig->setUserName(this->strEmail);
+			this->addSecondIndex(indexConfig);
+			this->loadSecondIndex(indexConfig);
+	//
+	posInitial = strSearch.find("[",posFinal);
+	posFinal = strSearch.find("]",posInitial);
+	while((posInitial > 0) && (posFinal > 0) && (posFinal > posInitial)){
+		aux = strSearch.substr(posInitial,posFinal-posInitial);
+		IndexConfig* indexConfig = this->createIndexConfig2(aux);
+		indexConfig->setUserName(this->strEmail);
+		this->addSecondIndex(indexConfig);
+		this->loadSecondIndex(indexConfig);
+		posInitial = strSearch.find("[",posFinal);
+		posFinal = strSearch.find("]",posInitial);
+	}
+
+
+}
 Search* Controller::parseStrSearch(std::string strSearch){
 	std::string aux;
 	std::string filterName;
@@ -453,7 +484,6 @@ Search* Controller::parseStrSearch(std::string strSearch){
 			pos = aux.find("=",0);
 			if(pos == -1){
 				filterName = aux.substr(0,posFinal);
-				cout<<"f2: "<<filterName<<endl;
 			}else{
 
 				filterValue = aux.substr(pos+2,(aux.length()-3)- pos);
@@ -497,8 +527,7 @@ std::string Controller::getMails(std::string strListOfIucs){
 			it++;
 			delete regPrimary->getMail();
 			delete regPrimary;
-       //TODO ver si se pude borrar     delete indexConfig;
-     //       delete consultation;
+
 
 }
 return strResult;
@@ -698,8 +727,7 @@ std::string Controller::getListOfIndexes(){
 
 	list<IndexConfig*>::iterator current = this->indexes.begin();
 	while((current != this->indexes.end())){//recorro la lista de todos lo indices que tiene el programa
-		auxIndex += (*current)->getUserName()+" ... ";
-		auxIndex += (*current)->getFilterName()+"\n";
+		auxIndex += "-"+(*current)->getFilterName()+"\n";
 		current++;
 	}
 	return auxIndex;
@@ -717,40 +745,40 @@ int Controller::strSearchValidation(std::string strSearch){
 	std::string filterName;
 	std::string filterValue;
 	int result=0;
-//	int pos;
-//	int posAux;
+	int pos;
+	int posAux;
 	int posInitial = strSearch.find("[",0);
 	int posFinal = strSearch.find("]",posInitial);
-	if ((posInitial == -1) && (posFinal == -1)){
+	if ((posInitial == -1) || (posFinal == -1)){
 		std::cout<<"Error en el string de busqueda, no se encuentran los parametros [ ] "<<std::endl;
 		return 1;
 	}
-//	while((posInitial >= 0) && (posFinal > 0)){
-//		if(posFinal>posInitial){
-//			aux = strSearch.substr(posInitial,posFinal-posInitial);
-//			pos = aux.find("=",0);
-//			if(pos==-1){
-//				std::cout<<"Error en el string de busqueda, no se encuentra el parametro = "<<std::endl;
-//			}
-//			posAux = aux.find("=",0);
-//			if(posAux > -1){
-//				std::cout<<"Error en el string de busqueda, existe mas de un signo = "<<std::endl;
-//			}
-//			filterName = aux.substr(0,pos);
-//			//validar que exista el indice
-//			if (!searchIndex(filterName)){
-//				std::cout<<"Error en el string de busqueda, no existe el nombre de indice: "<< filterName <<std::endl;
-//				result = 1;
-//			}
-//
-//			filterValue = aux.substr(pos+1,(aux.length()-1)- pos);
-//
-//			posInitial = strSearch.find("[",posFinal)+1;
-//			posFinal = strSearch.find("]",posInitial);
-//		}else{
-//			std::cout<<" Error en el string de busqueda, incorrecta ubicacion de corchetes [ ] "<<std::endl;
-//		}
-//	}
+	while((posInitial >= 0) && (posFinal > 0)){
+		if(posFinal>posInitial){
+			aux = strSearch.substr(posInitial,posFinal-posInitial);
+			pos = aux.find("=",0);
+			if(pos==-1){
+				std::cout<<"Error en el string de busqueda, no se encuentra el parametro = "<<std::endl;
+			}
+			posAux = aux.find("=",0);
+			if(posAux > -1){
+				std::cout<<"Error en el string de busqueda, existe mas de un signo = "<<std::endl;
+			}
+			filterName = aux.substr(0,pos);
+			//validar que exista el indice
+			if (!searchIndex(filterName)){
+				std::cout<<"Error en el string de busqueda, no existe el nombre de indice: "<< filterName <<std::endl;
+				result = 1;
+			}
+
+			filterValue = aux.substr(pos+1,(aux.length()-1)- pos);
+
+			posInitial = strSearch.find("[",posFinal)+1;
+			posFinal = strSearch.find("]",posInitial);
+		}else{
+			std::cout<<" Error en el string de busqueda, incorrecta ubicacion de corchetes [ ] "<<std::endl;
+		}
+	}
 	return result;
 }
 void Controller::deleteIucs(std::string strIucs){

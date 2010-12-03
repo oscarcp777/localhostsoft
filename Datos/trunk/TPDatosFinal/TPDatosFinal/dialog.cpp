@@ -33,54 +33,51 @@
 
 
     	createMenu();
-    	createLoginGroupBox();
-    	createOperationGroupBox();
-    	createClassificationGroupBox();
-    	createSelectionGroupBox();
-    	createSearchGroupBox();
-    	createDeleteGroupBox();
+        createLoginGroupBox();
+        createOperationGroupBox();
+        createClassificationGroupBox();
+        createSelectionGroupBox();
+        createSearchGroupBox();
+        createDeleteGroupBox();
 
     	bigEditor = new QTextEdit();
 //    	bigEditor->setReadOnly(true);
     	bigEditor->setPlainText(tr("Informacion sobre la confguracion de los filtros de la applicacion "));
 
 
+        okButton = new QPushButton(tr("OK"));
+        cancelButton = new QPushButton(tr("Cancel"));
+        okButton->setDefault(true);
 
-    	okButton = new QPushButton(tr("OK"));
-    	cancelButton = new QPushButton(tr("Cancel"));
-    	okButton->setDefault(true);
+        connect(okButton, SIGNAL(clicked()), this, SLOT(okClick()) );
+        connect(cancelButton, SIGNAL(clicked()), this, SLOT(reject()));
 
-    	connect(okButton, SIGNAL(clicked()), this, SLOT(okClick()) );
-    	connect(cancelButton, SIGNAL(clicked()), this, SLOT(reject()));
+        connect(buttons[0], SIGNAL(clicked()), this, SLOT(resguardarClick()));
+        connect(buttons[1], SIGNAL(clicked()), this, SLOT(configurarClick()));
+        connect(buttons[2], SIGNAL(clicked()), this, SLOT(buscarClick()));
+	connect(buttons[3], SIGNAL(clicked()), this, SLOT(verClick()));
+	connect(buttons[4], SIGNAL(clicked()), this, SLOT(borrarClick()));
 
-    	connect(buttons[0], SIGNAL(clicked()), this, SLOT(resguardarClick()));
-    	connect(buttons[1], SIGNAL(clicked()), this, SLOT(configurarClick()));
-    	connect(buttons[2], SIGNAL(clicked()), this, SLOT(buscarClick()));
-    	connect(buttons[3], SIGNAL(clicked()), this, SLOT(verClick()));
-    	connect(buttons[4], SIGNAL(clicked()), this, SLOT(borrarClick()));
-    	connect(buttons[5], SIGNAL(clicked()), this, SLOT(cargarClick()));
-    	QHBoxLayout *buttonLayout = new QHBoxLayout;
-    	buttonLayout->addStretch(1);
-    	buttonLayout->addWidget(okButton);
-    	buttonLayout->addWidget(cancelButton);
+        QHBoxLayout *buttonLayout = new QHBoxLayout;
+        buttonLayout->addStretch(1);
+        buttonLayout->addWidget(okButton);
+        buttonLayout->addWidget(cancelButton);
 
-    	QVBoxLayout *mainLayout = new QVBoxLayout;
-    	mainLayout->setMenuBar(menuBar);
-    	mainLayout->addWidget(loginGroupBox);
-    	mainLayout->addWidget(operationGroupBox);
-    	mainLayout->addWidget(classificationGroupBox);
-    	mainLayout->addWidget(selectionGroupBox);
-    	mainLayout->addWidget(searchGroupBox);
-    	mainLayout->addWidget(deleteGroupBox);
-    	mainLayout->addWidget(bigEditor);
-    	mainLayout->addLayout(buttonLayout);
-    	setLayout(mainLayout);
+        QVBoxLayout *mainLayout = new QVBoxLayout;
+        mainLayout->setMenuBar(menuBar);
+        mainLayout->addWidget(loginGroupBox);
+        mainLayout->addWidget(operationGroupBox);
+        mainLayout->addWidget(classificationGroupBox);
+	mainLayout->addWidget(selectionGroupBox);
+        mainLayout->addWidget(searchGroupBox);
+	mainLayout->addWidget(deleteGroupBox);
+        mainLayout->addWidget(bigEditor);
+        mainLayout->addLayout(buttonLayout);
+        setLayout(mainLayout);
 
     	setWindowTitle(tr("Almacenamiento de Correos Electronicos"));
     }
-    void cargarClick(){
 
-    }
     void Dialog::createMenu()
     {
     	 QPixmap newpix("image/Help-32.png");
@@ -103,12 +100,11 @@
         operationGroupBox = new QGroupBox(tr("Comunicacion"));
         QHBoxLayout *layout = new QHBoxLayout;
 
-		buttons[0] = new QPushButton(tr("Resguardar mails"));
+		buttons[0] = new QPushButton(tr("Resguardar"));
 		layout->addWidget(buttons[0]);
 		buttons[1] = new QPushButton(tr("Configurar"));
 		layout->addWidget(buttons[1]);
-		buttons[5] = new QPushButton(tr("Resguardar filtros"));
-		layout->addWidget(buttons[5]);
+
         operationGroupBox->setLayout(layout);
     }
 
@@ -222,16 +218,15 @@
     	cout<<"exit\n"<<endl;
 //    	exit;
     };
-    void Dialog::cargarClick()
-        {
-        	cout<<"cargarClick"<<endl;
-    //    	exit;
-        };
     void Dialog::buscarClick()
     {
+    	if(lineEdits[2]->text().isEmpty()){
+    	    		bigEditor->clear();
+    	    		bigEditor->append("... NO HA INGRESADO NADA PARA BUSCAR");
+    	    	}else{
     	QString textoBuscado;
     	textoBuscado.append("Busco el texto: ");
-    	textoBuscado.append(lineEdits[2]->text());
+    	textoBuscado.append(lineEdits[2]->text() + "\n");
     	Controller* control= new Controller(lineEdits[0]->text().toStdString(),lineEdits[1]->text().toStdString());
     	if(control->getMailAndPass()){
     		if(lineEdits[2]->text().toStdString() == "indices"){
@@ -241,6 +236,7 @@
     			textoBuscado.append(aux.c_str());
     			bigEditor->setText(textoBuscado);
     		}else{
+
     			control->searchMails(lineEdits[2]->text().toStdString());
     			string strResult;
     			list<int>::iterator it;
@@ -261,30 +257,38 @@
     		bigEditor->clear();
     		bigEditor->append("...\nUSUARIO Y/O PASSWORD INVALIDOS");
     	}
-         delete control;
+    	    	}
     };
     void Dialog::borrarClick()
     {
-    	QString listaUID;
-    	listaUID.append("Mails a borrar (UIDs): ");
-    	listaUID.append(lineEdits[3]->text());
-
-    	////
-    	Controller* control= new Controller(lineEdits[0]->text().toStdString(),lineEdits[1]->text().toStdString());
-    	if(control->getMailAndPass()){
-    		control->deleteIucs(lineEdits[3]->text().toStdString());
-    		bigEditor->setText(listaUID);
-    	}else{
+    	if(lineEdits[3]->text().isEmpty()){
     		bigEditor->clear();
-    		bigEditor->append("...\nUSUARIO Y/O PASSWORD INVALIDOS");
-    	}
-    	////
+    		bigEditor->append("... NO HA INGRESADO NADA PARA BORRAR");
+    	}else{
+    		QString listaUID;
+    		listaUID.append("Mails a borrar (UIDs): ");
+    		listaUID.append(lineEdits[3]->text());
 
+    		////
+    		Controller* control= new Controller(lineEdits[0]->text().toStdString(),lineEdits[1]->text().toStdString());
+    		if(control->getMailAndPass()){
+    			control->deleteIucs(lineEdits[3]->text().toStdString());
+    			bigEditor->setText(listaUID);
+    		}else{
+    			bigEditor->clear();
+    			bigEditor->append("...\nUSUARIO Y/O PASSWORD INVALIDOS");
+    		}
+    		////
+    	}
     };
     void Dialog::verClick()
     {
 
     	//
+    	if(lineEdits[3]->text().isEmpty()){
+    	    	    		bigEditor->clear();
+    	    	    		bigEditor->append("... NO HA INGRESADO NADA PARA VER");
+    	    	    	}else{
     	Controller* control= new Controller(lineEdits[0]->text().toStdString(),lineEdits[1]->text().toStdString());
     	if(control->getMailAndPass()){
         	string result = control->getMails(lineEdits[3]->text().toStdString());
@@ -298,16 +302,15 @@
     	}
     	//
         delete control;
-
+    	    	    	}
     };
     void Dialog::resguardarClick()
     {
     	QString mensajeUsuario;
     	/////
     	Controller* control= new Controller(lineEdits[0]->text().toStdString(),lineEdits[1]->text().toStdString());
-//    	if(control->getMailAndPass()){
+    	if(control->getMailAndPass()){
     		mensajeUsuario.append("Descargando mails de: ");
-
 
     		mensajeUsuario.append(lineEdits[0]->text());
     		bigEditor->setText(mensajeUsuario);
@@ -334,35 +337,41 @@
 //    				}
 
 
-    		bigEditor->append("BAjando mails");
+    		bigEditor->append("MAILS DESCARGADOS");
     	//	bigEditor->setText(mensajeUsuario);
-//    	}else{
-//    		bigEditor->clear();
-//    		bigEditor->append("...\nUSUARIO Y/O PASSWORD INVALIDOS");
-//    	}
+    	}else{
+    		bigEditor->clear();
+    		bigEditor->append("...\nUSUARIO Y/O PASSWORD INVALIDOS");
+    	}
 
     	delete control;
 
     };
     void Dialog::configurarClick()
     {
-	QString config;
-    	config.append("Configuracion ingresada: ");
-	config.append(lineEdits[2]->text());
 
+    	if(lineEdits[2]->text().isEmpty()){
+    		bigEditor->clear();
+    		bigEditor->append("...NO HA INGRESADO NINGUNA CONFIGURACION");
+    	}else{
+    		QString config;
+    		config.append("Configuracion ingresada:\n");
+    		config.append(lineEdits[2]->text() + "\n");
+    		bigEditor->setText(config);
 
-
-	Controller* control= new Controller(lineEdits[0]->text().toStdString(),lineEdits[1]->text().toStdString());
-	if(control->getMailAndPass()){
-		IndexConfig* indexConfig = control->createIndexConfig2(lineEdits[2]->text().toStdString());
-			indexConfig->setUserName(lineEdits[0]->text().toStdString());
-			control->addSecondIndex(indexConfig);
-			control->loadSecondIndex(indexConfig);
-			bigEditor->setText(config);
-	}else{
-		bigEditor->clear();
-			bigEditor->append("...\nUSUARIO Y/O PASSWORD INVALIDOS");
-	}
+    		Controller* control= new Controller(lineEdits[0]->text().toStdString(),lineEdits[1]->text().toStdString());
+    		if(control->getMailAndPass()){
+    			//IndexConfig* indexConfig = control->createIndexConfig2(lineEdits[2]->text().toStdString());
+    			//indexConfig->setUserName(lineEdits[0]->text().toStdString());
+    			//control->addSecondIndex(indexConfig);
+    			//control->loadSecondIndex(indexConfig);
+    			control->createIndexes(lineEdits[2]->text().toStdString());
+    			bigEditor->setText("CONFIGURACION GUARDADA");
+    		}else{
+    			bigEditor->clear();
+    			bigEditor->append("...\nUSUARIO Y/O PASSWORD INVALIDOS");
+    		}
+    	}
 
     };
 	void Dialog::clasificarClick(QString texto)
