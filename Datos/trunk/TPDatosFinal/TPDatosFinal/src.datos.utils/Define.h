@@ -21,7 +21,7 @@
 
 //Encriptacion
 //--Activa o Desactiva el encriptado
-  	#define ENCRYPTION 0
+  	#define ENCRYPTION 1
 //--Cantidad de elementos en el alfabeto
   	#define CONST_L 256
 //--Tamaño clave (numero caracteres a encriptar/desencriptar por vez)

@@ -242,10 +242,10 @@ string Mail::parserMesssage(string textMail,string end){
 		posInitial = textMail.find(charset.c_str(),posInitial); // busco charset
 		posInitial += charset.size();
 		for(itCharset = charsetList.begin(); itCharset != charsetList.end(); itCharset++){
-			cout<<"BUSCO: "<<(*itCharset).c_str()<<endl;
+			//cout<<"BUSCO: "<<(*itCharset).c_str()<<endl;
 			posCharset = textMail.find((*itCharset).c_str(),posInitial); // busco tipo de charset
 					if(posCharset > 0){
-						cout<<"ENCONTRO: "<<*itCharset<<endl;
+						//cout<<"ENCONTRO: "<<*itCharset<<endl;
 						posInitial = posCharset + (*itCharset).size();
 						correct = true;
 						break;
@@ -269,7 +269,7 @@ string Mail::parserMesssage(string textMail,string end){
 					for(itContent = contentList.begin(); itContent != contentList.end(); itContent++){
 						posAux = textMail.find((*itContent).c_str(),posInitial); // busco los content (quoted-printable, 8bits, etc)
 						if(posAux > 0){
-							cout<<"ENCONTRO: "<<*itContent<<endl;
+							//cout<<"ENCONTRO: "<<*itContent<<endl;
 							posInitial = posAux + (*itContent).size();
 							correct = true;
 							break;
@@ -285,7 +285,7 @@ string Mail::parserMesssage(string textMail,string end){
 				for(itContent = contentList.begin(); itContent != contentList.end(); itContent++){
 					posAux = textMail.find((*itContent).c_str(),posInitial); // busco los content (quoted-printable, 8bits, etc)
 					if(posAux > 0){
-						cout<<"ENCONTRO: "<<*itContent<<endl;
+						//cout<<"ENCONTRO: "<<*itContent<<endl;
 						posInitial= posAux + (*itContent).size();
 						correct = true;
 						break;

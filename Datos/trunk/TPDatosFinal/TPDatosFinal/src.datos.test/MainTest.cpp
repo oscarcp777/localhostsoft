@@ -18,7 +18,7 @@
 
 using namespace std;
 
-int main_old() {
+int main123456() {
 
 //	TestBSharp* test = new TestBSharp();
 //	Hill::getInstance()->initialize(ENCRYPTION_KEY_SIZE,"prueba");
