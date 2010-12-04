@@ -26,7 +26,7 @@
 #include "dialog.h"
 #include "DialogHelp.h"
 
-std::string botonesBusqueda[CANT_BOTONES] = {"From", "To", "Date", "Reply-To", "Content"};
+std::string botonesBusqueda[CANT_BOTONES] = {"From", "To", "Date", "Content"};
 using namespace std;
 Dialog::Dialog()
 {
@@ -44,7 +44,7 @@ Dialog::Dialog()
 
 
 	okButton = new QPushButton(tr("OK"));
-	cancelButton = new QPushButton(tr("Cancel"));
+	cancelButton = new QPushButton(tr("Close"));
 	okButton->setDefault(true);
 
 	connect(okButton, SIGNAL(clicked()), this, SLOT(okClick()) );
@@ -58,7 +58,7 @@ Dialog::Dialog()
 
 	QHBoxLayout *buttonLayout = new QHBoxLayout;
 	buttonLayout->addStretch(1);
-	buttonLayout->addWidget(okButton);
+//	buttonLayout->addWidget(okButton);
 	buttonLayout->addWidget(cancelButton);
 
 	QVBoxLayout *mainLayout = new QVBoxLayout;

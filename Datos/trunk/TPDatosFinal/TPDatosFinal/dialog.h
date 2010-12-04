@@ -12,7 +12,7 @@
 #include <iostream>
 #include "dialogMail.h"
 #include "src.datos.controller/Controller.h"
-#define CANT_BOTONES 5
+#define CANT_BOTONES 4
 #define CANT_FILAS 4
 
 class QAction;
