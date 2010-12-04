@@ -21,8 +21,8 @@
 	 newText=StringUtils::replaceAll(newText,"=F1",3,"ñ");
 	 newText=StringUtils::replaceAll(newText,"=A1",3,"¡");
 	 newText=StringUtils::replaceAll(newText,"=2C",3,":");
-	 newText=StringUtils::replaceAll(newText,"=\n",2,"");
-	 newText=StringUtils::replaceAll(newText,"=",1,"");
+	 newText=StringUtils::replaceAll(newText,"=3B",3,";");
+
 	 return newText;
 }
 string StringUtils::getPassword(int cant) {
