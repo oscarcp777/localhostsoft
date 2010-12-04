@@ -34,7 +34,7 @@
 
 	this->setMinimumHeight(600);
 	this->setMinimumWidth(600);
-        createMenu();
+//        createMenu();
 	QString mensaje;
 	mensaje.append("Datos de los mails: ");
 	mensaje.append(emailUIDs);

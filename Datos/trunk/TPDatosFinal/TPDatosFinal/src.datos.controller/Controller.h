@@ -40,10 +40,13 @@ private:
 	QTextEdit *bigEditor;
 	void loadIndexNames();
 	void loadInfoIndex(std::string linea, IndexConfig* index);
-	Controller(std::string userMail,std::string password);
+	void initialize(std::string userMail,std::string password);
+	Controller();
 
 public:
+
 	void setEditorText(QTextEdit* bigEditor);
+	void loadConfigUser(std::string userMail,std::string password);
 	int checkMailData();
 	virtual ~Controller();
 	Search* getSearch();
@@ -85,7 +88,7 @@ public:
 	void overWriteFile();
 	list<int>* getListOfIucs();
 	void calculateIntersection(unsigned int numSearchs, list<int>* listIucs);
-    static Controller *getInstance(string mail, string pass);
+    static Controller *getInstance();
     std::string getMessage() const;
     void setMessage(std::string message);
     static Controller *instance;

@@ -227,7 +227,8 @@ void Dialog::buscarClick()
 		textoBuscado.append("Busco el texto: ");
 		textoBuscado.append(lineEdits[2]->text() + "\n");
 
-		Controller* control= Controller::getInstance(lineEdits[0]->text().toStdString(),lineEdits[1]->text().toStdString());
+		Controller* control= Controller::getInstance();
+		control->loadConfigUser(lineEdits[0]->text().toStdString(),lineEdits[1]->text().toStdString());
 		std::string strError;
 		int result = control->strSearchValidation(lineEdits[2]->text() .toStdString(),strError);
 
@@ -282,7 +283,9 @@ void Dialog::borrarClick()
 		listaUID.append(lineEdits[3]->text());
 
 		////
-		Controller* control=  Controller::getInstance(lineEdits[0]->text().toStdString(),lineEdits[1]->text().toStdString());
+		Controller* control= Controller::getInstance();
+			control->loadConfigUser(lineEdits[0]->text().toStdString(),lineEdits[1]->text().toStdString());
+
 		if(control->getMailAndPass()){
 			control->deleteIucs(lineEdits[3]->text().toStdString());
 			this->setMessages(control->getMessage(),false);
@@ -300,7 +303,9 @@ void Dialog::verClick()
 		bigEditor->clear();
 		bigEditor->append("... NO HA INGRESADO NADA PARA VER");
 	}else{
-		Controller* control=  Controller::getInstance(lineEdits[0]->text().toStdString(),lineEdits[1]->text().toStdString());
+		Controller* control= Controller::getInstance();
+			control->loadConfigUser(lineEdits[0]->text().toStdString(),lineEdits[1]->text().toStdString());
+
 		if(control->getMailAndPass()){
 			string result = control->getMails(lineEdits[3]->text().toStdString());
 			QString resultQ ((const char*)result.c_str());
@@ -312,13 +317,14 @@ void Dialog::verClick()
 			bigEditor->append("...\nUSUARIO Y/O PASSWORD INVALIDOS");
 		}
 		//
-//		delete control;
 	}
 };
 void Dialog::resguardarClick()
 {
 	QString mensajeUsuario;
-	Controller* control=  Controller::getInstance(lineEdits[0]->text().toStdString(),lineEdits[1]->text().toStdString());
+	Controller* control= Controller::getInstance();
+		control->loadConfigUser(lineEdits[0]->text().toStdString(),lineEdits[1]->text().toStdString());
+
 	if(control->getMailAndPass()){
 		mensajeUsuario.append("Descargando mails de: ");
 		mensajeUsuario.append(lineEdits[0]->text());
@@ -338,8 +344,6 @@ void Dialog::resguardarClick()
 		bigEditor->clear();
 		bigEditor->append("...\nUSUARIO Y/O PASSWORD INVALIDOS");
 	}
-
-//	delete control;
 
 };
 void Dialog::setMessages(string message,bool clear){
@@ -362,7 +366,9 @@ void Dialog::configurarClick()
 		config.append(lineEdits[2]->text() + "\n");
 		bigEditor->setText(config);
 
-		Controller* control=  Controller::getInstance(lineEdits[0]->text().toStdString(),lineEdits[1]->text().toStdString());
+		Controller* control= Controller::getInstance();
+			control->loadConfigUser(lineEdits[0]->text().toStdString(),lineEdits[1]->text().toStdString());
+
 		if(control->getMailAndPass()){
 			control->createIndexes(lineEdits[2]->text().toStdString());
 			bigEditor->setText("CONFIGURACION GUARDADA");

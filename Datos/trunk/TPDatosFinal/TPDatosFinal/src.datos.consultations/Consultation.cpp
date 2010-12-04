@@ -82,10 +82,16 @@ void Consultation::consultSecondaryIndex(IndexConfig* indexConfig,list<int>* lis
 		RegClassification* searchReg = new RegClassification();
 		searchReg->setKey(new KeyString(filterValue));
 		searchReg = (RegClassification*)secondaryIndex->searchRegistry(searchReg);
-		list<KeyInteger* > auxList = searchReg->getIucs();
-		list<KeyInteger*>::iterator actual;
-		for (actual = auxList.begin(); actual	!= auxList.end(); ++actual){
-			(*listOfIucs).push_back((*actual)->getValue());
+		if(searchReg != NULL){
+			list<KeyInteger* > auxList = searchReg->getIucs();
+			list<KeyInteger*>::iterator actual;
+			for (actual = auxList.begin(); actual	!= auxList.end(); ++actual){
+				(*listOfIucs).push_back((*actual)->getValue());
+			}
+		}else{
+			std::cout<<"No hay mails con dicho filtro"<<std::endl;
+//			string str = "El arbol primario no posee el IUC: " + StringUtils::convertirAString(iuc) + "\n";
+//			Controller::getInstance()->setMessage(str);
 		}
 		delete searchReg;
 	}

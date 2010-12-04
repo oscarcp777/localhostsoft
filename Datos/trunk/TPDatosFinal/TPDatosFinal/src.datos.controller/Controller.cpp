@@ -16,36 +16,10 @@
 
 Controller *Controller::instance = NULL;
 
-Controller::Controller(std::string userMail,std::string password) {
-	string fileName= "";
-			fileName+=PATHFILES;
-			fileName+=userMail+".dat";
-	this->strEmail = userMail;
-	this->strPass = password;
-	if (ENCRYPTION)
-		Hill::getInstance()->initialize(ENCRYPTION_KEY_SIZE,userMail.append(password));
-	if(this->checkMailData() == 0){
-		this->mailAndPass = true;
-	}else{
-		this->mailAndPass = false;
-	}
-	this->fileNameAccount = fileName;
-	this->programFile = new TextFile();
-	this->primaryTree = NULL;
-	this->loadIndexNames();
-	this->search = NULL;
-
-}
-
-Controller *Controller::getInstance(string mail,string pass)
+Controller *Controller::getInstance()
 {
-	 if (!Controller::instance){
-		 Controller::instance = new Controller(mail,pass);
-	 }else{
-		 if((mail.compare(Controller::instance->getEmail())) != 0 ){
-			delete  Controller::instance;
-			 Controller::instance = new Controller(mail,pass);
-		 }
+	 if (Controller::instance==NULL){
+		 Controller::instance = new Controller();
 	 }
 	 return Controller::instance;
 }
@@ -61,7 +35,35 @@ void Controller::setEditorText(QTextEdit* bigEditor){
 int Controller::checkMailData(){
 	return connectionOK((char*)this->strEmail.c_str(),(char*)this->strPass.c_str());
 }
+void Controller::initialize(string userMail,string password){
+	string fileName= "";
+	fileName+=PATHFILES;
+	fileName+=userMail+".dat";
+	this->strEmail = userMail;
+	Controller::instance->strPass = password;
+	if (ENCRYPTION)
+		Hill::getInstance()->initialize(ENCRYPTION_KEY_SIZE,userMail.append(password));
+	if(this->checkMailData() == 0){
+		this->mailAndPass = true;
+	}else{
+		Controller::instance->mailAndPass = false;
+	}
+	this->fileNameAccount = fileName;
+	this->programFile = new TextFile();
+	this->primaryTree = NULL;
+	this->loadIndexNames();
+	this->search = NULL;
+}
+void Controller::loadConfigUser(string userMail,string password){
 
+	 int usr=userMail.compare(this->strEmail);
+	 int pass=password.compare(this->strPass);
+
+	if(!(usr== 0 &&pass==0) ){
+		this->initialize(userMail,password);
+	}
+
+}
 //Controller::Controller() {
 //	this->programFile = new TextFile();
 //	this->primaryTree = NULL;
@@ -80,7 +82,10 @@ int Controller::checkMailData(){
 //	this->search = NULL;
 //
 //}
-
+Controller::Controller() {
+  this->strEmail="";
+  this->strPass="";
+}
 
 Controller::~Controller() {
 	delete this->programFile;

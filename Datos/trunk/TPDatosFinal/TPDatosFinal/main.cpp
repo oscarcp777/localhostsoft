@@ -4,6 +4,7 @@
 #include <iostream>
 int main(int argc, char *argv[])
 {
+	 //-lspopc -lssl -lcrypto -lrt
     QApplication app(argc, argv);
     Dialog dialog;
     dialog.show();
