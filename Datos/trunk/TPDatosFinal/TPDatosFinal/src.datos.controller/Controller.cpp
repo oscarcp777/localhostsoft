@@ -16,12 +16,33 @@
 
 Controller *Controller::instance = NULL;
 
+Controller::Controller(std::string userMail,std::string password) {
+	string fileName= "";
+			fileName+=PATHFILES;
+			fileName+=userMail+".dat";
+	this->strEmail = userMail;
+	this->strPass = password;
+	if (ENCRYPTION)
+		Hill::getInstance()->initialize(ENCRYPTION_KEY_SIZE,userMail.append(password));
+	if(this->checkMailData() == 0){
+		this->mailAndPass = true;
+	}else{
+		this->mailAndPass = false;
+	}
+	this->fileNameAccount = fileName;
+	this->programFile = new TextFile();
+	this->primaryTree = NULL;
+	this->loadIndexNames();
+	this->search = NULL;
+
+}
+
 Controller *Controller::getInstance(string mail,string pass)
 {
 	 if (!Controller::instance){
 		 Controller::instance = new Controller(mail,pass);
 	 }else{
-		 if((mail.compare(Controller::instance->strEmail)) != 0 ){
+		 if((mail.compare(Controller::instance->getEmail())) != 0 ){
 			delete  Controller::instance;
 			 Controller::instance = new Controller(mail,pass);
 		 }
@@ -59,26 +80,7 @@ int Controller::checkMailData(){
 //	this->search = NULL;
 //
 //}
-Controller::Controller(std::string userMail,std::string password) {
-	string fileName= "";
-			fileName+=PATHFILES;
-			fileName+=userMail+".dat";
-	this->strEmail = userMail;
-	this->strPass = password;
-	if (ENCRYPTION)
-		Hill::getInstance()->initialize(ENCRYPTION_KEY_SIZE,userMail.append(password));
-	if(this->checkMailData() == 0){
-		this->mailAndPass = true;
-	}else{
-		this->mailAndPass = false;
-	}
-	this->fileNameAccount = fileName;
-	this->programFile = new TextFile();
-	this->primaryTree = NULL;
-	this->loadIndexNames();
-	this->search = NULL;
 
-}
 
 Controller::~Controller() {
 	delete this->programFile;

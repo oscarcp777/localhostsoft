@@ -256,8 +256,9 @@ void Dialog::buscarClick()
 						cout<<"IUC: "<<*it<<endl;
 						strResult += StringUtils::convertirAString(*it) + " ";
 					}
-
+					control->clearListsIucs();
 					textoBuscado.append(strResult.c_str());
+					bigEditor->clear();
 					bigEditor->setText(textoBuscado);
 
 			}else{
@@ -311,7 +312,7 @@ void Dialog::verClick()
 			bigEditor->append("...\nUSUARIO Y/O PASSWORD INVALIDOS");
 		}
 		//
-		delete control;
+//		delete control;
 	}
 };
 void Dialog::resguardarClick()
@@ -338,7 +339,7 @@ void Dialog::resguardarClick()
 		bigEditor->append("...\nUSUARIO Y/O PASSWORD INVALIDOS");
 	}
 
-	delete control;
+//	delete control;
 
 };
 void Dialog::setMessages(string message,bool clear){
