@@ -93,7 +93,7 @@ int mainfghfghfghfgh(int argc,char** argv){
 	}
 
 
-	Controller* control = new Controller(userMail,userPass);
+	Controller* control = Controller::getInstance(userMail,userPass);
 
 		/*Analisis de argumentos*/
 		if(argc>1){

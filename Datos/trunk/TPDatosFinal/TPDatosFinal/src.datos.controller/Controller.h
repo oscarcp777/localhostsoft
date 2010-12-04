@@ -22,10 +22,11 @@
 
 
 
-
+class QTextEdit;
 class Controller {
 private:
 	std::string fileNameAccount;
+	std::string message;
 	TextFile* programFile;
 	std::string strEmail;
 	std::string strPass;
@@ -36,13 +37,13 @@ private:
 	list<Mail*> listOfMails;
 	IndexBSharp* primaryTree;
 	bool mailAndPass;
+	QTextEdit *bigEditor;
 	void loadIndexNames();
 	void loadInfoIndex(std::string linea, IndexConfig* index);
+	Controller(std::string userMail,std::string password);
 
 public:
-	Controller();
-	Controller(std::string userMail);
-	Controller(std::string userMail,std::string password);
+	void setEditorText(QTextEdit* bigEditor);
 	int checkMailData();
 	virtual ~Controller();
 	Search* getSearch();
@@ -77,14 +78,17 @@ public:
 	bool searchIndex(std::string index);
 	bool searchPrimaryIndex(IndexConfig* indexConfig);
 	IndexConfig* loadIndexConfig(std::string index);
-	int strSearchValidation(std::string strSearch);
+	int strSearchValidation(std::string strSearch,std::string &strError);
 	void clearListsIucs();
 	void deleteIucs(std::string strIucs);
 	void deleteIuc(int iuc);
 	void overWriteFile();
 	list<int>* getListOfIucs();
 	void calculateIntersection(unsigned int numSearchs, list<int>* listIucs);
-
+    static Controller *getInstance(string mail, string pass);
+    std::string getMessage() const;
+    void setMessage(std::string message);
+    static Controller *instance;
 
 };
 

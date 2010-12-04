@@ -11,29 +11,54 @@
 #include "ManagerInvertedIndex.h"
 #include "../src.datos.utils/Define.h"
 #include "gmail-poptest.h"
+#include <QtGui>
+#include <iostream>
 
+Controller *Controller::instance = NULL;
+
+Controller *Controller::getInstance(string mail,string pass)
+{
+	 if (!Controller::instance){
+		 Controller::instance = new Controller(mail,pass);
+	 }else{
+		 if((mail.compare(Controller::instance->strEmail)) != 0 ){
+			delete  Controller::instance;
+			 Controller::instance = new Controller(mail,pass);
+		 }
+	 }
+	 return Controller::instance;
+}
+//Controller *Controller::getInstance()
+//{
+//	 if (!Controller::instance)
+//		 Controller::instance = new Controller();
+//	 return Controller::instance;
+//}
+void Controller::setEditorText(QTextEdit* bigEditor){
+  this->bigEditor=bigEditor;
+}
 int Controller::checkMailData(){
 	return connectionOK((char*)this->strEmail.c_str(),(char*)this->strPass.c_str());
 }
 
-Controller::Controller() {
-	this->programFile = new TextFile();
-	this->primaryTree = NULL;
-	this->loadIndexNames();
-	this->search = NULL;
-}
-Controller::Controller(std::string userMail) {
-	string fileName= "";
-			fileName+=PATHFILES;
-			fileName+=userMail+".dat";
-	this->fileNameAccount = fileName;
-	this->strEmail = userMail;
-	this->programFile = new TextFile();
-	this->primaryTree = NULL;
-	this->loadIndexNames();
-	this->search = NULL;
-
-}
+//Controller::Controller() {
+//	this->programFile = new TextFile();
+//	this->primaryTree = NULL;
+//	this->loadIndexNames();
+//	this->search = NULL;
+//}
+//Controller::Controller(std::string userMail) {
+//	string fileName= "";
+//			fileName+=PATHFILES;
+//			fileName+=userMail+".dat";
+//	this->fileNameAccount = fileName;
+//	this->strEmail = userMail;
+//	this->programFile = new TextFile();
+//	this->primaryTree = NULL;
+//	this->loadIndexNames();
+//	this->search = NULL;
+//
+//}
 Controller::Controller(std::string userMail,std::string password) {
 	string fileName= "";
 			fileName+=PATHFILES;
@@ -741,44 +766,54 @@ list<Mail*> Controller::getListOfMails(){
 }
 
 
-int Controller::strSearchValidation(std::string strSearch){
+int Controller::strSearchValidation(std::string strSearch,std::string &strError){
 	std::string aux;
 	std::string filterName;
 	std::string filterValue;
 	int result=0;
 	int pos;
+	int pos2;
 	int posAux;
+
 	int posInitial = strSearch.find("[",0);
 	int posFinal = strSearch.find("]",posInitial);
 	if ((posInitial == -1) || (posFinal == -1)){
 		std::cout<<"Error en el string de busqueda, no se encuentran los parametros [ ] "<<std::endl;
-		return 1;
+		strError += "Error en el string de busqueda, no se encuentran los parametros [ ]\n";
+		result= 1;
 	}
 	while((posInitial >= 0) && (posFinal > 0)){
 		if(posFinal>posInitial){
-			aux = strSearch.substr(posInitial,posFinal-posInitial);
+			aux = strSearch.substr(posInitial,posFinal+1-posInitial);
 			pos = aux.find("=",0);
-			if(pos==-1){
-				std::cout<<"Error en el string de busqueda, no se encuentra el parametro = "<<std::endl;
-			}
-			posAux = aux.find("=",0);
+			pos2 = pos;
+			if(pos != -1){
+				pos = aux.find("'",0);
+				posAux = aux.find("'",pos+1);
+				if(pos+ 1 == posAux  && pos != -1 && posAux != -1){
+					std::cout<<"No completo nada entre las comillas "<<std::endl;
+					strError += "No completo nada entre las comillas\n";
+					result= 2;
+				}
+				if(posAux == -1){
+					std::cout<<"Falta comilla "<<std::endl;
+					strError += "Falta comilla\n";
+					result= 3;
+				}
+			posAux = aux.find("=",pos2+1);
 			if(posAux > -1){
-				std::cout<<"Error en el string de busqueda, existe mas de un signo = "<<std::endl;
+				std::cout<<"Error en el string de busqueda, existe mas de un signo ="<<std::endl;
+				strError +="Error en el string de busqueda, existe mas de un signo =\n";
+				result= 4;
 			}
-			filterName = aux.substr(0,pos);
-			//validar que exista el indice
-			if (!searchIndex(filterName)){
-				std::cout<<"Error en el string de busqueda, no existe el nombre de indice: "<< filterName <<std::endl;
-				result = 1;
 			}
-
-			filterValue = aux.substr(pos+1,(aux.length()-1)- pos);
-
-			posInitial = strSearch.find("[",posFinal)+1;
-			posFinal = strSearch.find("]",posInitial);
 		}else{
-			std::cout<<" Error en el string de busqueda, incorrecta ubicacion de corchetes [ ] "<<std::endl;
+			std::cout<<" Error en el string de busqueda, incorrecta ubicacion de corchetes [ ]"<<std::endl;
+			strError +=" Error en el string de busqueda, incorrecta ubicacion de corchetes [ ]\n";
+			result= 5;
 		}
+		posInitial = strSearch.find("[",posFinal);
+		posFinal = strSearch.find("]",posFinal+1);
 	}
 	return result;
 }
@@ -804,8 +839,21 @@ void Controller::deleteIuc(int iuc){
 		this->primaryTree->print(cout);
 	}else{
 		cout<<"El arbol primario no posee el IUC: "<< iuc<<endl;
+		string str=this->getMessage();
+		str += "El arbol primario no posee el IUC: " + StringUtils::convertirAString(iuc) + "\n";
+		this->setMessage(str);
 	}
 
+}
+
+std::string Controller::getMessage() const
+{
+    return message;
+}
+
+void Controller::setMessage(std::string message)
+{
+	this->message = message;
 }
 
 list<int>* Controller::getListOfIucs(){
