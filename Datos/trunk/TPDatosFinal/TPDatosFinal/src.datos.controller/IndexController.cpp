@@ -23,7 +23,7 @@ IndexController::~IndexController() {
 
 void IndexController::generateClassificationIndex(IndexConfig* indexConfig){
 	//estan todos los del primario. tengo q saber atributo  (CONSTANTE)
-	string fileName = indexConfig->getFilterName();
+	string fileName = indexConfig->getUserName();
 	fileName += ".IndSecundario.Clasificacion."+StringUtils::convertConditionIntToString(indexConfig->getCondition());
 	IndexBSharp* primaryIndex = new IndexBSharp(PATHFILES+fileName,BLOCK_SIZE,TYPE_REG_CLASSIFICATION);
 	indexConfig->setBlockSize(BLOCK_SIZE);
@@ -32,7 +32,7 @@ void IndexController::generateClassificationIndex(IndexConfig* indexConfig){
 }
 void IndexController::generateSelectionIndex(IndexConfig* indexConfig){
 	//existen menos q en el primario.......tengo q saber atributo y valor, (CONSTANTE,VALOR)
-	string fileName = indexConfig->getFilterName();
+	string fileName = indexConfig->getUserName();
 	fileName += ".IndSecundario.Seleccion."+StringUtils::convertConditionIntToString(indexConfig->getCondition())+"."+indexConfig->getValue();
 	IndexBSharp* primaryIndex = new IndexBSharp(PATHFILES+fileName,BLOCK_SIZE,TYPE_REG_SELECTION);
 	indexConfig->setBlockSize(BLOCK_SIZE);
