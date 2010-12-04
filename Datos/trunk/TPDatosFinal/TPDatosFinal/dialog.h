@@ -59,7 +59,7 @@ private:
 
 	QMenu *fileMenu;
 	QAction *exitAction;
-
+	void setMessages(string message,bool clear);
 public slots:
 void okClick();
 void cancelClick();
