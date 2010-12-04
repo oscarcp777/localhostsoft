@@ -37,7 +37,8 @@ public:
     static int countWrite;
     static string replaceCharacterASCII(string originalText);
     static string replaceAll(string text,string charOld,int cantCharacterToReplace,string charNew);
-	/*
+    static string replaceIntChar(string text,int charactersIntToreplace, string newCharacter);
+    /*
 	 * Metodos de la nueva version.
 	 *
 	 */

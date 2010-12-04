@@ -4,7 +4,7 @@
 #include <cstdlib>
 #include<sstream>
 #include <time.h>
-
+#include <QtGui>
 
  StringUtils::StringUtils(){
 }
@@ -43,6 +43,15 @@ string StringUtils::getPassword(int cant) {
 }
 
  bool compare(int i,int j) { return (i<j); }
+
+ string StringUtils::replaceIntChar(string text,int charactersIntToreplace, string newCharacter){
+	for(unsigned int i = 0; i < text.size(); i++){
+			if(int(text.at(i)) == charactersIntToreplace)
+				text.replace(i, 1, newCharacter );
+
+	    }
+	    return text;
+ }
 
  string StringUtils::replaceAll(string text,string charOld,int cantCharacterToReplace,string charNew){
 	 string string1=text;
@@ -206,10 +215,10 @@ string caracter;
 			//si el caracter es un espacio leo el siguiente
 			It++;
 			caracter = *It;
-			if((caracter.compare(" ") == 0) || (caracter.compare("\n") == 0) || (caracter.compare("\t") == 0) || (caracter.compare("\r") == 0)){
+			if((caracter.compare(" ") == 0)){
 				//si es otro espacio, itero hasta que sea distinto de espacio
 	        	//cadenaSinEspacios+=*It;
-				while((caracter.compare(" ") == 0) || (caracter.compare("\n") == 0) || (caracter.compare("\t") == 0) || (caracter.compare("\r") == 0)){
+				while((caracter.compare(" ") == 0)){
 				It++;
 				caracter = *It;
 				}
@@ -226,40 +235,15 @@ string caracter;
 				}
 
 		}
-		else if(caracter.compare("\n") == 0){
-			//si es un salto de linea
-			It++;
-
-		}
-		else if(caracter.compare("\r") == 0){
-					//si es un salto de linea
-					It++;
-
-				}
-		else if(caracter.compare("\t") == 0){
-			//si es tab leo el siguiente y analizo lo que viene
-			It++;
-			caracter = *It;
-			if((caracter.compare(" ") == 0) || (caracter.compare("\n") == 0) || (caracter.compare("\t") == 0) || (caracter.compare("\r") == 0)){
-				//si es un espacio o tab o enter, itero hasta que sea distinto de esos
-	        	//cadenaSinEspacios+=*It;
-				while((caracter.compare(" ") == 0) || (caracter.compare("\n") == 0) || (caracter.compare("\t") == 0) || (caracter.compare("\r") == 0)){
-				It++;
-				caracter = *It;
-				}
-				cadenaSinEspacios+=*It;
-				It++;
-			}
-		}
-
 		else{
-			//si no es un espacio ni tab ni enter directamente se la asigno a la cadena
+			//si no es un espacio
 			cadenaSinEspacios+=*It;
 			It++;
 		}
 
     }
 
+	//cout<<"cadena q sale: "<<cadenaSinEspacios<<endl;
 	return cadenaSinEspacios;
 }
 
@@ -313,23 +297,47 @@ std::string StringUtils::toUpper(std::string word){
 	return word;
 }
 void StringUtils::TokenizeAndTrimAndUpper(const string& str, vector<string>& tokens, const string& delimiters ){
-    // Skip delimiters at beginning.
-    string::size_type lastPos = str.find_first_not_of(delimiters, 0);
+
+
+
+//	cout<<"*********************EN TokenizeAndTrimAndUpper*******************************"<<endl;
+//		cout<<"CADENA Q ENTRA"<<endl;
+//		cout<<str<<endl;
+//		cout<<"FIN CADENA"<<endl;
+	// char "\n" en int 10
+	//char "\r" en int 13
+	//char "\t" en int 9
+	QString message=  QString(str.c_str());
+	QByteArray array=   message.toAscii();
+	string strModifide=array.data();
+	  strModifide = replaceIntChar(strModifide,10," ");
+	strModifide = replaceIntChar(strModifide ,13," ");
+	strModifide = replaceIntChar(strModifide ,9," ");
+    StringUtils::replaceAll(strModifide,"<",1,"");
+    StringUtils::replaceAll(strModifide,">",1,"");
+    StringUtils::replaceAll(strModifide,"|",1,"");
+//	cout<<"BORRANDO CARACTERES, CADENA"<<endl;
+//	cout<<strModifide<<endl;
+//	cout<<"FIN CADENA"<<endl;
+
+	// Skip delimiters at beginning.
+    string::size_type lastPos = strModifide.find_first_not_of(delimiters, 0);
     // Find first "non-delimiter".
-    string::size_type pos     = str.find_first_of(delimiters, lastPos);
+    string::size_type pos     = strModifide.find_first_of(delimiters, lastPos);
 
     while (string::npos != pos || string::npos != lastPos)
     {
-    	string var = str.substr(lastPos, pos - lastPos);
+    	string var = strModifide.substr(lastPos, pos - lastPos);
     	// Found a token, add it to the vector.
 
        var = trim(var);
        var = removeCharacter(var);
-       	tokens.push_back(toUpper(var));
+       cout<<"VAR: "<<var<<endl;
+       tokens.push_back(toUpper(var));
         // Skip delimiters.  Note the "not_of"
-        lastPos = str.find_first_not_of(delimiters, pos);
+        lastPos = strModifide.find_first_not_of(delimiters, pos);
         // Find next "non-delimiter"
-        pos = str.find_first_of(delimiters, lastPos);
+        pos = strModifide.find_first_of(delimiters, lastPos);
     }
 }
 std::string StringUtils::trimPalabra(std::string cadena){

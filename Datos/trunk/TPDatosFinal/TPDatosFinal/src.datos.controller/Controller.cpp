@@ -40,7 +40,8 @@ Controller::Controller(std::string userMail,std::string password) {
 			fileName+=userMail+".dat";
 	this->strEmail = userMail;
 	this->strPass = password;
-	Hill::getInstance()->initialize(ENCRYPTION_KEY_SIZE,userMail.append(password));
+	if (ENCRYPTION)
+		Hill::getInstance()->initialize(ENCRYPTION_KEY_SIZE,userMail.append(password));
 	if(this->checkMailData() == 0){
 		this->mailAndPass = true;
 	}else{

@@ -60,6 +60,7 @@ void Consultation::consultSecondaryIndex(IndexConfig* indexConfig,list<int>* lis
 //				cout<<*itWords<<" ";
 //			}
 //			cout<<endl;
+			secondaryIndex->print(cout);
 			if(words.size() > 0){
 				for(itWords = words.begin(); itWords != words.end(); itWords++){
 					RegInvertedIndex* regInvertedIndex= new RegInvertedIndex();

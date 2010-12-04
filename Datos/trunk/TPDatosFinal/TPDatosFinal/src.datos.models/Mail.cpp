@@ -321,9 +321,9 @@ void Mail::parseMail(char* text){
 	string end = "\n--";
 
 	if(CONNECT == 1){
-		cout<<"*******************************************************************"<<endl;
-		cout<<text<<endl;
-		cout<<"*******************************************************************"<<endl;
+//		cout<<"*******************************************************************"<<endl;
+//		cout<<text<<endl;
+//		cout<<"*******************************************************************"<<endl;
 		this->setDate(this->parserCampo(textMail,endLine+date));
 		this->setTo(this->parserCampo(textMail,endLine+to));
 		this->setFrom(this->parserCampo(textMail,endLine+from));
