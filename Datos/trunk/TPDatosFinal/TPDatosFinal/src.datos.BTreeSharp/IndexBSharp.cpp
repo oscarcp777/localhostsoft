@@ -2585,5 +2585,5 @@ void IndexBSharp::deleteRegistry(Registry* reg) throw() {
 		this->manageRootUnderflow();
 	}
 
-	delete reg;
+//	delete reg;
 }
