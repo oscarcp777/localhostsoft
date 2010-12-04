@@ -8,16 +8,16 @@
 #include "GaussJordan.h"
 #include <math.h>
 #include <string.h>
-
+#include "../src.datos.utils/Define.h"
 
 using namespace std;
-GaussJordan::GaussJordan(int n, double** matriz, double** inversa) {
+GaussJordan::GaussJordan(int n, long double** matriz, long double** inversa) {
 	this->N = n;
 	this->identidad = inversa;
 
-	this->matriz = new double *[n];
+	this->matriz = new long double *[n];
 	for (int k=0; k<n; k++){
-		this->matriz[k] = new double[n];
+		this->matriz[k] = new long double[n];
 	}
 	for (int i = 0; i < this->N; i++) {
 		for (int j = 0; j < this->N; j++) {
@@ -35,6 +35,15 @@ GaussJordan::~GaussJordan() {
 	delete []this->matriz;
 }
 
+int GaussJordan::modL(long double value){
+
+	long double aux = fmod(value,CONST_L);
+	//cout<<"aux "<<aux<<endl;
+	if (aux < 0)
+		aux = aux + CONST_L;
+	//cout<<"modL "<<aux<<endl;
+	return aux;
+}
 
 void GaussJordan::hallar_inversa(long double num)
 {
@@ -50,7 +59,7 @@ void GaussJordan::hallar_inversa(long double num)
 		{
 			if(matriz[cont][cont2]!=0) //busca pivote (elemento ditinto de 0)
 			{
-				if(matriz[cont][cont2]!=1) //si pivote no es 1, se lo multiplica
+				if(matriz[cont][cont2]!=num) //si pivote no es 1, se lo multiplica
 				{
 					multip_fila(cont,pow(matriz[cont][cont2],-1));
 				}
@@ -60,6 +69,12 @@ void GaussJordan::hallar_inversa(long double num)
 
 				break;
 			}
+		}
+	}
+	for (int i = 0; i < this->N; i++) {
+		for (int j = 0; j < this->N; j++) {
+			cout<<"identidad["<<i<<"]["<<j<<"]"<<identidad[i][j]<<endl;
+			identidad[i][j] = modL((identidad[i][j]));
 		}
 	}
 
@@ -72,43 +87,45 @@ void GaussJordan::hallar_inversa(long double num)
 /* no es valida y la matriz no tiena inversa */
 /*--------------------------------------------------------------*/
 
-int flag = 0;
-
+//int flag = 0;
+//
 for(cont=0;cont<N;cont++)
 {
 	for(cont2=0;cont2<N;cont2++)
 	{
-		if(cont==cont2)
-		{
-			if(matriz[cont][cont2]!=num) flag=1;
-		}
-		else
-		{
-			if(matriz[cont][cont2]!=0) flag=1;
-		}
+//		if(cont==cont2)
+//		{
+//			if(matriz[cont][cont2]!=num) flag=1;
+//		}
+//		else
+//		{
+//			if(matriz[cont][cont2]!=0) flag=1;
+//		}
+		cout<<matriz[cont][cont2]<<" ";
 	}
+	cout<<endl;
 }
 
-
-
-if(flag==1)
-{
-	cout<<"La matriz no tiene inversa"<<endl;
-}
-else
-{
-	cout<<"La Matriz Inversa es :"<<endl;
-
-	for(cont=0;cont<N;cont++)
-	{
-		for(cont2=0;cont2<N;cont2++)
-		{
-			cout<<identidad[cont][cont2]<<" ";
-
-		}
-		cout<<endl;
-	}
-}
+//
+//
+//if(flag==1)
+//{
+//	cout<<"La matriz no tiene inversa"<<endl;
+//}
+//else
+//{
+//	cout<<"La Matriz Inversa es :"<<endl;
+//
+//	for(cont=0;cont<N;cont++)
+//	{
+//		for(cont2=0;cont2<N;cont2++)
+//		{
+//			cout<<identidad[cont][cont2]<<" ";
+//
+//		}
+//		cout<<endl;
+//	}
+//}
 
 }
 
@@ -187,26 +204,26 @@ void GaussJordan::permutar_filas(int fila1,int fila2)
 
 /*----------------------------------------------------------------------*/
 
-void GaussJordan::multip_fila(int fila,double factor)
+void GaussJordan::multip_fila(int fila,long double factor)
 {
 	int cont;
 
 	for(cont=0;cont<N;cont++)
 	{
-		matriz[fila][cont]=(matriz[fila][cont])*factor;
-		identidad[fila][cont]= (identidad[fila][cont])*factor;
+		matriz[fila][cont]= round((matriz[fila][cont])*factor);
+		identidad[fila][cont]= round((identidad[fila][cont])*factor);
 	}
 }
 
 /*----------------------------------------------------------------------*/
 
-void GaussJordan::sumar_fila_multip(int fila1,int fila2, double factor)
+void GaussJordan::sumar_fila_multip(int fila1,int fila2, long double factor)
 {
 	int cont;
 	for(cont=0;cont<N;cont++)
 	{
-		matriz[fila1][cont]=(matriz[fila1][cont])+((matriz[fila2][cont])*factor);
-		identidad[fila1][cont]= (identidad[fila1][cont])+((identidad[fila2][cont])*factor);
+		matriz[fila1][cont]=(matriz[fila1][cont])+ round(((matriz[fila2][cont])*factor));
+		identidad[fila1][cont]= (identidad[fila1][cont])+round(((identidad[fila2][cont])*factor));
 	}
 }
 

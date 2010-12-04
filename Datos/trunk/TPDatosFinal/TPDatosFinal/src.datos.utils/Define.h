@@ -17,7 +17,15 @@
 #define MAILSFILE "./files/mailsChico"
 #define PATHFILES "files/storage/"
 #define STOP_WORDS_FILE "./files/stopwords.txt"
-#define CONST_L 256
+
+
+//Encriptacion
+//--Activa o Desactiva el encriptado
+  	#define ENCRYPTION 1
+//--Cantidad de elementos en el alfabeto
+  	#define CONST_L 256
+//--Tamaño clave (numero caracteres a encriptar/desencriptar por vez)
+	#define ENCRYPTION_KEY_SIZE 4
 
 
 #define BOUNDARYMAIL "**********"

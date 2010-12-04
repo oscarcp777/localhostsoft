@@ -24,6 +24,7 @@ bool File::read(std::string& datos){
 	if (this->file.is_open()) {
 		/* lee del file una linea */
 		getline(this->file, datos);
+
 		/* chequea si se ha producido un error */
 		if (this->file.fail()){
 			/* el archivo esta vacio */
@@ -51,6 +52,13 @@ bool File::read(char* buffer, int tamanio, int pos){
 		this->file.seekp(0, std::ios_base::end);
  
 		this->file.read(buffer,tamanio);
+
+		if(ENCRYPTION){
+			//Desencripto buffer
+			Buffer* bufferAux = Hill::getInstance()->decrypt(buffer,tamanio);
+			memcpy(buffer, bufferAux->getData(), tamanio);
+			delete bufferAux;
+		}
 	}
 	else {
 		/* arroja una excepción porque el file no está abierto */
@@ -96,6 +104,13 @@ int File::write(std::string registro){
 
 
 void File::write(char* buffer, int tamanio, int pos){
+
+	if(ENCRYPTION){
+		//Encripto buffer
+		Buffer* bufferAux = Hill::getInstance()->encrypt(buffer,tamanio);
+		memcpy(buffer, bufferAux->getData(), tamanio);
+		delete bufferAux;
+	}
 
 	if (this->file.is_open()) {
 		if (pos >= 0)

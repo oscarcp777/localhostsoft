@@ -21,7 +21,9 @@ void TestCriptography::unitTest(){
 
 	cout << "Prueba Encriptacion" << endl;
 
-	Hill* hill = new Hill(8,"claveNoUtilizadaAun");
+	Hill* hill = Hill::getInstance();
+	hill->initialize(4,"caceres.oscar7");
+
 	hill->printKeyMatrix();
 	hill->printKeyInvertedMatrix();
 
@@ -38,10 +40,12 @@ void TestCriptography::unitTestWithBuffer(){
 
 	cout << "Prueba Encriptacion" << endl;
 
-	Hill* hill = new Hill(2,"clave");
+	Hill* hill = Hill::getInstance();
+	hill->initialize(8,"clave");
+
 	hill->printKeyMatrix();
 	hill->printKeyInvertedMatrix();
-	Buffer*  buffer= new Buffer(32);
+	Buffer*  buffer= new Buffer(64);
 	int number=1;
 	buffer->packField(&number,sizeof(number));
 	number=5;
@@ -50,7 +54,7 @@ void TestCriptography::unitTestWithBuffer(){
 	buffer->packField(&number,sizeof(number));
 	number=200;
 	buffer->packField(&number,sizeof(number));
-	string str="mensaje";
+	string str="mensaje largoo jajajajJAJAJAAJJOOOO";
 	int size=str.size();
 	buffer->packField(&size, sizeof(size));
 	buffer->packField(str.c_str(),size);

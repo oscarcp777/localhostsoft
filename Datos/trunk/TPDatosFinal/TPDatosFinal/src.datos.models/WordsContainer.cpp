@@ -56,7 +56,12 @@ void WordsContainer::addWord(string word){
 }
 void WordsContainer::print(){
 	vector<string>::iterator it;
+
 	for(it = this->getWordsBegin() ; it!= this->getWordsEnd() ; it++){
-		cout<<*it<<endl;
+		cout<<"PALABRA: "<<*it<<endl;
+//		for(unsigned int i= 0; i < (*it).size() ; i++){
+//			cout<<"CARACTER: "<<(*it).at(i)<<endl;
+//			cout<<"CARACTER EN INT: "<<int((*it).at(i))<<endl;
+//		}
 	}
 }

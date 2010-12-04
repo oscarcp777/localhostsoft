@@ -13,15 +13,15 @@
 #include "TestCompression.h"
 #include "TestManagerInvertedIndex.h"
 #include "TestCriptography.h"
-#include "TestStorage.h"
 
 
 
 using namespace std;
 
-int main_old2() {
+int main() {
 
 //	TestBSharp* test = new TestBSharp();
+//	Hill::getInstance()->initialize(ENCRYPTION_KEY_SIZE,"prueba");
 //	test->testInsert();
 //	test->testsearch();
 //	test->testInsertAndSearch();
@@ -33,13 +33,13 @@ int main_old2() {
 //	test->testInsertAndDelete();
 //	test->testInsertAndDeleteVariable();
 //	delete test;
-///*
+/*
 	//TEST STORAGE
    TestStorage* teststorage = new TestStorage();
-   teststorage->testParserMails();
+   teststorage->testBlock();
    delete teststorage;
 
-//*/
+*/
 
 //***********************************************
    	//TEST MAIL BLOCK MANAGER
@@ -62,10 +62,10 @@ int main_old2() {
 //*********************************************************************
 
 //**********************TEST CRIPTOGRAPHY******************************
-//	TestCriptography* test = new TestCriptography();
-//    test->unitTest();
-////	test->unitTestWithBuffer();
-//	delete test;
+	TestCriptography* test = new TestCriptography();
+  test->unitTest();
+//	test->unitTestWithBuffer();
+	delete test;
 //*********************************************************************
 
 //	TestManagerInvertedIndex* myTest = new TestManagerInvertedIndex();

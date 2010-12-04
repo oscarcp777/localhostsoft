@@ -16,7 +16,7 @@
 #include "StorageController.h"
 #include "IndexController.h"
 #include "../src.datos.classification/Classification.h"
-
+#include "../src.datos.cryptography/Hill.h"
 #include <vector>
 #include <stdlib.h>
 

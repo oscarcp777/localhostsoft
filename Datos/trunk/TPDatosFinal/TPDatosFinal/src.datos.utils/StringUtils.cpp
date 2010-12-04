@@ -198,10 +198,6 @@ string StringUtils::trim(std::string cadena){
  string cadenaSinEspacios;
 string caracter;
 
-cout<<"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"<<endl;
-cout<<"CADENA Q LLEGA AL TRIM "<<endl;
-cout<<cadena<<endl;
-cout<<"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"<<endl;
 	while ( It != cadena.end() ){
 
 		caracter = *It;
@@ -210,10 +206,10 @@ cout<<"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"<<endl;
 			//si el caracter es un espacio leo el siguiente
 			It++;
 			caracter = *It;
-			if((caracter.compare(" ") == 0) || (caracter.compare("\n") == 0) || (caracter.compare("\t") == 0)){
+			if((caracter.compare(" ") == 0) || (caracter.compare("\n") == 0) || (caracter.compare("\t") == 0) || (caracter.compare("\r") == 0)){
 				//si es otro espacio, itero hasta que sea distinto de espacio
 	        	//cadenaSinEspacios+=*It;
-				while((caracter.compare(" ") == 0) || (caracter.compare("\n") == 0) || (caracter.compare("\t") == 0)){
+				while((caracter.compare(" ") == 0) || (caracter.compare("\n") == 0) || (caracter.compare("\t") == 0) || (caracter.compare("\r") == 0)){
 				It++;
 				caracter = *It;
 				}
@@ -235,14 +231,19 @@ cout<<"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"<<endl;
 			It++;
 
 		}
+		else if(caracter.compare("\r") == 0){
+					//si es un salto de linea
+					It++;
+
+				}
 		else if(caracter.compare("\t") == 0){
 			//si es tab leo el siguiente y analizo lo que viene
 			It++;
 			caracter = *It;
-			if((caracter.compare(" ") == 0) || (caracter.compare("\n") == 0) || (caracter.compare("\t") == 0)){
+			if((caracter.compare(" ") == 0) || (caracter.compare("\n") == 0) || (caracter.compare("\t") == 0) || (caracter.compare("\r") == 0)){
 				//si es un espacio o tab o enter, itero hasta que sea distinto de esos
 	        	//cadenaSinEspacios+=*It;
-				while((caracter.compare(" ") == 0) || (caracter.compare("\n") == 0) || (caracter.compare("\t") == 0)){
+				while((caracter.compare(" ") == 0) || (caracter.compare("\n") == 0) || (caracter.compare("\t") == 0) || (caracter.compare("\r") == 0)){
 				It++;
 				caracter = *It;
 				}
@@ -321,9 +322,8 @@ void StringUtils::TokenizeAndTrimAndUpper(const string& str, vector<string>& tok
     {
     	string var = str.substr(lastPos, pos - lastPos);
     	// Found a token, add it to the vector.
-      cout<<"var antes del trim "<<var<<endl;
+
        var = trim(var);
-       cout<<"var despues del trim "<<var<<endl;
        var = removeCharacter(var);
        	tokens.push_back(toUpper(var));
         // Skip delimiters.  Note the "not_of"

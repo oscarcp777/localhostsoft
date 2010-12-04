@@ -128,7 +128,7 @@ int connection(char* username,char* password, StorageController* storageControll
 		printf("stat: %d bytes\n",stat2bytes(srvdata));
 		free(srvdata);
 
-		i = 15;//numberOfMails;
+		i = 20;//numberOfMails;
 		while(i){
 			srvdata=pop3_retr(mysock,i);
 			mymessage=retr2msg(srvdata);

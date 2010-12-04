@@ -66,7 +66,7 @@ void ManagerInvertedIndex::loadMessageWords(Mail* mail, IndexBSharp* indexBSharp
 		}
 		count++;
 	}
-	//this->printMap(cout);
+	this->printMap(cout);
 	this->writeOrUpdateInvertedIndex(indexBSharp);
 	delete this->currentWords;
 	this->regMap.clear();

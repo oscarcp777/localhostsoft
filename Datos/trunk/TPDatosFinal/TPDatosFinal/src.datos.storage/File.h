@@ -13,6 +13,7 @@
 #include <fstream>
 #include <sstream>
 #include "../src.datos.utils/Define.h"
+#include "../src.datos.cryptography/Hill.h"
 
 using namespace std;
 

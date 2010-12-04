@@ -47,12 +47,12 @@ void TestBSharp::testInsert(){
 }
 void TestBSharp::testInsertAndDelete(){
 
-	int cantidad_insertar = 50000;
+	int cantidad_insertar = 500;
 	map<int,int> vecInserts;
 	string max;
 	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTree.dat",BLOCK_SIZE,TYPE_REG_PRIMARY);
 	for (int var =0; var < cantidad_insertar; ++var) {
-		int keyInt=rand()%100000;
+		int keyInt=rand()%10000;
 		vecInserts[keyInt] = keyInt;
 	}
 	int i=0;
@@ -63,7 +63,7 @@ void TestBSharp::testInsertAndDelete(){
 		KeyInteger* key= new KeyInteger((*it).second);
 		regPrimary->setKey(key);
 		regPrimary->setNumberBlock(var);
-		cout<<" Inserto el : "<<i++;
+		cout<<"Insertar "<<i++<<": ";
 		regPrimary->print(cout);
 		indexBSharp->addRegistry(regPrimary);
 		var++;
@@ -79,7 +79,7 @@ void TestBSharp::testInsertAndDelete(){
 		RegPrimary* regPrimary = new RegPrimary();
 		KeyInteger* key= new KeyInteger((*it).second);
 		regPrimary->setKey(key);
-		cout<<" Deleteo el : "<<i<<" ";
+		cout<<"Eliminar "<<i<<": ";
 		regPrimary->print(cout);
 		indexBSharp->deleteRegistry(regPrimary);
 	}
@@ -87,7 +87,7 @@ void TestBSharp::testInsertAndDelete(){
 	RegPrimary* regPrimary = new RegPrimary();
 	KeyInteger* key= new KeyInteger((*it).second);
 	regPrimary->setKey(key);
-	cout<<" Deleteo el : "<<i;
+	cout<<"Eliminar "<<i<<": ";
 	regPrimary->print(cout);
 	indexBSharp->deleteRegistry(regPrimary);
 
@@ -156,20 +156,21 @@ void TestBSharp::testInsertAndDeleteVariable(){
 
 
 void TestBSharp::testInsertAndSearch(){
-	int cantidadAInsertar = 50000;
+	int cantidadAInsertar = 8000;
 	IndexBSharp* indexBSharp = new IndexBSharp("files/storage/BTreeInsertandSearch.dat",BLOCK_SIZE,TYPE_REG_PRIMARY);
-	indexBSharp->print(std::cout);
+//	indexBSharp->print(std::cout);
 	int vecInserts[cantidadAInsertar];
 	int j=0;
 	for (int var =0; var < cantidadAInsertar; ++var) {
 		RegPrimary* regPrimary = new RegPrimary();
-		int keyInt=rand()%1000000;
+		int keyInt=rand()%100000;
 		KeyInteger* key= new KeyInteger(keyInt);
 		regPrimary->setKey(key);
 		regPrimary->setNumberBlock(var);
 		indexBSharp->addRegistry(regPrimary);
 		vecInserts[var]=keyInt;
 	}
+	indexBSharp->print(cout);
 	for (int var = cantidadAInsertar - 1; var >= 0; --var) {
 		RegPrimary* regPrimary = new RegPrimary();
 		KeyInteger* key= new KeyInteger(vecInserts[var]);
@@ -182,6 +183,7 @@ void TestBSharp::testInsertAndSearch(){
 			regPrimary->print(std::cout);
 			j++;
 		}
+		delete regPrimary;
 	}
 	cout<<" Se encontraron "<< j << " registros!" <<endl;
 	delete indexBSharp;

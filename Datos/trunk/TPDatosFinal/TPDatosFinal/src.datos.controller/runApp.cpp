@@ -93,9 +93,7 @@ int mainfghfghfghfgh(int argc,char** argv){
 	}
 
 
-	Controller* control = new Controller(userMail);
-	control->addEmail(userMail);
-	control->addPass(userPass);
+	Controller* control = new Controller(userMail,userPass);
 
 		/*Analisis de argumentos*/
 		if(argc>1){
