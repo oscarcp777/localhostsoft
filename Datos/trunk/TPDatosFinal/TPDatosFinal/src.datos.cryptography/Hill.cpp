@@ -9,53 +9,10 @@
 using namespace std;
 #include <math.h>
 
+Hill *Hill::instance = NULL;
 
+Hill::Hill() {
 
-Hill::Hill(const int keySize, string clave) {
-	this->keySize = keySize;
-	this->keyMatrix = new double *[keySize];
-	for (int k=0; k<keySize; k++)
-		this->keyMatrix[k] = new double[keySize];
-
-	this->keyInvertedMatrix = new double *[keySize];
-	for (int k=0; k<keySize; k++)
-		this->keyInvertedMatrix[k] = new double[keySize];
-
-	//NOTA El det(keyMatrix) mod 128 = 1 para que funcione el metodo
-	double aux;
-	// Armado matriz clave
-	aux = this->buildKeyMatrix(clave);
-//	this->testMatrix2x2();
-	cout << "LLEGO " <<aux<< endl;
-	cout << this->modL(aux)<< endl;
-//	this->printKeyMatrix();
-	// Armado matriz clave inversa
-	this->buildKeyInverted(aux);
-	cout << "LLEGO " << endl;
-//	this->testInvertedMatrix2x2();
-
-
-//	this->buildKeyMatrix(clave); //TODO CAMBIAR......( el metodo hallar_inversa me modifica  la KeyMatrix, por eso la genero de nuevo, seria mejor hacer un memcpy o algo asi)
-//	this->testMatrix2x2();
-}
-void Hill::buildKeyInverted(long double num){
-	GaussJordan* gaussJordan = new GaussJordan(this->keySize, this->keyMatrix, this->keyInvertedMatrix);
-	gaussJordan->hallar_inversa(num);
-	delete gaussJordan;
-}
-void Hill::testMatrix2x2(){
-	//NOTA ver que 4x65 - 3 = 257, y 257 mod 256 = 1, verifica condicion
-	this->keyMatrix[0][0] = 4;
-	this->keyMatrix[0][1] = 3;
-	this->keyMatrix[1][0] = 1;
-	this->keyMatrix[1][1] = 65;
-}
-
-void Hill::testInvertedMatrix2x2(){
-	this->keyInvertedMatrix[0][0] = 65;
-	this->keyInvertedMatrix[0][1] = -3;
-	this->keyInvertedMatrix[1][0] = -1;
-	this->keyInvertedMatrix[1][1] = 4;
 }
 
 Hill::~Hill() {
@@ -66,6 +23,40 @@ Hill::~Hill() {
 			delete []this->keyInvertedMatrix[k];
 	delete []this->keyInvertedMatrix;
 
+}
+
+
+void Hill::initialize(const int keySize, string clave){
+	this->keySize = keySize;
+	this->keyMatrix = new long double *[keySize];
+	for (int k=0; k<keySize; k++)
+		this->keyMatrix[k] = new long double[keySize];
+
+	this->keyInvertedMatrix = new long double *[keySize];
+	for (int k=0; k<keySize; k++)
+		this->keyInvertedMatrix[k] = new long double[keySize];
+
+	//NOTA El det(keyMatrix) mod 128 = 1 para que funcione el metodo
+	long double aux;
+	// Armado matriz clave
+	aux = this->buildKeyMatrix(clave);
+	// Armado matriz clave inversa
+	cout<<"NUM IDENTIDAD: "<<aux<<endl;
+	this->buildKeyInverted(aux);
+}
+
+Hill *Hill::getInstance()
+{
+	 if (!Hill::instance)
+		Hill::instance = new Hill();
+	 return Hill::instance;
+}
+
+
+void Hill::buildKeyInverted(long double num){
+	GaussJordan* gaussJordan = new GaussJordan(this->keySize, this->keyMatrix, this->keyInvertedMatrix);
+	gaussJordan->hallar_inversa(num);
+	delete gaussJordan;
 }
 
 Buffer* Hill::encrypt(char* messageToEncrypt,int size){
@@ -104,12 +95,12 @@ void Hill::printKeyInvertedMatrix(){
 		cout << endl;
 	}
 }
-Buffer* Hill::translate(char* messageOriginal,int sizeText, double** matrix){
+Buffer* Hill::translate(char* messageOriginal,int sizeText, long double** matrix){
 
 	Buffer* result= new Buffer(sizeText);
 	int n = 0;
 	int j = 0;
-	double* textPart = new double[this->keySize];
+	long double* textPart = new long double[this->keySize];
 	char letter;
 
 	while (n < sizeText) {
@@ -118,7 +109,7 @@ Buffer* Hill::translate(char* messageOriginal,int sizeText, double** matrix){
 		textPart[j++] = int(c);
 		if (j >= this->keySize) {
 
-			double* multiplyResult = productVectorPerMatrix(textPart, matrix);
+			long double* multiplyResult = productVectorPerMatrix(textPart, matrix);
 			modL(multiplyResult);
 
 			for (int i = 0; i < this->keySize; i++) {
@@ -134,12 +125,12 @@ Buffer* Hill::translate(char* messageOriginal,int sizeText, double** matrix){
 	return result;
 
 }
-string Hill::translate(string text, double** matrix){
+string Hill::translate(string text, long double** matrix){
 
 	string result;
 	unsigned int n = 0;
 	int j = 0;
-	double* textPart = new double[this->keySize];
+	long double* textPart = new long double[this->keySize];
 	char letter;
 
 	//FIX-ME este codigo comentado es para solucionar si el mensaje no es multiplo de el tamaño clave
@@ -156,11 +147,11 @@ string Hill::translate(string text, double** matrix){
 		textPart[j++] = int(c);
 		if (j >= this->keySize) {
 
-			double* multiplyResult = productVectorPerMatrix(textPart, matrix);
+			long double* multiplyResult = productVectorPerMatrix(textPart, matrix);
 			modL(multiplyResult);
 
 			for (int i = 0; i < this->keySize; i++) {
-				double aux = round(multiplyResult[i]);
+				long double aux = multiplyResult[i];
 				int round = aux;
 				if (DEBUG) cout <<"Sin round: "<<multiplyResult[i]<<"  Con round: "<< round;
 				letter = char(round);
@@ -180,26 +171,26 @@ string Hill::translate(string text, double** matrix){
 
 
 
-double* Hill::productVectorPerMatrix(double *vector, double** matrix){
+long double* Hill::productVectorPerMatrix(long double *vector, long double** matrix){
 
-	double* result = new double[this->keySize];
+	long double* result = new long double[this->keySize];
 	int i, j;
 
 	for (i = 0; i < this->keySize; i++) {
 		result[i] = 0;
 		for (j = 0; j < this->keySize; j++)
-			result[i] += round(matrix[i][j] * vector[j]);
+			result[i] += modL(round(matrix[i][j] * vector[j]));
 		if (DEBUG) cout << " en product: "<<result[i]<<endl;
 	}
 	return result;
 
 }
 
-void Hill::modL(double *vector){
+void Hill::modL(long double *vector){
 
 	for (int i = 0; i < this->keySize; i++) {
-		long int toInt = (long int)vector[i];
-		int aux =  toInt % CONST_L;
+
+		long double  aux =  fmod(vector[i],CONST_L);
 		if (aux < 0) aux = aux + CONST_L;
 		vector[i] = aux;
 		if (DEBUG) cout <<"en MOD:"<< vector[i]<<endl;
@@ -207,8 +198,8 @@ void Hill::modL(double *vector){
 
 }
 
-int Hill::modL(long int value){
-	int aux = value % CONST_L;
+long double Hill::modL(long double value){
+	long double aux = fmod(value,CONST_L);
 	if (aux < 0)
 		aux = aux + CONST_L;
 	return aux;
@@ -254,7 +245,7 @@ long double Hill::buildKeyMatrix(string word){
 
 	//corregir el elemento superior izquierdo, primero hago productoria de la diagonal (sin el sup izq)
 	for(int i=1 ; i < this->keySize; i++){
-		aux = aux* this->keyMatrix[i][i];
+		aux = modL(aux* this->keyMatrix[i][i]);
 	}
 	//a la productoria le hago inversa mod L
 	long double aux2 = aux;

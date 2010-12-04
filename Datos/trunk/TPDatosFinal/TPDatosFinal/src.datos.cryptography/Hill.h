@@ -13,15 +13,25 @@
 #include "../src.datos.storage/Buffer.h"
 #include "GaussJordan.h"
 
+
 class Hill: public Encryption {
+
 public:
+
 	/**
-	 * Construye encriptador con un N y clave determinados
+	 * Singleton, metodo devuelve instancia unica de la clase
+	 */
+	static Hill *getInstance();
+
+	/**
+	 * Metodo que debe ser llamado luego de pedir por primera vez dicha instancia, setea tamaño y clave necesarias
+	 * para la encriptacion
 	 *
 	 * @param keySize  Tamaño clave (numero caracteres a encriptar/desencriptar por vez)
 	 * @param clave Clave utilizada para armar la matriz clave correspondiente a este metodo
 	 */
-	Hill(const int keySize, string clave);
+	void initialize(const int keySize, string clave);
+
 	virtual ~Hill();
 
 	/**
@@ -68,15 +78,26 @@ public:
 
 
 private:
+
+	/**
+	 * Instancia singleton de la clase
+	 */
+	static Hill *instance;
+
+	/**
+	 * Constructor privado (singleton) de la clase
+	 */
+	Hill();
+
 	/**
 	 * Matriz clave de este metodo (para encriptar), su determinante mod 128 tiene que ser igual a 1
 	 */
-	double** keyMatrix;
+	long double** keyMatrix;
 
 	/**
 	 * Matriz clave inversa de este metodo (para desencriptar)
 	 */
-	double** keyInvertedMatrix;
+	long double** keyInvertedMatrix;
 
 	/**
 	 * Multiplica un vector por una matriz
@@ -85,15 +106,15 @@ private:
 	 * @param matrix Matriz dada para realizar el producto
 	 * @return double* Vector resultante del producto
 	 */
-	double* productVectorPerMatrix(double* vector, double** matrix);
+	long double* productVectorPerMatrix(long double* vector, long double** matrix);
 
 	/**
 	 * Aplica mod 128 a todos los elementos del vector dado
 	 *
 	 * @param vector Vector dado para realizar la operacion
 	 */
-	void modL(double* vector);
-	int modL(long int value);
+	void modL(long double* vector);
+	long double modL(long double value);
 	int inverseModL(int num);
 	int H1(string word);
 	int H2(string word);
@@ -107,13 +128,15 @@ private:
 	 * @param matrix Matriz a usar para la traduccion
 	 * @return string Devuelve el mensaje convertido (encriptado o desencriptado)
 	 */
-	string translate(string text, double** matrix);
-	Buffer* translate(char* messageOriginal,int sizeText, double** matrix);
+	string translate(string text, long double** matrix);
+	Buffer* translate(char* messageOriginal,int sizeText,long double** matrix);
 
 	//BORRAR
 	void testMatrix2x2();
 	void testInvertedMatrix2x2();
 
 };
+
+
 
 #endif /* HILL_H_ */
