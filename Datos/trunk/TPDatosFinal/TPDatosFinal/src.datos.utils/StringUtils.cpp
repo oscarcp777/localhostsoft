@@ -202,6 +202,23 @@ string StringUtils::removeCharacter(std::string cadena){
 
 	return cadena;
 }
+
+bool StringUtils::isDirtycharacter(std::string cadena, vector<string> vec){
+	vector<string>::iterator it = vec.begin();
+	bool dirty = false;
+
+//	cout<<"caracter a comparar: "<<cadena<<endl;
+	for(it = vec.begin(); it != vec.end(); it++){
+		if((cadena.at(0) == (*it).at(0)) || (cadena.size() == 0)){
+			dirty = true;
+			break;
+		}
+
+	}
+
+//	cout<<"dirty: "<<dirty<<endl;
+	return dirty;
+}
 string StringUtils::trim(std::string cadena){
  string::iterator It = cadena.begin();
  string cadenaSinEspacios;
@@ -297,7 +314,65 @@ std::string StringUtils::toUpper(std::string word){
 	return word;
 }
 void StringUtils::TokenizeAndTrimAndUpper(const string& str, vector<string>& tokens, const string& delimiters ){
-
+	string point = ".";
+		string coma = ",";
+		string comilla = "\"";
+		string par1 = "(";
+		string par2 = ")";
+		string puntoComa = ";";
+		string dosPuntos = ":";
+		string menor = "<";
+		string mayor = ">";
+		string pipe = "|";
+		string admir1 = "!";
+		string admir2 = "¡";
+		string guionMedio = "-";
+		string barra = "/";
+		string ampersand = "&";
+		string numeral = "#";
+		string mas = "+";
+		string arroba = "@";
+		string asterisco = "*";
+		string llave1 = "{";
+		string llave2 = "}";
+		string int1 = "?";
+		string int2 = "¿";
+		string com = "`";
+		string cor1 = "[";
+		string cor2 = "]";
+		string comi = "'";
+		string nuflo = "~";
+		string guionBajo = "_";
+		vector<string> vec;
+		vec.push_back(point);
+		vec.push_back(coma);
+		vec.push_back(comilla);
+		vec.push_back(par1);
+		vec.push_back(par2);
+		vec.push_back(puntoComa);
+		vec.push_back(dosPuntos);
+		vec.push_back(menor);
+		vec.push_back(mayor);
+		vec.push_back(pipe);
+		vec.push_back(admir1);
+		vec.push_back(admir2);
+		vec.push_back(guionMedio);
+		vec.push_back(barra);
+		vec.push_back(ampersand);
+		vec.push_back(numeral);
+		vec.push_back(mas);
+		vec.push_back(arroba);
+		vec.push_back(asterisco);
+		vec.push_back(llave1);
+		vec.push_back(llave2);
+		vec.push_back(int1);
+		vec.push_back(int2);
+		vec.push_back(com);
+		vec.push_back(cor1);
+		vec.push_back(cor2);
+		vec.push_back(comi);
+		vec.push_back(nuflo);
+		vec.push_back(guionBajo);
 
 
 //	cout<<"*********************EN TokenizeAndTrimAndUpper*******************************"<<endl;
@@ -313,9 +388,7 @@ void StringUtils::TokenizeAndTrimAndUpper(const string& str, vector<string>& tok
 	  strModifide = replaceIntChar(strModifide,10," ");
 	strModifide = replaceIntChar(strModifide ,13," ");
 	strModifide = replaceIntChar(strModifide ,9," ");
-    StringUtils::replaceAll(strModifide,"<",1,"");
-    StringUtils::replaceAll(strModifide,">",1,"");
-    StringUtils::replaceAll(strModifide,"|",1,"");
+
 //	cout<<"BORRANDO CARACTERES, CADENA"<<endl;
 //	cout<<strModifide<<endl;
 //	cout<<"FIN CADENA"<<endl;
@@ -332,8 +405,9 @@ void StringUtils::TokenizeAndTrimAndUpper(const string& str, vector<string>& tok
 
        var = trim(var);
        var = removeCharacter(var);
-       cout<<"VAR: "<<var<<endl;
-       tokens.push_back(toUpper(var));
+     //  cout<<"VAR: "<<var<<endl;
+       if(!StringUtils::isDirtycharacter(var,vec))
+    	   tokens.push_back(toUpper(var));
         // Skip delimiters.  Note the "not_of"
         lastPos = strModifide.find_first_not_of(delimiters, pos);
         // Find next "non-delimiter"

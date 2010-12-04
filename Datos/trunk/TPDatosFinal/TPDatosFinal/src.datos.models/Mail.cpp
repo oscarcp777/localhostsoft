@@ -171,6 +171,7 @@ string Mail::parserCampo(string textMail,string campo ){
 	string endMail = ">";
 	string caracter = " =?";
 	string aux="";
+	string separator="";
 	posInitial = textMail.find(campo.c_str(),0);
 	posFinal = textMail.find(endLine.c_str(),posInitial+campo.size());
 	if(posInitial >= 0 && posFinal>=0 ){
@@ -183,10 +184,18 @@ string Mail::parserCampo(string textMail,string campo ){
 				aux= aux.substr(posInitial+1,posFinal-(posInitial+1));
 			}
 		}
-		if(campo.compare("\nSubject: ")==0||campo.compare("Subject: ")==0){
+		else if(campo.compare("\nSubject: ")==0||campo.compare("Subject: ")==0){
 			posInitial = aux.find(caracter.c_str(),0);
 			if(posInitial >= 0){
 				aux= aux.substr(0,posInitial);
+			}
+		}
+		else if(campo.compare("\nTo: ")==0||campo.compare("To: ")==0){
+			//busco si el mail tiene <> porque si es un contacto figura como "nombreContacto <contacto@gmail.com>
+			posInitial = aux.find(beginMail.c_str(),0);
+			if(posInitial >= 0){
+				posFinal = aux.find(endMail.c_str(),posInitial);
+				aux= aux.substr(posInitial+1,posFinal-(posInitial+1));
 			}
 		}
 	}
