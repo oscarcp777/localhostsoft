@@ -92,12 +92,12 @@ private:
 	/**
 	 * Matriz clave de este metodo (para encriptar), su determinante mod 128 tiene que ser igual a 1
 	 */
-	long double** keyMatrix;
+	double** keyMatrix;
 
 	/**
 	 * Matriz clave inversa de este metodo (para desencriptar)
 	 */
-	long double** keyInvertedMatrix;
+	double** keyInvertedMatrix;
 
 	/**
 	 * Multiplica un vector por una matriz
@@ -106,15 +106,15 @@ private:
 	 * @param matrix Matriz dada para realizar el producto
 	 * @return double* Vector resultante del producto
 	 */
-	long double* productVectorPerMatrix(long double* vector, long double** matrix);
+	double* productVectorPerMatrix(double* vector, double** matrix);
 
 	/**
 	 * Aplica mod 128 a todos los elementos del vector dado
 	 *
 	 * @param vector Vector dado para realizar la operacion
 	 */
-	void modL(long double* vector);
-	long double modL(long double value);
+	void modL(double* vector);
+	int modL(long int value);
 	int inverseModL(int num);
 	int H1(string word);
 	int H2(string word);
@@ -128,8 +128,8 @@ private:
 	 * @param matrix Matriz a usar para la traduccion
 	 * @return string Devuelve el mensaje convertido (encriptado o desencriptado)
 	 */
-	string translate(string text, long double** matrix);
-	Buffer* translate(char* messageOriginal,int sizeText,long double** matrix);
+	string translate(string text, double** matrix);
+	Buffer* translate(char* messageOriginal,int sizeText, double** matrix);
 
 	//BORRAR
 	void testMatrix2x2();
