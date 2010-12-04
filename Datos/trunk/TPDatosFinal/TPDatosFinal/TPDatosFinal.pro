@@ -2,7 +2,8 @@ TEMPLATE = app
 TARGET = TPDatosFinal
 QT += core \
     gui
-HEADERS += DialogHelp.h \
+HEADERS += src.datos.controller/Session.h \
+    DialogHelp.h \
     lib/libspopc.h \
     src.datos.classification/Classification.h \
     src.datos.compression/BitInput.h \
@@ -65,7 +66,8 @@ HEADERS += DialogHelp.h \
     dialog.h \
     dialogMail.h \
     tpdatosfinal.h
-SOURCES += DialogHelp.cpp \
+SOURCES += src.datos.controller/Session.cpp \
+    DialogHelp.cpp \
     src.datos.interface/Console.cpp \
     src.datos.classification/Classification.cpp \
     src.datos.compression/BitInput.cpp \
