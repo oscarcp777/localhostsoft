@@ -31,7 +31,8 @@ int main12345678(int argc,char** argv){
 	//----- ./Aplicacion -f stringAbuscar
 	//----- ./Application -si email TYPE_CLASSIFICATION/TYPE_SELECTION CONDITION (VALOR) filterName
 	//----- ./Application -li filterName
-		Controller* control = new Controller();
+
+				Controller* control=NULL;
 
 		/*Analisis de argumentos*/
 		if(argc>1){
