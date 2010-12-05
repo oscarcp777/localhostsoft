@@ -2,6 +2,8 @@
 #include "StringUtils.h"
 #include "Define.h"
 #include <cstdlib>
+#include <stdio.h>
+#include <string.h>
 #include<sstream>
 #include <time.h>
 #include <QtGui>
@@ -9,7 +11,8 @@
  StringUtils::StringUtils(){
 }
  string StringUtils::replaceCharacterASCII(string originalText){
-
+	 //Acentos áéíóó y otros Ñ ñ ü
+	 //Acentos =E1=E9=ED=F3=F3 y otros =D1 =F1 =FC
 	 string
 	 newText=StringUtils::replaceAll(originalText,"=E1",3,"a");
 	 newText=StringUtils::replaceAll(newText,"=E9",3,"e");
@@ -319,65 +322,71 @@ std::string StringUtils::toUpper(std::string word){
 	return word;
 }
 void StringUtils::TokenizeAndTrimAndUpper(const string& str, vector<string>& tokens, const string& delimiters ){
-	string point = ".";
-		string coma = ",";
-		string comilla = "\"";
-		string par1 = "(";
-		string par2 = ")";
-		string puntoComa = ";";
-		string dosPuntos = ":";
-		string menor = "<";
-		string mayor = ">";
-		string pipe = "|";
-		string admir1 = "!";
-		string admir2 = "¡";
-		string guionMedio = "-";
-		string barra = "/";
-		string ampersand = "&";
-		string numeral = "#";
-		string mas = "+";
-		string arroba = "@";
-		string asterisco = "*";
-		string llave1 = "{";
-		string llave2 = "}";
-		string int1 = "?";
-		string int2 = "¿";
-		string com = "`";
-		string cor1 = "[";
-		string cor2 = "]";
-		string comi = "'";
-		string nuflo = "~";
-		string guionBajo = "_";
-		vector<string> vec;
-		vec.push_back(point);
-		vec.push_back(coma);
-		vec.push_back(comilla);
-		vec.push_back(par1);
-		vec.push_back(par2);
-		vec.push_back(puntoComa);
-		vec.push_back(dosPuntos);
-		vec.push_back(menor);
-		vec.push_back(mayor);
-		vec.push_back(pipe);
-		vec.push_back(admir1);
-		vec.push_back(admir2);
-		vec.push_back(guionMedio);
-		vec.push_back(barra);
-		vec.push_back(ampersand);
-		vec.push_back(numeral);
-		vec.push_back(mas);
-		vec.push_back(arroba);
-		vec.push_back(asterisco);
-		vec.push_back(llave1);
-		vec.push_back(llave2);
-		vec.push_back(int1);
-		vec.push_back(int2);
-		vec.push_back(com);
-		vec.push_back(cor1);
-		vec.push_back(cor2);
-		vec.push_back(comi);
-		vec.push_back(nuflo);
-		vec.push_back(guionBajo);
+//	string point = ".";
+//		string coma = ",";
+//		string comilla = "\"";
+//		string par1 = "(";
+//		string par2 = ")";
+//		string puntoComa = ";";
+//		string dosPuntos = ":";
+//		string menor = "<";
+//		string mayor = ">";
+//		string pipe = "|";
+//		string admir1 = "!";
+//		string admir2 = "¡";
+//		string guionMedio = "-";
+//		string barra = "/";
+//		string ampersand = "&";
+//		string numeral = "#";
+//		string mas = "+";
+//		string arroba = "@";
+//		string asterisco = "*";
+//		string llave1 = "{";
+//		string llave2 = "}";
+//		string int1 = "?";
+//		string int2 = "¿";
+//		string com = "`";
+//		string cor1 = "[";
+//		string cor2 = "]";
+//		string comi = "'";
+//		string nuflo = "~";
+//		string guionBajo = "_";
+//		string signoPesos = "$";
+//		string igual = "=";
+//		string pico = "^";
+//		vector<string> vec;
+//		vec.push_back(point);
+//		vec.push_back(coma);
+//		vec.push_back(comilla);
+//		vec.push_back(par1);
+//		vec.push_back(par2);
+//		vec.push_back(puntoComa);
+//		vec.push_back(dosPuntos);
+//		vec.push_back(menor);
+//		vec.push_back(mayor);
+//		vec.push_back(pipe);
+//		vec.push_back(admir1);
+//		vec.push_back(admir2);
+//		vec.push_back(guionMedio);
+//		vec.push_back(barra);
+//		vec.push_back(ampersand);
+//		vec.push_back(numeral);
+//		vec.push_back(mas);
+//		vec.push_back(arroba);
+//		vec.push_back(asterisco);
+//		vec.push_back(llave1);
+//		vec.push_back(llave2);
+//		vec.push_back(int1);
+//		vec.push_back(int2);
+//		vec.push_back(com);
+//		vec.push_back(cor1);
+//		vec.push_back(cor2);
+//		vec.push_back(comi);
+//		vec.push_back(nuflo);
+//		vec.push_back(guionBajo);
+//		vec.push_back(signoPesos);
+//		vec.push_back(igual);
+//		vec.push_back(pico);
 
 
 //	cout<<"*********************EN TokenizeAndTrimAndUpper*******************************"<<endl;
@@ -387,6 +396,9 @@ void StringUtils::TokenizeAndTrimAndUpper(const string& str, vector<string>& tok
 	// char "\n" en int 10
 	//char "\r" en int 13
 	//char "\t" en int 9
+
+	string dirtyChars = "\"\\<>()'@|.:;,!¡¿-_+*[]{}´¨°¬#$%&^/=?`~";
+
 	QString message=  QString(str.c_str());
 	QByteArray array=   message.toAscii();
 	string strModifide=array.data();
@@ -410,10 +422,12 @@ void StringUtils::TokenizeAndTrimAndUpper(const string& str, vector<string>& tok
 
        var = trim(var);
        var = removeCharacter(var);
-     //  cout<<"VAR: "<<var<<endl;
-       if(!StringUtils::isDirtycharacter(var,vec))
-    	   tokens.push_back(toUpper(var));
-        // Skip delimiters.  Note the "not_of"
+
+//       if(!StringUtils::isDirtycharacter(var,vec))
+//    	   tokens.push_back(toUpper(var));
+       if(strpbrk(var.c_str(),dirtyChars.c_str()) == NULL)
+    	   	   tokens.push_back(toUpper(var));
+       // Skip delimiters.  Note the "not_of"
         lastPos = strModifide.find_first_not_of(delimiters, pos);
         // Find next "non-delimiter"
         pos = strModifide.find_first_of(delimiters, lastPos);
