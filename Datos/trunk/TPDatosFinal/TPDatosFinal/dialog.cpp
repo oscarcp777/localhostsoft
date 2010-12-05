@@ -262,6 +262,8 @@ void Dialog::buscarClick()
 					if(strResult.size()==0){
 					textoBuscado.append(control->getMessage().c_str());
 					this->setMessages(textoBuscado.toStdString(),true);
+					}else{
+						this->setMessages(textoBuscado.toStdString(),true);
 					}
 
 			}else{
