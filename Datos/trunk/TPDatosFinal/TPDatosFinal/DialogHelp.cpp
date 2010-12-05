@@ -10,18 +10,28 @@
 DialogHelp::DialogHelp(){
 
 	this->setMinimumHeight(600);
-	this->setMinimumWidth(550);
+	this->setMinimumWidth(800);
 	QString mensaje;
 	mensaje.append("<table width=\"100%\" border=1 cellspacing=0>\n");
-    mensaje.append("<tr><td align=\"center\" bgcolor=\"#E0E0E0\"><font size=\"+3\">");
-	mensaje.append("\n<br>\n<i>     Manual  de usuario Arquitect Mail Application</i></b></font>\n</td></tr>");
-    mensaje.append("<tr><td bgcolor=\"#E0E0E0\"><font size=\"+1\"><ul type=\"circle\">");
-    mensaje.append("\n<br>\n<li>Importante: Recuerde que para poder visualizar el mail completo debera ingresar en numero de Iuc en area de Buscar y luego hacer clic en Ver</li></b>");
-	mensaje.append("<li>Si desea bajar los mails del servidor debera hacer click en Resguardar mails</li></b>");
-	mensaje.append("<li>Para poder crear filtros debera hacer click en los diferentes filtros From,To,Subject,Date tanto en clasification como seleccion y luego hacer click en Configuracion y en el panel de abajo le aparecera los filtros que ud creo</li></b>");
-	mensaje.append("<li>Una vez que Uds. configuro los filtros que deseaba, podra guardarlos haciendo click en Resguardar Filtros</li></b>");
-	mensaje.append("<li>Para crear un filtro por contenido de los mails debera hacer click en content , configuracion y luego resguardar filtros, una vez hecho esto puede hacer busquedas por contenido haciendo click en buscar </li></b>");
-	mensaje.append("<li>Tambien puede hacer busquedas de los mails por los filtros que creo: Para ello debera seleccionar From,To,Subject,Date tanto en clasification como seleccion y hace click en buscar y le apareran los Iuc de los Mail que Uds. busco</li></b>");
+    mensaje.append("<tr><td align=\"center\" bgcolor=\"#E2DFDA\"><font size=\"+3\">");
+	mensaje.append("\n<br>\n<i> <STRONG>    Manual  de usuario Architect Mail Application</STRONG></i></b></font>\n</td></tr>");
+    mensaje.append("<tr><td bgcolor=\"#E2DFDA\"><font size=\"+1\"><ul type=\"circle\">");
+    mensaje.append("\n<br>\n<p><li><STRONG> Para realizar todas las operaciones se debe ingresar la cuenta de correo y la clave. La direccion de correo debe ingresarse de manera completa.</STRONG></li></p></b>");
+	mensaje.append("<p><li><STRONG> Resguardar :</STRONG> Se conecta con el servidor y baja los mails nuevos. Crea el indice primario o lo actualiza, si ya existen los indices secundarios, estos son actualizados.</li</p></b>");
+	mensaje.append("<p><li><STRONG>Configurar :</STRONG> Se encarga de crear los indices secundarios, esto se logra seteando en el textbox de la seccion \"Buscar\" la configuracion del indice deseada.</li></p><p><STRONG> Las configuraciones posibles se realizan de la siguiente manera: </STRONG></p>\n</b></b>");
+	mensaje.append("<p><STRONG>Indices de seleccion: </STRONG>");
+	mensaje.append("[From='parametro']</p></b>");
+	mensaje.append("<p><STRONG>Indice de clasificacion :</STRONG>");
+	mensaje.append("[From]</p></b>");
+	mensaje.append("<p><STRONG>Indices invertidos :</STRONG>");
+	mensaje.append("[Content]</p></b>");
+	mensaje.append("<p><li><STRONG>Buscar :</STRONG> Escribiendo la palabra 'indices' dentro del textbox de busqueda, se muestra en el dialogBox inferior una lista de los indices que han sido creados y que se vinculan a la cuenta de usuario de la sesion.</li></p><p><STRONG> Para realizar busquedas sobre los indices secundarios se deben ingresar de la siguiente forma:</STRONG></p></b>");
+	mensaje.append("<p><STRONG>Indice de seleccion :</STRONG>");
+	mensaje.append("[FromParametro]</p></b>");
+	mensaje.append("<p><STRONG>Indice de clasificacion :</STRONG>");
+	mensaje.append("[From='parametro']</p></b>");
+	mensaje.append("<p><li>Los nombres de los indices de seleccion estan formados por el filtro y la concatenacion del parametro, para ayudarse a buscar, se recomienda escribir 'indices' y presionar buscar, para saber los nombres de los indices.</li></p></b>");
+	mensaje.append("<p><li>Tambien puede hacer busquedas de los mails por los filtros que creo: Para ello debera seleccionar From,To,Subject,Date tanto en clasification como seleccion y hace click en buscar y le apareran los Iuc de los Mail que Uds. busco</li></p></b>");
     mensaje.append(	"\n</ul></td></tr>");
     mensaje.append(	"\n<br></table>");
     qthtml= new QTextDocument;
