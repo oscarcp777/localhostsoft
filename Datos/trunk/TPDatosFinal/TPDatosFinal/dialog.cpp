@@ -259,8 +259,10 @@ void Dialog::buscarClick()
 					}
 					control->clearListsIucs();
 					textoBuscado.append(strResult.c_str());
-					bigEditor->clear();
-					bigEditor->setText(textoBuscado);
+					if(strResult.size()==0){
+					textoBuscado.append(control->getMessage().c_str());
+					this->setMessages(textoBuscado.toStdString(),true);
+					}
 
 			}else{
 				bigEditor->clear();

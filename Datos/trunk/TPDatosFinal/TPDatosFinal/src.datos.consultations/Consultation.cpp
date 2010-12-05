@@ -14,6 +14,7 @@
 #include "../src.datos.models/RegClassification.h"
 #include "../src.datos.utils/StringUtils.h"
 #include "../src.datos.controller/ManagerInvertedIndex.h"
+#include "../src.datos.controller/Controller.h"
 
 Consultation::Consultation() {
 	// TODO Auto-generated constructor stub
@@ -90,8 +91,8 @@ void Consultation::consultSecondaryIndex(IndexConfig* indexConfig,list<int>* lis
 			}
 		}else{
 			std::cout<<"No hay mails con dicho filtro"<<std::endl;
-//			string str = "El arbol primario no posee el IUC: " + StringUtils::convertirAString(iuc) + "\n";
-//			Controller::getInstance()->setMessage(str);
+			string str = "No hay mails con dicho filtro\n";
+			Controller::getInstance()->setMessage(str);
 		}
 		delete searchReg;
 	}

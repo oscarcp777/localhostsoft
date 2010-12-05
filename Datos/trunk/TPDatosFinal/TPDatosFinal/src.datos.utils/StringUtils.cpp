@@ -9,8 +9,7 @@
  StringUtils::StringUtils(){
 }
  string StringUtils::replaceCharacterASCII(string originalText){
-	 //Acentos áéíóó y otros Ñ ñ ü
-	 //Acentos =E1=E9=ED=F3=F3 y otros =D1 =F1 =FC
+
 	 string
 	 newText=StringUtils::replaceAll(originalText,"=E1",3,"a");
 	 newText=StringUtils::replaceAll(newText,"=E9",3,"e");
@@ -22,6 +21,12 @@
 	 newText=StringUtils::replaceAll(newText,"=A1",3,"¡");
 	 newText=StringUtils::replaceAll(newText,"=2C",3,":");
 	 newText=StringUtils::replaceAll(newText,"=3B",3,";");
+	 newText=StringUtils::replaceAll(newText,"=",2,"");
+	 newText=StringUtils::replaceAll(newText,"=20",3," ");
+	 newText=StringUtils::replaceAll(newText,"=21",3,"!");
+	 newText=StringUtils::replaceAll(newText,"=BF",3,"?");
+	 newText=StringUtils::replaceAll(newText,"=3D",3,"=");
+	 newText=StringUtils::replaceAll(newText,"=E7",3,"ç");
 
 	 return newText;
 }
