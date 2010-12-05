@@ -342,7 +342,7 @@ void Controller::updateIndexes(Mail* mail){
 				RegSelection* regSelection = new RegSelection();
 				regSelection->setKey((Key*)mail->getKey()->clone());
 				secondaryIndex->addRegistry(regSelection);
-				secondaryIndex->print(cout);
+				//secondaryIndex->print(cout);
 				delete secondaryIndex;
 			}
 		}
@@ -354,7 +354,7 @@ void Controller::updateIndexes(Mail* mail){
 			regClassification->setKey(key);
 			regClassification->addIuc((KeyInteger*) mail->getKey()->clone());
 			secondaryIndex->addRegistry(regClassification);
-			secondaryIndex->print(cout);
+			//secondaryIndex->print(cout);
 			(*current)->setLoaded(true);/////////////777777
 			this->overWriteFile();///////////////////7
 			delete secondaryIndex;
@@ -379,14 +379,14 @@ int Controller::createPrimaryIndex() {
 		configIndex->setLoaded(true);
 		this->addIndexToFile(configIndex);
 		this->indexes.push_back(configIndex);
-		this->primaryTree->print(cout);//////////////////////////////////////////////
+		//this->primaryTree->print(cout);//////////////////////////////////////////////
 		flag =1;
 	}else{
 		//busco si el arbol primario ya existe, si existe configIndex tiene seteado el ultimo IUC
 		if(this->searchPrimaryIndex(configIndex)){
 			int iuc = configIndex->getLastIuc();
 			this->primaryTree = storage->generatePrimaryIndex((char*)this->strEmail.c_str(),(char*)this->strPass.c_str(),configIndex);
-			this->primaryTree->print(cout);/////////////////////////////////////////
+			//this->primaryTree->print(cout);/////////////////////////////////////////
 			list<IndexConfig*>::iterator current = this->indexes.begin();
 			int result = 1;
 			string auxEmail;
@@ -854,8 +854,8 @@ void Controller::deleteIuc(int iuc){
 		Mail* mail = reg->getMail();
 		this->updateIndexesDelete(mail);
 		this->primaryTree->deleteRegistry(regPrimary);
-		cout<<"***********INDICE: "<< "************ARBOL PRIMARIO"<<endl;
-		this->primaryTree->print(cout);
+		//cout<<"***********INDICE: "<< "************ARBOL PRIMARIO"<<endl;
+		//this->primaryTree->print(cout);
 	}else{
 		cout<<"El arbol primario no posee el IUC: "<< iuc<<endl;
 		string str=this->getMessage();

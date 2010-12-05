@@ -161,7 +161,7 @@ string Hill::translate(string text, double** matrix){
 			delete []multiplyResult;
 		}
 	}
-	cout << endl;
+	if (DEBUG) cout << endl;
 	delete []textPart;
 
 	return result;
