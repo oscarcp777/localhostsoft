@@ -232,7 +232,7 @@ void Dialog::buscarClick()
 		std::string strError;
 		int result = control->strSearchValidation(lineEdits[2]->text() .toStdString(),strError);
 
-		if(result == 1 && control->getMailAndPass()){
+		if(result == 6 && control->getMailAndPass()){
 			std::string aux = control->getListOfIndexes();
 								bigEditor->clear();
 								textoBuscado.clear();
@@ -278,12 +278,14 @@ void Dialog::borrarClick()
 		bigEditor->clear();
 		bigEditor->append("... NO HA INGRESADO NADA PARA BORRAR");
 	}else{
+		bigEditor->clear();
 		QString listaUID;
 		listaUID.append("Mails a borrar (UIDs): ");
 		listaUID.append(lineEdits[3]->text());
 
 		////
 		Controller* control= Controller::getInstance();
+		control->setMessage("");
 			control->loadConfigUser(lineEdits[0]->text().toStdString(),lineEdits[1]->text().toStdString());
 
 		if(control->getMailAndPass()){
@@ -303,6 +305,7 @@ void Dialog::verClick()
 		bigEditor->clear();
 		bigEditor->append("... NO HA INGRESADO NADA PARA VER");
 	}else{
+		bigEditor->clear();
 		Controller* control= Controller::getInstance();
 			control->loadConfigUser(lineEdits[0]->text().toStdString(),lineEdits[1]->text().toStdString());
 
@@ -326,6 +329,7 @@ void Dialog::resguardarClick()
 		control->loadConfigUser(lineEdits[0]->text().toStdString(),lineEdits[1]->text().toStdString());
 
 	if(control->getMailAndPass()){
+		bigEditor->clear();
 		mensajeUsuario.append("Descargando mails de: ");
 		mensajeUsuario.append(lineEdits[0]->text());
 		bigEditor->setText(mensajeUsuario);
@@ -362,6 +366,7 @@ void Dialog::configurarClick()
 		this->setMessages("...NO HA INGRESADO NINGUNA CONFIGURACION", true);
 	}else{
 		QString config;
+		bigEditor->clear();
 		config.append("Configuracion ingresada:\n");
 		config.append(lineEdits[2]->text() + "\n");
 		bigEditor->setText(config);
@@ -370,8 +375,12 @@ void Dialog::configurarClick()
 			control->loadConfigUser(lineEdits[0]->text().toStdString(),lineEdits[1]->text().toStdString());
 
 		if(control->getMailAndPass()){
-			control->createIndexes(lineEdits[2]->text().toStdString());
-			bigEditor->setText("CONFIGURACION GUARDADA");
+			if( 1 == control->createIndexes(lineEdits[2]->text().toStdString())){
+				this->setMessages(control->getMessage(),false);
+			}else{
+				bigEditor->setText("CONFIGURACION GUARDADA");
+			}
+
 		}else{
 			bigEditor->clear();
 			bigEditor->append("...\nUSUARIO Y/O PASSWORD INVALIDOS");

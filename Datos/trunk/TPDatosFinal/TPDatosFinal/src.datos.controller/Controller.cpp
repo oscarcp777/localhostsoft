@@ -273,10 +273,12 @@ void Controller::overWriteFile(){
 	this->programFile->close();
 
 }
-void Controller::addSecondIndex(IndexConfig* indexConfig) {
+int Controller::addSecondIndex(IndexConfig* indexConfig) {
 
 	if(this->searchIndex(indexConfig->getFilterName())){
 		cout<<"No se puede crear, ya existe el indice con nombre: "<<indexConfig->getFilterName()<<endl;
+		this->setMessage("No se puede crear, ya existe el indice con nombre: " + indexConfig->getFilterName());
+		return 1;
 	}else{
 		//crea un archivo del indice secundario vacio, agrega en la lista de indices y genera un boton por el indice
 		IndexController* indexController = new IndexController();
@@ -284,6 +286,7 @@ void Controller::addSecondIndex(IndexConfig* indexConfig) {
 		this->addIndexToFile(indexConfig);
 		this->indexes.push_back(indexConfig);
 		delete indexController;
+		return 0;
 	}
 }
 
@@ -423,13 +426,13 @@ int Controller::createPrimaryIndex() {
 	delete storage;
 	return flag;
 }
-
 int Controller::loadSecondIndex(IndexConfig* indexConfig){
-
+	std::string aux;
 	if(this->indexes.size() != 0){
 
 		if(this->getIndex(indexConfig->getFilterName())->isLoaded()){
-			cout<<"Ya fue cargado el indice "<<indexConfig->getFilterName()<<endl;
+			cout<<"Ya fue cargado el indice anteriormente "<<indexConfig->getFilterName()<<endl;
+			this->setMessage("Ya ha sido cargado con anterioridad el indice " + indexConfig->getFilterName());
 			return 1;
 		}else{
 			Classification* classification = new Classification();
@@ -469,12 +472,13 @@ void Controller::convertStringToListOfInt(Search* search,std::string str){
 		search->setIuc(atoi(tokens.at(i).c_str()));
 	}
 }
-void Controller::createIndexes(std::string strSearch){
+int Controller::createIndexes(std::string strSearch){
 	std::string aux;
 	std::string filterName;
 	std::string filterValue("");
 	int posInitial;
 	int posFinal=0;
+	int result = 0;
 
 
 	//
@@ -483,8 +487,9 @@ void Controller::createIndexes(std::string strSearch){
 	aux = strSearch.substr(posInitial,posFinal-posInitial);
 			IndexConfig* indexConfig = this->createIndexConfig2(aux);
 			indexConfig->setUserName(this->strEmail);
-			this->addSecondIndex(indexConfig);
+		result = this->addSecondIndex(indexConfig);
 			this->loadSecondIndex(indexConfig);
+
 	//
 	posInitial = strSearch.find("[",posFinal);
 	posFinal = strSearch.find("]",posInitial);
@@ -492,12 +497,13 @@ void Controller::createIndexes(std::string strSearch){
 		aux = strSearch.substr(posInitial,posFinal-posInitial);
 		IndexConfig* indexConfig = this->createIndexConfig2(aux);
 		indexConfig->setUserName(this->strEmail);
-		this->addSecondIndex(indexConfig);
+		result =this->addSecondIndex(indexConfig);
 		this->loadSecondIndex(indexConfig);
 		posInitial = strSearch.find("[",posFinal);
 		posFinal = strSearch.find("]",posInitial);
 	}
 
+	return result;
 
 }
 Search* Controller::parseStrSearch(std::string strSearch){
@@ -780,11 +786,17 @@ int Controller::strSearchValidation(std::string strSearch,std::string &strError)
 	int result=0;
 	int pos;
 	int pos2;
-	int posAux;
+
 
 	int posInitial = strSearch.find("[",0);
 	int posFinal = strSearch.find("]",posInitial);
-	if ((posInitial == -1) || (posFinal == -1)){
+	int posAux = strSearch.find("indices",0);
+
+	if(posAux == 0){
+		return 6;
+	}
+
+	if (((posInitial == -1) || (posFinal == -1))  && (posAux == -1)){
 		std::cout<<"Error en el string de busqueda, no se encuentran los parametros [ ] "<<std::endl;
 		strError += "Error en el string de busqueda, no se encuentran los parametros [ ]\n";
 		result= 1;

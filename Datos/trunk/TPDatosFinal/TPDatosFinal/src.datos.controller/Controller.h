@@ -53,14 +53,14 @@ public:
 	bool getMailAndPass();
 	std::string getListOfIndexes();
 	void setSearch(Search* search);
-	void addSecondIndex(IndexConfig* indexConfig);
+	int addSecondIndex(IndexConfig* indexConfig);
 	int loadSecondIndex(IndexConfig* indexConfig);
 	void addIndexToFile(IndexConfig* index);
 	std::string getMails(std::string strListOfIucs);
 	int searchMails(std::string strSearch);
 	void convertStringToListOfInt(Search* search,std::string str);
 	Search* parseStrSearch(std::string strSearch);
-	void createIndexes(std::string strSearch);
+	int createIndexes(std::string strSearch);
 	IndexConfig* createIndexConfig2(std::string str);
 	void addEmail(std::string email);
 	std::string getEmail();
