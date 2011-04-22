@@ -1,0 +1,6 @@
+#IdBeneficio,CodBeneficio,Sponsor,FechaInicioBeneficio,FechaFinBeneficio,Duracion
+1,CODBM,Banco Mundial,2011-01-12,2011-08-12,6
+2,PRNUD,Proyecto Naciones Unidas,2011-02-12,2012-08-12,18
+3,PRESI,Presidencia de la Nacion,2011-02-12,2014-08-12,36
+4,FONTR,Fontar,2011-02-13,2013-08-12,22
+5,FSOFT,Fonsoft,2011-02-12,2012-08-12,16

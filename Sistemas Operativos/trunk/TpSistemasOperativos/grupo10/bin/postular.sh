@@ -7,17 +7,11 @@
 #       $grupo/recibidos/
 #       Archivo de beneficios  beneficios.mae
 #       Archivo de postulantes <codigo de agencia>.<secuencia>
-#       separador ,
+#       separador de campos ","
 #
 #   ARCHIVO DE OUTPUT
-#       Archivo de Contratos de Préstamos Personales $grupo/datadir/new/CONTRAT.<pais>
-#       Archivos (duplicados) Rechazados $grupo/datadir/nok/<nombre del archivo>
-#       Archivos de Practico Procesados $grupo/datadir/old/<pais>-<sistema>-<año>-<mes>
-#       Log $grupo/logdir/interprete.log
-#
-#Opciones y Parámetros
-#       A especificar por el desarrollador
-#
+#      El archivo una vez procesado se mueve a 
+#       $grupo/procesados/
 
 #########Nombre del comando
 nombre="interprete"
