@@ -1,6 +1,6 @@
 #!/bin/bash
 # Comando de Inicialización del ambiente
-# Inicializa todas las variables de ambientes necesarias para la ejecución
+# Inicializa todas las variables de ambiente necesarias para la ejecución
 # de la aplicación y valida la existencia de los archivos maestros de 
 # Beneficios y Agencias
 
@@ -8,8 +8,8 @@
 # Devuelve 0 si se inicializa correctamente
 # Devuelve 1 si hubo algún error
 
-# Variable de instalación (se tiene que pisar desde el INSTULA)
-GRUPO="/home/Santiago/Documentos/Materias/Sistemas_Operativos/scripts/comandoPostini"
+# Variable de instalación (se tiene que pisar -o borrar esta linea y setear - desde el INSTULA cuando se copie a BINDIR)
+GRUPO="/home/Santiago/Documentos/Materias/Sistemas_Operativos/eclipseShell/workspace/TpSistemasOperativos/grupo10"
 
 # Mensaje de error
 errorMsj="Inicialización de Ambiente No fue exitosa. Error en"
@@ -38,6 +38,13 @@ function mostrarVariables(){
 	echo "DATADIR = $DATADIR"
 }
 
+# Esta función termina la ejecución del script
+function terminar(){
+	echo "Pulse una tecla para finalizar POSTINI..."
+	read end
+	exit 1	
+}
+
 # Seteo de Variables de Ambiente
 if [ -z $ARRIDIR  ] 
 then
@@ -61,38 +68,57 @@ fi
 if [ ! -e "$GRUPO$DATADIR/agencias.mae" ]
 then
 	echo "$errorMsj archivo maestro de agencias (\"$GRUPO$DATADIR/agencias.mae\" no existe)"
-	read pause
-	exit 1
+	terminar
 fi
 if [ ! -e "$GRUPO$DATADIR/beneficios.mae" ]
 then
 	echo "$errorMsj archivo maestro de beneficios (\"$GRUPO$DATADIR/beneficios.mae\" no existe)"
-	read pause
-	exit 1
+	terminar
 fi
 if [ ! -e "$GRUPO$BINDIR" ]
 then
 	echo "$errorMsj directorio de Ejecutables (\"$GRUPO$BINDIR\" no existe)"
-	read pause
-	exit 1
+	terminar
 fi
 if [ ! -e "$GRUPO$ARRIDIR" ]
 then
 	echo "$errorMsj directorio de Recibidos (\"$GRUPO$ARRIDIR\" no existe)"
-	read pause
-	exit 1
+	terminar
 fi
 if [ ! -e "$GRUPO$LOGDIR" ]
 then
 	echo "$errorMsj directorio de Log (\"$GRUPO$LOGDIR\" no existe)"
-	read pause
-	exit 1
+	terminar
 fi
+if [ ! -e "$GRUPO$BINDIR/postonio.sh" ]
+then
+	echo "$errorMsj comando POSTONIO (\"$GRUPO$BINDIR/postonio.sh\" no existe)"
+	terminar
+fi
+if [ ! -e "$GRUPO$BINDIR/postular.sh" ]
+then
+	echo "$errorMsj comando POSTULAR (\"$GRUPO$BINDIR/postula.sh\" no existe)"
+	terminar
+fi
+
+
+# PID de postonio.sh
+#pid=$(obtpid.sh "postonio.sh")
+
+# Verificar que no haya un POSTONIO corriendo
+#if [ -z $pid ]
+#then
+#	$postonio &
+#	pid=$(obtpid.sh $postonio)
+#	echo "Se inicia el demonio postonio. Se encuentra corriendo bajo el no. $pid"
+#else
+#	echo "postonio.sh ya se encuentra corriendo bajo nro. $pid"
+#fi
 
 
 echo "Inicialización de Ambiente Concluida"
 echo "Ambiente:"
 echo "`mostrarVariables`"
-echo "Demonio corriendo bajo el Nro.: 1111"
+echo "Demonio corriendo bajo el Nro.: $pid"
 
 
