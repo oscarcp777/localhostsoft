@@ -3,9 +3,8 @@ archvioDestino=${2##*/}
 directorioOrigen=${1%/*}
 directorioDestino=${2%/*}
 
-
 #Ver con el grupo el path del archivo log 	
-log='/home/hlovey/log.txt'
+log='./log.txt'
 
 #validamos que la cantidad de parametros sea menor o igual a 3 y mayor o igual a 2
 if [ $# -gt 3 -o $# -lt 2 ]
@@ -15,7 +14,7 @@ then
 fi
 
 #validamos que los directorios origen y destino existan
-if [ ! -d "$directorioOrigen" -o ! -e "$archivoOrigen" ]
+if [ ! -d "$directorioOrigen" -o ! -e "$directorioOrigen/$archivoOrigen" ]
 then
 	echo "El directorio o archivo origen no existe" >> $log	
 	exit 2
