@@ -16,14 +16,14 @@
 
 if [ $# -gt 3 -o $# -lt 2 ]
 then
-	./gralog.sh gralog es "$1: Cantidad de parámetros inválida."
+	./gralog.sh gralog E "$1: Cantidad de parámetros inválida."
 	exit 1
 fi
 
 # Si es del instalador va en otro lado (TODO si el comando es instula el archivo de Log llamado instula.log que se graba en el directorio $grupo/conf) VER ESTO
 if [ -z $LOGDIR ]
 then
-	logdir="../log"
+	logdir="/home/richy/workspace/TpSistemasOperativos/grupo10/log"
 else
 	logdir="$GRUPO/$LOGDIR"
 fi
@@ -32,7 +32,7 @@ fi
 
 if [ -f $logdir ]
 then
-	./gralog.sh gralog es "$1: La dirección del directorio de destino es un archivo."
+	./gralog.sh gralog E "$1: La dirección del directorio de destino es un archivo."
 	exit 1
 fi
 
@@ -63,19 +63,19 @@ if [ $# -eq 3 ]
 then
 	tipoMensaje=$(echo $2 | tr "[:lower:]" "[:upper:]")
 	mensaje=$3
-fi
 
-# Si el tipo de mensaje es inválido lo pone en el log del gralog
-if [ $tipoMensaje != i -a $tipoMensaje != I -a $tipoMensaje != w -a $tipoMensaje != W -a $tipoMensaje != e -a $tipoMensaje != E -a $tipoMensaje != es -a $tipoMensaje != ES ]
-then
-	tipoMensaje="  "
-	./gralog.sh gralog w "$1: Tipo de mensaje inválido."
-else
-	if [ $tipoMensaje != es -a $tipoMensaje != ES ]
+	#I = INFORMATIVO: mensajes informativos o explicativos sobre el curso de ejecución del comando. Ej: Inicio de Ejecución
+	#A = ALERTA: mensajes de advertencia pero que no afectaran la continuidad de ejecución del comando. Ej: Archivo ya procesado
+	#E = ERROR: mensajes de error Ej: Archivo Inexistente.
+	#SE = ERROR SEVERO: mensajes severos de error que provocaran la cancelación del comando: Ej: Archivo Maestro no encontrado
+
+	# Si el tipo de mensaje es inválido lo pone en el log del gralog
+	if [ $tipoMensaje != I -a $tipoMensaje != A -a $tipoMensaje != E -a $tipoMensaje != SE ]
 	then
-		tipoMensaje=$tipoMensaje" "
-		
+		tipoMensaje="  "
+		./gralog.sh gralog "$1: Tipo de mensaje inválido."
 	fi
+	
 fi
 
 unaCadena=$tipoMensaje/
