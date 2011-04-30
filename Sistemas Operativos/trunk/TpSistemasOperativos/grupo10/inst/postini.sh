@@ -42,22 +42,23 @@ function mostrarVariables(){
 function terminar(){
 	echo "Pulse una tecla para finalizar POSTINI..."
 	read end
-	exit 1	
+	return 1	
 }
 
 # Seteo de Variables de Ambiente
 if [ -z $ARRIDIR  ] 
 then
+	export CURRDIR=`obtenerValor 1`
 	export CONFDIR=`obtenerValor 2`
 	export ARRIDIR=`obtenerValor 3`
 	export BINDIR=`obtenerValor 4`
 	export DATASIZE=`obtenerValor 5`
 	export LOGDIR=`obtenerValor 6`
 	export LOGEXT=`obtenerValor 7`
-	export INSTDIR=`obtenerValor 8`
-	export MAXLOGSIZE=`obtenerValor 9`
-	export USERID=`obtenerValor 10`
+	export MAXLOGSIZE=`obtenerValor 8`
+	export USERID=`obtenerValor 9`
 	export DATADIR=`obtenerValor 21`
+	export INSTDIR=`obtenerValor 22`
 	echo "Las variables han sido inicializadas con éxito"
 else
 	echo "Las variables fueron inicializadas previamente"
