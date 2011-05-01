@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# --------------Variables--------------------
+# Lista de todos los comandos del paquete
+COMANDOS=("postini.sh" "postonio.sh" "postular.sh" "plist" "mover.sh" "gralog.sh")
+# --------------Fin Variables--------------------
+
+# --------------Comandos--------------------
+GRALOG=./gralog.sh
+# --------------Fin Comandos--------------------
+
 # --------------Funciones Generales--------------------
 
 # Esta función recibe un número de linea y devuelve el valor de la variable
@@ -15,15 +24,17 @@ function mostrarEstadoInstalacion(){
 	echo "TODOS: " $2
 }
 
+# Esta función recibe un comando y la ubicación donde quiere instalarse el mismo
+function instalarComando(){
+	 
+	$GRALOG instula.log I "		Instalación del componente  $1 completada" 
+	echo "		Instalación del componente  $1 completada"
+		
+}
+
 # --------------Fin Funciones Generales--------------------
 
-# --------------Comandos--------------------
-GRALOG=./gralog.sh
-# --------------Fin Comandos--------------------
 
-# --------------Variables--------------------
-COMANDOS="postini.sh,postonio.sh..." # Lista de todos los comandos del paquete
-# --------------Fin Variables--------------------
 
 # --------------Inicio Programa--------------
 
@@ -65,6 +76,27 @@ if [ ! -e "$GRUPO/instula.conf" ]; then
 else
 	echo "TODO" # TODO renombrar archivo de log si es q existe y crear el nuevo
 fi
+
+
+#---------ZONA RICHY---------------
+
+
+
+
+#---------FIN ZONA RICHY---------------
+
+
+#---------ZONA TIAGO---------------
+# Instalación
+$GRALOG instula.log I "Moviendo Archivos..."
+echo "Moviendo Archivos..."
+	# Instalando POSTINI
+	instalarComando "postini.sh" $BINDIR	
+
+
+#---------FIN ZONA TIAGO---------------
+
+
 
 # --------------Fin Programa--------------
  
