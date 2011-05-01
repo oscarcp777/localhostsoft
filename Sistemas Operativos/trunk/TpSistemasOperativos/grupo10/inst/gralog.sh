@@ -23,13 +23,12 @@ fi
 # Si es del instalador va en otro lado (TODO si el comando es instula el archivo de Log llamado instula.log que se graba en el directorio $grupo/conf) VER ESTO
 if [ -z $LOGDIR ]
 then
-	logdir="/home/richy/workspace/TpSistemasOperativos/grupo10/log"
+	logdir="$GRUPO/conf"
 else
 	logdir="$GRUPO/$LOGDIR"
 fi
 
 # Que la dirección no sea un archivo
-
 if [ -f $logdir ]
 then
 	./gralog.sh gralog E "$1: La dirección del directorio de destino es un archivo."
