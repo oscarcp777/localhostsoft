@@ -2,7 +2,7 @@
 
 # --------------Variables--------------------
 # Lista de todos los comandos del paquete
-COMANDOS=("postini.sh" "postonio.sh" "postular.sh" "plist" "mover.sh" "gralog.sh")
+COMANDOS=("postini.sh" "postonio.sh" "postular.sh" "plist.pl" "mover.sh" "gralog.sh")
 # --------------Fin Variables--------------------
 
 # --------------Comandos--------------------
@@ -24,12 +24,17 @@ function mostrarEstadoInstalacion(){
 	echo "TODOS: " $2
 }
 
-# Esta función recibe un comando y la ubicación donde quiere instalarse el mismo
+# Esta función recibe un comando y una ubicación y instala el mismo
 function instalarComando(){
-	 
-	$GRALOG instula.log I "		Instalación del componente  $1 completada" 
-	echo "		Instalación del componente  $1 completada"
-		
+	# Valida que los archivos no esten en el directorio destino
+	if [ -e "$2/$1" ]; then
+		$GRALOG instula A "	El componente $1 ya se encuentra instalado, el mismo no fue actualizado" 
+		echo "	El componente $1 ya se encuentra instalado, el mismo no fue actualizado"
+	else
+		cp $1 $2
+		$GRALOG instula I "	Instalación del componente  $1 completada" 
+		echo "	Instalación del componente  $1 completada"
+	fi	
 }
 
 # --------------Fin Funciones Generales--------------------
@@ -52,30 +57,30 @@ else
 fi
 
 # Valida que exista un archivo previo de log de instalación 
-if [ ! -e "$GRUPO/conf/instula.log" ]; then
-	# No hay instalación previa
-	$GRALOG instula I "Inicio de Intalacion"
-	echo "Inicio de Intalacion"
-else
+if [ -e "$GRUPO/conf/instula.log" ]; then
+	# Hay instalación previa
 	# Renombra el archivo anterior y crea el nuevo
-	echo "TODO - renombrar archivo de log si es q existe y crear el nuevo" 
+	echo "TODO - renombrar archivo de log si es q existe y crear el nuevo"
 fi
 
+$GRALOG instula I "Inicio de Instalación"
+echo "Inicio de Instalación"
+
 # Valida si existe una instalación previa
-if [ ! -e "$GRUPO/instula.conf" ]; then
-	echo "El programa ya se encuentra instalado"
-	$GRALOG instula.log I "El programa ya se encuentra instalado"
-	echo "Verificando componentes ya instalados del programa..."
-	$GRALOG instula.log I "Verificando componentes ya instalados del programa..."
-		
-	# Verifica cuales componentes estan instalados y cuales no
-	comandosInstalados=`obtenerValor 23`
-	`mostrarEstadoInstalacion $comandosInstalados $COMANDOS` 
-	$GRALOG instula.log I "Borrar los componentes instalados y ejecutar el comando nuevamente"
-	echo "Borrar los componentes instalados y ejecutar el comando nuevamente"
-else
-	echo "TODO" # TODO renombrar archivo de log si es q existe y crear el nuevo
-fi
+#if [ ! -e "$GRUPO/instula.conf" ]; then
+#	echo "El programa ya se encuentra instalado"
+#	$GRALOG instula I "El programa ya se encuentra instalado"
+#	echo "Verificando componentes ya instalados del programa..."
+#	$GRALOG instula I "Verificando componentes ya instalados del programa..."
+#		
+#	# Verifica cuales componentes estan instalados y cuales no
+#	comandosInstalados=`obtenerValor 23`
+#	`mostrarEstadoInstalacion $comandosInstalados $COMANDOS` 
+#	$GRALOG instula I "Borrar los componentes instalados y ejecutar el comando nuevamente"
+#	echo "Borrar los componentes instalados y ejecutar el comando nuevamente"
+#else
+#	echo "TODO" # TODO renombrar archivo de log si es q existe y crear el nuevo
+#fi
 
 
 #---------ZONA RICHY---------------
@@ -88,10 +93,26 @@ fi
 
 #---------ZONA TIAGO---------------
 # Instalación
-$GRALOG instula.log I "Moviendo Archivos..."
-echo "Moviendo Archivos..."
-	# Instalando POSTINI
-	instalarComando "postini.sh" $BINDIR	
+	# Variable que chequea si estan todos los componentes
+	estaCompleto=true
+	# Valida que todos los componentes esten disponibles en el directorio de instalación
+	for i in ${COMANDOS[*]}; do
+		if [ ! -e $GRUPO/inst/$i ]; then
+		 	estaCompleto=false
+			$GRALOG instula E "El componente $i no se encuentra o está corrupto, no se puede continuar la instalación" 
+			echo "El componente $i no se encuentra o está corrupto, no se puede continuar la instalación"
+		fi
+	done
+	if [ $estaCompleto == "true" ]; then
+		$GRALOG instula I "Moviendo Archivos..."
+		echo "Moviendo Archivos..."
+		# Instalando COMANDOS
+		for i in ${COMANDOS[*]}; do
+			instalarComando $i $GRUPO/bin  #TODO debe estar BINDIR
+		done
+	fi
+	
+		
 
 
 #---------FIN ZONA TIAGO---------------
