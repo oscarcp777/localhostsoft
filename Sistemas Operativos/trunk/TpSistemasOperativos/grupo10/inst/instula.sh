@@ -56,7 +56,7 @@ if [ -z "$GRUPO" ]; then
 	echo 'No se puede iniciar la instalación.';
 	echo  'Por favor lea el archivo README.txt y vuelva a realizar la instalación';
 	echo "";
-	exit 1;
+	#exit 1; TODO Descomentar al finalizar comando
 else
 	# Si esta seteada le agrega la ruta del grupo 10 
 	GRUPO="$GRUPO/grupo10"
@@ -75,15 +75,16 @@ echo "Inicio de Instalación"
 # Valida si existe una instalación previa
 if [ ! -e "$GRUPO/instula.conf" ]; then
 	echo "El programa ya se encuentra instalado"
-	$GRALOG instula.log I "El programa ya se encuentra instalado"
+	$GRALOG instula I "El programa ya se encuentra instalado"
 	echo "Verificando componentes ya instalados del programa..."
-	$GRALOG instula.log I "Verificando componentes ya instalados del programa..."
+	$GRALOG instula I "Verificando componentes ya instalados del programa..."
 		
 	# Verifica cuales componentes estan instalados y cuales no
 	comandosInstalados=`obtenerValor 23`
 	mostrarEstadoInstalacion $comandosInstalados
-	$GRALOG instula.log I "Borrar los componentes instalados y ejecutar el comando nuevamente"
+	$GRALOG instula I "Borrar los componentes instalados y ejecutar el comando nuevamente"
 	echo "Borrar los componentes instalados y ejecutar el comando nuevamente"
+	exit
 else
 	echo "TODO" # TODO renombrar archivo de log si es q existe y crear el nuevo
 fi
@@ -92,7 +93,7 @@ fi
 
 #---------ZONA RICHY---------------
 	# Consulta al usuario si esta de acuerdo con los terminos y condiciones de la instalacion
-	$GRALOG instula.log I "Mostrando mensaje de Aceptacion de terminos y condiciones...";
+	$GRALOG instula I "Mostrando mensaje de Aceptacion de terminos y condiciones...";
 
 	respVal="";
 	while [ -z $respVal ]	# mientras no responda si o no
@@ -119,15 +120,15 @@ echo '**************************************************************
 
 	# si el usuario no acepta finalizo el script
 	if [ $respVal = "no" ]; then
-		$GRALOG instula.log I  "Usuario NO acepto ACUERDO DE LICENCIA DE SOFTWARE";
+		$GRALOG instula I  "Usuario NO acepto ACUERDO DE LICENCIA DE SOFTWARE";
 		exit 2;
 	fi
 	
 	# Usuario Acepto los terminos
-	$GRALOG instula.log I  "Usuario acepto ACUERDO DE LICENCIA DE SOFTWARE";
+	$GRALOG instula I  "Usuario acepto ACUERDO DE LICENCIA DE SOFTWARE";
 
 	# Verifica la instalacion de perl
-	$GRALOG instula.log I "Verificando versión de Perl instalada....";
+	$GRALOG instula I "Verificando versión de Perl instalada....";
 	echo "Verificando versión de Perl instalada....";
     PERLV=$(perl -v | grep 'v[0-9]\.[0-9]\+\.[0-9]*' -o); # obtengo la version de perl
 	numPERLV=$(echo $PERLV | cut -d"." -f1 | sed 's/^v\([0-9]\)$/\1/'); #obtengo el primer numero
@@ -141,11 +142,11 @@ echo '**************************************************************
 				 **************************************************************
 				 Proceso de Instalación Cancelado"
 		echo -e $msgPerl;
-		$GRALOG instula.log E $msgPerl;
+		$GRALOG instula E $msgPerl;
 		exit 3;
 	else
 		echo "PERL instalado. Version:$PERLV";
-		$GRALOG instula.log I "PERL instalado. Version:$PERLV";
+		$GRALOG instula I "PERL instalado. Version:$PERLV";
 	fi
 	
 
@@ -165,6 +166,35 @@ echo $GRUPO"/conf"
 
 
 #---------ZONA TIAGO---------------
+
+#######variables de prueba, se borran cuando esten los datos pedidos al usuario#############
+BINDIR=/binTest
+ARRIDIR=/recibidosTest
+LOGDIR=/logTest
+PROCESSED=/procesadosTest
+NEW=/nuevosTest
+LIST=/listaTest
+
+#######fin variables de prueba, se borran cuando esten los datos pedidos al usuario#############
+ 
+# Creación estructura de Directorios definida
+	$GRALOG instula I "Creando Estructuras de Directorio......"
+	echo "Creando Estructuras de Directorio......"
+
+	DIRECTORIOS=( $BINDIR $ARRIDIR $LOGDIR $PROCESSED $NEW $LIST);
+	for i in ${DIRECTORIOS[*]}; do
+		# Crea los directorios
+		if [ ! -e "$GRUPO/$i" ] 
+		then
+			mkdir  "$GRUPO$i" 
+			echo "	Se creo el directorio $GRUPO$i" 
+			$GRALOG instula I "	Se creo el directorio $GRUPO$i" 
+		else
+			$GRALOG instula I "	El directorio $GRUPO$i ya existe";
+			echo "	El directorio $GRUPO$i ya existe";
+		fi
+	done
+
 # Instalación
 	# Variable que chequea si estan todos los componentes
 	estaCompleto=true
