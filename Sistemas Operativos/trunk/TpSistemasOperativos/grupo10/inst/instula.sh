@@ -149,17 +149,17 @@ function preguntarTamanio(){
 	
 	
 	while [ $tamanio -eq 0 ]; do
-		read -p "$pregunta" posibleTam;
+		read -p "$pregunta " posibleTam;
 		if [ -z $posibleTam ] ; then
 			tamanio=$2 #   $2 es el valor por dafault 
 		else #TODO Validar q lo q ingresa el usuario sea un posible valor maximo
-			resp=$(echo $posibleTam | grep "^[A-Za-z0-9%@_=:.]\{1,\}$");
+			resp=$posibleTam;
 						
-			if [ -z $resp ]; then 
+			if [ $resp -lt 0 ]; then 
 				echo "";
 				echo "El valor $posibleTam es invalido";
 			else
-				$tamanio=$resp
+				tamanio=$resp
 			fi
 		fi	
 	done
@@ -312,6 +312,22 @@ echo $DATASIZE
 
 #TODO verificar escpacio en disco
 
+# calculo espacio libre en ARRIDIR
+	$GRALOG instula I "Calculando espacio disponible..." 1
+	#obtengo el espacio libre en el directorio(df -B). corto la unica linea que me devuelve,
+	#reemplazo los espacios en blanco por ';' (sed) y hago un cut del tercer campo (cut)
+	espacioLibre=$(df -B1024 "$ARRIDIR" | tail -n1 | sed -e"s/\s\{1,\}/;/g" | cut -f4 -d';');
+	espacioLibre=$(echo "scale=0 ; $espacioLibre/1024" | bc -l); #lo paso a Mb
+	$GRALOG instula I "Espacio disponible en $ARRIDIR $espacioLibre Mb" 1 
+		
+	#si el espacio disponible en ARRIDIR es menor que el espacio minimo reservado para datos se informa el error y se vuelve al punto anterior	
+	if [ $DATASIZE -gt $espacioLibre ] ; then
+		 msgError="ERROR !:
+         Insuficiente espacio en disco.
+         Espacio disponible en $ARRIDIR $espacioLibre Mb. 
+         Espacio requerido $DATASIZE Mb" 	
+		 $GRALOG instula E "$msgError" 1
+	fi
 # se almcacena en la variable LOGDIR el directorio q el usuario escriba para los archivos de log de los comandos y sino $GRUPO/log por defecto
 preguntarDirectorio "Ingrese el nombre del directorio de log: (presione ENTER para dejar el subdirectorio por defecto $GRUPO/log)" "$GRUPO/log"
 LOGDIR=$dirSeleccionado
