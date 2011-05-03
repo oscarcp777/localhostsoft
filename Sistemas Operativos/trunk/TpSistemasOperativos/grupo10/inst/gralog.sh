@@ -14,7 +14,7 @@
 
 #TODO HAY Q VER LO DE LAS EXTENSIONES PQ SON POR DEFECTO .LOG PERO EL USUARIO PUEDE CAMBIARLO EN UNA VARIABLE LOGEXT
 
-if [ $# -gt 3 -o $# -lt 2 ]
+if [ $# -gt 4 -o $# -lt 2 ]
 then
 	./gralog.sh gralog E "$1: Cantidad de parámetros inválida."
 	exit 1
@@ -77,6 +77,23 @@ then
 	
 fi
 
+#el 4to parametro sirve para activar la salida standar ademas de escribir en el log
+if [ $# -eq 4 ]
+then
+	tipoMensaje=$(echo $2 | tr "[:lower:]" "[:upper:]")
+	mensaje=$3
+	
+	if [ $tipoMensaje != I -a $tipoMensaje != A -a $tipoMensaje != E -a $tipoMensaje != SE ]
+	then
+		tipoMensaje="  "
+		./gralog.sh gralog "$1: Tipo de mensaje inválido."
+	fi
+	
+	if [ $4 -eq 1 ]
+		then
+		echo $mensaje
+	fi		
+fi
 unaCadena=$tipoMensaje/
 
 tamanioArchivo=`stat -c%s $log`

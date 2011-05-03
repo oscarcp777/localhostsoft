@@ -34,12 +34,10 @@ function mostrarEstadoInstalacion(){
 function instalarComando(){
 	# Valida que los archivos no esten en el directorio destino
 	if [ -e "$2/$1" ]; then
-		$GRALOG instula A "	El componente $1 ya se encuentra instalado, el mismo no fue actualizado" 
-		echo "	El componente $1 ya se encuentra instalado, el mismo no fue actualizado"
+		$GRALOG instula A "	El componente $1 ya se encuentra instalado, el mismo no fue actualizado" 1 
 	else
 		cp $1 $2
-		$GRALOG instula I "	Instalación del componente  $1 completada" 
-		echo "	Instalación del componente  $1 completada"
+		$GRALOG instula I "	Instalación del componente  $1 completada" 1	
 	fi	
 }
 
@@ -97,21 +95,18 @@ if [ -e "$GRUPO/conf/instula.log" ]; then
 	echo "TODO - renombrar archivo de log si es q existe y crear el nuevo" 
 fi
 
-$GRALOG instula I "Inicio de Instalación"
-echo "Inicio de Instalación"
+$GRALOG instula I "Inicio de Instalación" 1
+#echo "Inicio de Instalación"
 
 # Valida si existe una instalación previa
 if [ ! -e "$GRUPO/instula.conf" ]; then
-	echo "El programa ya se encuentra instalado"
-	$GRALOG instula I "El programa ya se encuentra instalado"
-	echo "Verificando componentes ya instalados del programa..."
-	$GRALOG instula I "Verificando componentes ya instalados del programa..."
+	$GRALOG instula I "El programa ya se encuentra instalado" 1
+	$GRALOG instula I "Verificando componentes ya instalados del programa..." 1
 		
 	# Verifica cuales componentes estan instalados y cuales no
 	comandosInstalados=`obtenerValor 23`
 	mostrarEstadoInstalacion $comandosInstalados
-	$GRALOG instula I "Borrar los componentes instalados y ejecutar el comando nuevamente"
-	echo "Borrar los componentes instalados y ejecutar el comando nuevamente"
+	$GRALOG instula I "Borrar los componentes instalados y ejecutar el comando nuevamente" 1
 	#exit 1; TODO Descomentar al finalizar comando
 else
 	echo "TODO" # TODO renombrar archivo de log si es q existe y crear el nuevo
@@ -123,6 +118,7 @@ fi
 	# Consulta al usuario si esta de acuerdo con los terminos y condiciones de la instalacion
 	$GRALOG instula I "Mostrando mensaje de Aceptacion de terminos y condiciones...";
 
+	
 		
 echo '**************************************************************
 * Proceso de Instalación del sistema Postulantes             *
@@ -144,9 +140,8 @@ echo '**************************************************************
 	$GRALOG instula I  "Usuario acepto ACUERDO DE LICENCIA DE SOFTWARE";
 
 	# Verifica la instalacion de perl
-	$GRALOG instula I "Verificando versión de Perl instalada....";
-	echo "Verificando versión de Perl instalada....";
-    PERLV=$(perl -v | grep 'v[0-9]\.[0-9]\+\.[0-9]*' -o); # obtengo la version de perl
+	$GRALOG instula I "Verificando versión de Perl instalada...." 1
+	PERLV=$(perl -v | grep 'v[0-9]\.[0-9]\+\.[0-9]*' -o); # obtengo la version de perl
 	numPERLV=$(echo $PERLV | cut -d"." -f1 | sed 's/^v\([0-9]\)$/\1/'); #obtengo el primer numero
 
 	#si perlv no existe o es menor a 5 mando error
@@ -161,8 +156,8 @@ echo '**************************************************************
 		$GRALOG instula E $msgPerl;
 		exit 3;
 	else
-		echo "PERL instalado. Version:$PERLV";
-		$GRALOG instula I "PERL instalado. Version:$PERLV";
+		#echo "PERL instalado. Version:$PERLV";
+		$GRALOG instula I "PERL instalado. Version:$PERLV" 1
 	fi
 	
 
@@ -208,20 +203,17 @@ LIST=/listaTest
 #######fin variables de prueba, se borran cuando esten los datos pedidos al usuario#############
  
 # Creación estructura de Directorios definida
-	$GRALOG instula I "Creando Estructuras de Directorio......"
-	echo "Creando Estructuras de Directorio......"
-
+	$GRALOG instula I "Creando Estructuras de Directorio......" 1
+	
 	DIRECTORIOS=( $BINDIR $ARRIDIR $LOGDIR $PROCESSED $NEW $LIST);
 	for i in ${DIRECTORIOS[*]}; do
 		# Crea los directorios
 		if [ ! -e "$GRUPO/$i" ] 
 		then
 			mkdir  "$GRUPO$i" 
-			echo "	Se creo el directorio $GRUPO$i" 
-			$GRALOG instula I "	Se creo el directorio $GRUPO$i" 
+			$GRALOG instula I "	Se creo el directorio $GRUPO$i" 1 
 		else
-			$GRALOG instula I "	El directorio $GRUPO$i ya existe";
-			echo "	El directorio $GRUPO$i ya existe";
+			$GRALOG instula I "	El directorio $GRUPO$i ya existe" 1
 		fi
 	done
 
@@ -232,13 +224,11 @@ LIST=/listaTest
 	for i in ${COMANDOS[*]}; do
 		if [ ! -e $GRUPO/inst/$i ]; then
 		 	estaCompleto=false
-			$GRALOG instula E "El componente $i no se encuentra o está corrupto, no se puede continuar la instalación" 
-			echo "El componente $i no se encuentra o está corrupto, no se puede continuar la instalación"
+			$GRALOG instula E "El componente $i no se encuentra o está corrupto, no se puede continuar la instalación" 1 
 		fi
 	done
 	if [ $estaCompleto == "true" ]; then
-		$GRALOG instula I "Moviendo Archivos..."
-		echo "Moviendo Archivos..."
+		$GRALOG instula I "Moviendo Archivos..." 1
 		# Instalando COMANDOS
 		for i in ${COMANDOS[*]}; do
 			instalarComando $i $GRUPO/bin  #TODO debe estar BINDIR
