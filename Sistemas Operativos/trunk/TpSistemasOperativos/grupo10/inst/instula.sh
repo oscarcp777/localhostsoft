@@ -178,6 +178,36 @@ echo $GRUPO"/conf"
 
 #---------ZONA TIAGO---------------
 
+# Mostrar estructura de directorios y parámetros configurados
+
+	clear
+echo "**************************************************************************************************
+* Parámetros de Instalación del paquete POSTULA		     *	
+**************************************************************************************************
+ Directorio de trabajo: $GRUPO
+ Directorio de instalación: $GRUPO/inst
+ Directorio de configuración: $GRUPO/conf
+ Directorio de datos: $GRUPO/data
+ Librería de ejecutables: $BINDIR
+ Directorio de arribos: $ARRIDIR
+ Espacio mínimo reservado en $ARRIDIR: $DATASIZE Mb
+ Directorio para los archivos de Log: $LOGDIR
+ Extensión para los archivos de Log: $LOGEXT
+ Tamaño máximo para cada archivo de Log: $LOGSIZE Kb
+ Log de la instalación: $GRUPO/conf/instula.log
+
+ Si los datos ingresados son correctos oprima sólo ENTER para iniciar la instalación.
+ Si desea modificar alguno de ellos oprima cualquier tecla.
+**************************************************************************************************"
+
+	read -n1 algo
+	if [ ! -z $algo ]; then
+		echo ""
+		echo "Vuelve al paso 2"
+	else
+		echo "Sigue"
+	fi
+
 # Confirmación Inicio Instalación
 	$GRALOG instula I "Mostrando mensaje de Confirmación de la Instalación"
 	pregSINO "Iniciando Instalación... Está UD. seguro?"
