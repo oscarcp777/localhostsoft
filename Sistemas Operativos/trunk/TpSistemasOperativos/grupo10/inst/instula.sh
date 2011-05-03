@@ -30,7 +30,7 @@ function mostrarEstadoInstalacion(){
 	#done
 }
 
-# Esta función recibe un comando y una ubicación y instala el mismo
+# Esta función recibe un comando y una ubicación e instala el mismo
 function instalarComando(){
 	# Valida que los archivos no esten en el directorio destino
 	if [ -e "$2/$1" ]; then
@@ -42,6 +42,34 @@ function instalarComando(){
 		echo "	Instalación del componente  $1 completada"
 	fi	
 }
+
+# Esta función recibe una pregunta y valida su respuesta, siendo los valores posibles SI y NO
+# Devuelve 1 si la respuesta es afirmativa y 0 si es negativa
+respSINO=""; # Respuesta que devuelve la funcion
+function pregSINO(){
+	respSINO="";
+	local pregunta=$1;
+	local respVal="";
+	
+	while [ -z $respVal ]	# Mientras no responda si o no
+	do 
+		read -p "$pregunta SI - NO: " resp; # Lee la respuesta y la guarda en $resp
+		respVal=$(echo $resp | grep '^[Ss][Ii]$\|^[Nn][Oo]$'); # Valido que la respuesta sea si o no
+
+	done
+	# Transforma la respuesta a minuscula
+	resp=$(echo $respVal | sed 's/^[Ss][Ii]$/si/');
+	
+	# Transforma la respuesta en un numero
+	if [ $resp = "si" ]; then
+		respSINO=1;
+	else
+		respSINO=0;
+	fi
+}
+
+
+
 
 # --------------Fin Funciones Generales--------------------
 
@@ -56,7 +84,7 @@ if [ -z "$GRUPO" ]; then
 	echo 'No se puede iniciar la instalación.';
 	echo  'Por favor lea el archivo README.txt y vuelva a realizar la instalación';
 	echo "";
-	#exit 1; TODO Descomentar al finalizar comando
+	exit 1; 
 else
 	# Si esta seteada le agrega la ruta del grupo 10 
 	GRUPO="$GRUPO/grupo10"
@@ -84,7 +112,7 @@ if [ ! -e "$GRUPO/instula.conf" ]; then
 	mostrarEstadoInstalacion $comandosInstalados
 	$GRALOG instula I "Borrar los componentes instalados y ejecutar el comando nuevamente"
 	echo "Borrar los componentes instalados y ejecutar el comando nuevamente"
-	exit
+	#exit 1; TODO Descomentar al finalizar comando
 else
 	echo "TODO" # TODO renombrar archivo de log si es q existe y crear el nuevo
 fi
@@ -95,10 +123,6 @@ fi
 	# Consulta al usuario si esta de acuerdo con los terminos y condiciones de la instalacion
 	$GRALOG instula I "Mostrando mensaje de Aceptacion de terminos y condiciones...";
 
-	respVal="";
-	while [ -z $respVal ]	# mientras no responda si o no
-	do
-		clear;
 		
 echo '**************************************************************
 * Proceso de Instalación del sistema Postulantes             *
@@ -109,18 +133,10 @@ echo '**************************************************************
 * SOFTWARE" incluido en este paquete.                        *
 **************************************************************';
 
-		read -p "Acepta? SI - NO: " resp; #leo la respuesta y la guardo en $resp
-
-		respVal=$(echo $resp | grep '^[Ss][Ii]$\|^[Nn][Oo]$'); #valido la respuesta 
-
-	done
-
-	# transformo la respuesta a minuscula
-	respVal=$(echo $respVal | sed 's/^[Nn][Oo]$/no/');
-
-	# si el usuario no acepta finalizo el script
-	if [ $respVal = "no" ]; then
-		$GRALOG instula I  "Usuario NO acepto ACUERDO DE LICENCIA DE SOFTWARE";
+	pregSINO "Acepta?"
+	# Si el usuario no acepta finaliza el script
+	if [ $respSINO = 0 ]; then
+		$GRALOG instula I  "Usuario NO acepto ACUERDO DE LICENCIA DE SOFTWARE: Instalación Cancelada";
 		exit 2;
 	fi
 	
@@ -166,6 +182,20 @@ echo $GRUPO"/conf"
 
 
 #---------ZONA TIAGO---------------
+
+# Confirmación Inicio Instalación
+	$GRALOG instula I "Mostrando mensaje de Confirmación de la Instalación"
+	pregSINO "Iniciando Instalación... Está UD. seguro?"
+	# Si el usuario no acepta finaliza el script
+	if [ $respSINO = 0 ]; then
+		$GRALOG instula I  "Usuario No Confirma la Instalación: Instalación Cancelada";
+		exit 2;
+	fi
+	
+	# Usuario Acepto los terminos
+	$GRALOG instula I  "Usuario acepto Confirmación de Instalación";
+	
+
 
 #######variables de prueba, se borran cuando esten los datos pedidos al usuario#############
 BINDIR=/binTest
