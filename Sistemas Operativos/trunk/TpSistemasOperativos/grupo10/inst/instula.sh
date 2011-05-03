@@ -1,6 +1,16 @@
 #!/bin/bash
 
 # --------------Variables--------------------
+# Directorio base de POSTULA
+BASEDIR=$GRUPO/grupo10
+# Directorio de Archivos Maestros
+DATADIR=$BASEDIR/data
+# Directorio de Instalación
+INSTDIR=$BASEDIR/inst
+# Directorio de Configuración
+CONFDIR=$BASEDIR/conf
+# Archivo de Configuración
+CONFFILE="instula.conf"
 # Lista de todos los comandos del paquete
 COMANDOS=("postini.sh" "postonio.sh" "postular.sh" "plist.pl" "mover.sh" "gralog.sh")
 # Subdirectorio de ejecutables
@@ -10,6 +20,11 @@ DATASIZE=""
 LOGDIR=""
 LOGEXT=""
 LOGSIZE=""
+#######variables no muy claras, revisar#############
+PROCESSED=$BASEDIR/procesadosTest
+NEW=$BASEDIR/nuevosTest
+LIST=$BASEDIR/listaTest
+#######fin variables no muy claras, revisar#############
 # --------------Fin Variables--------------------
 
 # --------------Comandos--------------------
@@ -21,7 +36,7 @@ GRALOG=./gralog.sh
 # Esta función recibe un número de linea y devuelve el valor de la variable
 # correpondiente del archivo de configuración
 function obtenerValor(){
-	head -n $1 "$GRUPO/conf/instula.conf" | tail -1 | sed -e 's/.*=//'
+	head -n $1 "$CONFDIR/$CONFFILE" | tail -1 | sed -e 's/.*=//'
 }
 
 # Esta función recibe la lista de comandos instalados y los muestra junto con los no instalados
@@ -46,6 +61,30 @@ function instalarComando(){
 		cp $1 $2
 		$GRALOG instula I "	Instalación del componente  $1 completada" 1	
 	fi	
+}
+	
+# Esta función crea el archivo de configuración de la instalación
+function crearConfiguracion(){
+	$GRALOG instula I "Generando Archivo de Configuración..." 1
+	echo "CURRDIR=$BASEDIR" > "$CONFDIR/$CONFFILE"              	      	#1
+	echo "CONFDIR=$CONFDIR" >> "$CONFDIR/$CONFFILE" 
+	echo "ARRIDIR=$ARRIDIR" >> "$CONFDIR/$CONFFILE" 
+	echo "BINDIR=$BINDIR" >> "$CONFDIR/$CONFFILE" 
+	echo "DATASIZE=$DATASIZE" >> "$CONFDIR/$CONFFILE"
+	echo "LOGDIR=$LOGDIR" >> "$CONFDIR/$CONFFILE"
+	echo "LOGEXT=$LOGEXT" >> "$CONFDIR/$CONFFILE" 
+	MAXLOGSIZE=$(echo "$MAXLOGSIZE*1024" | bc)
+	echo "MAXLOGSIZE=$MAXLOGSIZE" >> "$CONFDIR/$CONFFILE" 
+	echo "USERID= `whoami`" >> "$CONFDIR/$CONFFILE"
+	echo "FECINS= `date +%D`" >> "$CONFDIR/$CONFFILE" 
+	for ((i=0;i<10;i++)); do
+		echo " " >> "$CONFDIR/$CONFFILE"
+	done
+	echo "DATADIR=$DATADIR" >> "$CONFDIR/$CONFFILE"
+	echo "INSTDIR=$INSTDIR" >> "$CONFDIR/$CONFFILE"
+	echo "INSTDIR=$INSTDIR" >> "$CONFDIR/$CONFFILE"
+	echo "COMANDOS=$COMANDOS" >> "$CONFDIR/$CONFFILE"
+	$GRALOG instula I "Archivo de Configuración $CONFFILE generado con éxito" 1
 }
 
 # Esta función recibe una pregunta y valida su respuesta, siendo los valores posibles SI y NO
@@ -169,12 +208,12 @@ if [ -z "$GRUPO" ]; then
 	echo "";
 	exit 1; 
 else
-	# Si esta seteada le agrega la ruta del grupo 10 
+	# Si esta seteada le agrega la ruta del grupo 10
 	GRUPO="$GRUPO/grupo10"
 fi
 
 # Valida que exista un archivo previo de log de instalación 
-if [ -e "$GRUPO/conf/instula.log" ]; then
+if [ -e "$CONFDIR/instula.log" ]; then
 	# Hay instalación previa
 	# Renombra el archivo anterior y crea el nuevo
 	echo "TODO - renombrar archivo de log si es q existe y crear el nuevo" 
@@ -184,7 +223,8 @@ $GRALOG instula I "Inicio de Instalación" 1
 #echo "Inicio de Instalación"
 
 # Valida si existe una instalación previa
-if [ ! -e "$GRUPO/instula.conf" ]; then
+if [ -e "$CONFDIR/$CONFFILE" ]
+then
 	$GRALOG instula I "El programa ya se encuentra instalado" 1
 	$GRALOG instula I "Verificando componentes ya instalados del programa..." 1
 		
@@ -193,8 +233,6 @@ if [ ! -e "$GRUPO/instula.conf" ]; then
 	mostrarEstadoInstalacion $comandosInstalados
 	$GRALOG instula I "Borrar los componentes instalados y ejecutar el comando nuevamente" 1
 	#exit 1; TODO Descomentar al finalizar comando
-else
-	echo "TODO" # TODO renombrar archivo de log si es q existe y crear el nuevo
 fi
 
 
@@ -247,15 +285,15 @@ echo '**************************************************************
 	
 
 echo "Todos los directorios del sistema de postulantes serán subdirectorios de:" 
-echo $GRUPO
+echo $BASEDIR
 
 echo "Todos los componentes de la instalación se obtendrán del repositorio:" 
-echo $GRUPO"/inst"
+echo $INSTDIR
 echo "Contenido del directorio:"
-ls $GRUPO/inst 
+ls $INSTDIR 
 
 echo "El archivo de configuración y el log de la instalación se registrarán en:" 
-echo $GRUPO"/conf"
+echo $CONFDIR
 
 # se almacena en la variable BINDIR el directorio q el usuario escriba y sino por defecto $GRUPO/bin
 preguntarDirectorio "Ingrese el nombre del subdirectorio de ejecutables: (presione ENTER para dejar el subdirectorio por defecto $GRUPO/bin)" "$GRUPO/bin"
@@ -294,22 +332,22 @@ echo $LOGSIZE
 #---------ZONA TIAGO---------------
 
 # Mostrar estructura de directorios y parámetros configurados
-	$GRALOG instula I "Mostrando estructura de directorios configurada"
+	$GRALOG instula I "Mostrando estructura de directorios configurada";
 	clear
 echo "**************************************************************************************************
-* Parámetros de Instalación del paquete POSTULA		     *	
+* Parámetros de Instalación del paquete POSTULA		     										 *	
 **************************************************************************************************
- Directorio de trabajo: $GRUPO
- Directorio de instalación: $GRUPO/inst
- Directorio de configuración: $GRUPO/conf
- Directorio de datos: $GRUPO/data
+ Directorio de trabajo: $BASEDIR
+ Directorio de instalación: $INSTDIR
+ Directorio de configuración: $CONFDIR
+ Directorio de datos: $DATADIR
  Librería de ejecutables: $BINDIR
  Directorio de arribos: $ARRIDIR
  Espacio mínimo reservado en $ARRIDIR: $DATASIZE Mb
  Directorio para los archivos de Log: $LOGDIR
  Extensión para los archivos de Log: $LOGEXT
  Tamaño máximo para cada archivo de Log: $LOGSIZE Kb
- Log de la instalación: $GRUPO/conf/instula.log
+ Log de la instalación: $CONFDIR/instula.log
 
  Si los datos ingresados son correctos oprima sólo ENTER para iniciar la instalación.
  Si desea modificar alguno de ellos oprima cualquier tecla.
@@ -317,11 +355,11 @@ echo "**************************************************************************
 
 	read -n1 algo
 	if [ ! -z $algo ]; then
-		$GRALOG instula I "El usuario decide modificar estructura de directorios configurada"
+		$GRALOG instula I "El usuario decide modificar estructura de directorios configurada";
 		echo ""
 		echo "Vuelve al paso 2"
 	else
-		$GRALOG instula I "El usuario acepta estructura de directorios configurada"
+		$GRALOG instula I "El usuario acepta estructura de directorios configurada";
 		echo "Sigue"
 	fi
 
@@ -339,15 +377,7 @@ echo "**************************************************************************
 	
 
 
-#######variables de prueba, se borran cuando esten los datos pedidos al usuario#############
-#BINDIR=/binTest
-#ARRIDIR=/recibidosTest
-#LOGDIR=/logTest
-PROCESSED=/procesadosTest
-NEW=/nuevosTest
-LIST=/listaTest
 
-#######fin variables de prueba, se borran cuando esten los datos pedidos al usuario#############
  
 # Creación estructura de Directorios definida
 	$GRALOG instula I "Creando Estructuras de Directorio......" 1
@@ -355,12 +385,16 @@ LIST=/listaTest
 	DIRECTORIOS=( $BINDIR $ARRIDIR $LOGDIR $PROCESSED $NEW $LIST);
 	for i in ${DIRECTORIOS[*]}; do
 		# Crea los directorios
-		if [ ! -e "$GRUPO/$i" ] 
+		if [ ! -e $i -a ! -z $i ] 
 		then
-			mkdir  "$GRUPO$i" 
-			$GRALOG instula I "	Se creo el directorio $GRUPO$i" 1 
+			mkdir  "$i" 
+			$GRALOG instula I "	Se creo el directorio $i" 1 
 		else
-			$GRALOG instula I "	El directorio $GRUPO$i ya existe" 1
+			if [ -z $i ];then
+				$GRALOG instula I "	El directorio $i no está definido" 1
+			else
+				$GRALOG instula I "	El directorio $i ya existe" 1
+			fi
 		fi
 	done
 
@@ -369,7 +403,7 @@ LIST=/listaTest
 	estaCompleto=true
 	# Valida que todos los componentes esten disponibles en el directorio de instalación
 	for i in ${COMANDOS[*]}; do
-		if [ ! -e $GRUPO/inst/$i ]; then
+		if [ ! -e $INSTDIR/$i ]; then
 		 	estaCompleto=false
 			$GRALOG instula E "El componente $i no se encuentra o está corrupto, no se puede continuar la instalación" 1 
 		fi
@@ -378,11 +412,13 @@ LIST=/listaTest
 		$GRALOG instula I "Moviendo Archivos..." 1
 		# Instalando COMANDOS
 		for i in ${COMANDOS[*]}; do
-			instalarComando $i $GRUPO/bin  #TODO debe estar BINDIR
+			instalarComando $i $BINDIR
 		done
 	fi
 	
-		
+# Creación archivo de configuración
+	`crearConfiguracion`
+			
 
 
 #---------FIN ZONA TIAGO---------------
