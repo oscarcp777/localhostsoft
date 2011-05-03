@@ -3,6 +3,13 @@
 # --------------Variables--------------------
 # Lista de todos los comandos del paquete
 COMANDOS=("postini.sh" "postonio.sh" "postular.sh" "plist.pl" "mover.sh" "gralog.sh")
+# Subdirectorio de ejecutables
+BINDIR=""
+ARRIDIR=""
+DATASIZE=""
+LOGDIR=""
+LOGEXT=""
+LOGSIZE=""
 # --------------Fin Variables--------------------
 
 # --------------Comandos--------------------
@@ -65,9 +72,87 @@ function pregSINO(){
 		respSINO=0;
 	fi
 }
-
-
-
+# Esta función recibe un mensaje de pregunta para seleccionar un determinado directorio y en el segundo parametro el directorio por defecto
+# Devuelve una cadena con el directorio seleccionado por el usuario
+dirSeleccionado=""; # directorio que devuelve la funcion
+function preguntarDirectorio(){
+ dirSeleccionado=""
+ local pregunta=$1
+ local resp="";
+ local posibleDir=""
+	
+	
+	while [ -z $dirSeleccionado ]; do
+		read -p "$pregunta" posibleDir;
+		if [ -z $posibleDir ] ; then
+			dirSeleccionado=$2
+		else #TODO Validar q lo q ingresa el usuario sea un posible directorio esta validacion no funca
+			resp=$(echo $posibleDir | grep "^[A-Za-z0-9%@_=:.]\{1,\}$");
+						
+			if [ -z $resp ]; then 
+				echo "";
+				echo "El nombre de directorio $posibleDir es invalido";
+			else
+				dirSeleccionado=$resp
+			fi
+		fi	
+	done
+	
+}
+# Esta función recibe un mensaje de pregunta para seleccionar tamaño y en el segundo parametro es el tamaño por defecto
+# Devuelve el tamaño definido por el usuario 
+tamanio=0; # directorio que devuelve la funcion
+function preguntarTamanio(){
+ tamanio=0
+ local pregunta=$1
+ local resp="";
+ local posibleTam=""
+	
+	
+	while [ $tamanio -eq 0 ]; do
+		read -p "$pregunta" posibleTam;
+		if [ -z $posibleTam ] ; then
+			tamanio=$2 #   $2 es el valor por dafault 
+		else #TODO Validar q lo q ingresa el usuario sea un posible valor maximo
+			resp=$(echo $posibleTam | grep "^[A-Za-z0-9%@_=:.]\{1,\}$");
+						
+			if [ -z $resp ]; then 
+				echo "";
+				echo "El valor $posibleTam es invalido";
+			else
+				$tamanio=$resp
+			fi
+		fi	
+	done
+	
+}
+# Esta función recibe un mensaje de pregunta para seleccionar una extension de archivo y en el segundo parametro el valor por defecto
+# Devuelve una cadena con la extension seleccionado por el usuario
+extSeleccionada=""; # extension que devuelve la funcion
+function preguntarExtension(){
+ extSeleccionada=""
+ local pregunta=$1
+ local resp="";
+ local posibleExt=""
+	
+	
+	while [ -z $extSeleccionada ]; do
+		read -p "$pregunta" posibleExt;
+		if [ -z $posibleExt ] ; then
+			extSeleccionada=$2
+		else #TODO Validar q lo q ingresa el usuario sea una posible extension esta validacion no funca
+			resp=$(echo $posibleExt | grep "^[A-Za-z0-9%@_=:.]\{1,\}$");
+						
+			if [ -z $resp ]; then 
+				echo "";
+				echo "El nombre de de la extension $posibleExt es invalido";
+			else
+				extSeleccionada=$resp
+			fi
+		fi	
+	done
+	
+}
 
 # --------------Fin Funciones Generales--------------------
 
@@ -172,7 +257,37 @@ ls $GRUPO/inst
 echo "El archivo de configuración y el log de la instalación se registrarán en:" 
 echo $GRUPO"/conf"
 
+# se almacena en la variable BINDIR el directorio q el usuario escriba y sino por defecto $GRUPO/bin
+preguntarDirectorio "Ingrese el nombre del subdirectorio de ejecutables: (presione ENTER para dejar el subdirectorio por defecto $GRUPO/bin)" "$GRUPO/bin"
+BINDIR=$dirSeleccionado
+echo $BINDIR
 
+# se almacena en la variable ARRIDIR el directorio q el usuario escriba y sino por defecto $GRUPO/bin
+preguntarDirectorio "Ingrese el nombre del directorio que permite el arribo de archivos externos (presione ENTER para dejar el subdirectorio por defecto $GRUPO/arribos)" "$GRUPO/arribos"
+ARRIDIR=$dirSeleccionado
+echo $ARRIDIR
+
+# se almacena en la variable DATASIZE el espacio mínimo reservado para datos q el usuario ingrese y sino 200 Mb por defecto
+preguntarTamanio "Ingrese el espacio mínimo requerido para datos externos (en Mbytes): 200 Mb" 200
+DATASIZE=$tamanio
+echo $DATASIZE
+
+#TODO verificar escpacio en disco
+
+# se almcacena en la variable LOGDIR el directorio q el usuario escriba para los archivos de log de los comandos y sino $GRUPO/log por defecto
+preguntarDirectorio "Ingrese el nombre del directorio de log: (presione ENTER para dejar el subdirectorio por defecto $GRUPO/log)" "$GRUPO/log"
+LOGDIR=$dirSeleccionado
+echo $LOGDIR
+
+# se almacena en la variable LOGEXT la extension q el usuario escriba para los archivos de log y sino (.log) por defecto
+preguntarExtension "Ingrese la extensión para los archivos de log: (.log)" ".log"
+LOGEXT=$extSeleccionada
+echo $LOGEXT
+
+# se almacena en la variable LOGSIZE el tamaño maximo reservado para los archivos de log q el usuario ingrese y sino 500 KB por defecto
+preguntarTamanio "Ingrese el tamaño máximo para los archivos <LOGEXT> (en Kbytes): 500 KB" 500
+LOGSIZE=$tamanio
+echo $LOGSIZE
 #---------FIN ZONA RICHY---------------
 
 
@@ -225,9 +340,9 @@ echo "**************************************************************************
 
 
 #######variables de prueba, se borran cuando esten los datos pedidos al usuario#############
-BINDIR=/binTest
-ARRIDIR=/recibidosTest
-LOGDIR=/logTest
+#BINDIR=/binTest
+#ARRIDIR=/recibidosTest
+#LOGDIR=/logTest
 PROCESSED=/procesadosTest
 NEW=/nuevosTest
 LIST=/listaTest
