@@ -179,7 +179,7 @@ echo $GRUPO"/conf"
 #---------ZONA TIAGO---------------
 
 # Mostrar estructura de directorios y parámetros configurados
-
+	$GRALOG instula I "Mostrando estructura de directorios configurada"
 	clear
 echo "**************************************************************************************************
 * Parámetros de Instalación del paquete POSTULA		     *	
@@ -202,9 +202,11 @@ echo "**************************************************************************
 
 	read -n1 algo
 	if [ ! -z $algo ]; then
+		$GRALOG instula I "El usuario decide modificar estructura de directorios configurada"
 		echo ""
 		echo "Vuelve al paso 2"
 	else
+		$GRALOG instula I "El usuario acepta estructura de directorios configurada"
 		echo "Sigue"
 	fi
 
