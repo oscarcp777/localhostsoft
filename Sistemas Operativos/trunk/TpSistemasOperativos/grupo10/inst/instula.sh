@@ -132,7 +132,7 @@ function preguntarDirectorio(){
 				echo "";
 				echo "El nombre de directorio $posibleDir es invalido";
 			else
-				dirSeleccionado=$resp
+				dirSeleccionado="$GRUPO/$resp"
 			fi
 		fi	
 	done
@@ -180,7 +180,7 @@ function preguntarExtension(){
 		if [ -z $posibleExt ] ; then
 			extSeleccionada=$2
 		else #TODO Validar q lo q ingresa el usuario sea una posible extension esta validacion no funca
-			resp=$(echo $posibleExt | grep "^[A-Za-z0-9%@_=:.]\{1,\}$");
+			resp=$(echo $posibleExt | grep "^[A-Za-z.]\{1,\}$");
 						
 			if [ -z $resp ]; then 
 				echo "";
@@ -220,7 +220,6 @@ if [ -e "$CONFDIR/instula.log" ]; then
 fi
 
 $GRALOG instula I "Inicio de Instalación" 1
-#echo "Inicio de Instalación"
 
 # Valida si existe una instalación previa
 if [ -e "$CONFDIR/$CONFFILE" ]
@@ -241,8 +240,7 @@ fi
 	# Consulta al usuario si esta de acuerdo con los terminos y condiciones de la instalacion
 	$GRALOG instula I "Mostrando mensaje de Aceptacion de terminos y condiciones...";
 
-	
-		
+			
 echo '**************************************************************
 * Proceso de Instalación del sistema Postulantes             *
 *          Copyright TPSistemasOp (c)2011                    *
@@ -279,7 +277,6 @@ echo '**************************************************************
 		$GRALOG instula E $msgPerl;
 		exit 3;
 	else
-		#echo "PERL instalado. Version:$PERLV";
 		$GRALOG instula I "PERL instalado. Version:$PERLV" 1
 	fi
 	
@@ -327,6 +324,7 @@ echo $DATASIZE
          Espacio disponible en $ARRIDIR $espacioLibre Mb. 
          Espacio requerido $DATASIZE Mb" 	
 		 $GRALOG instula E "$msgError" 1
+		 #TODO falta volver a un punto anterior
 	fi
 # se almcacena en la variable LOGDIR el directorio q el usuario escriba para los archivos de log de los comandos y sino $GRUPO/log por defecto
 preguntarDirectorio "Ingrese el nombre del directorio de log: (presione ENTER para dejar el subdirectorio por defecto $GRUPO/log)" "$GRUPO/log"
