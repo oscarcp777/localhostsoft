@@ -214,8 +214,8 @@ fi
 # Valida que exista un archivo previo de log de instalación 
 if [ -e "$CONFDIR/instula.log" ]; then
 	# Hay instalación previa
-	# Renombra el archivo anterior y crea el nuevo
-	echo "TODO - renombrar archivo de log si es q existe y crear el nuevo" 
+	# Renombra el archivo anterior 
+	mv "$CONFDIR/instula.log" "$CONFDIR/instulaOLD.log"	
 fi
 
 $GRALOG instula I "Inicio de Instalación" 1
@@ -253,7 +253,7 @@ echo '**************************************************************
 	# Si el usuario no acepta finaliza el script
 	if [ $respSINO = 0 ]; then
 		$GRALOG instula I  "Usuario NO acepto ACUERDO DE LICENCIA DE SOFTWARE: Instalación Cancelada";
-		exit 2;
+		exit 3;
 	fi
 	
 	# Usuario Acepto los terminos
@@ -274,7 +274,7 @@ echo '**************************************************************
 				 Proceso de Instalación Cancelado"
 		echo -e $msgPerl;
 		$GRALOG instula E $msgPerl;
-		exit 3;
+		exit 4;
 	else
 		$GRALOG instula I "PERL instalado. Version:$PERLV" 1
 	fi
@@ -301,31 +301,34 @@ preguntarDirectorio "Ingrese el nombre del directorio que permite el arribo de a
 ARRIDIR=$dirSeleccionado
 echo $ARRIDIR
 
-# se almacena en la variable DATASIZE el espacio mínimo reservado para datos q el usuario ingrese y sino 200 Mb por defecto
-preguntarTamanio "Ingrese el espacio mínimo requerido para datos externos (en Mbytes): 200 Mb" 200
-DATASIZE=$tamanio
-echo $DATASIZE
+	continuar=0;
+	while [ $continuar -eq 0 ]; do
+		# se almacena en la variable DATASIZE el espacio mínimo reservado para datos q el usuario ingrese y sino 200 Mb por defecto
+		preguntarTamanio "Ingrese el espacio mínimo requerido para datos externos (en Mbytes): 200 Mb" 200
+		DATASIZE=$tamanio
+		echo $DATASIZE
 
-#TODO verificar escpacio en disco
-
-# calculo espacio libre en ARRIDIR
-	$GRALOG instula I "Calculando espacio disponible..." 1
-	#obtengo el espacio libre en el directorio(df -B). corto la unica linea que me devuelve,
-	#reemplazo los espacios en blanco por ';' (sed) y hago un cut del tercer campo (cut)
-	espacioLibre=$(df -B1024 "$ARRIDIR" | tail -n1 | sed -e"s/\s\{1,\}/;/g" | cut -f4 -d';');
-	espacioLibre=$(echo "scale=0 ; $espacioLibre/1024" | bc -l); #lo paso a Mb
-	$GRALOG instula I "Espacio disponible en $ARRIDIR $espacioLibre Mb" 1 
+		# calculo espacio libre en ARRIDIR
+		$GRALOG instula I "Calculando espacio disponible..." 1
+		#obtengo el espacio libre en el directorio(df -B). corto la unica linea que me devuelve,
+		#reemplazo los espacios en blanco por ';' (sed) y hago un cut del tercer campo (cut)
+		espacioLibre=$(df -B1024 "$ARRIDIR" | tail -n1 | sed -e"s/\s\{1,\}/;/g" | cut -f4 -d';');
+		espacioLibre=$(echo "scale=0 ; $espacioLibre/1024" | bc -l); #lo paso a Mb
+		$GRALOG instula I "Espacio disponible en $ARRIDIR $espacioLibre Mb" 1 
 		
-	#si el espacio disponible en ARRIDIR es menor que el espacio minimo reservado para datos se informa el error y se vuelve al punto anterior	
-	if [ $DATASIZE -gt $espacioLibre ] ; then
-		 msgError="ERROR !:
-         Insuficiente espacio en disco.
-         Espacio disponible en $ARRIDIR $espacioLibre Mb. 
-         Espacio requerido $DATASIZE Mb" 	
-		 $GRALOG instula E "$msgError" 1
-		 
-		#TODO falta volver a un punto anterior
-	fi
+		#si el espacio disponible en ARRIDIR es menor que el espacio minimo reservado para datos se informa el error y se vuelve al punto anterior	
+		if [ $DATASIZE -gt $espacioLibre ] ; then
+			 msgError="ERROR !:
+         	Insuficiente espacio en disco.
+         	Espacio disponible en $ARRIDIR $espacioLibre Mb. 
+         	Espacio requerido $DATASIZE Mb" 	
+		 	$GRALOG instula E "$msgError" 1         	
+         
+         else
+         	continuar=1
+		fi
+	done	
+
 # se almcacena en la variable LOGDIR el directorio q el usuario escriba para los archivos de log de los comandos y sino $GRUPO/log por defecto
 preguntarDirectorio "Ingrese el nombre del directorio de log: (presione ENTER para dejar el subdirectorio por defecto $GRUPO/log)" "$GRUPO/log"
 LOGDIR=$dirSeleccionado
@@ -383,7 +386,7 @@ echo "**************************************************************************
 	# Si el usuario no acepta finaliza el script
 	if [ $respSINO = 0 ]; then
 		$GRALOG instula I  "Usuario No Confirma la Instalación: Instalación Cancelada";
-		exit 2;
+		exit 5;
 	fi
 	
 	# Usuario Acepto los terminos
@@ -433,11 +436,24 @@ echo "**************************************************************************
 # Creación archivo de configuración
 	`crearConfiguracion`
 			
+	mens="**************************************************************
+	* Se encuentran instalados los siguientes componentes:       *
+	#* POSTINI  <fecha de creación>    <usuario>                  *
+	#* OSTONIO <fecha de instalación> <usuario>                  *
+	#* POSTLIST <fecha de instalación> <usuario>                  *
+	#* POSTULAR <fecha de instalación> <usuario>                  *
+	**************************************************************
+	* FIN del Proceso de Instalación de Postulantes*
+	*          Copyright TPSistemasOp (c)2011                    *
+	**************************************************************"
 
+	$GRALOG instula I $mens 1
+
+	echo "Presione ENTER para salir"
 
 #---------FIN ZONA TIAGO---------------
 
 
-
+	exit 0;
 # --------------Fin Programa--------------
  
