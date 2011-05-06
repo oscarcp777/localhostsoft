@@ -153,9 +153,8 @@ function preguntarTamanio(){
 		if [ -z $posibleTam ] ; then
 			tamanio=$2 #   $2 es el valor por dafault 
 		else #TODO Validar q lo q ingresa el usuario sea un posible valor maximo
-			resp=$posibleTam;
-						
-			if [ $resp -lt 0 ]; then 
+			resp=$(echo $posibleTam | grep "^[0-9]*$");			
+			if [ -z $resp ]; then 
 				echo "";
 				echo "El valor $posibleTam es invalido";
 			else
@@ -324,7 +323,8 @@ echo $DATASIZE
          Espacio disponible en $ARRIDIR $espacioLibre Mb. 
          Espacio requerido $DATASIZE Mb" 	
 		 $GRALOG instula E "$msgError" 1
-		 #TODO falta volver a un punto anterior
+		 
+		#TODO falta volver a un punto anterior
 	fi
 # se almcacena en la variable LOGDIR el directorio q el usuario escriba para los archivos de log de los comandos y sino $GRUPO/log por defecto
 preguntarDirectorio "Ingrese el nombre del directorio de log: (presione ENTER para dejar el subdirectorio por defecto $GRUPO/log)" "$GRUPO/log"
