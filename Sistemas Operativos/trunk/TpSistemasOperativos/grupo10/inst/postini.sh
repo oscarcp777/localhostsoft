@@ -9,7 +9,7 @@
 # Devuelve 1 si hubo algún error
 
 # Variable de instalación (se tiene que pisar -o borrar esta linea y setear - desde el INSTULA cuando se copie a BINDIR)
-GRUPO="/home/Santiago/Documentos/Materias/Sistemas_Operativos/eclipseShell/workspace/TpSistemasOperativos/grupo10"
+GRUPO="LLENAR EN INSTALACION"
 
 # Mensaje de error
 errorMsj="Inicialización de Ambiente No fue exitosa. Error en"

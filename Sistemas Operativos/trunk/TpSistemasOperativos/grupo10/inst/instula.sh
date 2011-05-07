@@ -8,7 +8,7 @@
 #	5 Perl no esta instalado o su version es menor a la 5.0
 #	6 Usuario no acepto continuar con la intalacion
 
-# --------------Variables--------------------
+# ------------------------------------------Variables------------------------------------------
 # Directorio base de POSTULA
 BASEDIR=$GRUPO/grupo10
 # Directorio de Archivos Maestros
@@ -28,18 +28,16 @@ DATASIZE=""
 LOGDIR=""
 LOGEXT=""
 LOGSIZE=""
-#######variables no muy claras, revisar#############
-PROCESSED=$BASEDIR/procesadosTest
-NEW=$BASEDIR/nuevosTest
-LIST=$BASEDIR/listaTest
-#######fin variables no muy claras, revisar#############
-# --------------Fin Variables--------------------
+PROCESSED=$BASEDIR/procesados
+REJECTED=$BASEDIR/rechazados
+RECEIVED=$BASEDIR/recibidos
+# ------------------------------------------Fin Variables------------------------------------------
 
-# --------------Comandos--------------------
+# ------------------------------------------Comandos------------------------------------------
 GRALOG=./gralog.sh
-# --------------Fin Comandos--------------------
+# ------------------------------------------Fin Comandos------------------------------------------
 
-# --------------Funciones Generales--------------------
+# ------------------------------------------Funciones Generales-----------------------------------------------------
 
 # Esta función recibe un número de linea y devuelve el valor de la variable
 # correpondiente del archivo de configuración
@@ -58,7 +56,11 @@ function instalarComando(){
 		$GRALOG instula A "	El componente $1 ya se encuentra instalado, el mismo no fue actualizado" 1 
 	else
 		cp $1 $2
-		$GRALOG instula I "	Instalación del componente  $1 completada" 1	
+		if [ "$1" = "postini.sh" ]; then
+			#escribo $GRUPO 
+    		sed -e "s:GRUPO=\\\"LLENAR EN INSTALACION\\\":GRUPO=\\\"$BASEDIR\\\":" "postini.sh" > "$BINDIR/postini.sh"
+		fi
+	$GRALOG instula I "	Instalación del componente  $1 completada" 1	
 	fi	
 }
 	
@@ -115,6 +117,7 @@ function pregSINO(){
 		respSINO=0;
 	fi
 }
+
 # Esta función recibe un mensaje de pregunta para seleccionar un determinado directorio y en el segundo parametro el directorio por defecto
 # Devuelve una cadena con el directorio seleccionado por el usuario
 dirSeleccionado=""; # directorio que devuelve la funcion
@@ -136,12 +139,13 @@ function preguntarDirectorio(){
 				echo "";
 				echo "El nombre de directorio $posibleDir es invalido";
 			else
-				dirSeleccionado="$GRUPO/$resp"
+				dirSeleccionado="$BASEDIR/$resp"
 			fi
 		fi	
 	done
 	
 }
+
 # Esta función recibe un mensaje de pregunta para seleccionar tamaño y en el segundo parametro es el tamaño por defecto
 # Devuelve el tamaño definido por el usuario 
 tamanio=0; # directorio que devuelve la funcion
@@ -168,6 +172,7 @@ function preguntarTamanio(){
 	done
 	
 }
+
 # Esta función recibe un mensaje de pregunta para seleccionar una extension de archivo y en el segundo parametro el valor por defecto
 # Devuelve una cadena con la extension seleccionado por el usuario
 extSeleccionada=""; # extension que devuelve la funcion
@@ -196,7 +201,8 @@ function preguntarExtension(){
 	
 }
 
-# --------------Fin Funciones Generales--------------------
+
+# ------------------------------------------Fin Funciones Generales------------------------------------------
 
 
 
@@ -279,16 +285,16 @@ then
 			indice=$(($indice+1));	
 		fi
 	done
-	
+	rm "$CONFDIR/comandos.temp";
 	#Si no hay ningun comando faltante indicar al usuario que el programa esta correctamente instalado
 	if [ -z $COMANDOS_FALTANTES ]; then
 			echo "	********************************************************"
 			echo "	*   Proceso de Instalación del sistema de Postulantes  *"
 			echo "	*            Copyright TPSistemasOp (c)2011            *"
 			echo "	********************************************************"
-			echo "	* Se encuentran instalados los siguientes componentes: *"
+			echo "	 Se encuentran instalados los siguientes componentes: "
 			for i in "${COMANDOS_INSTALADOS[@]}"; do 
-			echo "        * $i  ";
+			echo "         $i  ";
 			 done
 			echo "        ********************************************************"
 			echo "	Proceso de Instalación Cancelado"
@@ -316,7 +322,7 @@ then
 fi
 
 	# Consulta al usuario si esta de acuerdo con los terminos y condiciones de la instalacion
-	$GRALOG instula I "Mostrando mensaje de Aceptacion de terminos y condiciones...";
+	$GRALOG instula I "Mostrando mensaje de Aceptación de términos y condiciones...";
 
 			
 echo '**************************************************************
@@ -361,22 +367,26 @@ echo '**************************************************************
 
 echo "Todos los directorios del sistema de postulantes serán subdirectorios de:" 
 echo $BASEDIR
+echo ""
 
 echo "Todos los componentes de la instalación se obtendrán del repositorio:" 
 echo $INSTDIR
+echo ""
 echo "Contenido del directorio:"
-ls $INSTDIR 
+ls $INSTDIR
+echo "" 
 
 echo "El archivo de configuración y el log de la instalación se registrarán en:" 
 echo $CONFDIR
+echo ""
 
-# se almacena en la variable BINDIR el directorio q el usuario escriba y sino por defecto $GRUPO/bin
-preguntarDirectorio "Ingrese el nombre del subdirectorio de ejecutables: (presione ENTER para dejar el subdirectorio por defecto $GRUPO/bin)" "$GRUPO/bin"
+# se almacena en la variable BINDIR el directorio q el usuario escriba y sino por defecto $BASEDIR/bin
+preguntarDirectorio "Ingrese el nombre del subdirectorio de ejecutables: (presione ENTER para dejar el subdirectorio por defecto /bin)" "$BASEDIR/bin"
 BINDIR=$dirSeleccionado
 echo $BINDIR
 
-# se almacena en la variable ARRIDIR el directorio q el usuario escriba y sino por defecto $GRUPO/bin
-preguntarDirectorio "Ingrese el nombre del directorio que permite el arribo de archivos externos (presione ENTER para dejar el subdirectorio por defecto $GRUPO/arribos)" "$GRUPO/arribos"
+# se almacena en la variable ARRIDIR el directorio q el usuario escriba y sino por defecto $BASEDIR/arribos
+preguntarDirectorio "Ingrese el nombre del directorio que permite el arribo de archivos externos (presione ENTER para dejar el subdirectorio por defecto /arribos)" "$BASEDIR/arribos"
 ARRIDIR=$dirSeleccionado
 echo $ARRIDIR
 
@@ -391,7 +401,7 @@ echo $ARRIDIR
 		$GRALOG instula I "Calculando espacio disponible..." 1
 		#obtengo el espacio libre en el directorio(df -B). corto la unica linea que me devuelve,
 		#reemplazo los espacios en blanco por ';' (sed) y hago un cut del tercer campo (cut)
-		espacioLibre=$(df -B1024 "$ARRIDIR" | tail -n1 | sed -e"s/\s\{1,\}/;/g" | cut -f4 -d';');
+		espacioLibre=$(df -B1024 "$BASEDIR" | tail -n1 | sed -e"s/\s\{1,\}/;/g" | cut -f4 -d';');
 		espacioLibre=$(echo "scale=0 ; $espacioLibre/1024" | bc -l); #lo paso a Mb
 		$GRALOG instula I "Espacio disponible en $ARRIDIR $espacioLibre Mb" 1 
 		
@@ -408,8 +418,8 @@ echo $ARRIDIR
 		fi
 	done	
 
-# se almcacena en la variable LOGDIR el directorio q el usuario escriba para los archivos de log de los comandos y sino $GRUPO/log por defecto
-preguntarDirectorio "Ingrese el nombre del directorio de log: (presione ENTER para dejar el subdirectorio por defecto $GRUPO/log)" "$GRUPO/log"
+# se almcacena en la variable LOGDIR el directorio q el usuario escriba para los archivos de log de los comandos y sino $BASEDIR/log por defecto
+preguntarDirectorio "Ingrese el nombre del directorio de log: (presione ENTER para dejar el subdirectorio por defecto /log)" "$BASEDIR/log"
 LOGDIR=$dirSeleccionado
 echo $LOGDIR
 
@@ -470,7 +480,7 @@ echo "**************************************************************************
 # Creación estructura de Directorios definida
 	$GRALOG instula I "Creando Estructuras de Directorio......" 1
 	
-	DIRECTORIOS=( $BINDIR $ARRIDIR $LOGDIR $PROCESSED $NEW $LIST);
+	DIRECTORIOS=( $BINDIR $ARRIDIR $LOGDIR $PROCESSED $REJECTED $RECEIVED);
 	for i in ${DIRECTORIOS[*]}; do
 		# Crea los directorios
 		if [ ! -e $i -a ! -z $i ] 
@@ -517,7 +527,7 @@ mensFinal="***************************************************************
 * Se encuentran instalados los siguientes componentes:       *
 * POSTINI  `date +%D`    `whoami`          			       
 * POSTONIO  `date +%D`    `whoami`                  		   
-* POSTLIST `date +%D`    `whoami`                  		   
+* PLIST `date +%D`    `whoami`                  		   
 * POSTULAR `date +%D`    `whoami`                            
 **************************************************************
 * FIN del Proceso de Instalación de Postulantes			   *			
@@ -528,5 +538,5 @@ mensFinal="***************************************************************
 	$GRALOG instula I "$mensFinal"
 
 	exit 0;
-# --------------Fin Programa--------------
+# ------------------------------------------Fin Programa------------------------------------------
  
