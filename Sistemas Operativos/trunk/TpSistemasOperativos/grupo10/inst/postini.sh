@@ -33,7 +33,7 @@ function mostrarVariables(){
 	echo "LOGDIR = $LOGDIR"
 	echo "LOGEXT = $LOGEXT"
 	echo "INSTDIR = $INSTDIR"
-	echo "MAXLOGSIZE = $MAXLOGSIZE"
+	echo "LOGSIZE = $LOGSIZE"
 	echo "USERID = $USERID"
 	echo "DATADIR = $DATADIR"
 }
@@ -55,7 +55,7 @@ then
 	export DATASIZE=`obtenerValor 5`
 	export LOGDIR=`obtenerValor 6`
 	export LOGEXT=`obtenerValor 7`
-	export MAXLOGSIZE=`obtenerValor 8`
+	export LOGSIZE=`obtenerValor 8`
 	export USERID=`obtenerValor 9`
 	export DATADIR=`obtenerValor 21`
 	export INSTDIR=`obtenerValor 22`
@@ -66,39 +66,39 @@ else
 fi
 
 # Validar que existan directorios y archivos necesarios para la ejecución
-if [ ! -e "$GRUPO$DATADIR/agencias.mae" ]
+if [ ! -e "$DATADIR/agencias.mae" ]
 then
-	echo "$errorMsj archivo maestro de agencias (\"$GRUPO$DATADIR/agencias.mae\" no existe)"
+	echo "$errorMsj archivo maestro de agencias (\"$DATADIR/agencias.mae\" no existe)"
 	terminar
 fi
-if [ ! -e "$GRUPO$DATADIR/beneficios.mae" ]
+if [ ! -e "$DATADIR/beneficios.mae" ]
 then
-	echo "$errorMsj archivo maestro de beneficios (\"$GRUPO$DATADIR/beneficios.mae\" no existe)"
+	echo "$errorMsj archivo maestro de beneficios (\"$DATADIR/beneficios.mae\" no existe)"
 	terminar
 fi
-if [ ! -e "$GRUPO$BINDIR" ]
+if [ ! -e "$BINDIR" ]
 then
-	echo "$errorMsj directorio de Ejecutables (\"$GRUPO$BINDIR\" no existe)"
+	echo "$errorMsj directorio de Ejecutables (\"$BINDIR\" no existe)"
 	terminar
 fi
-if [ ! -e "$GRUPO$ARRIDIR" ]
+if [ ! -e "$ARRIDIR" ]
 then
-	echo "$errorMsj directorio de Recibidos (\"$GRUPO$ARRIDIR\" no existe)"
+	echo "$errorMsj directorio de Recibidos (\"$ARRIDIR\" no existe)"
 	terminar
 fi
-if [ ! -e "$GRUPO$LOGDIR" ]
+if [ ! -e "$LOGDIR" ]
 then
-	echo "$errorMsj directorio de Log (\"$GRUPO$LOGDIR\" no existe)"
+	echo "$errorMsj directorio de Log (\"$LOGDIR\" no existe)"
 	terminar
 fi
-if [ ! -e "$GRUPO$BINDIR/postonio.sh" ]
+if [ ! -e "$BINDIR/postonio.sh" ]
 then
-	echo "$errorMsj comando POSTONIO (\"$GRUPO$BINDIR/postonio.sh\" no existe)"
+	echo "$errorMsj comando POSTONIO (\"$BINDIR/postonio.sh\" no existe)"
 	terminar
 fi
-if [ ! -e "$GRUPO$BINDIR/postular.sh" ]
+if [ ! -e "$BINDIR/postular.sh" ]
 then
-	echo "$errorMsj comando POSTULAR (\"$GRUPO$BINDIR/postula.sh\" no existe)"
+	echo "$errorMsj comando POSTULAR (\"$BINDIR/postula.sh\" no existe)"
 	terminar
 fi
 
