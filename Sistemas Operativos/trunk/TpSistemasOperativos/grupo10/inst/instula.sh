@@ -38,18 +38,9 @@ GRALOG=./gralog.sh
 function obtenerValor(){
 	head -n $1 "$CONFDIR/$CONFFILE" | tail -1 | sed -e 's/.*=//'
 }
-
-# Esta función recibe la lista de comandos instalados y los muestra junto con los no instalados
-function mostrarEstadoInstalacion(){
-	echo "INSTALADOS: " $1
-
-	#comparo las cadenas	
-	contador=0;
-	#while [ $contador -lt ${#COMANDOS} ]; do
-		#var1= echo $1 | cut -d ',' -f `expr $contador + 1`
-	#	echo ${COMANDOS[$contador]}
-	#contador=`expr $contador + 1`
-	#done
+#obtiene valor de la linea pasada
+function parsearValor() {
+	head -n$1 "$CONFDIR/$CONFFILE" | tail -n1 | sed -e "s/.*=//" -e "s/^ *//"
 }
 
 # Esta función recibe un comando y una ubicación e instala el mismo
@@ -83,7 +74,14 @@ function crearConfiguracion(){
 	echo "DATADIR=$DATADIR" >> "$CONFDIR/$CONFFILE"
 	echo "INSTDIR=$INSTDIR" >> "$CONFDIR/$CONFFILE"
 	echo "INSTDIR=$INSTDIR" >> "$CONFDIR/$CONFFILE"
-	echo "COMANDOS=$COMANDOS" >> "$CONFDIR/$CONFFILE"
+	#echo "COMANDOS=$COMANDOS" >> "$CONFDIR/$CONFFILE"
+	
+	for ((i=0;i<${#COMANDOS[*]};i++)); do
+	    echo "COMAND = ${COMANDOS[$i]}" >> "$CONFDIR/$CONFFILE"
+	    echo "USERID = `whoami`" >> "$CONFDIR/$CONFFILE"
+	    echo "FECINS = `date +%D`" >> "$CONFDIR/$CONFFILE"
+	    echo " " >> "$CONFDIR/$CONFFILE" 
+	done
 	$GRALOG instula I "Archivo de Configuración $CONFFILE generado con éxito" 1
 }
 
@@ -227,10 +225,88 @@ then
 	$GRALOG instula I "Verificando componentes ya instalados del programa..." 1
 		
 	# Verifica cuales componentes estan instalados y cuales no
-	comandosInstalados=`obtenerValor 23`
-	mostrarEstadoInstalacion $comandosInstalados
-	$GRALOG instula I "Borrar los componentes instalados y ejecutar el comando nuevamente" 1
-	#exit 1; TODO Descomentar al finalizar comando
+	
+	#array con el nombre de los comandos que faltan
+	declare -a COMANDOS_INSTALADOS;
+	declare -a COMANDOS_FALTANTES;
+	indice=0; #indice del array
+	indiceInstalados=0; #indice del array instalados
+
+	#recupero el path de la carpeta de ejecutables que fue guardada en el archivo de configuracion
+	directorioTempBin=`obtenerValor 4`
+
+	#obtengo todos los comandos que hay y los guardo en comandos.temp
+	cat "$CONFDIR/$CONFFILE" | grep "COMAND = " -n | sed "s/COMAND = //" > "$CONFDIR/comandos.temp";
+	
+	#recorro todo el archivo comandos.temp
+	for linea in $(cat "$CONFDIR/comandos.temp"); do	
+		#obtengo el numero de linea donde arranco a leer el comando y el nombre del comando
+		numLinea=$(echo $linea | cut -f1 -d":");
+		comando=$(echo $linea | cut -f2 -d":");
+		
+		#Las demas caracteristicas de los comandos deben estar si o si contiguas
+		u=$(echo "scale=0;$numLinea+1" | bc -l); #USERID
+		f=$(echo "scale=0;$numLinea+2" | bc -l); #FECHA
+		
+		#Obtengo todos los parametros del comando
+		userComando=$(parsearValor $u);
+		fecComando=$(parsearValor $f); 
+		
+		#sino estan contiguas el archivo esta corrupto	
+		if [ -z "$userComando" -o -z "$fecComando" ]; then
+			mensError="El archivo de configuracion se encuentra corrupto cercano a la linea $numLinea
+					   Las descripciones de los comandos deben estar contiguas"
+			$GRALOG instula E "$mensError" 1			
+			exit 6;
+		fi
+		
+		#si el archivo del comando existe
+		if [ -e "$directorioTempBin/$comando" ]; then 
+			#guardo el nombre del comando intalado en un vector
+			varTemp=$comando"-"$fecComando"-"$userComando
+			COMANDOS_INSTALADOS=( ${COMANDOS_INSTALADOS[*]} [$indiceInstalados]=$varTemp );
+			indiceInstalados=$(($indiceInstalados+1));
+			
+		else
+			#guardo el nombre del comando que falta en un vector
+			COMANDOS_FALTANTES=( ${COMANDOS_FALTANTES[*]} [$indice]=$comando );
+			indice=$(($indice+1));	
+		fi
+	done
+	
+	#Si no hay ningun comando faltante indicar al usuario que el programa esta correctamente instalado
+	if [ -z $COMANDOS_FALTANTES ]; then
+			echo "	********************************************************"
+			echo "	*   Proceso de Instalación del sistema de Postulantes  *"
+			echo "	*            Copyright TPSistemasOp (c)2011            *"
+			echo "	********************************************************"
+			echo "	* Se encuentran instalados los siguientes componentes: *"
+			for i in "${COMANDOS_INSTALADOS[@]}"; do 
+			echo "        * $i  ";
+			 done
+			echo "        ********************************************************"
+			echo "	Proceso de Instalación Cancelado"
+		exit 0;	
+
+	else
+			echo "  **************************************************************"
+			echo "  * Proceso de Instalación del sistema Postulantes             *"
+			echo "  *          Copyright TPSistemasOp (c)2011                    *"
+			echo "  **************************************************************"
+			echo "  * Se encuentran instalados los siguientes componentes:       *"
+			for i in "${COMANDOS_INSTALADOS[@]}"; do 
+			echo "         $i  ";
+			done                                  
+			echo "  * Falta instalar los siguientes componentes:                 *"
+			for i in "${COMANDOS_FALTANTES[@]}"; do 
+			echo "         $i  ";
+			done
+			echo "  * Elimine los componentes instalados e inténtelo nuevamente. *"
+			echo "  *                                                            *"
+			echo "  **************************************************************"
+			exit 8;
+	fi
+
 fi
 
 
@@ -432,10 +508,16 @@ echo "**************************************************************************
 			instalarComando $i $BINDIR
 		done
 	fi
-	
+	echo "HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 # Creación archivo de configuración
 	`crearConfiguracion`
-			
+
+# Si existe elimino archivo comandos.temp
+	if [ -e "$CONFDIR/comandos.temp" ]; then
+		rm "$CONFDIR/comandos.temp";			
+	fi
+
+
 	mens="**************************************************************
 	* Se encuentran instalados los siguientes componentes:       *
 	#* POSTINI  <fecha de creación>    <usuario>                  *
@@ -448,8 +530,6 @@ echo "**************************************************************************
 	**************************************************************"
 
 	$GRALOG instula I $mens 1
-
-	echo "Presione ENTER para salir"
 
 #---------FIN ZONA TIAGO---------------
 
