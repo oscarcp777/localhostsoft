@@ -8,7 +8,6 @@
 #	5 Perl no esta instalado o su version es menor a la 5.0
 #	6 Usuario no acepto continuar con la intalacion
 
-
 # --------------Variables--------------------
 # Directorio base de POSTULA
 BASEDIR=$GRUPO/grupo10
