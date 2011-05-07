@@ -1,4 +1,13 @@
 #!/bin/bash
+#Valores de retorno
+#	0 Finalizado con exito
+#	1 No se seteo la variable $GRUPO o se seteo en un directorio incorrecto
+#	2 Archivo de configuracion corrupto 
+#   3 Elimine los componentes instalados e inténtelo nuevamente #TODO q pasa si estan todos borrados pero el archivo de conf no esta borrado  
+# 	4 Usuario no acepto acuerdo de licencia de sowftware
+#	5 Perl no esta instalado o su version es menor a la 5.0
+#	6 Usuario no acepto continuar con la intalacion
+
 
 # --------------Variables--------------------
 # Directorio base de POSTULA
@@ -57,15 +66,15 @@ function instalarComando(){
 # Esta función crea el archivo de configuración de la instalación
 function crearConfiguracion(){
 	$GRALOG instula I "Generando Archivo de Configuración..." 1
-	echo "CURRDIR=$BASEDIR" > "$CONFDIR/$CONFFILE"              	      	#1
+	echo "CURRDIR=$BASEDIR" >> "$CONFDIR/$CONFFILE"              	      	#1
 	echo "CONFDIR=$CONFDIR" >> "$CONFDIR/$CONFFILE" 
 	echo "ARRIDIR=$ARRIDIR" >> "$CONFDIR/$CONFFILE" 
 	echo "BINDIR=$BINDIR" >> "$CONFDIR/$CONFFILE" 
 	echo "DATASIZE=$DATASIZE" >> "$CONFDIR/$CONFFILE"
 	echo "LOGDIR=$LOGDIR" >> "$CONFDIR/$CONFFILE"
 	echo "LOGEXT=$LOGEXT" >> "$CONFDIR/$CONFFILE" 
-	MAXLOGSIZE=$(echo "$MAXLOGSIZE*1024" | bc)
-	echo "MAXLOGSIZE=$MAXLOGSIZE" >> "$CONFDIR/$CONFFILE" 
+	LOGSIZE=$(echo "$LOGSIZE*1024" | bc)
+	echo "LOGSIZE=$LOGSIZE" >> "$CONFDIR/$CONFFILE" 
 	echo "USERID= `whoami`" >> "$CONFDIR/$CONFFILE"
 	echo "FECINS= `date +%D`" >> "$CONFDIR/$CONFFILE" 
 	for ((i=0;i<10;i++)); do
@@ -73,9 +82,7 @@ function crearConfiguracion(){
 	done
 	echo "DATADIR=$DATADIR" >> "$CONFDIR/$CONFFILE"
 	echo "INSTDIR=$INSTDIR" >> "$CONFDIR/$CONFFILE"
-	echo "INSTDIR=$INSTDIR" >> "$CONFDIR/$CONFFILE"
-	#echo "COMANDOS=$COMANDOS" >> "$CONFDIR/$CONFFILE"
-	
+		
 	for ((i=0;i<${#COMANDOS[*]};i++)); do
 	    echo "COMAND = ${COMANDOS[$i]}" >> "$CONFDIR/$CONFFILE"
 	    echo "USERID = `whoami`" >> "$CONFDIR/$CONFFILE"
@@ -257,7 +264,7 @@ then
 			mensError="El archivo de configuracion se encuentra corrupto cercano a la linea $numLinea
 					   Las descripciones de los comandos deben estar contiguas"
 			$GRALOG instula E "$mensError" 1			
-			exit 6;
+			exit 2;
 		fi
 		
 		#si el archivo del comando existe
@@ -304,14 +311,11 @@ then
 			echo "  * Elimine los componentes instalados e inténtelo nuevamente. *"
 			echo "  *                                                            *"
 			echo "  **************************************************************"
-			exit 8;
+			exit 3;
 	fi
 
 fi
 
-
-
-#---------ZONA RICHY---------------
 	# Consulta al usuario si esta de acuerdo con los terminos y condiciones de la instalacion
 	$GRALOG instula I "Mostrando mensaje de Aceptacion de terminos y condiciones...";
 
@@ -329,7 +333,7 @@ echo '**************************************************************
 	# Si el usuario no acepta finaliza el script
 	if [ $respSINO = 0 ]; then
 		$GRALOG instula I  "Usuario NO acepto ACUERDO DE LICENCIA DE SOFTWARE: Instalación Cancelada";
-		exit 3;
+		exit 4;
 	fi
 	
 	# Usuario Acepto los terminos
@@ -350,7 +354,7 @@ echo '**************************************************************
 				 Proceso de Instalación Cancelado"
 		echo -e $msgPerl;
 		$GRALOG instula E $msgPerl;
-		exit 4;
+		exit 5;
 	else
 		$GRALOG instula I "PERL instalado. Version:$PERLV" 1
 	fi
@@ -419,10 +423,6 @@ echo $LOGEXT
 preguntarTamanio "Ingrese el tamaño máximo para los archivos <LOGEXT> (en Kbytes): 500 KB" 500
 LOGSIZE=$tamanio
 echo $LOGSIZE
-#---------FIN ZONA RICHY---------------
-
-
-#---------ZONA TIAGO---------------
 
 # Mostrar estructura de directorios y parámetros configurados
 	$GRALOG instula I "Mostrando estructura de directorios configurada";
@@ -462,15 +462,11 @@ echo "**************************************************************************
 	# Si el usuario no acepta finaliza el script
 	if [ $respSINO = 0 ]; then
 		$GRALOG instula I  "Usuario No Confirma la Instalación: Instalación Cancelada";
-		exit 5;
+		exit 6;
 	fi
 	
 	# Usuario Acepto los terminos
 	$GRALOG instula I  "Usuario acepto Confirmación de Instalación";
-	
-
-
-
  
 # Creación estructura de Directorios definida
 	$GRALOG instula I "Creando Estructuras de Directorio......" 1
@@ -508,9 +504,9 @@ echo "**************************************************************************
 			instalarComando $i $BINDIR
 		done
 	fi
-	echo "HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+	
 # Creación archivo de configuración
-	`crearConfiguracion`
+	crearConfiguracion
 
 # Si existe elimino archivo comandos.temp
 	if [ -e "$CONFDIR/comandos.temp" ]; then
@@ -518,21 +514,19 @@ echo "**************************************************************************
 	fi
 
 
-	mens="**************************************************************
-	* Se encuentran instalados los siguientes componentes:       *
-	#* POSTINI  <fecha de creación>    <usuario>                  *
-	#* OSTONIO <fecha de instalación> <usuario>                  *
-	#* POSTLIST <fecha de instalación> <usuario>                  *
-	#* POSTULAR <fecha de instalación> <usuario>                  *
-	**************************************************************
-	* FIN del Proceso de Instalación de Postulantes*
-	*          Copyright TPSistemasOp (c)2011                    *
-	**************************************************************"
+mensFinal="***************************************************************
+* Se encuentran instalados los siguientes componentes:       *
+* POSTINI  `date +%D`    `whoami`          			       
+* POSTONIO  `date +%D`    `whoami`                  		   
+* POSTLIST `date +%D`    `whoami`                  		   
+* POSTULAR `date +%D`    `whoami`                            
+**************************************************************
+* FIN del Proceso de Instalación de Postulantes			   *			
+*          Copyright TPSistemasOp (c)2011                    *
+**************************************************************";
 
-	$GRALOG instula I $mens 1
-
-#---------FIN ZONA TIAGO---------------
-
+	echo "$mensFinal"
+	$GRALOG instula I "$mensFinal"
 
 	exit 0;
 # --------------Fin Programa--------------
