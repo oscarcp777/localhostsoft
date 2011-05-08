@@ -21,10 +21,12 @@ my %matriz;
 my %beneficios;
 my $file;
 my @files;
-my $dir_Actual = './EjemplosPerl/data/'; 
-my $log ='>>.cdata/log.txt';
-my $dirName ='./EjemplosPerl/data/';
-my $salidaPorArchivo = '>./EjemplosPerl/grupo10/list/';
+my $dir_Actual = './grupo10/data/'; 
+my $log ='>>.grupo10/data/log.txt';
+my $dirName ='./grupo10/data/';
+my $dirSalidaArchivo ='./grupo10/list';
+my $ardestino = 'plist';
+my $salidaPorArchivo = '>./grupo10/list/';
 my @listaBenficiarios;
 
 #----------------------------CABECERA---------------------------------
@@ -63,29 +65,29 @@ sub imprimirInfo
 	my $con_Matriz = shift;
 	my $matriz =shift;
 	my $beneficios = shift;
-	if($opcionSalida eq '-t'){
-
-		print "@cabecera\n";
-		print "@listaBenficiarios\n";
-
-		if($conMatriz){
-		    foreach $llave (keys %{$matriz}){
-	   	  	print $llave;	    
-			foreach $llave2 (keys %{$beneficios}){
-			    print "       ".${$matriz->{$llave}}{$llave2}; 
-	    		}
-			print "\n";
-		     }				
-		}
-	}
-	if($tipo_Salida eq '-d'){
-		
-		
-	}
-	if($tipo_Salida eq '-td' | $tipo_Salida eq '-dt'){
 	
-
-	}		
+	print "@cabecera\n";
+	print "@listaBenficiarios\n";
+	if($conMatriz){
+	   foreach $llave (keys %{$matriz}){
+	   	 	    
+		if(! ($llave eq 'totalBeneficiario')){	         
+		   print $llave;			  
+		   foreach $llave2 (keys %{$beneficios}){
+		      print "       ".${$matriz->{$llave}}{$llave2}; 
+	    	   }
+		 print "\n";
+		}
+           }				
+	#Muestra el total de beneficiarios por beneficios(por columna)	
+	print "ToltaBeneficiario   ";
+	foreach $llaveBeneficio (keys %{$beneficios}){
+		print ${$matriz->{'totalBeneficiario'}}{$llaveBeneficio}."       ";
+	}
+		
+		
+	}
+		
 
 }
 #-----------------------------ESCRIBIR EN ARCHIVO---------------------
@@ -95,9 +97,38 @@ sub escribirEnArchivo{
 my $conMatriz = shift;
 my $matriz = shift;
 my $beneficios = shift;
+my $secuencia=0;
 
+$secuencia = `ls "./EjemplosPerl/list" | grep ".*plist.[1-9]" | sort -r | sed s/$ardestino.// | head -n 1`;
+print $ultimaSecuencia;
+if($secuencia > 0){
+	$secuencia ++;
+}else{
+	$secuencia =1;
+}
+$rutaArchivo = ">>".$dirSalidaArchivo."/plist.".$secuencia;
+print $rutaArchivo;
+open(PLIST,$rutaArchivo);
+print "@cabecera\n";
+print PLIST "@listaBenficiarios\n";
 
-
+if($conMatriz){
+	   foreach $llave (keys %{$matriz}){
+		 if(! ($llave eq 'totalBeneficiario')){	   
+	   	 print PLIST $llave;	    
+	         foreach $llave2 (keys %{$beneficios}){
+		      print PLIST "       ".${$matriz->{$llave}}{$llave2}; 
+	    	 }
+		 print PLIST "\n";
+		 }
+           }				
+	}
+	#Muestra el total de beneficiarios por beneficios(por columna)	
+	print "ToltaBeneficiario   ";
+	foreach $llaveBeneficio (keys %{$beneficios}){
+		print ${$matriz->{'totalBeneficiario'}}{$llaveBeneficio}."       ";
+	}
+close(PLIST);
 }
 
 #---------------------------------LISTAR------------------------------
@@ -131,7 +162,7 @@ sub listar(@encontrados,$dir_Actual){
 	}
 	return @listafinal;	
 }
-
+#-------------------------------RELLENAR -
 sub rellenarMatriz{
 	
 	my $beneficios = shift;
@@ -172,7 +203,9 @@ sub calcularTotal{
 		}
 		${$matriz->{'totalBeneficiario'}}{$llaveBeneficio} = $totalBenefirioPorBeneficio
 	}
+	$beneficios->{'totalBeneficiario'}=1;
 }
+
 
 #-------------------------------MATRIZ DE CONTROL---------------------
 
@@ -266,3 +299,4 @@ if(@encontrados==0)
 		imprimirInfo($conMatriz,\%matriz,\%beneficios);
 	}	 				 	
 }	
+
