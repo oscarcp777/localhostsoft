@@ -25,7 +25,7 @@ if [ -z $LOGDIR ]
 then
 	logdir="$GRUPO/conf"
 else
-	logdir="$GRUPO/$LOGDIR"
+	logdir=$LOGDIR
 fi
 
 # Que la dirección no sea un archivo
