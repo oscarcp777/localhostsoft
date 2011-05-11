@@ -82,21 +82,21 @@ else
 				secuencia=$(echo $nombre | cut -d \. -f 2)
 				validarSecuencia  $nomAgencia $secuencia
 				if [ $resp -eq 1 ]; then #valido secuencia 
-					echo arridir/$nombre
-					mv ./arridir/$nombre ./recibidos
+					echo $ARRIDIR/$nombre
+					mv $ARRIDIR/$nombre $RECIBIDOS
 					$GRALOG postonio I "	El archivo $AUX se ha movido a la carpeta de recibidos" 1 
 				else
 					$GRALOG postonio A "	El archivo $AUX se ha movido a la carpeta de rechazados, por secuencia no permitida" 1 
-					mv ./arridir/$nombre ./rechazados
+					mv $ARRIDIR/$nombre $RECHAZADOS
 				fi	
 			else
 				$GRALOG postonio A "	El archivo $AUX se ha movido a la carpeta de rechazados, por codigo de agencia inexistente" 1 
-				mv ./arridir/$nombre ./rechazados
+				mv $ARRIDIR/$nombre $RECHAZADOS
 			fi
 		
 		else
 			$GRALOG postonio A "	El archivo $AUX se ha movido a la carpeta de rechazados, por nombre incorrecto" 1 	
-			mv ./arridir/$nombre ./rechazados		
+			mv $ARRIDIR/$nombre $RECHAZADOS		
 		fi
 	done
 fi
