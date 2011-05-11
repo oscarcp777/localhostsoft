@@ -108,14 +108,15 @@ if [ $cantidad -eq 0 ]; then
 	echo "No hay archivos en la carpeta x"
 else
 
-pid=$(obtpid.sh "postular.sh")
+
+pid=$(ps a | grep -v $0 | grep "postular.sh" | grep -v "grep" | head -n1 | head -c5)
 	if [ -n "$pid" ];then
 		echo "POSTULAR se encuentra corriendo con PID: $pid"
 		$GRALOG postonio A "Se llamo a POSTULAR, y ya se encuentra corriendo con PID: $pid"
 	else
 		postular.sh & 
-		pid=$(obtpid.sh "postular.sh")
-		if [ -n $(obtpid.sh "postular.sh") ]; then
+		pid=$(ps a | grep -v $0 | grep "postular.sh" | grep -v "grep" | head -n1 | head -c5)
+		if [ -n $pid ]; then
 			echo "El pid de POSTULAR es: $pid"
 			$GRALOG postonio A "Se llamo a POSTULAR, PID: $pid"
 			
