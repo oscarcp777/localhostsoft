@@ -28,9 +28,9 @@ DATASIZE=""
 LOGDIR=""
 LOGEXT=""
 LOGSIZE=""
-PROCESSED=$BASEDIR/procesados
-REJECTED=$BASEDIR/rechazados
-RECEIVED=$BASEDIR/recibidos
+PROCESSED=$BASEDIR"/procesados"
+REJECTED=$BASEDIR"/rechazados"
+RECEIVED=$BASEDIR"/recibidos"
 # ------------------------------------------Fin Variables------------------------------------------
 
 # ------------------------------------------Comandos------------------------------------------
@@ -83,7 +83,10 @@ function crearConfiguracion(){
 	done
 	echo "DATADIR=$DATADIR" >> "$CONFDIR/$CONFFILE"
 	echo "INSTDIR=$INSTDIR" >> "$CONFDIR/$CONFFILE"
-		
+	echo "PROCESSED=$PROCESSED" >> "$CONFDIR/$CONFFILE"
+	echo "REJECTED=$REJECTED" >> "$CONFDIR/$CONFFILE"
+	echo "RECEIVED=$RECEIVED" >> "$CONFDIR/$CONFFILE"
+
 	for ((i=0;i<${#COMANDOS[*]};i++)); do
 	    echo "COMAND = ${COMANDOS[$i]}" >> "$CONFDIR/$CONFFILE"
 	    echo "USERID = `whoami`" >> "$CONFDIR/$CONFFILE"

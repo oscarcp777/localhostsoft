@@ -45,7 +45,7 @@ fi
 #isInicializado=$(verificarvar.sh)
 isInicializado=1
 if [ $isInicializado -eq 0 ]; then
-	# gragarloh.sh 
+	# gralog.sh 
     echo "Las variables de ambiente no se encuentran inicalizadas"
     exit 1
 fi

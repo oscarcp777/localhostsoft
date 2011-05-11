@@ -38,6 +38,9 @@ function mostrarVariables(){
 	echo "LOGSIZE = $LOGSIZE"
 	echo "USERID = $USERID"
 	echo "DATADIR = $DATADIR"
+	echo "PROCESSED=$PROCESSED"
+	echo "REJECTED=$REJECTED"
+	echo "RECEIVED=$RECEIVED"
 }
 
 # Esta función termina la ejecución del script
@@ -61,6 +64,9 @@ then
 	export USERID=`obtenerValor 9`
 	export DATADIR=`obtenerValor 21`
 	export INSTDIR=`obtenerValor 22`
+	export PROCESSED=`obtenerValor 23`
+	export REJECTED=`obtenerValor 24`
+	export RECEIVED=`obtenerValor 25`
 	echo "Las variables han sido inicializadas con éxito"
 else
 	echo "Las variables fueron inicializadas previamente"
@@ -88,6 +94,25 @@ then
 	echo "$errorMsj directorio de Recibidos (\"$ARRIDIR\" no existe)"
 	terminar
 fi
+
+if [ ! -e "$PROCESSED" ]
+then
+	echo "$errorMsj directorio de Procesados (\"$PROCESSED\" no existe)"
+	terminar
+fi
+
+if [ ! -e "$REJECTED" ]
+then
+	echo "$errorMsj directorio de Rechazados (\"$REJECTED\" no existe)"
+	terminar
+fi
+
+if [ ! -e "$RECEIVED" ]
+then
+	echo "$errorMsj directorio de Recibidos (\"$RECEIVED\" no existe)"
+	terminar
+fi
+
 if [ ! -e "$LOGDIR" ]
 then
 	echo "$errorMsj directorio de Log (\"$LOGDIR\" no existe)"
