@@ -364,106 +364,110 @@ echo '**************************************************************
 		$GRALOG instula I "PERL instalado. Version:$PERLV" 1
 	fi
 	
+algo="seguir";
+while [ ! -z $algo ]; do
+	echo "Todos los directorios del sistema de postulantes serán subdirectorios de:" 
+	echo $BASEDIR
+	echo ""
 
-echo "Todos los directorios del sistema de postulantes serán subdirectorios de:" 
-echo $BASEDIR
-echo ""
+	echo "Todos los componentes de la instalación se obtendrán del repositorio:" 
+	echo $INSTDIR
+	echo ""
+	echo "Contenido del directorio:"
+	ls $INSTDIR
+	echo "" 
 
-echo "Todos los componentes de la instalación se obtendrán del repositorio:" 
-echo $INSTDIR
-echo ""
-echo "Contenido del directorio:"
-ls $INSTDIR
-echo "" 
-
-echo "El archivo de configuración y el log de la instalación se registrarán en:" 
-echo $CONFDIR
-echo ""
-
+	echo "El archivo de configuración y el log de la instalación se registrarán en:" 
+	echo $CONFDIR
+	echo ""
+	
 # se almacena en la variable BINDIR el directorio q el usuario escriba y sino por defecto $BASEDIR/bin
-preguntarDirectorio "Ingrese el nombre del subdirectorio de ejecutables: (presione ENTER para dejar el subdirectorio por defecto /bin)" "$BASEDIR/bin"
-BINDIR=$dirSeleccionado
-echo $BINDIR
-
+	preguntarDirectorio "Ingrese el nombre del subdirectorio de ejecutables: (presione ENTER para dejar el subdirectorio por defecto /bin)" "$BASEDIR/bin"
+	BINDIR=$dirSeleccionado
+	echo $BINDIR
+	
 # se almacena en la variable ARRIDIR el directorio q el usuario escriba y sino por defecto $BASEDIR/arribos
-preguntarDirectorio "Ingrese el nombre del directorio que permite el arribo de archivos externos (presione ENTER para dejar el subdirectorio por defecto /arribos)" "$BASEDIR/arribos"
-ARRIDIR=$dirSeleccionado
-echo $ARRIDIR
-
-	continuar=0;
-	while [ $continuar -eq 0 ]; do
-		# se almacena en la variable DATASIZE el espacio mínimo reservado para datos q el usuario ingrese y sino 200 Mb por defecto
-		preguntarTamanio "Ingrese el espacio mínimo requerido para datos externos (en Mbytes): 200 Mb" 200
-		DATASIZE=$tamanio
-		echo $DATASIZE
-
-		# calculo espacio libre en ARRIDIR
-		$GRALOG instula I "Calculando espacio disponible..." 1
-		#obtengo el espacio libre en el directorio(df -B). corto la unica linea que me devuelve,
-		#reemplazo los espacios en blanco por ';' (sed) y hago un cut del tercer campo (cut)
-		espacioLibre=$(df -B1024 "$BASEDIR" | tail -n1 | sed -e"s/\s\{1,\}/;/g" | cut -f4 -d';');
-		espacioLibre=$(echo "scale=0 ; $espacioLibre/1024" | bc -l); #lo paso a Mb
-		$GRALOG instula I "Espacio disponible en $ARRIDIR $espacioLibre Mb" 1 
-		
-		#si el espacio disponible en ARRIDIR es menor que el espacio minimo reservado para datos se informa el error y se vuelve al punto anterior	
-		if [ $DATASIZE -gt $espacioLibre ] ; then
-			 msgError="ERROR !:
-         	Insuficiente espacio en disco.
-         	Espacio disponible en $ARRIDIR $espacioLibre Mb. 
-         	Espacio requerido $DATASIZE Mb" 	
-		 	$GRALOG instula E "$msgError" 1         	
-         
-         else
-         	continuar=1
+	preguntarDirectorio "Ingrese el nombre del directorio que permite el arribo de archivos externos (presione ENTER para dejar el subdirectorio por defecto /arribos)" "$BASEDIR/arribos"
+	ARRIDIR=$dirSeleccionado
+	echo $ARRIDIR
+	
+		continuar=0;
+		while [ $continuar -eq 0 ]; do
+			# se almacena en la variable DATASIZE el espacio mínimo reservado para datos q el usuario ingrese y sino 200 Mb por defecto
+			preguntarTamanio "Ingrese el espacio mínimo requerido para datos externos (en Mbytes): 200 Mb" 200
+			DATASIZE=$tamanio
+			echo $DATASIZE
+	
+			# calculo espacio libre en ARRIDIR
+			$GRALOG instula I "Calculando espacio disponible..." 1
+			#obtengo el espacio libre en el directorio(df -B). corto la unica linea que me devuelve,
+			#reemplazo los espacios en blanco por ';' (sed) y hago un cut del tercer campo (cut)
+			espacioLibre=$(df -B1024 "$BASEDIR" | tail -n1 | sed -e"s/\s\{1,\}/;/g" | cut -f4 -d';');
+			espacioLibre=$(echo "scale=0 ; $espacioLibre/1024" | bc -l); #lo paso a Mb
+			$GRALOG instula I "Espacio disponible en $ARRIDIR $espacioLibre Mb" 1 
+			
+			#si el espacio disponible en ARRIDIR es menor que el espacio minimo reservado para datos se informa el error y se vuelve al punto anterior	
+			if [ $DATASIZE -gt $espacioLibre ] ; then
+				 msgError="ERROR !:
+	         	Insuficiente espacio en disco.
+	         	Espacio disponible en $ARRIDIR $espacioLibre Mb. 
+	         	Espacio requerido $DATASIZE Mb" 	
+			 	$GRALOG instula E "$msgError" 1         	
+	         
+	         else
+	         	continuar=1
+			fi
+		done	
+	
+	# se almcacena en la variable LOGDIR el directorio q el usuario escriba para los archivos de log de los comandos y sino $BASEDIR/log por defecto
+	preguntarDirectorio "Ingrese el nombre del directorio de log: (presione ENTER para dejar el subdirectorio por defecto /log)" "$BASEDIR/log"
+	LOGDIR=$dirSeleccionado
+	echo $LOGDIR
+	
+	# se almacena en la variable LOGEXT la extension q el usuario escriba para los archivos de log y sino (.log) por defecto
+	preguntarExtension "Ingrese la extensión para los archivos de log: (.log)" ".log"
+	LOGEXT=$extSeleccionada
+	echo $LOGEXT
+	
+	# se almacena en la variable LOGSIZE el tamaño maximo reservado para los archivos de log q el usuario ingrese y sino 500 KB por defecto
+	preguntarTamanio "Ingrese el tamaño máximo para los archivos <LOGEXT> (en Kbytes): 500 KB" 500
+	LOGSIZE=$tamanio
+	echo $LOGSIZE
+	
+	# Mostrar estructura de directorios y parámetros configurados
+		$GRALOG instula I "Mostrando estructura de directorios configurada";
+		clear
+	echo "**************************************************************************************************
+	* Parámetros de Instalación del paquete POSTULA		     										 *	
+	**************************************************************************************************
+	 Directorio de trabajo: $BASEDIR
+	 Directorio de instalación: $INSTDIR
+	 Directorio de configuración: $CONFDIR
+	 Directorio de datos: $DATADIR
+	 Librería de ejecutables: $BINDIR
+	 Directorio de arribos: $ARRIDIR
+	 Espacio mínimo reservado en $ARRIDIR: $DATASIZE Mb
+	 Directorio para los archivos de Log: $LOGDIR
+	 Extensión para los archivos de Log: $LOGEXT
+	 Tamaño máximo para cada archivo de Log: $LOGSIZE Kb
+	 Log de la instalación: $CONFDIR/instula.log
+	
+	 Si los datos ingresados son correctos oprima sólo ENTER para iniciar la instalación.
+	 Si desea modificar alguno de ellos oprima cualquier tecla.
+	**************************************************************************************************"
+	
+		read -n1 algo
+		if [ ! -z $algo ]; then
+			$GRALOG instula I "El usuario decide modificar estructura de directorios configurada";
+			
+		else
+			$GRALOG instula I "El usuario acepta estructura de directorios configurada";
+						
 		fi
-	done	
 
-# se almcacena en la variable LOGDIR el directorio q el usuario escriba para los archivos de log de los comandos y sino $BASEDIR/log por defecto
-preguntarDirectorio "Ingrese el nombre del directorio de log: (presione ENTER para dejar el subdirectorio por defecto /log)" "$BASEDIR/log"
-LOGDIR=$dirSeleccionado
-echo $LOGDIR
 
-# se almacena en la variable LOGEXT la extension q el usuario escriba para los archivos de log y sino (.log) por defecto
-preguntarExtension "Ingrese la extensión para los archivos de log: (.log)" ".log"
-LOGEXT=$extSeleccionada
-echo $LOGEXT
+done
 
-# se almacena en la variable LOGSIZE el tamaño maximo reservado para los archivos de log q el usuario ingrese y sino 500 KB por defecto
-preguntarTamanio "Ingrese el tamaño máximo para los archivos <LOGEXT> (en Kbytes): 500 KB" 500
-LOGSIZE=$tamanio
-echo $LOGSIZE
-
-# Mostrar estructura de directorios y parámetros configurados
-	$GRALOG instula I "Mostrando estructura de directorios configurada";
-	clear
-echo "**************************************************************************************************
-* Parámetros de Instalación del paquete POSTULA		     										 *	
-**************************************************************************************************
- Directorio de trabajo: $BASEDIR
- Directorio de instalación: $INSTDIR
- Directorio de configuración: $CONFDIR
- Directorio de datos: $DATADIR
- Librería de ejecutables: $BINDIR
- Directorio de arribos: $ARRIDIR
- Espacio mínimo reservado en $ARRIDIR: $DATASIZE Mb
- Directorio para los archivos de Log: $LOGDIR
- Extensión para los archivos de Log: $LOGEXT
- Tamaño máximo para cada archivo de Log: $LOGSIZE Kb
- Log de la instalación: $CONFDIR/instula.log
-
- Si los datos ingresados son correctos oprima sólo ENTER para iniciar la instalación.
- Si desea modificar alguno de ellos oprima cualquier tecla.
-**************************************************************************************************"
-
-	read -n1 algo
-	if [ ! -z $algo ]; then
-		$GRALOG instula I "El usuario decide modificar estructura de directorios configurada";
-		echo ""
-		echo "Vuelve al paso 2"
-	else
-		$GRALOG instula I "El usuario acepta estructura de directorios configurada";
-		echo "Sigue"
-	fi
 
 # Confirmación Inicio Instalación
 	$GRALOG instula I "Mostrando mensaje de Confirmación de la Instalación"
