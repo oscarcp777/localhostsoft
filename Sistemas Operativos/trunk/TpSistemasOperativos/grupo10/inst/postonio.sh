@@ -1,3 +1,24 @@
+
+#------------
+
+#seteo variables 
+agenciaMae=agencias.mae
+#ARRIDIR=./arridir
+#RECIBIDOS=./recibidos
+#RECHAZADOS=./rechazados
+TESPERA=1000
+# --------------Comandos--------------------
+GRALOG=./gralog.sh
+
+
+if [ ! -d /temp ]; then
+	mkdir temp #creo un directorio para archivos temporales si no existe
+fi
+if [ ! -d ./temp/DET ]; then
+	mkdir ./temp/DET
+fi
+
+
 # Esta función recibe una secuencia y agencia
 # Devuelve 1 si la respuesta es afirmativa y 0 si es negativa
 resp=""; # Respuesta que devuelve la funcion
@@ -29,44 +50,13 @@ function validarSecuencia(){
 	fi
 }
 
-#------------
-
-#seteo variables 
-agenciaMae=agencias.mae
-ARRIDIR=./arridir
-RECIBIDOS=./recibidos
-RECHAZADOS=./rechazados
-TESPERA=4000
-# --------------Comandos--------------------
-GRALOG=./gralog.sh
-
-#creo los directorios 
-if [ ! -d $ARRIDIR ]; then
-	mkdir $ARRIDIR
-fi
-if [ ! -d $RECIBIDOS ]; then
-	mkdir $RECIBIDOS
-fi
-if [ ! -d $RECHAZADOS ]; then
-	mkdir $RECHAZADOS
-fi
-
-
-
-if [ ! -d ./temp ]; then
-	mkdir temp #creo un directorio para archivos temporales si no existe
-fi
-if [ ! -d ./temp/DET ]; then
-	mkdir ./temp/DET
-fi
-
 while [ 0 -le 1 ] 
 
 do #principio del loop
 
 #verifico que haya archivos en ARRIDIR
-ls $ARRIDIR >./temp/DET/archivos.txt
-cantidad=$(wc -l <./temp/DET/archivos.txt)
+ls $ARRIDIR > ./temp/DET/archivos.txt
+cantidad=$(wc -l < ./temp/DET/archivos.txt)
 if [ $cantidad -eq 0 ]; then 
 	echo "No hay archivos en la carpeta x"
 else
@@ -102,8 +92,8 @@ else
 fi
 
 #verifico que haya archivos en RECIBIDOS
-ls $RECIBIDOS >./temp/DET/recibidos.txt
-cantidad=$(wc -l <./temp/DET/recibidos.txt)
+ls $RECIBIDOS > ./temp/DET/recibidos.txt
+cantidad=$(wc -l < ./temp/DET/recibidos.txt)
 if [ $cantidad -eq 0 ]; then 
 	echo "No hay archivos en la carpeta x"
 else
@@ -114,7 +104,7 @@ pid=$(ps a | grep -v $0 | grep "postular.sh" | grep -v "grep" | head -n1 | head 
 		echo "POSTULAR se encuentra corriendo con PID: $pid"
 		$GRALOG postonio A "Se llamo a POSTULAR, y ya se encuentra corriendo con PID: $pid"
 	else
-		postular.sh & 
+		./postular.sh & 
 		pid=$(ps a | grep -v $0 | grep "postular.sh" | grep -v "grep" | head -n1 | head -c5)
 		if [ -n $pid ]; then
 			echo "El pid de POSTULAR es: $pid"
@@ -128,10 +118,10 @@ pid=$(ps a | grep -v $0 | grep "postular.sh" | grep -v "grep" | head -n1 | head 
 
 fi
 
-rm temp/DET/recibidos.txt
-rm temp/DET/archivos.txt
-rmdir temp/DET
-rmdir temp
+#rm temp/DET/recibidos.txt
+#rm temp/DET/archivos.txt
+#rmdir temp/DET
+#rmdir temp
 
 
 sleep "$TESPERA"s

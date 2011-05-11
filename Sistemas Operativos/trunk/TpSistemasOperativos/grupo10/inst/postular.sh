@@ -50,16 +50,11 @@ if [ $isInicializado -eq 0 ]; then
     exit 1
 fi
 #inicializo los path de los archivos
-GRUPO="/home/oscar/workspace/TpSistemasOperativos/grupo10"
-pathdata="$GRUPO/data"
-pathRecibidos="$GRUPO/recibidos"
-pathProcesados="$GRUPO/procesados"
-pathBeneficiarios="$GRUPO/data/beneficios.mae"
+#pathdata="$GRUPO/data"
+#pathRecibidos="$GRUPO/recibidos"
+#pathProcesados="$GRUPO/procesados"
+#pathBeneficiarios="$GRUPO/data/beneficios.mae"
 
-#creo el pathProcesados si no estaban creados
-if [ ! -e $pathProcesados ]; then
-    mkdir $pathProcesados
-fi
 
 #si no existe el archivo lo crea
 function verificarExisteArch(){

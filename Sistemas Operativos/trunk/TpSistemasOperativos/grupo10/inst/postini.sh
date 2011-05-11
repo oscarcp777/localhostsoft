@@ -9,13 +9,15 @@
 # Devuelve 1 si hubo algún error
 
 # Variable de instalación (se tiene que pisar -o borrar esta linea y setear - desde el INSTULA cuando se copie a BINDIR)
-GRUPO="LLENAR EN INSTALACION"
+#GRUPO="LLENAR EN INSTALACION"
+
+postonio="./postonio.sh"
 
 # Mensaje de error
 errorMsj="Inicialización de Ambiente No fue exitosa. Error en"
 
 # Archivo de configuración
-CONFIGFILE="$GRUPO/conf/instula.conf"
+CONFIGFILE=$GRUPO"grupo10/conf/instula.conf"
 
 # Esta función recibe un número de linea y devuelve el valor de la variable
 # correpondiente del archivo de configuración
@@ -103,18 +105,18 @@ then
 fi
 
 
-# PID de postonio.sh
-#pid=$(obtpid.sh "postonio.sh")
+#PID de postonio.sh
+pid=$(ps a | grep -v $0 | grep "postonio.sh" | grep -v "grep" | head -n1 | head -c5) 
 
 # Verificar que no haya un POSTONIO corriendo
-#if [ -z $pid ]
-#then
-#	$postonio &
-#	pid=$(obtpid.sh $postonio)
-#	echo "Se inicia el demonio postonio. Se encuentra corriendo bajo el no. $pid"
-#else
-#	echo "postonio.sh ya se encuentra corriendo bajo nro. $pid"
-#fi
+if [ -z $pid ]
+then
+	./postonio.sh &
+	pid=$(ps a | grep -v $0 | grep "postonio.sh" | grep -v "grep" | head -n1 | head -c5) 
+	echo "Se inicia el demonio postonio. Se encuentra corriendo bajo el no. $pid"
+else
+	echo "postonio.sh ya se encuentra corriendo bajo nro. $pid"
+fi
 
 
 echo "Inicialización de Ambiente Concluida"

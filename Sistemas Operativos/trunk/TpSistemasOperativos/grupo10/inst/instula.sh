@@ -10,7 +10,7 @@
 
 # ------------------------------------------Variables------------------------------------------
 # Directorio base de POSTULA
-BASEDIR=$GRUPO/grupo10
+BASEDIR=$GRUPO"grupo10"
 # Directorio de Archivos Maestros
 DATADIR=$BASEDIR/data
 # Directorio de Instalación
