@@ -26,7 +26,7 @@ function validarSecuencia(){
 	else
 		aux=`expr $secuencia - 1 `
 		n=`printf '%06d' "$aux"`
-		encontroAnterior=$(grep -c "$agencia.$n" ./temp/DET/archivosvalidos.txt )	
+		encontroAnterior=$(grep -c "$agencia.$n" ./temp/DET/archivosValidos.txt )	
 				
 		if [ $encontroAnterior -eq 1 ]; then
 			resp=1;
