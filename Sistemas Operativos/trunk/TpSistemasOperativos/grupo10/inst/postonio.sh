@@ -21,16 +21,26 @@ function validarSecuencia(){
 	encontroAgencia=$(grep -c "$agencia" ./temp/DET/archivosValidos.txt )	
 	
 	if [ $encontroAgencia -eq 0 ] ;then
-		resp=1;
-		rm temp/DET/archivosValidos.txt
-	else
-		aux=`expr $secuencia - 1 `
-		n=`printf '%06d' "$aux"`
-		encontroAnterior=$(grep -c "$agencia.$n" ./temp/DET/archivosValidos.txt )	
-				
-		if [ $encontroAnterior -eq 1 ]; then
+		if [ $secuencia -ge 1 ]; then 
 			resp=1;
 			rm temp/DET/archivosValidos.txt
+		else
+			resp=0;
+		fi	
+	else
+		aux=`expr $secuencia - 1 `
+		
+		if [ $secuencia -ge 1 ]; then 
+			n=`printf '%06d' "$aux"`
+			encontroAnterior=$(grep -c "$agencia.$n" ./temp/DET/archivosValidos.txt )	
+			encontroActual=$(grep -c "$agencia.$secuencia" ./temp/DET/archivosValidos.txt )
+			if [ $encontroAnterior -eq 1 -a $encontroActual -eq 0 ]; then
+				resp=1;
+				rm temp/DET/archivosValidos.txt
+			else
+				resp=0;
+				rm temp/DET/archivosValidos.txt
+			fi
 		else
 			resp=0;
 			rm temp/DET/archivosValidos.txt
@@ -41,7 +51,7 @@ function validarSecuencia(){
 while [ 0 -le 1 ] 
 
 do #principio del loop
-
+echo "YO SOY POSTONIO $$"
 if [ ! -d /temp ]; then
 	mkdir temp #creo un directorio para archivos temporales si no existe
 fi
@@ -53,9 +63,7 @@ fi
 #verifico que haya archivos en ARRIDIR
 ls $ARRIDIR > ./temp/DET/archivos.txt
 cantidad=$(wc -l < ./temp/DET/archivos.txt)
-echo "************************"
-echo "cantidad: $cantidad"
-echo "************************"
+
 if [ $cantidad -eq 0 ]; then 
 	echo "No hay archivos en la carpeta x"
 else
@@ -63,13 +71,8 @@ else
 	do
 		valido=true
 		nombre=$(head -n $i ./temp/DET/archivos.txt | tail -n 1) 
-		AUX=`echo $nombre | grep "\b......\.......\b"` #valido formato
-		
-		echo "***********************************"
-		echo "nombre: $nombre"
-		echo "aux:  $AUX"
-		echo "***********************************"	
-				
+		AUX=`echo $nombre | grep "\b......\.[0-9][0-9][0-9][0-9][0-9][0-9]\b"` #valido formato
+						
 		if [ -n "$AUX" ]; then
 			nomAgencia=$(echo $nombre | cut -d \. -f 1)
 			aparece=$(grep $nomAgencia $agenciaMae -c)
@@ -79,20 +82,20 @@ else
 				validarSecuencia  $nomAgencia $secuencia
 				if [ $resp -eq 1 ]; then #valido secuencia 
 					
-					mv "$ARRIDIR/$nombre" $RECEIVED
-					$GRALOG postonio I "	El archivo $AUX se ha movido a la carpeta de recibidos" 1 
+					./mover.sh "$ARRIDIR/$nombre" "$RECEIVED/$nombre"
+					$GRALOG postonio I "	El archivo $nombre se ha movido a la carpeta de recibidos" 1 
 				else
-					$GRALOG postonio A "	El archivo $AUX se ha movido a la carpeta de rechazados, por secuencia no permitida" 1 
-					mv "$ARRIDIR/$nombre" $REJECTED
+					$GRALOG postonio A "	El archivo $nombre se ha movido a la carpeta de rechazados, por secuencia no permitida" 1 
+					./mover.sh "$ARRIDIR/$nombre" "$REJECTED/$nombre"
 				fi	
 			else
-				$GRALOG postonio A "	El archivo $AUX se ha movido a la carpeta de rechazados, por codigo de agencia inexistente" 1 
-				mv "$ARRIDIR/$nombre" $REJECTED
+				$GRALOG postonio A "	El archivo $nombre se ha movido a la carpeta de rechazados, por codigo de agencia inexistente" 1 
+				./mover.sh "$ARRIDIR/$nombre" "$REJECTED/$nombre"
 			fi
 		
 		else
-			$GRALOG postonio A "	El archivo $AUX se ha movido a la carpeta de rechazados, por nombre incorrecto" 1 	
-			mv "$ARRIDIR/$nombre" $REJECTED		
+			$GRALOG postonio A "	El archivo $nombre se ha movido a la carpeta de rechazados, por nombre incorrecto" 1 	
+			./mover.sh "$ARRIDIR/$nombre" "$REJECTED/$nombre"		
 		fi
 	done
 fi
@@ -110,7 +113,7 @@ pid=$(ps a | grep -v $0 | grep "postular.sh" | grep -v "grep" | head -n1 | head 
 		echo "POSTULAR se encuentra corriendo con PID: $pid"
 		$GRALOG postonio A "Se llamo a POSTULAR, y ya se encuentra corriendo con PID: $pid"
 	else
-		./postular.sh & 
+		#./postular.sh & 
 		pid=$(ps a | grep -v $0 | grep "postular.sh" | grep -v "grep" | head -n1 | head -c5)
 		if [ -n $pid ]; then
 			echo "El pid de POSTULAR es: $pid"

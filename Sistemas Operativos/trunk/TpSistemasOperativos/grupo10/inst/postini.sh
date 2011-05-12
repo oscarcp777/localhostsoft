@@ -50,6 +50,8 @@ function terminar(){
 	return 1	
 }
 
+echo "YO SOY POSTINI $$"
+
 # Seteo de Variables de Ambiente
 if [ -z $ARRIDIR  ] 
 then

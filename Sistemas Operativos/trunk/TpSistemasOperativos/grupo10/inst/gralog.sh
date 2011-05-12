@@ -98,7 +98,7 @@ unaCadena=$tipoMensaje/
 
 tamanioArchivo=`stat -c%s $log`
 
-# Si el tamaño es menor a $LOGSIZE y no es instalacion puede haber que recortar
+# Si el tamaño es menor a $LOGSIZE  puede haber que recortar
 if [ $LOGSIZE ]
 then
 	if [ $tamanioArchivo -eq $LOGSIZE ] || [ $tamanioArchivo -gt $LOGSIZE ]

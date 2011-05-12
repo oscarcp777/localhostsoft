@@ -135,7 +135,7 @@ function preguntarDirectorio(){
 		read -p "$pregunta" posibleDir;
 		if [ -z $posibleDir ] ; then
 			dirSeleccionado=$2
-		else #TODO Validar q lo q ingresa el usuario sea un posible directorio esta validacion no funca
+		else 
 			resp=$(echo $posibleDir | grep "^[A-Za-z0-9%@_=:.]\{1,\}$");
 						
 			if [ -z $resp ]; then 
@@ -163,7 +163,7 @@ function preguntarTamanio(){
 		read -p "$pregunta " posibleTam;
 		if [ -z $posibleTam ] ; then
 			tamanio=$2 #   $2 es el valor por dafault 
-		else #TODO Validar q lo q ingresa el usuario sea un posible valor maximo
+		else 
 			resp=$(echo $posibleTam | grep "^[0-9]*$");			
 			if [ -z $resp ]; then 
 				echo "";
@@ -190,7 +190,7 @@ function preguntarExtension(){
 		read -p "$pregunta" posibleExt;
 		if [ -z $posibleExt ] ; then
 			extSeleccionada=$2
-		else #TODO Validar q lo q ingresa el usuario sea una posible extension esta validacion no funca
+		else 
 			resp=$(echo $posibleExt | grep "^[A-Za-z.]\{1,\}$");
 						
 			if [ -z $resp ]; then 
