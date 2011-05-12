@@ -1,45 +1,56 @@
+#!/bin/bash
+#Input 
+#-->Parametro1 : Archivo Origen
+#-->Parametro2 : Archivo Destino
+#-->Parametro3 (opcional) : Comando que lo invoca
+#
+#Output 
+#-->Archivo definido en el parametro 2
+#-->Archivo de log
+
 archivoOrigen=${1##*/}
 archvioDestino=${2##*/}
 directorioOrigen=${1%/*}
 directorioDestino=${2%/*}
 
 #Ver con el grupo el path del archivo log 	
-log='./log.txt'
+log='./grupo10/inst/gralog.sh'
 
 #validamos que la cantidad de parametros sea menor o igual a 3 y mayor o igual a 2
 if [ $# -gt 3 -o $# -lt 2 ]
 then
-	echo "Error en la cantidad de parametros/n" >> $log
+	$log E "Error en la cantidad de parametros/n"
 	exit 1
 fi
 
 #validamos que los directorios origen y destino existan
 if [ ! -d "$directorioOrigen" -o ! -e "$directorioOrigen/$archivoOrigen" ]
 then
-	echo "El directorio o archivo origen no existe" >> $log	
-	exit 2
+	$log E "El directorio o archivo origen no existe"	
+	exit 0
 fi
 #validamos que el directorio origen axista
 if [ ! -d "$directorioDestino" ]
 then
-	echo "El directorio destino no existe" >> $log
-	exit 3
+	$log E "El directorio destino no existe"
+	exit 0
 fi
 	
 #Validamos que en la directorio destino no haya un archivo con el mismo nombre
 
 if [ "$directorioDestino" == "$directorioOrigen" ]
 then
-	echo "(Movimiento como Duplicado)Directorio origen y destino son iguales" >> $log
+	$log A "(Movimiento como Duplicado)Directorio origen y destino son iguales"
 fi
 
 if [ -e $directorioDestino/$archvioDestino ]
 then
 	if [ ! -d $directorioDestino/dup ]
-	then
- 		mkdir $directorioDestino/dup
+	then 		
+		mkdir $directorioDestino/dup
+	        $log A "(Movimiento como Duplicado)Se ha creado el directorio$directorioDestino/dup"
 	else		
- 		 secuencia=$(ls "$directorioDestino/dup" | grep ".*$archvioDestino.[1-9]$" | sort -r | sed s/$archvioDestino.// | head -n 1)
+ 		 secuencia=$(ls "$directorioDestino/dup" | grep ".*$archvioDestino.[1-9]*$" | sort -r | sed s/$archvioDestino.// | head -n 1)
 		#Verificamos el numero de secuencia de los archivos 			duplicados
 		if [ "$secuencia" == "" ]
 		then
@@ -53,11 +64,10 @@ then
 else	
 	destinoFinal=$directorioDestino/$archvioDestino
 fi
-
-echo "Archivo movido de $directorioOrigen/$archivoOrigen a $destinoFinal" >> $log	
-
-echo "----------------------------------------------------------------" >> $log
-
+	
 mv "$directorioOrigen/$archivoOrigen" "$destinoFinal"
+$log I "Archivo movido de $directorioOrigen/$archivoOrigen a $destinoFinal"
+
+exit 1
 
 
