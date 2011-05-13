@@ -20,7 +20,8 @@
 #       $grupo/data/
 #      registros exitosos      benef.<process id>
 #      registros con errores   benerro.<process id>
-
+# ------------------------------------------Comandos------------------------------------------
+GRALOG=./gralog.sh
 #NOMBRE DEL COMANDO
 nombre="postular"
 #Motivos
@@ -37,6 +38,7 @@ cantProcess=$(echo "$proceso" | grep -v "grep" | grep -v "obtpid" | grep -v "vi"
 if [ $cantProcess -ge 2 ]; then
    # gragarloh.sh 
    echo "El proceso postular.sh ya se está ejecutando!"
+   $GRALOG postular SE "El proceso postular.sh ya se está ejecutando!" 1
    exit 1
 fi
 
@@ -46,7 +48,7 @@ fi
 isInicializado=1
 if [ $isInicializado -eq 0 ]; then
 	# gragarloh.sh 
-    echo "Las variables de ambiente no se encuentran inicalizadas"
+    $GRALOG postular SE "Las variables de ambiente no se encuentran inicalizadas" 1
     exit 1
 fi
 #inicializo los path de los archivos
@@ -72,15 +74,7 @@ function verificarExisteArch(){
 	> $1
 	fi	
 }
-#validar numero
-function esNumero(){
-    resp=$(echo $1 | grep "^[0-9]*$");                        
-     if [ -z $resp ]; then
-        echo 0
-     else
-        echo 1
-     fi
-}
+
 #validar fecha
 #retorna 0 si no hay error y 1 si lo hay
 function validarFecha(){
@@ -158,12 +152,11 @@ function calcularFechaEfectiva(){
 }
 function escribirError(){
 var=`verificarExisteArch "$pathdata/benerro.$processId"`
-echo " ERROR : $2"
+$GRALOG postular E "ERROR : $2" 1
 echo $1 >> $pathdata/benerro.$processId
 }
 function escribirBeneficiario(){
 var=`verificarExisteArch "$pathdata/benef.$processId"`
-echo " registro : $1"
 echo $1 >> $pathdata/benef.$processId
 }
 function calcularFechaFinalizacion(){
@@ -192,18 +185,18 @@ IFS=$OldIFS #restauro el IFS anterior
 cantArchivos=${#vector[@]}
 
   # gragarloh.sh  
-  echo "Inicio postular <Cantidad de Archivos > : $cantArchivos"
-
+  $GRALOG postular I "Inicio postular <Cantidad de Archivos > : $cantArchivos" 1
+  
 for arch in ${vector[@]}
 do
 	
 	
 	
 	
-	echo " :::::::::::::   Proceso el Archivo : ${arch} :::::::::::::::::::::::::::::::::::"
+#	echo " :::::::::::::   Proceso el Archivo : ${arch} :::::::::::::::::::::::::::::::::::"
 #4.- PROCESO EL PRIMER ARCHIVO
-  echo "Archivo a procesar: ${arch}"
   
+    $GRALOG postular I "Archivo a procesar: ${arch}" 1
        contador=0
        contadorError=0
        contadorNuevos=0
@@ -488,11 +481,13 @@ do
 # MOVER.SH
 
 #GRABARLOG.SH
-echo "Cantidad Total de registros : $contador"
-echo "Cantidad de registros con error : $contadorError"
-echo "Cantidad de beneficiarios nuevos :$contadorNuevos"
+ $GRALOG postular I "Cantidad Total de registros : $contador" 1
+ $GRALOG postular I "Cantidad de registros con error : $contadorError" 1
+ $GRALOG postular I "Cantidad de beneficiarios nuevos :$contadorNuevos" 1
 
-echo " :::::::::::::   Fin del Archivo : :::::::::::::::::::::::::::::::::::"
+
+
+#echo " :::::::::::::   Fin del Archivo : :::::::::::::::::::::::::::::::::::"
 done
 # ------------------------------------------------ X -------------------------------------------------------
 #CERRAR Y GRABAR LOG
