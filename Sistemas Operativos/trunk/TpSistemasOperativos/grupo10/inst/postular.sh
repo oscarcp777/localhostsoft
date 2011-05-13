@@ -471,7 +471,7 @@ do
 #FIN DE ARCHIVO
 #MUEVO AL DIRECTORIO DE $GRUPO/PROCESADOS PARA EVITAR REPROCESAMIENTO
 # MOVER.SH
-
+./mover.sh "$RECEIVED/$arch" "$PROCESSED/$arch"
 #GRABARLOG.SH
  $GRALOG postular I "Cantidad Total de registros : $contador" 1
  $GRALOG postular I "Cantidad de registros con error : $contadorError" 1
