@@ -53,7 +53,7 @@ if [ $isInicializado -eq 0 ]; then
 fi
 #inicializo los path de los archivos
 GRUPO="/home/oscar/workspace/TpSistemasOperativos/grupo10"
-pathdata="$GRUPO/data/test"
+pathdata="$GRUPO/data"
 pathRecibidos="$GRUPO/recibidos"
 pathProcesados="$GRUPO/procesados"
 pathBeneficiarios="$GRUPO/data/beneficios.mae"
