@@ -484,4 +484,4 @@ done
 # ------------------------------------------------ X -------------------------------------------------------
 #CERRAR Y GRABAR LOG
 #grabarlog.sh 
-echo "Fin de Intérprete"
+echo "Fin de Postular"
