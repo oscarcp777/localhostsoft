@@ -133,13 +133,13 @@ fi
 
 
 #PID de postonio.sh
-pid=$(ps a | grep -v $0 | grep "postonio.sh" | grep -v "grep" | head -n1 | head -c5) 
+pid=$(ps -A | grep -v $0 | grep "postonio.sh" | grep -v "grep" | head -n1 | head -c5) 
 
 # Verificar que no haya un POSTONIO corriendo
 if [ -z $pid ]
 then
 	./postonio.sh &
-	pid=$(ps a | grep -v $0 | grep "postonio.sh" | grep -v "grep" | head -n1 | head -c5) 
+	pid=$(ps -A | grep -v $0 | grep "postonio.sh" | grep -v "grep" | head -n1 | head -c5) 
 	echo "Se inicia el demonio postonio. Se encuentra corriendo bajo el no. $pid"
 else
 	echo "postonio.sh ya se encuentra corriendo bajo nro. $pid"

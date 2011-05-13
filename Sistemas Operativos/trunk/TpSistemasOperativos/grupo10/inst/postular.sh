@@ -51,19 +51,11 @@ if [ $isInicializado -eq 0 ]; then
     $GRALOG postular SE "Las variables de ambiente no se encuentran inicalizadas" 1
     exit 1
 fi
-#inicializo los path de los archivos
-GRUPO="/home/oscar/workspace/TpSistemasOperativos/grupo10"
-pathdata="$GRUPO/data"
-pathRecibidos="$GRUPO/recibidos"
-pathProcesados="$GRUPO/procesados"
-pathBeneficiarios="$GRUPO/data/beneficios.mae"
+
+#variables
 ESTADO_RECHAZADO=rechazado
 ESTADO_PENDIENTE=pendiente
-ESTADO_APROBADO=aprobado	
-#creo el pathProcesados si no estaban creados
-if [ ! -e $pathProcesados ]; then
-    mkdir $pathProcesados
-fi
+ESTADO_APROBADO=aprobado
 
 #si no existe el archivo lo crea
 function verificarExisteArch(){
@@ -151,13 +143,13 @@ function calcularFechaEfectiva(){
       echo $fechaEfectiva
 }
 function escribirError(){
-var=`verificarExisteArch "$pathdata/benerro.$processId"`
+var=`verificarExisteArch "$DATADIR/benerro.$processId"`
 $GRALOG postular E "ERROR : $2" 1
-echo $1 >> $pathdata/benerro.$processId
+echo $1 >> $DATADIR/benerro.$processId
 }
 function escribirBeneficiario(){
-var=`verificarExisteArch "$pathdata/benef.$processId"`
-echo $1 >> $pathdata/benef.$processId
+var=`verificarExisteArch "$DATADIR/benef.$processId"`
+echo $1 >> $DATADIR/benef.$processId
 }
 function calcularFechaFinalizacion(){
 	  FEA=$1
@@ -174,7 +166,7 @@ function calcularFechaFinalizacion(){
 }
 #3.- ----------------------------        PROCESO ARCHIVOS   -------------------------------------------------
 # lo listo como columna los archivos y filtro lo que terminan en barra
-archivos=$(ls -1p $pathRecibidos | grep -v /\$ )
+archivos=$(ls -1p $RECEIVED | grep -v /\$ )
 
 #IFS=Separador de elementos de una lista. Normalmente espacio, tabulador y salto de carro
 
@@ -301,9 +293,9 @@ do
         	      continue
                fi
                 if [ $cantCaracteres -eq 5 ];then
-                   codigos=$(cut -d ',' -f2 $pathBeneficiarios)
+                   codigos=$(cut -d ',' -f2 $"$DATADIR/beneficios.mae")
                    existe=$(echo "$codigos" | grep -c "$codBeneficio")
-                   beneficio=$(grep "$codBeneficio" $pathBeneficiarios)
+                   beneficio=$(grep "$codBeneficio" $"$DATADIR/beneficios.mae")
                    duracionMaxBeneficio=$(echo "$beneficio" | awk -F, '{print $6}')
                    fechaFinBeneficio=$(echo "$beneficio" | awk -F, '{print $5}')
                    fechaInicioBeneficio=$(echo "$beneficio" | awk -F, '{print $4}')
@@ -473,7 +465,7 @@ do
          escribirBeneficiario "$beneficiarioNuevo"
   
         #4.1.1 VALIDAR A NIVEL CAMPO
-       done < "$pathRecibidos/$arch"
+       done < "$RECEIVED/$arch"
          
   
 #FIN DE ARCHIVO

@@ -108,13 +108,13 @@ if [ $cantidad -eq 0 ]; then
 else
 
 
-pid=$(ps a | grep -v $0 | grep "postular.sh" | grep -v "grep" | head -n1 | head -c5)
+pid=$(ps -A | grep -v $0 | grep "postular.sh" | grep -v "grep" | head -n1 | head -c5)
 	if [ -n "$pid" ];then
 		echo "POSTULAR se encuentra corriendo con PID: $pid"
 		$GRALOG postonio A "Se llamo a POSTULAR, y ya se encuentra corriendo con PID: $pid"
 	else
-		#./postular.sh & 
-		pid=$(ps a | grep -v $0 | grep "postular.sh" | grep -v "grep" | head -n1 | head -c5)
+		./postular.sh & 
+		pid=$(ps -A | grep -v $0 | grep "postular.sh" | grep -v "grep" | head -n1 | head -c5)
 		if [ -n $pid ]; then
 			echo "El pid de POSTULAR es: $pid"
 			$GRALOG postonio A "Se llamo a POSTULAR, PID: $pid"
