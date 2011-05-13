@@ -492,7 +492,7 @@ done
 		# Crea los directorios
 		if [ ! -e $i -a ! -z $i ] 
 		then
-			mkdir  "$i" 
+			mkdir -m 777 "$i" 
 			$GRALOG instula I "	Se creo el directorio $i" 1 
 		else
 			if [ -z $i ];then

@@ -31,6 +31,7 @@ my @listaBenficiarios;
 
 #PATH
 my $dir_Actual = $DATADIR; 
+my $dir_log = $LOGDIR;
 my $log ='./gralog.sh';
 #my $dirName ='./grupo10/data/';
 my $dirSalidaArchivo =$CURRDIR.'/list';
@@ -327,7 +328,8 @@ if( $agencias eq ""){
 
 #open(LOG,$log)||print "ERROR AL ABRIR ARCHIVO DE LOG";
 
-opendir(DIR,$dirName)||$log "listaBeneficirios" E "error al abrir el directorio\n";
+opendir(DIR,$dirName)|| `$log "$dir_log/listaBeneficiarios" E "error al abrir el directorio\n"`;
+
 while($filename=readdir(DIR)){
 	push(@files,$filename);
 }
@@ -339,15 +341,18 @@ closedir(DIR);
  
 if(@encontrados==0)
 {
-	$log "listaBeneficirios" I "NO SE ENCONTRO NINGUN ARCHIVO DE BENEFICIARIOS\n";
+ 	print listaBeneficiarios;
+	print "$dir_log LAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+	`$log "$dir_log/listaBeneficiarios" I "NO SE ENCONTRO NINGUN ARCHIVO DE BENEFICIARIOS\n"`;
 	
 }else{
 	@listaBenficiarios = listar(@encontrados,$dir_Actual,$filtroPorEstado);
 	my $cantArchivosEncontrados = @encontrados;
 	my $canBenefEncontrados = @listaBenficiarios; 	
-	
-	$log "listaBeneficirios" I "Numero de archivos benef encontrados (sin filtrar) :$canBenefEncontrados\n";	
-	$log "listaBeneficirios" I "Numero de beneficiarios encontrados (filtrado) :$canBenefEncontrados\n";	
+		
+	print "$dir_log LAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+	`$log "$dir_log/listaBeneficiarios" I "Numero de archivos benef encontrados (sin filtrar) :$canBenefEncontrados\n"`;	
+	`$log "$dir_log/listaBeneficiarios" I "Numero de beneficiarios encontrados (filtrado) :$canBenefEncontrados\n"`;	
 	
 	$conMatriz = false;
 	@cabecera = getCabecera();
