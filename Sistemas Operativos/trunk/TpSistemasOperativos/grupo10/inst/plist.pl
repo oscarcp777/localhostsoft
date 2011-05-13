@@ -1,3 +1,5 @@
+#! /usr/bin/perl
+
 #Los parametros seran ingresados en el siguiente orden :
 # 1) archivo/s beneficiario/s nuevos 
 # 2) Agencia/s
@@ -19,21 +21,21 @@ my $beneficios = $ARGV[2];
 my $opcionSalida = $ARGV[3];
 my $opcionListaMatriz = $ARGV[4];
 my $filtroPorEstado = $ARGV[5];
+
 #HASH
 my %matriz;
 my %beneficios;
-
 my $file;
 my @files;
 my @listaBenficiarios;
-#PATH
-my $dir_Actual = './grupo10/data/'; 
-my $log ='>>./data/log.txt';
-my $dirName ='./grupo10/data/';
-my $dirSalidaArchivo ='./grupo10/list';
-my $ardestino = 'plist';
-my $salidaPorArchivo = '>./grupo10/list/';
 
+#PATH
+my $dir_Actual = $DATADIR; 
+my $log ='./gralog.sh';
+#my $dirName ='./grupo10/data/';
+my $dirSalidaArchivo =$CURRDIR.'/list';
+my $ardestino = 'plist';
+my $salidaPorArchivo = '>'.$CURRDIR.'/list/';
 
 #----------------------------CABECERA---------------------------------
 
@@ -44,10 +46,11 @@ sub getCabecera(){
 	$mon ++; 
 	$hora = "$hour:$min:$sec";
 	$fecha= "$mday/$mon/$year";
+	my $usuario = `echo \$LOGNAME | tr -d '\n'`;
 	
 	push(@cabecera,$hora);
 	push(@cabecera,$fecha);
-	push(@cabecera,$ENV{"REMOTE_USER"});
+	push(@cabecera,$usuario);
 	push(@cabecera,$arch_Beneficiarios);
 	push(@cabecera,$agencias);
 	push(@cabecera,$beneficios);
@@ -68,8 +71,8 @@ sub imprimirInfo
 	my $matriz =shift;
 	my $beneficios = shift;
 	my $longitudListaBenef = @listaBenficiarios;
-
-	printf("\n%-8s%-4s%-8s%-10s%-10s%-10s%-10s%-10s%-10s\n\n",$cabecera[0],$cabecera[1],$cabecera[2],$cabecera[3],$cabecera[4],$cabecera[5],$cabecera[6],$cabecera[7],$cabecera[8]);
+	
+	printf("\n%-10s%-10s%-10s%-10s%-10s%-10s%-10s%-10s%-10s\n\n",$cabecera[0],$cabecera[1],$cabecera[2],$cabecera[3],$cabecera[4],$cabecera[5],$cabecera[6],$cabecera[7],$cabecera[8]);
 	printf("\n%-10s%-10s%-10s%-15s%-20s%-12s%-10s\n","APELLIDO","BENEFICIO","AGENCIA","CUIL","PROVINCIA","ESTADO","FECHA_EFECT_ALTA");
 	for($i=0;$i<$longitudListaBenef;$i++) {	
 		printf("%-10s%-10s%-10s%-15s%-20s%-12s%-10s\n",@listaBenficiarios[$i],@listaBenficiarios[$i+1],@listaBenficiarios[$i+2],@listaBenficiarios[$i+3],@listaBenficiarios[$i+4],@listaBenficiarios[$i+5],@listaBenficiarios[$i+6]);
@@ -119,7 +122,8 @@ my $longitudListaBenef = @listaBenficiarios;
 my @secuenciasEncontradas;
 my $long;
 
-opendir(DIR,$dirSalidaArchivo)||die "error al abrir el directorio\n";
+opendir(DIR,$dirSalidaArchivo)|| printf  "error al abrir el directorio\n";
+
 while($filename=readdir(DIR)){
 	push(@secuenciasEncontradas,$filename);
 }
@@ -145,8 +149,8 @@ if($secuencia > 0){
 
 $rutaArchivo = ">>".$dirSalidaArchivo."/plist.".$secuencia;
 open(PLIST,$rutaArchivo);
+	printf PLIST "\n%-8s%-4s%-8s%-10s%-10s%-10s%-10s%-10s%-10s\n\n",$cabecera[0],$cabecera[1],$cabecera[2],$cabecera[3],$cabecera[4],$cabecera[5],$cabecera[6],$cabecera[7],$cabecera[8];
 
-printf PLIST "\n%-8s\t%-10s\t%-10s\t%-10s\t%-10s\n\n",$cabecera[0],$cabecera[1],$cabecera[2],$cabecera[3],$cabecera[4];
 	printf PLIST "\n%-10s%-10s%-10s%-15s%-20s%-12s%-10s\n","APELLIDO","BENEFICIO","AGENCIA","CUIL","PROVINCIA","ESTADO","FECHA_EFECT_ALTA";
 	for($i=0;$i<$longitudListaBenef;$i++) {	
 		printf PLIST "%-10s%-10s%-10s%-15s%-20s%-12s%-10s\n",@listaBenficiarios[$i],@listaBenficiarios[$i+1],@listaBenficiarios[$i+2],@listaBenficiarios[$i+3],@listaBenficiarios[$i+4],@listaBenficiarios[$i+5],@listaBenficiarios[$i+6];
@@ -224,7 +228,7 @@ sub listar(@encontrados,$dir_Actual,$filtroPorEstado){
 	}
 	return @listafinal;	
 }
-#-------------------------------RELLENAR -
+#-------------------------------RELLENAR -------------------------------------------------------
 sub rellenarMatriz{
 	
 	my $beneficios = shift;
@@ -240,7 +244,7 @@ sub rellenarMatriz{
 	}
 }
 
-#------------------------------------CALCULO TOTAL--------------------
+#------------------------------------CALCULO TOTAL----------------------------------------------
 
 sub calcularTotal{
 
@@ -272,7 +276,7 @@ sub calcularTotal{
 }
 
 
-#-------------------------------MATRIZ DE CONTROL---------------------
+#-------------------------------MATRIZ DE CONTROL-----------------------------------------------
 
 sub matrizControl{
 
@@ -309,7 +313,7 @@ while($contador < $longitud){
 	calcularTotal($beneficios,$matriz);	
 }
 
-#--------------------------PRINCIPAL---------------------------------#
+#--------------------------PRINCIPAL-----------------------------------------------------------#
 
 #validacion de parametros
 if($beneficios eq ""){
@@ -321,9 +325,9 @@ if( $agencias eq ""){
 }
 #Se listan todos los archivos del directorio data
 
-open(LOG,$log);
+#open(LOG,$log)||print "ERROR AL ABRIR ARCHIVO DE LOG";
 
-opendir(DIR,$dirName)||print LOG "error al abrir el directorio\n";
+opendir(DIR,$dirName)||$log "listaBeneficirios" E "error al abrir el directorio\n";
 while($filename=readdir(DIR)){
 	push(@files,$filename);
 }
@@ -335,11 +339,16 @@ closedir(DIR);
  
 if(@encontrados==0)
 {
-
-	print LOG "NO SE ENCONTRO NINGUN ARCHIVO DE BENEFICIARIOS";
+	$log "listaBeneficirios" I "NO SE ENCONTRO NINGUN ARCHIVO DE BENEFICIARIOS\n";
 	
 }else{
-	@listaBenficiarios = listar(@encontrados,$dir_Actual,$filtroPorEstado);		
+	@listaBenficiarios = listar(@encontrados,$dir_Actual,$filtroPorEstado);
+	my $cantArchivosEncontrados = @encontrados;
+	my $canBenefEncontrados = @listaBenficiarios; 	
+	
+	$log "listaBeneficirios" I "Numero de archivos benef encontrados (sin filtrar) :$canBenefEncontrados\n";	
+	$log "listaBeneficirios" I "Numero de beneficiarios encontrados (filtrado) :$canBenefEncontrados\n";	
+	
 	$conMatriz = false;
 	@cabecera = getCabecera();
 	#--------------------VALIDANDO Y GENERANDO LISTA - MATRIZ----------------
@@ -365,4 +374,4 @@ if(@encontrados==0)
 		imprimirInfo($conMatriz,\%matriz,\%beneficios);
 	}	 				 	
 }	
-close(LOG);
+#close(LOG);
