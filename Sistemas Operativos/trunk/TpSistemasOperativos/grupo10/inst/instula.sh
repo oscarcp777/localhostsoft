@@ -60,6 +60,10 @@ function instalarComando(){
 			#escribo $GRUPO 
     		sed -e "s:GRUPO=\\\"LLENAR EN INSTALACION\\\":GRUPO=\\\"$BASEDIR\\\":" "postini.sh" > "$BINDIR/postini.sh"
 		fi
+		#asigno permisos al script
+		chmod u+x "$2/$1"
+		$GRALOG instula I "Permisos de ejecución asignados al archivo $1" 1
+		
 	$GRALOG instula I "	Instalación del componente  $1 completada" 1	
 	fi	
 }
@@ -440,9 +444,9 @@ while [ ! -z $algo ]; do
 	# Mostrar estructura de directorios y parámetros configurados
 		$GRALOG instula I "Mostrando estructura de directorios configurada";
 		clear
-	echo "**************************************************************************************************
-	* Parámetros de Instalación del paquete POSTULA		     										 *	
-	**************************************************************************************************
+	echo "****************************************************
+	* Parámetros de Instalación del paquete POSTULA		     *	
+	**********************************************************
 	 Directorio de trabajo: $BASEDIR
 	 Directorio de instalación: $INSTDIR
 	 Directorio de configuración: $CONFDIR
@@ -457,7 +461,7 @@ while [ ! -z $algo ]; do
 	
 	 Si los datos ingresados son correctos oprima sólo ENTER para iniciar la instalación.
 	 Si desea modificar alguno de ellos oprima cualquier tecla.
-	**************************************************************************************************"
+	**********************************************************"
 	
 		read -n1 algo
 		if [ ! -z $algo ]; then
@@ -532,10 +536,12 @@ done
 
 mensFinal="***************************************************************
 * Se encuentran instalados los siguientes componentes:       *
-* POSTINI  `date +%D`    `whoami`          			       
-* POSTONIO  `date +%D`    `whoami`                  		   
-* PLIST `date +%D`    `whoami`                  		   
-* POSTULAR `date +%D`    `whoami`                            
+* postini.sh  `date +%D`    `whoami`          			       
+* postonio.sh  `date +%D`    `whoami`                  		   
+* plist.pl `date +%D`    `whoami`                  		   
+* postular.sh `date +%D`    `whoami`
+* gralog.sh `date +%D`    `whoami`
+* mover.sh `date +%D`    `whoami`                            
 **************************************************************
 * FIN del Proceso de Instalación de Postulantes			   *			
 *          Copyright TPSistemasOp (c)2011                    *
