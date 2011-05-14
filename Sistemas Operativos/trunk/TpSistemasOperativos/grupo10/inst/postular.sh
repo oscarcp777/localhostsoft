@@ -323,7 +323,7 @@ do
         	        fechaEfectivaAlta="$fechaCorriente"
                     fechaFinalizacion="$fechaCorriente"
                     duracionMaxBeneficio=0
-                    reg1="$agencia,$secuencia,$cuil,$tipoDoc,$apellido,$Nombre,$Domicilio,$Localidad,$Provincia,$codBeneficio,$fechaCorriente,"
+                    reg1="$agencia,$secuencia,$cuil,$tipoDoc,$numeroDoc,$apellido,$Nombre,$Domicilio,$Localidad,$Provincia,$codBeneficio,$fechaCorriente,"
                     reg2="$fechaEfectivaAlta,$estado,$duracionMaxBeneficio,$fechaFinalizacion,$motivoEstado,$usuario,$fechaCorriente"
                     beneficiarioNuevo="$reg1$reg2"
                     escribirBeneficiario "$beneficiarioNuevo"
@@ -346,7 +346,7 @@ do
         	         motivoEstado="Fecha Pedida de Alta Invalido"
         	         fechaEfectivaAlta=`calcularFechaEfectiva $fechaInicioBeneficio $fechaCorriente $campo10`
                      fechaFinalizacion=`calcularFechaFinalizacion $fechaEfectivaAlta $duracionMaxBeneficio $fechaFinBeneficio`
-                     reg1="$agencia,$secuencia,$cuil,$tipoDoc,$apellido,$Nombre,$Domicilio,$Localidad,$Provincia,$codBeneficio,$campo10,"
+                     reg1="$agencia,$secuencia,$cuil,$tipoDoc,$numeroDoc,$apellido,$Nombre,$Domicilio,$Localidad,$Provincia,$codBeneficio,$campo10,"
                      reg2="$fechaEfectivaAlta,$estado,$duracionMaxBeneficio,$fechaFinalizacion,$motivoEstado,$usuario,$fechaCorriente"
                      beneficiarioNuevo="$reg1$reg2"
                      escribirBeneficiario "$beneficiarioNuevo"
@@ -359,7 +359,7 @@ do
         	              motivoEstado="Fecha Pedida de Alta mayor a Fecha Fin Beneficio"
         	              fechaEfectivaAlta=`calcularFechaEfectiva $fechaInicioBeneficio $fechaCorriente $campo10`
                           fechaFinalizacion=`calcularFechaFinalizacion $fechaEfectivaAlta $duracionMaxBeneficio $fechaFinBeneficio`
-                          reg1="$agencia,$secuencia,$cuil,$tipoDoc,$apellido,$Nombre,$Domicilio,$Localidad,$Provincia,$codBeneficio,$campo10,"
+                          reg1="$agencia,$secuencia,$cuil,$tipoDoc,$numeroDoc,$apellido,$Nombre,$Domicilio,$Localidad,$Provincia,$codBeneficio,$campo10,"
                           reg2="$fechaEfectivaAlta,$estado,$duracionMaxBeneficio,$fechaFinalizacion,$motivoEstado,$usuario,$fechaCorriente"
                           beneficiarioNuevo="$reg1$reg2"
                           escribirBeneficiario "$beneficiarioNuevo"
@@ -377,7 +377,7 @@ do
         	             motivoEstado="Duracion pedida invalida"
         	              fechaEfectivaAlta=`calcularFechaEfectiva $fechaInicioBeneficio $fechaCorriente $fechaCorriente`
                           fechaFinalizacion=`calcularFechaFinalizacion $fechaEfectivaAlta $duracionMaxBeneficio $fechaFinBeneficio`
-                          reg1="$agencia,$secuencia,$cuil,$tipoDoc,$apellido,$Nombre,$Domicilio,$Localidad,$Provincia,$codBeneficio,$fechaCorriente,"
+                          reg1="$agencia,$secuencia,$cuil,$tipoDoc,$numeroDoc,$apellido,$Nombre,$Domicilio,$Localidad,$Provincia,$codBeneficio,$fechaCorriente,"
                           reg2="$fechaEfectivaAlta,$estado,$campo10,$fechaFinalizacion,$motivoEstado,$usuario,$fechaCorriente"
                           beneficiarioNuevo="$reg1$reg2"
                           escribirBeneficiario "$beneficiarioNuevo"
@@ -389,7 +389,7 @@ do
         	                  motivoEstado="Duracion pedida mayor a duracion Maxima Beneficio"
         	                 fechaEfectivaAlta=`calcularFechaEfectiva $fechaInicioBeneficio $fechaCorriente $fechaCorriente`
                              fechaFinalizacion=`calcularFechaFinalizacion $fechaEfectivaAlta $campo10 $fechaFinBeneficio`
-                             reg1="$agencia,$secuencia,$cuil,$tipoDoc,$apellido,$Nombre,$Domicilio,$Localidad,$Provincia,$codBeneficio,$fechaCorriente,"
+                             reg1="$agencia,$secuencia,$cuil,$tipoDoc,$numeroDoc,$apellido,$Nombre,$Domicilio,$Localidad,$Provincia,$codBeneficio,$fechaCorriente,"
                              reg2="$fechaEfectivaAlta,$estado,$campo10,$fechaFinalizacion,$motivoEstado,$usuario,$fechaCorriente"
                              beneficiarioNuevo="$reg1$reg2"
                              escribirBeneficiario "$beneficiarioNuevo"
@@ -412,7 +412,7 @@ do
         	                motivoEstado="Fecha Pedida de Alta Invalido"
         	                fechaEfectivaAlta=`calcularFechaEfectiva $fechaInicioBeneficio $fechaCorriente $fechaPedida`
                             fechaFinalizacion=`calcularFechaFinalizacion $fechaEfectivaAlta $duracionMaxBeneficio $fechaFinBeneficio`
-                            reg1="$agencia,$secuencia,$cuil,$tipoDoc,$apellido,$Nombre,$Domicilio,$Localidad,$Provincia,$codBeneficio,$fechaPedida,"
+                            reg1="$agencia,$secuencia,$cuil,$tipoDoc,$numeroDoc,$apellido,$Nombre,$Domicilio,$Localidad,$Provincia,$codBeneficio,$fechaPedida,"
                             reg2="$fechaEfectivaAlta,$estado,$duracionMaxBeneficio,$fechaFinalizacion,$motivoEstado,$usuario,$fechaCorriente"
                             beneficiarioNuevo="$reg1$reg2"
                             escribirBeneficiario "$beneficiarioNuevo"
@@ -426,7 +426,7 @@ do
         	                    motivoEstado="Fecha Pedida de Alta mayor a Fecha Fin Beneficio"
         	                    fechaEfectivaAlta=`calcularFechaEfectiva $fechaInicioBeneficio $fechaCorriente $fechaPedida`
                                 fechaFinalizacion=`calcularFechaFinalizacion $fechaEfectivaAlta $duracionMaxBeneficio $fechaFinBeneficio`
-                                reg1="$agencia,$secuencia,$cuil,$tipoDoc,$apellido,$Nombre,$Domicilio,$Localidad,$Provincia,$codBeneficio,$fechaPedida,"
+                                reg1="$agencia,$secuencia,$cuil,$tipoDoc,$numeroDoc,$apellido,$Nombre,$Domicilio,$Localidad,$Provincia,$codBeneficio,$fechaPedida,"
                                 reg2="$fechaEfectivaAlta,$estado,$duracionMaxBeneficio,$fechaFinalizacion,$motivoEstado,$usuario,$fechaCorriente"
                                 beneficiarioNuevo="$reg1$reg2"
                                 escribirBeneficiario "$beneficiarioNuevo"
@@ -445,7 +445,7 @@ do
         	             motivoEstado="Duracion pedida invalida"
         	              fechaEfectivaAlta=`calcularFechaEfectiva $fechaInicioBeneficio $fechaCorriente $fechaPedidaAlta`
                           fechaFinalizacion=`calcularFechaFinalizacion $fechaEfectivaAlta $duracionMaxBeneficio $fechaFinBeneficio`
-                          reg1="$agencia,$secuencia,$cuil,$tipoDoc,$apellido,$Nombre,$Domicilio,$Localidad,$Provincia,$codBeneficio,$fechaPedidaAlta,"
+                          reg1="$agencia,$secuencia,$cuil,$tipoDoc,$numeroDoc,$apellido,$Nombre,$Domicilio,$Localidad,$Provincia,$codBeneficio,$fechaPedidaAlta,"
                           reg2="$fechaEfectivaAlta,$estado,$duracionPedida,$fechaFinalizacion,$motivoEstado,$usuario,$fechaCorriente"
                           beneficiarioNuevo="$reg1$reg2"
                           escribirBeneficiario "$beneficiarioNuevo"
@@ -457,7 +457,7 @@ do
         	                  motivoEstado="Duracion pedida mayor a duracion Maxima Beneficio"
         	                 fechaEfectivaAlta=`calcularFechaEfectiva $fechaInicioBeneficio $fechaCorriente $fechaPedidaAlta`
                              fechaFinalizacion=`calcularFechaFinalizacion $fechaEfectivaAlta $duracionPedida $fechaFinBeneficio`
-                             reg1="$agencia,$secuencia,$cuil,$tipoDoc,$apellido,$Nombre,$Domicilio,$Localidad,$Provincia,$codBeneficio,$fechaPedidaAlta,"
+                             reg1="$agencia,$secuencia,$cuil,$tipoDoc,$numeroDoc,$apellido,$Nombre,$Domicilio,$Localidad,$Provincia,$codBeneficio,$fechaPedidaAlta,"
                              reg2="$fechaEfectivaAlta,$estado,$duracionPedida,$fechaFinalizacion,$motivoEstado,$usuario,$fechaCorriente"
                              beneficiarioNuevo="$reg1$reg2"
                              escribirBeneficiario "$beneficiarioNuevo"
@@ -482,7 +482,7 @@ do
             estado=$ESTADO_APROBADO
          fi
          fechaFinalizacion=`calcularFechaFinalizacion $fechaEfectivaAlta $duracionPedida $fechaFinBeneficio`
-         reg1="$agencia,$secuencia,$cuil,$tipoDoc,$apellido,$Nombre,$Domicilio,$Localidad,$Provincia,$codBeneficio,$fechaPedidaAlta,"
+         reg1="$agencia,$secuencia,$cuil,$tipoDoc,$numeroDoc,$apellido,$Nombre,$Domicilio,$Localidad,$Provincia,$codBeneficio,$fechaPedidaAlta,"
          reg2="$fechaEfectivaAlta,$estado,$duracionPedida,$fechaFinalizacion,$motivoEstado,$usuario,$fechaCorriente"
          beneficiarioNuevo="$reg1$reg2"
          contadorNuevos=`expr $contadorNuevos + 1`
