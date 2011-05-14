@@ -1,7 +1,14 @@
-
+#!/bin/bash
+# Comando "postonio"
+# Demonio que verifica la existencia de archivos en la carpeta de arribos, 
+# verifica que los codigos de agencia sean validos y que las secuencias sean permitidas,
+# si estan correctos, se mueven a la carpeta de recibidos, de lo contrario a la carpeta de rechazados.
+# Tambien verifica  que hayan archivos en la carpeta de recibidos y de ser asi, se invoca al comando postular.
+# El tiempo de los ciclos se determina en la variable TESPERA
 #------------
 
 #seteo variables 
+nroCiclo=0
 agenciaMae=$DATADIR"/agencias.mae"
 TESPERA=30
 # --------------Comandos--------------------
@@ -9,7 +16,7 @@ GRALOG=./gralog.sh
 
 
 # Esta función recibe una secuencia y agencia
-# Devuelve 1 si la respuesta es afirmativa y 0 si es negativa
+# Devuelve 1 si la secuencia es correcta y 0 si es incorrecta
 resp=""; # Respuesta que devuelve la funcion
 function validarSecuencia(){
 	resp="";
@@ -51,7 +58,10 @@ function validarSecuencia(){
 while [ 0 -le 1 ] 
 
 do #principio del loop
-echo "YO SOY POSTONIO $$"
+
+$GRALOG postonio I "---------------Comienzo de ciclo: $nroCiclo ---------------" 
+
+
 if [ ! -d /temp ]; then
 	mkdir temp #creo un directorio para archivos temporales si no existe
 fi
@@ -65,7 +75,8 @@ ls $ARRIDIR > ./temp/DET/archivos.txt
 cantidad=$(wc -l < ./temp/DET/archivos.txt)
 
 if [ $cantidad -eq 0 ]; then 
-	echo "No hay archivos en la carpeta x"
+		$GRALOG postonio A "No hay archivos en la carpeta $ARRIDIR" 
+
 else
 	for  i in $(seq 1 $cantidad);
 	do
@@ -83,18 +94,18 @@ else
 				if [ $resp -eq 1 ]; then #valido secuencia 
 					
 					./mover.sh "$ARRIDIR/$nombre" "$RECEIVED/$nombre"
-					$GRALOG postonio I "	El archivo $nombre se ha movido a la carpeta de recibidos" 1 
+					$GRALOG postonio I "	El archivo $nombre se ha movido a la carpeta de recibidos"
 				else
-					$GRALOG postonio A "	El archivo $nombre se ha movido a la carpeta de rechazados, por secuencia no permitida" 1 
+					$GRALOG postonio A "	El archivo $nombre se ha movido a la carpeta de rechazados, por secuencia no permitida" 
 					./mover.sh "$ARRIDIR/$nombre" "$REJECTED/$nombre"
 				fi	
 			else
-				$GRALOG postonio A "	El archivo $nombre se ha movido a la carpeta de rechazados, por codigo de agencia inexistente" 1 
+				$GRALOG postonio A "	El archivo $nombre se ha movido a la carpeta de rechazados, por codigo de agencia inexistente" 
 				./mover.sh "$ARRIDIR/$nombre" "$REJECTED/$nombre"
 			fi
 		
 		else
-			$GRALOG postonio A "	El archivo $nombre se ha movido a la carpeta de rechazados, por nombre incorrecto" 1 	
+			$GRALOG postonio A "	El archivo $nombre se ha movido a la carpeta de rechazados, por nombre incorrecto"
 			./mover.sh "$ARRIDIR/$nombre" "$REJECTED/$nombre"		
 		fi
 	done
@@ -104,23 +115,22 @@ fi
 ls $RECEIVED > ./temp/DET/recibidos.txt
 cantidad=$(wc -l < ./temp/DET/recibidos.txt)
 if [ $cantidad -eq 0 ]; then 
-	echo "No hay archivos en la carpeta x"
+	$GRALOG postonio A "No hay archivos en la carpeta $RECEIVED"
+
 else
 
 
 pid=$(ps -A | grep -v $0 | grep "postular.sh" | grep -v "grep" | head -n1 | head -c5)
 	if [ -n "$pid" ];then
-		echo "POSTULAR se encuentra corriendo con PID: $pid"
+
 		$GRALOG postonio A "Se llamo a POSTULAR, y ya se encuentra corriendo con PID: $pid"
 	else
 		./postular.sh & 
 		pid=$(ps -A | grep -v $0 | grep "postular.sh" | grep -v "grep" | head -n1 | head -c5)
 		if [ -n $pid ]; then
-			echo "El pid de POSTULAR es: $pid"
 			$GRALOG postonio A "Se llamo a POSTULAR, PID: $pid"
 			
 		else
-			echo "ERROR: No se pudo ejecutar postular.sh"
 			$GRALOG postonio A "ERROR: No se pudo ejecutar postular."
 		fi
 	fi
@@ -133,8 +143,8 @@ rm ./temp/DET/archivos.txt
 rmdir ./temp/DET
 rmdir ./temp
 
-#processId=$(echo "$$")
-#echo  $proccesId"------------------------------"
+$GRALOG postonio I "---------------Fin de ciclo: $nroCiclo ---------------" 
+nroCiclo=`expr $nroCiclo + 1 `
 sleep "$TESPERA"s
 
 done #termina el loop
