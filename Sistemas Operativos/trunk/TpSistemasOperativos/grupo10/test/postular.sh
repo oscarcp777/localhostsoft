@@ -20,8 +20,7 @@
 #       $grupo/data/
 #      registros exitosos      benef.<process id>
 #      registros con errores   benerro.<process id>
-usuario=`whoami`
-echo $usuario
+
 #NOMBRE DEL COMANDO
 nombre="postular"
 #Motivos
@@ -30,7 +29,7 @@ errorCampo2="no informado"
 motivoErrorFormato="Formato de registro erroneo"
 #obtengo el processId
 processId=$(echo "$$")
-usuario="usuario loqueado"
+usuario=`whoami`
 # 1.-VEO SI EXISTE OTRO POSTULAR CORRIENDO
 proceso=$(ps x)
 cantProcess=$(echo "$proceso" | grep -v "grep" | grep -v "vi" | grep -v "gedit" | grep -c "$nombre.sh")
@@ -85,6 +84,7 @@ function esNumero(){
 #validar fecha
 #retorna 0 si no hay error y 1 si lo hay
 function validarFecha(){
+	 return=1
     cantCampos=$(echo "$1" | awk -F- '{print NF}')
 	    if [  $cantCampos -ne 3 ];then
 	       return=1
@@ -95,8 +95,8 @@ function validarFecha(){
 	        isyear=$(echo $year | grep "^[0-9]*$")
 	        ismes=$(echo $mes | grep "^[0-9]*$")
 	        isdia=$(echo $dia | grep "^[0-9]*$")
-	        if [ -n $isyear ] && [ -n $isyear ] && [ -n $isyear ]; then
-	           if [ $dia -lt 1 ] || [ $dia -gt 31 ] || [ $mes -lt 1 ] || [ $mes -gt 12 ] || [ $year -lt 0 ] ; then
+	        if [ -n "$isyear" ] && [ -n "$ismes" ] && [ -n "$isdia" ]; then
+	           if [ $dia -lt 1 ] || [ $dia -gt 31 ] || [ $mes -lt 1 ] || [ $mes -gt 12 ] || [ $year -lt 2000 ] ; then
 	        	return=1
 	           else
 	            return=0
@@ -114,14 +114,24 @@ function compararFechas(){
 	    year2=$(echo "$2" | awk -F- '{print $1}')
 	    mes2=$(echo "$2" | awk -F- '{print $2}')
 	    dia2=$(echo "$2" | awk -F- '{print $3}')
-        if [ $dia1 -ge $dia2 ] && [ $mes1 -ge $mes2 ] && [ $year1 -ge $year2 ] ; then
-	       	return=1
-	    else
-	        return=0
-	    fi
-        if [ $dia1 -eq $dia2 ] && [ $mes1 -eq $mes2 ] && [ $year1 -eq $year2 ] ; then
-	       	return=0
-        fi   	
+	    isyear1=$(echo $year1 | grep "^[0-9]*$")
+	    ismes1=$(echo $mes1 | grep "^[0-9]*$")
+	    isdia1=$(echo $dia1 | grep "^[0-9]*$")
+	    isyear2=$(echo $year2 | grep "^[0-9]*$")
+	    ismes2=$(echo $mes2 | grep "^[0-9]*$")
+	    isdia2=$(echo $dia2 | grep "^[0-9]*$")
+     if [ -n "$isyear1" ] && [ -n "$ismes1" ] && [ -n "$isdia1" ] && [ -n "$isyear2" ] && [ -n "$ismes2" ] && [ -n "$isdia2" ] ; then
+        
+        if [ $year1 -gt $year2 ] ; then
+        	 return=1
+        elif [ $year1 -eq $year2 ] && [ $mes1 -gt $mes2 ] ; then
+             return=1
+        elif [ $year1 -eq $year2 ] && [ $mes1 -eq $mes2 ] && [ $dia1 -gt $dia2 ]  ; then
+	       	 return=1
+        elif [ $dia1 -eq $dia2 ] && [ $mes1 -eq $mes2 ] && [ $year1 -eq $year2 ] ; then
+	       	 return=0
+        fi 
+     fi  	
   echo $return
 }
 function sumaMes(){ 
@@ -165,7 +175,6 @@ echo $1 >> $pathdata/benerro.$processId
 }
 function escribirBeneficiario(){
 var=`verificarExisteArch "$pathdata/benef.$processId"`
-echo " registro : $1"
 echo $1 >> $pathdata/benef.$processId
 }
 function calcularFechaFinalizacion(){
@@ -215,6 +224,7 @@ do
        fechaInicioBeneficio=""
        fechaCorriente=`date +%Y-%m-%d`
        fechaPedidaAlta=`date +%Y-%m-%d`
+       duracionPedida=0
        estado=$ESTADO_APROBADO
        motivoEstado="Registro con campos validos"
        while read line
@@ -316,12 +326,14 @@ do
                    duracionMaxBeneficio=$(echo "$beneficio" | awk -F, '{print $6}')
                    fechaFinBeneficio=$(echo "$beneficio" | awk -F, '{print $5}')
                    fechaInicioBeneficio=$(echo "$beneficio" | awk -F, '{print $4}')
+                   duracionPedida=$duracionMaxBeneficio
                    if [ $existe -ne 1 ];then
                    	contadorError=`expr $contadorError + 1`
                     estado=$ESTADO_RECHAZADO
         	        motivoEstado="No existe el beneficio: $codBeneficio"
-        	        fechaEfectivaAlta=`calcularFechaEfectiva $fechaInicioBeneficio $fechaCorriente $fechaCorriente`
-                    fechaFinalizacion=`calcularFechaFinalizacion $fechaEfectivaAlta $duracionMaxBeneficio $fechaFinBeneficio`
+        	        fechaEfectivaAlta="$fechaCorriente"
+                    fechaFinalizacion="$fechaCorriente"
+                    duracionMaxBeneficio=0
                     reg1="$agencia,$secuencia,$cuil,$tipoDoc,$apellido,$Nombre,$Domicilio,$Localidad,$Provincia,$codBeneficio,$fechaCorriente,"
                     reg2="$fechaEfectivaAlta,$estado,$duracionMaxBeneficio,$fechaFinalizacion,$motivoEstado,$usuario,$fechaCorriente"
                     beneficiarioNuevo="$reg1$reg2"
@@ -335,8 +347,9 @@ do
                if [ $cantidadCampos -eq 10 ];then
                   campo10=$(echo "$line" | awk -F, '{print $10}')
                   cantCaracteres=`expr length "$campo10"`
+                  tieneFormatoFecha=$(echo "$campo10" | awk -F- '{print NF }')
                     #valido fecha pedida de alta
-                  if [ $cantCaracteres -eq 10 ];then
+                  if [ $cantCaracteres -eq 10 ] || [ $tieneFormatoFecha -eq 3 ] ;then
                   	 fechaValida=`validarFecha $campo10`
                      if [ $fechaValida -eq 1 ];then
                	     contadorError=`expr $contadorError + 1`
@@ -351,6 +364,7 @@ do
         	         continue
                      else
                         esMayor=`compararFechas $campo10 $fechaFinBeneficio`
+                        echo "--------------- $esMayor"
                        if [ $esMayor -eq 1 ];then
                        	  contadorError=`expr $contadorError + 1`
         	              estado=$ESTADO_RECHAZADO
@@ -367,15 +381,16 @@ do
         	         fi
         	      else
         	       #valido Duracion pedida
+                        duracionPedida=$campo10
         	            esDuracion=$(echo $campo10 | grep "^[0-9]*$")
-            	      if [ -z $esDuracion  ];then
+            	      if [ -z $esDuracion  ] || [ $esDuracion -le 0  ] ;then
             	      	 contadorError=`expr $contadorError + 1`
             	      	 estado=$ESTADO_RECHAZADO
         	             motivoEstado="Duracion pedida invalida"
         	              fechaEfectivaAlta=`calcularFechaEfectiva $fechaInicioBeneficio $fechaCorriente $fechaCorriente`
                           fechaFinalizacion=`calcularFechaFinalizacion $fechaEfectivaAlta $duracionMaxBeneficio $fechaFinBeneficio`
                           reg1="$agencia,$secuencia,$cuil,$tipoDoc,$apellido,$Nombre,$Domicilio,$Localidad,$Provincia,$codBeneficio,$fechaCorriente,"
-                          reg2="$fechaEfectivaAlta,$estado,$duracionMaxBeneficio,$fechaFinalizacion,$motivoEstado,$usuario,$fechaCorriente"
+                          reg2="$fechaEfectivaAlta,$estado,$campo10,$fechaFinalizacion,$motivoEstado,$usuario,$fechaCorriente"
                           beneficiarioNuevo="$reg1$reg2"
                           escribirBeneficiario "$beneficiarioNuevo"
         	              continue
@@ -385,9 +400,9 @@ do
             	              estado=$ESTADO_RECHAZADO
         	                  motivoEstado="Duracion pedida mayor a duracion Maxima Beneficio"
         	                 fechaEfectivaAlta=`calcularFechaEfectiva $fechaInicioBeneficio $fechaCorriente $fechaCorriente`
-                             fechaFinalizacion=`calcularFechaFinalizacion $fechaEfectivaAlta $duracionMaxBeneficio $fechaFinBeneficio`
+                             fechaFinalizacion=`calcularFechaFinalizacion $fechaEfectivaAlta $campo10 $fechaFinBeneficio`
                              reg1="$agencia,$secuencia,$cuil,$tipoDoc,$apellido,$Nombre,$Domicilio,$Localidad,$Provincia,$codBeneficio,$fechaCorriente,"
-                             reg2="$fechaEfectivaAlta,$estado,$duracionMaxBeneficio,$fechaFinalizacion,$motivoEstado,$usuario,$fechaCorriente"
+                             reg2="$fechaEfectivaAlta,$estado,$campo10,$fechaFinalizacion,$motivoEstado,$usuario,$fechaCorriente"
                              beneficiarioNuevo="$reg1$reg2"
                              escribirBeneficiario "$beneficiarioNuevo"
         	                 continue
@@ -399,8 +414,9 @@ do
                if [ $cantidadCampos -eq 11 ];then
         	            fechaPedida=$(echo "$line" | awk -F, '{print $10}')
                         cantCaracteres=`expr length "$fechaPedida"`
+                        tieneFormatoFecha=$(echo "$fechaPedida" | awk -F- '{print NF }')
                        #valido fecha pedida de alta
-                      if [ $cantCaracteres -eq 10 ];then
+                      if [ $cantCaracteres -eq 10 ] || [ $tieneFormatoFecha -eq 3 ];then
                   	     fechaValida=`validarFecha $fechaPedida`
                          if [ $fechaValida -eq 1 ];then
                	            contadorError=`expr $contadorError + 1`
@@ -435,26 +451,26 @@ do
         	       #valido Duracion pedida
                         duracionPedida=$(echo "$line" | awk -F, '{print $11}')
         	            esDuracion=$(echo $duracionPedida | grep "^[0-9]*$")
-            	      if [ -z $esDuracion  ];then
+            	      if [ -z $esDuracion  ] || [ $esDuracion -le 0  ];then
             	      	 contadorError=`expr $contadorError + 1`
             	      	 estado=$ESTADO_RECHAZADO
         	             motivoEstado="Duracion pedida invalida"
         	              fechaEfectivaAlta=`calcularFechaEfectiva $fechaInicioBeneficio $fechaCorriente $fechaPedidaAlta`
                           fechaFinalizacion=`calcularFechaFinalizacion $fechaEfectivaAlta $duracionMaxBeneficio $fechaFinBeneficio`
                           reg1="$agencia,$secuencia,$cuil,$tipoDoc,$apellido,$Nombre,$Domicilio,$Localidad,$Provincia,$codBeneficio,$fechaPedidaAlta,"
-                          reg2="$fechaEfectivaAlta,$estado,$duracionMaxBeneficio,$fechaFinalizacion,$motivoEstado,$usuario,$fechaCorriente"
+                          reg2="$fechaEfectivaAlta,$estado,$duracionPedida,$fechaFinalizacion,$motivoEstado,$usuario,$fechaCorriente"
                           beneficiarioNuevo="$reg1$reg2"
                           escribirBeneficiario "$beneficiarioNuevo"
         	              continue
             	      else
-            	           if [ $duracionPedida -ge $duracionMaxBeneficio ];then
+            	           if [ $duracionPedida -gt $duracionMaxBeneficio ];then
             	             contadorError=`expr $contadorError + 1`
             	              estado=$ESTADO_RECHAZADO
         	                  motivoEstado="Duracion pedida mayor a duracion Maxima Beneficio"
         	                 fechaEfectivaAlta=`calcularFechaEfectiva $fechaInicioBeneficio $fechaCorriente $fechaPedidaAlta`
-                             fechaFinalizacion=`calcularFechaFinalizacion $fechaEfectivaAlta $duracionMaxBeneficio $fechaFinBeneficio`
+                             fechaFinalizacion=`calcularFechaFinalizacion $fechaEfectivaAlta $duracionPedida $fechaFinBeneficio`
                              reg1="$agencia,$secuencia,$cuil,$tipoDoc,$apellido,$Nombre,$Domicilio,$Localidad,$Provincia,$codBeneficio,$fechaPedidaAlta,"
-                             reg2="$fechaEfectivaAlta,$estado,$duracionMaxBeneficio,$fechaFinalizacion,$motivoEstado,$usuario,$fechaCorriente"
+                             reg2="$fechaEfectivaAlta,$estado,$duracionPedida,$fechaFinalizacion,$motivoEstado,$usuario,$fechaCorriente"
                              beneficiarioNuevo="$reg1$reg2"
                              escribirBeneficiario "$beneficiarioNuevo"
         	                 continue
@@ -474,9 +490,12 @@ do
          if [ $esMayor -eq 1 ];then
          estado=$ESTADO_PENDIENTE
          fi
-         fechaFinalizacion=`calcularFechaFinalizacion $fechaEfectivaAlta $duracionMaxBeneficio $fechaFinBeneficio`
+         if [ "$fechaCorriente" = "$fechaEfectivaAlta" ];then
+            estado=$ESTADO_APROBADO
+         fi
+         fechaFinalizacion=`calcularFechaFinalizacion $fechaEfectivaAlta $duracionPedida $fechaFinBeneficio`
          reg1="$agencia,$secuencia,$cuil,$tipoDoc,$apellido,$Nombre,$Domicilio,$Localidad,$Provincia,$codBeneficio,$fechaPedidaAlta,"
-         reg2="$fechaEfectivaAlta,$estado,$duracionMaxBeneficio,$fechaFinalizacion,$motivoEstado,$usuario,$fechaCorriente"
+         reg2="$fechaEfectivaAlta,$estado,$duracionPedida,$fechaFinalizacion,$motivoEstado,$usuario,$fechaCorriente"
          beneficiarioNuevo="$reg1$reg2"
          contadorNuevos=`expr $contadorNuevos + 1`
          escribirBeneficiario "$beneficiarioNuevo"

@@ -32,5 +32,12 @@ function cuadrado()
 }
 ver=`cuadrado 96`
 fecha=`sumaMes "2011-01-12" 18`
-echo $fecha
+line="2011"
+cantidadCampos=$(echo "$line" | awk -F- '{print NF }')
+dia=12
+ isdia=$(echo $dia | grep "^[0-9]*$")
+if [ -n "$isdia" ] ; then
+      echo "hhhhhhhhhhhhhhhhh"
+fi
+echo $isdia
 echo $ver
