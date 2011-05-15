@@ -34,9 +34,9 @@ my $dir_Actual = $DATADIR;
 $dir_log=$ENV{"LOGDIR"};
 my $log ='./gralog.sh';
 $dirName =$ENV{"DATADIR"};
-my $dirSalidaArchivo =$CURRDIR.'/list';
+my $dirSalidaArchivo =$ENV{"CURRDIR"}."/list";
 my $ardestino = 'plist';
-my $salidaPorArchivo = '>'.$CURRDIR.'/list/';
+my $salidaPorArchivo = '>'.$ENV{"CURRDIR"}.'/list/';
 
 #----------------------------CABECERA---------------------------------
 
@@ -89,7 +89,7 @@ sub imprimirInfo
 	   print "\n";
 
 	   foreach $llave (keys %{$matriz}){
-		if(! ($llave eq 'totalBeneficiario')){	         
+		if(! ($llave eq 'totalBeneficiario') && !($llave eq 'total') ){	         
 		   printf ("%-17s\t",$llave);			  
 		   foreach $llave2 (keys %{$beneficios}){
 		      printf("%-s\t", ${$matriz->{$llave}}{$llave2});
@@ -123,7 +123,11 @@ my $longitudListaBenef = @listaBenficiarios;
 my @secuenciasEncontradas;
 my $long;
 
-opendir(DIR,$dirSalidaArchivo)|| printf  "error al abrir el directorio\n";
+if(! -e $dirSalidaArchivo){
+	mkdir $dirSalidaArchivo;
+}
+
+opendir(DIR,$dirSalidaArchivo)|| `$log "listaBeneficiarios" A "No se puede leer el directorio $dirSalidaArchivo"`;
 
 while($filename=readdir(DIR)){
 	push(@secuenciasEncontradas,$filename);
@@ -167,7 +171,7 @@ open(PLIST,$rutaArchivo);
 	   print PLIST "\n";
 
 	   foreach $llave (keys %{$matriz}){
-		if(! ($llave eq 'totalBeneficiario')){	         
+		if(! ($llave eq 'totalBeneficiario') && !($llave eq 'total')){	         
 		   printf PLIST "%-17s\t",$llave;			  
 		   foreach $llave2 (keys %{$beneficios}){
 		      printf PLIST "%-d\t", ${$matriz->{$llave}}{$llave2};
@@ -181,7 +185,7 @@ open(PLIST,$rutaArchivo);
 	foreach $llaveBeneficio (keys %{$beneficios}){
 		printf PLIST "%-d\t",${$matriz->{'totalBeneficiario'}}{$llaveBeneficio};
 	}
-		printf PLIST "%-d",${$matriz->{'total'}}{'total'};
+		printf PLIST "%-d",${$matriz->{$llave}}{'total'};
 		print PLIST "\n\n";	
 	}
 close(PLIST);
@@ -319,6 +323,11 @@ while($contador < $longitud){
 #--------------------------PRINCIPAL-----------------------------------------------------------#
 
 #validacion de parametros
+
+if($ENV{"GRUPO"} eq ""){
+	exit 0;
+}
+
 if($beneficios eq ""){
 	$beneficios = '.*';
 }
@@ -328,7 +337,6 @@ if( $agencias eq ""){
 }
 #Se listan todos los archivos del directorio data
 
-#open(LOG,$log)||print "ERROR AL ABRIR ARCHIVO DE LOG";
 
 opendir(DIR,$dirName)|| `$log "listaBeneficiarios" E "error al abrir el directorio\n"`;
 
