@@ -58,11 +58,11 @@ function instalarComando(){
 		cp $1 $2
 		if [ "$1" = "postini.sh" ]; then
 			#escribo $GRUPO 
-    		sed -e "s:GRUPO=\\\"LLENAR EN INSTALACION\\\":GRUPO=\\\"$BASEDIR\\\":" "postini.sh" > "$BINDIR/postini.sh"
+    		sed -e "s:#GRUPO=\\\"LLENAR EN INSTALACION\\\":export GRUPO=\\\"$BASEDIR\\\":" "postini.sh" > "$BINDIR/postini.sh"
 		fi
 		#asigno permisos al script
 		chmod u+x "$2/$1"
-		$GRALOG instula I "Permisos de ejecución asignados al archivo $1" 1
+		$GRALOG instula I "	Permisos de ejecución asignados al archivo $1" 1
 		
 	$GRALOG instula I "	Instalación del componente  $1 completada" 1	
 	fi	
@@ -445,23 +445,23 @@ while [ ! -z $algo ]; do
 		$GRALOG instula I "Mostrando estructura de directorios configurada";
 		clear
 	echo "****************************************************
-	* Parámetros de Instalación del paquete POSTULA		     *	
-	**********************************************************
-	 Directorio de trabajo: $BASEDIR
-	 Directorio de instalación: $INSTDIR
-	 Directorio de configuración: $CONFDIR
-	 Directorio de datos: $DATADIR
-	 Librería de ejecutables: $BINDIR
-	 Directorio de arribos: $ARRIDIR
-	 Espacio mínimo reservado en $ARRIDIR: $DATASIZE Mb
-	 Directorio para los archivos de Log: $LOGDIR
-	 Extensión para los archivos de Log: $LOGEXT
-	 Tamaño máximo para cada archivo de Log: $LOGSIZE Kb
-	 Log de la instalación: $CONFDIR/instula.log
+* Parámetros de Instalación del paquete POSTULA		     *	
+**********************************************************
+ Directorio de trabajo: $BASEDIR
+ Directorio de instalación: $INSTDIR
+ Directorio de configuración: $CONFDIR
+ Directorio de datos: $DATADIR
+ Librería de ejecutables: $BINDIR
+ Directorio de arribos: $ARRIDIR
+ Espacio mínimo reservado en $ARRIDIR: $DATASIZE Mb
+ Directorio para los archivos de Log: $LOGDIR
+ Extensión para los archivos de Log: $LOGEXT
+ Tamaño máximo para cada archivo de Log: $LOGSIZE Kb
+ Log de la instalación: $CONFDIR/instula.log
 	
-	 Si los datos ingresados son correctos oprima sólo ENTER para iniciar la instalación.
-	 Si desea modificar alguno de ellos oprima cualquier tecla.
-	**********************************************************"
+ Si los datos ingresados son correctos oprima sólo ENTER para iniciar la instalación.
+ Si desea modificar alguno de ellos oprima cualquier tecla.
+**********************************************************"
 	
 		read -n1 algo
 		if [ ! -z $algo ]; then
@@ -496,7 +496,7 @@ done
 		# Crea los directorios
 		if [ ! -e $i -a ! -z $i ] 
 		then
-			mkdir -m 777 "$i" 
+			mkdir -p -m u+x "$i" 
 			$GRALOG instula I "	Se creo el directorio $i" 1 
 		else
 			if [ -z $i ];then

@@ -1,4 +1,5 @@
 #!/bin/bash
+#!/bin/bash
 # Comando "postonio"
 # Demonio que verifica la existencia de archivos en la carpeta de arribos, 
 # verifica que los codigos de agencia sean validos y que las secuencias sean permitidas,
