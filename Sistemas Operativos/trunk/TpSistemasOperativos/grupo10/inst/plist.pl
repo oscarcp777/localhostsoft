@@ -83,7 +83,7 @@ sub imprimirInfo
 	if($conMatriz){
 
 	   foreach $llaveBeneficio (keys %{$beneficios}){
-		printf("%-4d\t",$llaveBeneficio);	
+		printf("%-4s\t",$llaveBeneficio);	
 	   }
 	   printf("%-17s","TOTAL BENEFICIARIOS");
 	   print "\n";
@@ -92,7 +92,7 @@ sub imprimirInfo
 		if(! ($llave eq 'totalBeneficiario')){	         
 		   printf ("%-17s\t",$llave);			  
 		   foreach $llave2 (keys %{$beneficios}){
-		      printf("%-d\t", ${$matriz->{$llave}}{$llave2});
+		      printf("%-s\t", ${$matriz->{$llave}}{$llave2});
 	    	   }
 		 printf ("%-d\n",${$matriz->{$llave}}{'totalBeneficiario'});
 		}
@@ -187,21 +187,22 @@ open(PLIST,$rutaArchivo);
 close(PLIST);
 }
 
-#----------------------------------------------LISTAR-----------------------------------------
+#----------------------------------------------|-----------------------------------------
 
-sub listar(@encontrados,$dir_Actual,$filtroPorEstado){
+sub listar(@encontrados,$filtroPorEstado){
 
 	
 	my @listaBeneficiarios;
 	my @listaBeneficiariosTemp;
 	foreach $nombreArch (@encontrados){
-		$ruta = $dir_Actual.$nombreArch;
+		$ruta = $dirName."/".$nombreArch;
 		open(OUT,$ruta);
 		while($linea=<OUT>){			
 			push(@listaBeneficiariosTemp,$linea);
 		}
 		close(OUT);		
 	}
+
 	if($filtroPorEstado eq "-ea"){
 		$filtroPorEstado="aprobado";
 	}elsif($filtroPorEstado eq "-ep"){
@@ -215,6 +216,7 @@ sub listar(@encontrados,$dir_Actual,$filtroPorEstado){
 	
 	
 	@listaBeneficiarios = grep(/$agencias,.*,.*,.*,.*,.*,.*,.*,.*,.*,$beneficios,.*,.*,$filtroPorEstado,.*,.*,.*,.*,.*/,@listaBeneficiariosTemp);
+
 	my @listafinal;
 	foreach $linea (@listaBeneficiarios){
 		@registro = split(/,/,$linea);
@@ -332,7 +334,6 @@ opendir(DIR,$dirName)|| `$log "listaBeneficiarios" E "error al abrir el director
 
 while($filename=readdir(DIR)){
 	push(@files,$filename);
-	print "$filename";
 }
 closedir(DIR);
 
@@ -345,7 +346,7 @@ if(@encontrados==0)
 	`$log "listaBeneficiarios" I "NO SE ENCONTRO NINGUN ARCHIVO DE BENEFICIARIOS\n"`;
 	
 }else{
-	@listaBenficiarios = listar(@encontrados,$dir_Actual,$filtroPorEstado);
+	@listaBenficiarios = listar(@encontrados,$filtroPorEstado);
 	my $cantArchivosEncontrados = @encontrados;
 	my $canBenefEncontrados = @listaBenficiarios; 	
 		
