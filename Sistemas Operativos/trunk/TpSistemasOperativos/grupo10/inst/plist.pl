@@ -76,7 +76,8 @@ sub imprimirInfo
 	printf("\n%-10s%-10s%-10s%-10s%-10s%-10s%-10s%-10s%-10s\n\n",$cabecera[0],$cabecera[1],$cabecera[2],$cabecera[3],$cabecera[4],$cabecera[5],$cabecera[6],$cabecera[7],$cabecera[8]);
 	printf("\n%-10s%-10s%-10s%-15s%-20s%-12s%-10s\n","APELLIDO","BENEFICIO","AGENCIA","CUIL","PROVINCIA","ESTADO","FECHA_EFECT_ALTA");
 	for($i=0;$i<$longitudListaBenef;$i++) {	
-		printf("%-10s%-10s%-10s%-15s%-20s%-12s%-10s\n",@listaBenficiarios[$i],@listaBenficiarios[$i+1],@listaBenficiarios[$i+2],@listaBenficiarios[$i+3],@listaBenficiarios[$i+4],@listaBenficiarios[$i+5],@listaBenficiarios[$i+6]);
+		my $apellido = substr(@listaBenficiarios[$i],0,index(@listaBenficiarios[$i]," ",0));
+		printf("%-10s%-10s%-10s%-15s%-20s%-12s%-10s\n",$apellido,@listaBenficiarios[$i+1],@listaBenficiarios[$i+2],@listaBenficiarios[$i+3],@listaBenficiarios[$i+4],@listaBenficiarios[$i+5],@listaBenficiarios[$i+6]);
 	$i+=7;
 	}
 	print "\n\t\t\t";
@@ -198,6 +199,7 @@ sub listar(@encontrados,$filtroPorEstado){
 	
 	my @listaBeneficiarios;
 	my @listaBeneficiariosTemp;
+	my $filtro;
 	foreach $nombreArch (@encontrados){
 		$ruta = $dirName."/".$nombreArch;
 		open(OUT,$ruta);
@@ -208,18 +210,18 @@ sub listar(@encontrados,$filtroPorEstado){
 	}
 
 	if($filtroPorEstado eq "-ea"){
-		$filtroPorEstado="aprobado";
+		$filtro="aprobado";
 	}elsif($filtroPorEstado eq "-ep"){
-		$filtroPorEstado="pendiente";
+		$filtro="pendiente";
 	}elsif($filtroPorEstado eq "-er"){
-		$filtroPorEstado ="rechazado";
+		$filtro ="rechazado";
 	}else{
-		$filtroPorEstado ='.*';
+		$filtro ='.*';
 	}		
 	
 	
 	
-	@listaBeneficiarios = grep(/$agencias,.*,.*,.*,.*,.*,.*,.*,.*,.*,$beneficios,.*,.*,$filtroPorEstado,.*,.*,.*,.*,.*/,@listaBeneficiariosTemp);
+	@listaBeneficiarios = grep(/$agencias,.*,.*,.*,.*,.*,.*,.*,.*,.*,$beneficios,.*,.*,$filtro,.*,.*,.*,.*,.*/,@listaBeneficiariosTemp);
 
 	my @listafinal;
 	foreach $linea (@listaBeneficiarios){
