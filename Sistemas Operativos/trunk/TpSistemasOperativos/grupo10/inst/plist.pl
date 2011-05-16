@@ -76,8 +76,8 @@ sub imprimirInfo
 	printf("\n%-10s%-10s%-10s%-10s%-10s%-10s%-10s%-10s%-10s\n\n",$cabecera[0],$cabecera[1],$cabecera[2],$cabecera[3],$cabecera[4],$cabecera[5],$cabecera[6],$cabecera[7],$cabecera[8]);
 	printf("\n%-10s%-10s%-10s%-15s%-20s%-12s%-10s\n","APELLIDO","BENEFICIO","AGENCIA","CUIL","PROVINCIA","ESTADO","FECHA_EFECT_ALTA");
 	for($i=0;$i<$longitudListaBenef;$i++) {	
-		my $apellido = substr(@listaBenficiarios[$i],0,index(@listaBenficiarios[$i]," ",0));
-		printf("%-10s%-10s%-10s%-15s%-20s%-12s%-10s\n",$apellido,@listaBenficiarios[$i+1],@listaBenficiarios[$i+2],@listaBenficiarios[$i+3],@listaBenficiarios[$i+4],@listaBenficiarios[$i+5],@listaBenficiarios[$i+6]);
+		
+		printf("%-10s%-10s%-10s%-15s%-20s%-12s%-10s\n",@listaBenficiarios[$i],@listaBenficiarios[$i+1],@listaBenficiarios[$i+2],@listaBenficiarios[$i+3],@listaBenficiarios[$i+4],@listaBenficiarios[$i+5],@listaBenficiarios[$i+6]);
 	$i+=7;
 	}
 	print "\n\t\t\t";
@@ -226,6 +226,9 @@ sub listar(@encontrados,$filtroPorEstado){
 	my @listafinal;
 	foreach $linea (@listaBeneficiarios){
 		@registro = split(/,/,$linea);
+		if(length(@registro[5]) >= 10){
+		      @registro[5] = substr(@registro[5],0,index(@registro[5]," ",0))."..";
+		}
 		push(@listafinal,@registro[5]);
 		push(@listafinal,@registro[10]);
 		push(@listafinal,@registro[0]);
