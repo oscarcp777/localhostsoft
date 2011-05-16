@@ -20,8 +20,8 @@
 #       $grupo/data/
 #      registros exitosos      benef.<process id>
 #      registros con errores   benerro.<process id>
-# ------------------------------------------Comandos------------------------------------------
 GRALOG=./gralog.sh
+$GRALOG postular I "Inicio de Postular : $$"
 #NOMBRE DEL COMANDO
 nombre="postular"
 #Motivos
@@ -37,17 +37,14 @@ cantProcess=$(echo "$proceso" | grep -v "grep" | grep -v "vi" | grep -v "gedit" 
 
 if [ $cantProcess -ge 2 ]; then
    # gragarloh.sh 
-   $GRALOG postular SE "El proceso postular.sh ya se está ejecutando!" 1
+   $GRALOG postular SE "El proceso postular.sh ya se está ejecutando!"
    exit 1
 fi
-
 #2.- VEO SI SE INICIALIZO EL AMBIENTE
 
-#isInicializado=$(verificarvar.sh)
-isInicializado=1
-if [ $isInicializado -eq 0 ]; then
+if [ -z $LOGDIR ] || [ -z $CONFDIR ] || [ -z $DATADIR ] || [ -z $ARRIDIR ] || [ -z $BINDIR ] || [ -z $DATASIZE ] || [ -z $LOGEXT ] || [ -z $INSTDIR ] || [ -z $LOGSIZE ] || [ -z $USERID ] || [ -z $PROCESSED ] || [ -z $REJECTED ] || [ -z $RECEIVED ] ; then
 	# gragarloh.sh 
-    $GRALOG postular SE "Las variables de ambiente no se encuentran inicalizadas" 1
+    $GRALOG postular SE "Las variables de ambiente no se encuentran inicalizadas"
     exit 1
 fi
 
@@ -159,7 +156,7 @@ function calcularFechaEfectiva(){
 }
 function escribirError(){
 var=`verificarExisteArch "$DATADIR/benerro.$processId"`
-$GRALOG postular E "Error en registro : $2" 1
+$GRALOG postular E "Error en registro : $2"
 echo $1 >> $DATADIR/benerro.$processId
 }
 function escribirBeneficiario(){
@@ -192,7 +189,7 @@ IFS=$OldIFS #restauro el IFS anterior
 cantArchivos=${#vector[@]}
 
   # gragarloh.sh  
-  $GRALOG postular I "Inicio postular <Cantidad de Archivos > : $cantArchivos" 1
+  $GRALOG postular I "Inicio postular <Cantidad de Archivos > : $cantArchivos"
   
 for arch in ${vector[@]}
 do
@@ -203,7 +200,7 @@ do
 #	echo " :::::::::::::   Proceso el Archivo : ${arch} :::::::::::::::::::::::::::::::::::"
 #4.- PROCESO EL PRIMER ARCHIVO
   
-    $GRALOG postular I "Archivo a procesar: ${arch}" 1
+    $GRALOG postular I "Archivo a procesar: ${arch}"
        contador=0
        contadorError=0
        contadorNuevos=0
@@ -497,9 +494,9 @@ do
 # MOVER.SH
 ./mover.sh "$RECEIVED/$arch" "$PROCESSED/$arch"
 #GRABARLOG.SH
- $GRALOG postular I "Cantidad Total de registros : $contador" 1
- $GRALOG postular I "Cantidad de registros con error : $contadorError" 1
- $GRALOG postular I "Cantidad de beneficiarios nuevos :$contadorNuevos" 1
+ $GRALOG postular I "Cantidad Total de registros : $contador"
+ $GRALOG postular I "Cantidad de registros con error : $contadorError"
+ $GRALOG postular I "Cantidad de beneficiarios nuevos :$contadorNuevos"
 
 
 
@@ -508,4 +505,4 @@ done
 # ------------------------------------------------ X -------------------------------------------------------
 #CERRAR Y GRABAR LOG
 #grabarlog.sh 
-echo "Fin de Postular"
+$GRALOG postular I "Fin de Postular"
