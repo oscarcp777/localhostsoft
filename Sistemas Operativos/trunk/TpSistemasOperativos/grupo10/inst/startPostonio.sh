@@ -1,7 +1,8 @@
 #!/bin/bash
 #Comando que sirve para inicializar el proceso postonio, se verifica que no este corriendo otro.
-
+GRALOG=./gralog.sh
 POSTONIO="./postonio.sh"
+
 #PID de postonio.sh
 pid=$(ps -A | grep -v $0 | grep "postonio.sh" | grep -v "grep" | head -n1 | head -c5) 
 
