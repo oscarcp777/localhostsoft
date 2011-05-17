@@ -28,7 +28,7 @@ Esto puede realizarlo desde una consola con el comando: "tar xzvf TPSistemasOp.t
 5) Dirijase al directorio <DirInstalacion>/grupo05/inst/ y ejecute el comando instula.sh desde una consola 
    de la siguiente forma "./instula.sh"
    +-------------------------------------------------------------------------------------+
-   |IMPORTANTE: La ejecucion de instalar.sh debe ser como se muestra "./instalar.sh".	 |
+   |IMPORTANTE: La ejecucion de instula.sh debe ser como se muestra "./instula.sh".	 |
    |		De lo contrario la instalacion NO sera exitosa		 						 |	
    +-------------------------------------------------------------------------------------+
 
@@ -36,8 +36,8 @@ Para correr el software:
 
 1) Ingresar a la carpeta <DirInstalacion>/grupo10/bin por consola o la carpeta que se haya seleccionado como destino de ejecutables
 
-2) Llamar a iniciar.sh con el comando ". ./iniciar.sh"
-Ej: >. ./iniciar.sh
+2) Llamar a postini.sh con el comando ". ./postini.sh"
+Ej: >. ./postini.sh
 
 
 
