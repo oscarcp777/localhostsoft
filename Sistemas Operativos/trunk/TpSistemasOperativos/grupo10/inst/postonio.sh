@@ -27,7 +27,7 @@ proceso=$(ps x)
 cantProcess=$(echo "$proceso" | grep -v "grep" | grep -v "vi" | grep -v "gedit" | grep -c "postonio.sh")
 
 if [ $cantProcess -ge 2 ]; then
-   echo "cantProcess  $cantProcess"
+   
    $GRALOG postonio SE "El proceso postonio.sh ya se está ejecutando!" 1
    exit 1
 fi
