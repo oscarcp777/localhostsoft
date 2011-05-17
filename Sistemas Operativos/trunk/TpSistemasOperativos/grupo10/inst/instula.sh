@@ -20,7 +20,7 @@ CONFDIR=$BASEDIR/conf
 # Archivo de Configuración
 CONFFILE="instula.conf"
 # Lista de todos los comandos del paquete
-COMANDOS=("postini.sh" "postonio.sh" "postular.sh" "plist.pl" "mover.sh" "gralog.sh")
+COMANDOS=("postini.sh" "postonio.sh" "postular.sh" "plist.pl" "mover.sh" "gralog.sh" "killPostonio.sh" "startPostonio.sh")
 # Subdirectorio de ejecutables
 BINDIR=""
 ARRIDIR=""
@@ -541,7 +541,9 @@ mensFinal="***************************************************************
 * plist.pl `date +%D`    `whoami`                  		   
 * postular.sh `date +%D`    `whoami`
 * gralog.sh `date +%D`    `whoami`
-* mover.sh `date +%D`    `whoami`                            
+* mover.sh `date +%D`    `whoami`
+* killPostonio.sh `date +%D`    `whoami`
+* startPostonio.sh `date +%D`    `whoami`                            
 **************************************************************
 * FIN del Proceso de Instalación de Postulantes			   *			
 *          Copyright TPSistemasOp (c)2011                    *
