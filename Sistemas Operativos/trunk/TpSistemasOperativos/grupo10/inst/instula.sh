@@ -3,7 +3,7 @@
 #	0 Finalizado con exito
 #	1 No se seteo la variable $GRUPO o se seteo en un directorio incorrecto
 #	2 Archivo de configuracion corrupto 
-#   3 Elimine los componentes instalados e inténtelo nuevamente #TODO q pasa si estan todos borrados pero el archivo de conf no esta borrado  
+#   3 Elimine los componentes instalados e inténtelo nuevamente   
 # 	4 Usuario no acepto acuerdo de licencia de sowftware
 #	5 Perl no esta instalado o su version es menor a la 5.0
 #	6 Usuario no acepto continuar con la intalacion

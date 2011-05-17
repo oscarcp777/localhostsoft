@@ -12,7 +12,6 @@
 
 # No pueden ser más de 3 ni menos de 2 parámetros
 
-#TODO HAY Q VER LO DE LAS EXTENSIONES PQ SON POR DEFECTO .LOG PERO EL USUARIO PUEDE CAMBIARLO EN UNA VARIABLE LOGEXT
 
 if [ $# -gt 4 -o $# -lt 2 ]
 then
@@ -20,7 +19,7 @@ then
 	exit 1
 fi
 
-# Si es del instalador va en otro lado (TODO si el comando es instula el archivo de Log llamado instula.log que se graba en el directorio $grupo/conf) VER ESTO
+# Si es del instalador va en otro lado (si el comando es instula el archivo de Log llamado instula.log que se graba en el directorio $grupo/conf)
 if [ -z $LOGDIR ]
 then
 	logdir="$GRUPO/conf"
