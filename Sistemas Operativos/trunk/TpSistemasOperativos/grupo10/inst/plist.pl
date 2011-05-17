@@ -75,11 +75,14 @@ sub imprimirInfo
 	
 	printf("\n%-10s%-10s%-10s%-10s%-10s%-10s%-10s%-10s%-10s\n\n",$cabecera[0],$cabecera[1],$cabecera[2],$cabecera[3],$cabecera[4],$cabecera[5],$cabecera[6],$cabecera[7],$cabecera[8]);
 	printf("\n%-10s%-10s%-10s%-15s%-20s%-12s%-10s\n","APELLIDO","BENEFICIO","AGENCIA","CUIL","PROVINCIA","ESTADO","FECHA_EFECT_ALTA");
+	my $totalBeneficiariosLista=0;
 	for($i=0;$i<$longitudListaBenef;$i++) {	
 		
 		printf("%-10s%-10s%-10s%-15s%-20s%-12s%-10s\n",@listaBenficiarios[$i],@listaBenficiarios[$i+1],@listaBenficiarios[$i+2],@listaBenficiarios[$i+3],@listaBenficiarios[$i+4],@listaBenficiarios[$i+5],@listaBenficiarios[$i+6]);
 	$i+=7;
+	$totalBeneficiariosLista++;
 	}
+	printf("\n%-10s%-d","TOTAL",$totalBeneficiariosLista);
 	print "\n\t\t\t";
 	if($conMatriz){
 
@@ -100,7 +103,7 @@ sub imprimirInfo
            }
 				
 	#Muestra el total de beneficiarios por beneficios(por columna)	
-	print "ToltaBeneficiario\t";
+	print "TOTAL BENEFICIARIOS\t";
 	foreach $llaveBeneficio (keys %{$beneficios}){
 		printf("%-d\t",${$matriz->{'totalBeneficiario'}}{$llaveBeneficio});
 	}
@@ -155,18 +158,21 @@ if($secuencia > 0){
 
 $rutaArchivo = ">>".$dirSalidaArchivo."/plist.".$secuencia;
 open(PLIST,$rutaArchivo);
-	printf PLIST "\n%-8s%-4s%-8s%-10s%-10s%-10s%-10s%-10s%-10s\n\n",$cabecera[0],$cabecera[1],$cabecera[2],$cabecera[3],$cabecera[4],$cabecera[5],$cabecera[6],$cabecera[7],$cabecera[8];
+	printf PLIST "\n%-10s%-10s%-10s%-10s%-10s%-10s%-10s%-10s%-10s\n\n",$cabecera[0],$cabecera[1],$cabecera[2],$cabecera[3],$cabecera[4],$cabecera[5],$cabecera[6],$cabecera[7],$cabecera[8];
 
 	printf PLIST "\n%-10s%-10s%-10s%-15s%-20s%-12s%-10s\n","APELLIDO","BENEFICIO","AGENCIA","CUIL","PROVINCIA","ESTADO","FECHA_EFECT_ALTA";
+	my $totalBeneficiariosLista=0;
 	for($i=0;$i<$longitudListaBenef;$i++) {	
 		printf PLIST "%-10s%-10s%-10s%-15s%-20s%-12s%-10s\n",@listaBenficiarios[$i],@listaBenficiarios[$i+1],@listaBenficiarios[$i+2],@listaBenficiarios[$i+3],@listaBenficiarios[$i+4],@listaBenficiarios[$i+5],@listaBenficiarios[$i+6];
 	$i+=7;
-	}
+	$totalBeneficiariosLista++;
+	}	
+	printf PLIST "\n%-10s%-d","TOTAL",$totalBeneficiariosLista;
 	print PLIST "\n\t\t\t";
 	if($conMatriz){
 
 	   foreach $llaveBeneficio (keys %{$beneficios}){
-		printf PLIST "%-4d\t",$llaveBeneficio;	
+		printf PLIST "%-4s\t",$llaveBeneficio;	
 	   }
 	   printf PLIST "%-17s","TOTAL BENEFICIARIOS";
 	   print PLIST "\n";
@@ -182,7 +188,7 @@ open(PLIST,$rutaArchivo);
            }
 
 	#Muestra el total de beneficiarios por beneficios(por columna)	
-	print PLIST "ToltaBeneficiario\t";
+	print PLIST "TOTAL BENEFICIARIOS\t";
 	foreach $llaveBeneficio (keys %{$beneficios}){
 		printf PLIST "%-d\t",${$matriz->{'totalBeneficiario'}}{$llaveBeneficio};
 	}
