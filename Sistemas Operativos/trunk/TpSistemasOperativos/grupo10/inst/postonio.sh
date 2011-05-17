@@ -16,6 +16,24 @@ TESPERA=30
 GRALOG=./gralog.sh
 
 
+# 1.-VEO SI EXISTE OTRO POSTONIO CORRIENDO
+proceso=$(ps x)
+cantProcess=$(echo "$proceso" | grep -v "grep" | grep -v "vi" | grep -v "gedit" | grep -c "postonio.sh")
+
+if [ $cantProcess -ge 2 ]; then
+
+   $GRALOG postonio SE "El proceso postonio.sh ya se está ejecutando!" 1
+   exit 1
+fi
+#2.- VEO SI SE INICIALIZO EL AMBIENTE
+
+if [ -z $LOGDIR ] || [ -z $CONFDIR ] || [ -z $DATADIR ] || [ -z $ARRIDIR ] || [ -z $BINDIR ] || [ -z $DATASIZE ] || [ -z $LOGEXT ] || [ -z $INSTDIR ] || [ -z $LOGSIZE ] || [ -z $USERID ] || [ -z $PROCESSED ] || [ -z $REJECTED ] || [ -z $RECEIVED ] ; then
+
+    $GRALOG postonio SE "Las variables de ambiente no se encuentran inicalizadas"
+    exit 1
+fi
+
+
 # Esta función recibe una secuencia y agencia
 # Devuelve 1 si la secuencia es correcta y 0 si es incorrecta
 resp=""; # Respuesta que devuelve la funcion
