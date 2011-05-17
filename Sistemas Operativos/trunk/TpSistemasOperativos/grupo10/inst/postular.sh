@@ -21,7 +21,7 @@
 #      registros exitosos      benef.<process id>
 #      registros con errores   benerro.<process id>
 GRALOG=./gralog.sh
-$GRALOG postular I "Inicio de Postular : $$"
+
 #NOMBRE DEL COMANDO
 nombre="postular"
 #Motivos
@@ -31,7 +31,15 @@ motivoErrorFormato="Formato de registro erroneo"
 #obtengo el processId
 processId=$(echo "$$")
 usuario=`whoami`
-# 1.-VEO SI EXISTE OTRO POSTULAR CORRIENDO
+#1.- VEO SI SE INICIALIZO EL AMBIENTE
+
+if [ -z $LOGDIR ] || [ -z $CONFDIR ] || [ -z $DATADIR ] || [ -z $ARRIDIR ] || [ -z $BINDIR ] || [ -z $DATASIZE ] || [ -z $LOGEXT ] || [ -z $INSTDIR ] || [ -z $LOGSIZE ] || [ -z $USERID ] || [ -z $PROCESSED ] || [ -z $REJECTED ] || [ -z $RECEIVED ] ; then
+     echo "ERROR: Las variables de ambiente no se encuentran inicalizadas"
+   # $GRALOG postonio SE "Las variables de ambiente no se encuentran inicalizadas"
+    exit 1
+fi
+$GRALOG postular I "Inicio de postular.sh : $$"
+# 2.-VEO SI EXISTE OTRO POSTULAR CORRIENDO
 proceso=$(ps x)
 cantProcess=$(echo "$proceso" | grep -v "grep" | grep -v "vi" | grep -v "gedit" | grep -c "$nombre.sh")
 
@@ -40,13 +48,7 @@ if [ $cantProcess -ge 2 ]; then
    $GRALOG postular SE "El proceso postular.sh ya se está ejecutando!"
    exit 1
 fi
-#2.- VEO SI SE INICIALIZO EL AMBIENTE
 
-if [ -z $LOGDIR ] || [ -z $CONFDIR ] || [ -z $DATADIR ] || [ -z $ARRIDIR ] || [ -z $BINDIR ] || [ -z $DATASIZE ] || [ -z $LOGEXT ] || [ -z $INSTDIR ] || [ -z $LOGSIZE ] || [ -z $USERID ] || [ -z $PROCESSED ] || [ -z $REJECTED ] || [ -z $RECEIVED ] ; then
-	# gragarloh.sh 
-    $GRALOG postular SE "Las variables de ambiente no se encuentran inicalizadas"
-    exit 1
-fi
 
 #variables
 ESTADO_RECHAZADO=rechazado
@@ -188,8 +190,10 @@ vector=($archivos) #creo el vector separando sólo con el IFS
 IFS=$OldIFS #restauro el IFS anterior
 cantArchivos=${#vector[@]}
 
-  # gragarloh.sh  
+  
+  $GRALOG postular I  "################################################################################"
   $GRALOG postular I "Inicio postular <Cantidad de Archivos > : $cantArchivos"
+  $GRALOG postular I  "################################################################################"
   
 for arch in ${vector[@]}
 do
@@ -200,7 +204,7 @@ do
 #	echo " :::::::::::::   Proceso el Archivo : ${arch} :::::::::::::::::::::::::::::::::::"
 #4.- PROCESO EL PRIMER ARCHIVO
   
-    $GRALOG postular I "Archivo a procesar: ${arch}"
+    $GRALOG postular I " :::::::::::::  Archivo a procesar: ${arch} :::::::::::::  "
        contador=0
        contadorError=0
        contadorNuevos=0
@@ -492,6 +496,7 @@ do
 #FIN DE ARCHIVO
 #MUEVO AL DIRECTORIO DE $GRUPO/PROCESADOS PARA EVITAR REPROCESAMIENTO
 # MOVER.SH
+$GRALOG postular I " Moviendo archivo : $arch a procesados " 
 ./mover.sh "$RECEIVED/$arch" "$PROCESSED/$arch"
 #GRABARLOG.SH
  $GRALOG postular I "Cantidad Total de registros : $contador"
@@ -505,4 +510,6 @@ done
 # ------------------------------------------------ X -------------------------------------------------------
 #CERRAR Y GRABAR LOG
 #grabarlog.sh 
+$GRALOG postular I  "################################################################################"
 $GRALOG postular I "Fin de Postular"
+$GRALOG postular I  "################################################################################"

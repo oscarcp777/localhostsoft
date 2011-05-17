@@ -57,7 +57,7 @@ function terminar(){
 if [ -z "$GRUPO" ]
 then
 	echo "Ejecute este comando desde el directorio de ejecutables"
-	return 1
+	exit 1
 fi		
 
 # Seteo de Variables de Ambiente
