@@ -49,7 +49,7 @@ then
 	then 		
 		mkdir $directorioDestino/dup
 	        $GRALOG mover A "(Movimiento como Duplicado)Se ha creado el directorio$directorioDestino/dup"
-	else		
+	fi		
  		 secuencia=$(ls "$directorioDestino/dup" | grep ".*$archvioDestino.[1-9]*$" | sort -r | sed s/$archvioDestino.// | head -n 1)
 		#Verificamos el numero de secuencia de los archivos 			duplicados
 		if [ "$secuencia" == "" ]
@@ -57,8 +57,7 @@ then
 			secuencia=1
 		else
 			secuencia=$(echo $secuencia+1 | bc -l)	
-		fi
-	fi		
+		fi		
 	
 	destinoFinal=$directorioDestino/dup/$archvioDestino.$secuencia
 else	
