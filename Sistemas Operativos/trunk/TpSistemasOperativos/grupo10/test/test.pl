@@ -1,14 +1,4 @@
 #! /usr/bin/perl
-sub saludo{
-	print "@_";
-}
-&saludo("Hola mundo","feo\n");
-sub Suma
-{
-$Total="aca se usa \n"
-}
-# Llamada a la subrutina con 2 parámetros.
-print &Suma (2,3);
 
 exit 1;
 print "holamundo \n";
@@ -29,12 +19,13 @@ print "$#animal\n";
 foreach $iter (@animal){
 	print "que hay : $iter\n";
 }
+
 %hash=(1,"lunes1",2,"lunes2",3,"lunes3",4,"lunes4",5,"lune5",6,"lunes6");
-%hash2=(lunes1 =>2,lunes2=>3,lunes3=>4,lunes4=>5,lune5=>6,lunes6=>7);
+%hash2=(lunes =>2,lunes2=>3,lunes3=>4,lunes4=>5,lune5=>6,lunes6=>7);
 
 print "$hash{5}\n";
 print "$hash2{lunes1}\n";
-$hash2{lunes1}="100";
+$hash2{lunes}="100";
 print "$hash2{lunes1}\n";
 delete $hash{1};
 print values(%hash2);
