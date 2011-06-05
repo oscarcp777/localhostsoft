@@ -1,3 +1,5 @@
+#!usr/bin/perl
+
 # Parametros
 # 1.Zona
 # 2.Plan
