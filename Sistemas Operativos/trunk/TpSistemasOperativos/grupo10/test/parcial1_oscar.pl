@@ -1,5 +1,5 @@
 #! /usr/bin/perl
-$cant=2;#$#ARGV;
+$cant=$ARGV;
 if($cant < 1){
 	die "Error en la cantidad  de parametros";
 }

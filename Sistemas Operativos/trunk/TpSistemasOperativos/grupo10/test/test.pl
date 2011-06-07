@@ -1,5 +1,7 @@
 #! /usr/bin/perl
 
+$cant=@ARGV;
+print "$cant \n";
 exit 1;
 print "holamundo \n";
 $var=12122122;
