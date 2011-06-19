@@ -1,0 +1,22 @@
+#created on: 17/06/2011
+package fi.uba.drools.poker
+import fi.uba.drools.poker.example.Cliente
+#list any import classes here.
+
+
+rule "Gastos superior a 1.000 euros"
+ when
+  cliente : Cliente( gasto > 1000 )
+ then 
+  System.out.println("El cliente "+cliente.getNombre()+" ha gastado más de 1.000 euros.");
+  cliente.setDescuento(cliente.getDescuento() + cliente.getGasto()*5/100);
+end
+
+rule "Cliente registrado"
+ when
+  cliente : Cliente( registrado == true )
+ then 
+  System.out.println("El cliente " 
+   + cliente.getNombre() + " está registrado.");
+  cliente.setDescuento(cliente.getDescuento() + cliente.getGasto()*5/100);
+end
