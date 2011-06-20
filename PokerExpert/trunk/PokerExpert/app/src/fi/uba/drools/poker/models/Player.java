@@ -36,9 +36,6 @@ public class Player {
     
     /** Pot when all-in. */
     private int allInPot;
-    
-    /** Last action performed. */
-    private Action action;
 
     
   	public int getRankHand() {
@@ -77,10 +74,7 @@ public class Player {
 		this.decision = decision;
 	}
 	
-	public void setAction(Action action) {
-		this.action = action;
-	}
-
+	
 	/**
      * Constructor.
      * 
@@ -124,7 +118,7 @@ public class Player {
      */
     public void resetBet() {
         bet = 0;
-        action = null;
+//        action = null;
         raises = 0;
         allInPot = 0;
     }
@@ -201,16 +195,7 @@ public class Player {
         return raises;
     }
     
-    /**
-     * Returns the player's action.
-     *
-     * @return  the action
-     */
-    public Action getAction() {
-        return action;
-    }
-    
-    /**
+     /**
      * Returns the player's hand of cards.
      *
      * @return The hand of cards.
@@ -235,7 +220,7 @@ public class Player {
      *            The small blind.
      */
     public void postSmallBlind(int blind) {
-        action = Action.SMALL_BLIND;
+//        action = Action.SMALL_BLIND;
         cash -= blind;
         bet += blind;
     }
@@ -247,7 +232,7 @@ public class Player {
      *            The big blind.
      */
     public void postBigBlind(int blind) {
-        action = Action.BIG_BLIND;
+//        action = Action.BIG_BLIND;
         cash -= blind;
         bet += blind;
     }
@@ -340,7 +325,7 @@ public class Player {
         Player clone = new Player(name, cash);
         clone.bet = bet;
         clone.raises = raises;
-        clone.action = action;
+//        clone.action = action;
         return clone;
     }
     
