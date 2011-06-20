@@ -2,9 +2,17 @@ package fi.uba.drools.poker.models;
 
 public class Table {
 	
-	private Player mainPlayer;
-	private Player opponentPlayer;
-	private Integer bigBlind;
+	public Player mainPlayer;
+	public Player opponentPlayer;
+	public Integer bigBlind;
+	public Integer potSize;
+	
+	public Integer getPotSize() {
+		return potSize;
+	}
+	public void setPotSize(Integer potSize) {
+		this.potSize = potSize;
+	}
 	public Integer getBigBlind() {
 		return bigBlind;
 	}

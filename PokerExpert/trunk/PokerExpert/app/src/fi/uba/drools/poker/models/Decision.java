@@ -10,6 +10,13 @@ package fi.uba.drools.poker.models;
 public class Decision {
 	private Action action;
 	private Integer betsize;
+	
+	
+	public Decision(Action action, Integer betsize) {
+		super();
+		this.action = action;
+		this.betsize = betsize;
+	}
 	public Action getAction() {
 		return action;
 	}

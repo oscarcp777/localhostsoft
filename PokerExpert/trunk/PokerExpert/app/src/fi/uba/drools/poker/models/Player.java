@@ -16,26 +16,9 @@ public class Player {
 	private Decision decision;
     private final String name;
     private String position;
-    private int rankHand; //es un numero q indica en q % esta la mano ej: 10% indica q la mano esta en el TOP 10%
-    public int getRankHand() {
-		return rankHand;
-	}
-
-	public void setRankHand(int rankHand) {
-		this.rankHand = rankHand;
-	}
-
-	/** Client application responsible for the actual behavior. */
-//    private final Client client;
-    
-    public String getPosition() {
-		return position;
-	}
-
-	public void setPosition(String position) {
-		this.position = position;
-	}
-
+    private String strategy; // puede ser AGGRESSIVE o TIGHT
+  	private int rankHand; //es un numero q indica en q % esta la mano ej: 10% indica q la mano esta en el TOP 10%
+  
 	/** Hand of cards. */
     private final Hand hand;
     
@@ -57,6 +40,35 @@ public class Player {
     /** Last action performed. */
     private Action action;
 
+    
+  	public int getRankHand() {
+		return rankHand;
+	}
+
+	public void setRankHand(int rankHand) {
+		this.rankHand = rankHand;
+	}
+
+	/** Client application responsible for the actual behavior. */
+//    private final Client client;
+    
+    public String getPosition() {
+		return position;
+	}
+
+	public void setPosition(String position) {
+		this.position = position;
+	}
+    
+    public String getStrategy() {
+		return strategy;
+	}
+
+	public void setStrategy(String strategy) {
+		this.strategy = strategy;
+	}
+
+    
     public Decision getDecision() {
 		return decision;
 	}
@@ -64,7 +76,7 @@ public class Player {
 	public void setDecision(Decision decision) {
 		this.decision = decision;
 	}
-
+	
 	public void setAction(Action action) {
 		this.action = action;
 	}
