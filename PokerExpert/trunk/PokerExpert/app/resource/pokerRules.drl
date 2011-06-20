@@ -1,0 +1,110 @@
+#created on: 19-jun-2011
+package fi.uba.drools.poker
+import fi.uba.drools.poker.models.Player
+import fi.uba.drools.poker.models.Hand
+import fi.uba.drools.poker.models.Action
+import fi.uba.drools.poker.models.Table
+import fi.uba.drools.poker.models.Decision
+import java.util.Random
+#list any import classes here.
+
+
+
+#declare any global variables here
+#REGLAS PARA BIG BLIND
+
+rule "Soy luz grande, oponente hizo call y mi mano esta en el TOP 30%"
+ when
+  $table : Table( mainPlayer.rankHand  < 30 && mainPlayer.position  == "BIGBLIND", opponentPlayer.decision.action == Action.CALL)
+  
+ then 
+  #  System.out.println("Mi posicion es "+mainPlayer.getPosition()+" ,mi mano es "+mainPlayer.getHand().toString()+".");
+  
+  System.out.println("Debo raisear un poco mas del tamaño del pozo (tomo un 10% mas del tamaño del pozo) ");
+  int potSize = $table.getPotSize();
+  $table.mainPlayer.setDecision(new Decision(Action.RAISE, potSize + potSize/10));
+  
+end
+
+rule "Soy luz grande, oponente hizo call y mi mano esta entre TOP 30% - 40%"
+ when
+  $table : Table( mainPlayer.rankHand  == 30 && mainPlayer.rankHand  == 40 && mainPlayer.position  == "BIGBLIND", opponentPlayer.decision.action == Action.CALL)
+  
+ then 
+  #  System.out.println("Mi posicion es "+mainPlayer.getPosition()+" ,mi mano es "+mainPlayer.getHand().toString()+".");
+  //TODO obtener tamaño del pozo
+  System.out.println("Debo raisear el 60% del tiempo y call el 40% si el jugador es agresivo");
+  System.out.println("Debo raisear el 80% del tiempo y call el 20% si el jugador es pasivo"); 
+  int potSize = $table.getPotSize();
+  Random random = new Random();
+  int num = random.nextInt(100);
+  
+  if($table.opponentPlayer.getStrategy().equals("AGGRESSIVE")){
+  	if(num <= 60){
+  		$table.mainPlayer.setDecision(new Decision(Action.RAISE, potSize + potSize/10));
+  		//TODO falta decirle cuanto raisear
+  	}  		
+  	else if(num >60){
+  		$table.mainPlayer.setDecision(new Decision(Action.CALL,0));
+  	}  	
+  }
+  if($table.opponentPlayer.getStrategy().equals("TIGHT")){
+  	if(num <= 80){
+  		$table.mainPlayer.setDecision(new Decision(Action.RAISE, potSize + potSize/10));
+  		
+  	}  		
+  	else if(num >80){
+  		$table.mainPlayer.setDecision(new Decision(Action.CALL,0));
+  	} 
+  }
+  
+end
+
+rule "Soy luz grande, oponente hizo call y mi mano esta en el TOP 50%"
+ when
+  $table : Table( mainPlayer.rankHand  == 50 && mainPlayer.position  == "BIGBLIND", opponentPlayer.decision.action == Action.CALL)
+  
+ then 
+  #  System.out.println("Mi posicion es "+mainPlayer.getPosition()+" ,mi mano es "+mainPlayer.getHand().toString()+".");
+  //TODO obtener tamaño del pozo
+  System.out.println("Debo raisear el 60% del tiempo y call el 40% si el jugador es agresivo");
+  System.out.println("Debo raisear el 50% del tiempo y call el 50% si el jugador es pasivo"); 
+  int potSize = $table.getPotSize();
+  Random random = new Random();
+  int num = random.nextInt(100);
+  
+  if($table.opponentPlayer.getStrategy().equals("AGGRESSIVE")){
+  	if(num <= 60){
+  		$table.mainPlayer.setDecision(new Decision(Action.RAISE, potSize + potSize/10));
+  		//TODO falta decirle cuanto raisear
+  	}  		
+  	else if(num >60){
+  		$table.mainPlayer.setDecision(new Decision(Action.CALL,0));
+  	}  	
+  }
+  if($table.opponentPlayer.getStrategy().equals("TIGHT")){
+  	if(num <= 50){
+  		$table.mainPlayer.setDecision(new Decision(Action.RAISE, potSize + potSize/10));
+  		//TODO falta decirle cuanto raisear
+  	}  		
+  	else if(num >50){
+  		$table.mainPlayer.setDecision(new Decision(Action.CALL,0));
+  	} 
+  }
+  
+end
+
+rule "Soy luz grande, oponente hizo call y mi mano esta entre TOP 50% - 100%"
+ when
+  $table : Table( mainPlayer.rankHand  > 50 && mainPlayer.position  == "BIGBLIND", opponentPlayer.decision.action == Action.CALL)
+  
+ then 
+  #  System.out.println("Mi posicion es "+mainPlayer.getPosition()+" ,mi mano es "+mainPlayer.getHand().toString()+".");
+  //TODO obtener tamaño del pozo
+  System.out.println("Hago check");
+  $table.mainPlayer.setDecision(new Decision(Action.CALL,0));
+   
+end
+
+
+#FIN REGLAS PARA BIG BLIND
