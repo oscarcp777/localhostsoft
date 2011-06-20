@@ -1,6 +1,9 @@
 package fi.uba.drools.poker.models;
 
 import java.util.Collection;
+import java.util.StringTokenizer;
+
+import fi.uba.drools.poker.utils.MapUtils;
 
 /**
  * A generic hand of game cards.
@@ -14,10 +17,10 @@ import java.util.Collection;
 public class Hand {
     
     /** The maximum number of cards in a hand. */
-    private static final int MAX_NO_OF_CARDS = 7;
+    private static final int MAX_NO_OF_CARDS = 2;
     
     /** The cards in this hand. */
-    private Card[] cards = new Card[MAX_NO_OF_CARDS];
+    private Card[] cards = new Card[2];
     
     /** The current number of cards in this hand. */
     private int noOfCards = 0;
@@ -210,5 +213,31 @@ public class Hand {
         }
         return sb.toString();
     }
+
+	public String getFormatRange() {
+		String newFormat;
+		StringTokenizer tokenizer = new StringTokenizer(this.toString());
+			String card1 = (String) tokenizer.nextElement();
+			String card2 = (String) tokenizer.nextElement();
+			newFormat=card1.substring(0,1)+card2.substring(0,1);
+			if(card1.substring(0,1).equals(card2.substring(0,1))){
+				return newFormat;
+			}
+			if(card1.contains("d") && card2.contains("d") ||
+		       card1.contains("c") && card2.contains("c") ||
+			   card1.contains("h") && card2.contains("h") ||
+			   card1.contains("s") && card2.contains("s") ){
+				newFormat+="s";
+			}else{
+				newFormat+="o";
+			}
+			
+		return newFormat;
+	}
+
+	public Integer getHandRange() {
+		return MapUtils.getHandRange(this.getFormatRange());
+		
+	}
     
 }
