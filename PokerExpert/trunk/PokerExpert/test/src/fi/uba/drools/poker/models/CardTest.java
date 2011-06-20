@@ -16,6 +16,7 @@ public class CardTest {
      */
     @Test
     public void basics() {
+    	
         Card card = new Card(Card.TEN, Card.HEARTS);
         Assert.assertNotNull(card);
         Assert.assertEquals(Card.TEN, card.getRank());
