@@ -1,7 +1,6 @@
 package fi.uba.drools.poker.models;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * A Texas Hold'em player.
@@ -14,6 +13,7 @@ import java.util.Set;
 public class Player {
     
     /** Name. */
+	private Decision decision;
     private final String name;
     private String position;
     private int rankHand; //es un numero q indica en q % esta la mano ej: 10% indica q la mano esta en el TOP 10%
@@ -57,7 +57,15 @@ public class Player {
     /** Last action performed. */
     private Action action;
 
-    public void setAction(Action action) {
+    public Decision getDecision() {
+		return decision;
+	}
+
+	public void setDecision(Decision decision) {
+		this.decision = decision;
+	}
+
+	public void setAction(Action action) {
 		this.action = action;
 	}
 
