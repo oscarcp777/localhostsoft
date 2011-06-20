@@ -15,11 +15,28 @@ public class Player {
     
     /** Name. */
     private final String name;
-    
-    /** Client application responsible for the actual behavior. */
+    private String position;
+    private int rankHand; //es un numero q indica en q % esta la mano ej: 10% indica q la mano esta en el TOP 10%
+    public int getRankHand() {
+		return rankHand;
+	}
+
+	public void setRankHand(int rankHand) {
+		this.rankHand = rankHand;
+	}
+
+	/** Client application responsible for the actual behavior. */
 //    private final Client client;
     
-    /** Hand of cards. */
+    public String getPosition() {
+		return position;
+	}
+
+	public void setPosition(String position) {
+		this.position = position;
+	}
+
+	/** Hand of cards. */
     private final Hand hand;
     
     /** Current amount of cash. */
@@ -40,7 +57,11 @@ public class Player {
     /** Last action performed. */
     private Action action;
 
-    /**
+    public void setAction(Action action) {
+		this.action = action;
+	}
+
+	/**
      * Constructor.
      * 
      * @param name
