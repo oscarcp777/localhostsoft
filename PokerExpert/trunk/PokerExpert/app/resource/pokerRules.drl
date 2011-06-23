@@ -94,7 +94,7 @@ rule "Soy luz grande, oponente hizo call y mi mano esta en el TOP 50%"
   
 end
 
-rule "Soy luz grande, oponente hizo call y mi mano esta entre TOP 50% - 100%"
+rule "Soy luz grande, oponente hizo call y mi mano esta entre TOP >50% - 100%"
  when
   $table : Table( mainPlayer.rankHand  > 50 && mainPlayer.position  == "BIGBLIND", opponentPlayer.decision.action == Action.CALL)
   
@@ -102,9 +102,244 @@ rule "Soy luz grande, oponente hizo call y mi mano esta entre TOP 50% - 100%"
   #  System.out.println("Mi posicion es "+mainPlayer.getPosition()+" ,mi mano es "+mainPlayer.getHand().toString()+".");
   //TODO obtener tamaño del pozo
   System.out.println("Hago check");
-  $table.mainPlayer.setDecision(new Decision(Action.CALL,0));
+  $table.mainPlayer.setDecision(new Decision(Action.CHECK,0));
    
 end
 
 
+rule "Soy luz grande, oponente hizo raise y mi mano esta entre TOP 5% - 20%"
+ when
+  $table : Table( mainPlayer.rankHand  <= 20 && mainPlayer.position  == "BIGBLIND", opponentPlayer.decision.action == Action.RAISE)
+  
+ then 
+  #  System.out.println("Mi posicion es "+mainPlayer.getPosition()+" ,mi mano es "+mainPlayer.getHand().toString()+".");
+  //NO IMPORTA LA AGRESIVIDAD DE MI OPONENTE, SIEMPRE HAGO RAISE
+  int potSize = $table.getPotSize();
+  System.out.println("Hago raise (analizar bien cuanto subir) a"+ (potSize + 3*potSize/10));
+  $table.mainPlayer.setDecision(new Decision(Action.CHECK, potSize + 3*potSize/10)); //TODO analizar bien cuanto subir
+   
+end
+
+rule "Soy luz grande, oponente hizo raise y mi mano esta entre TOP 30%"
+ when
+  $table : Table( mainPlayer.rankHand  == 30 && mainPlayer.position  == "BIGBLIND", opponentPlayer.decision.action == Action.RAISE)
+  
+ then 
+  int potSize = $table.getPotSize();
+  Random random = new Random();
+  int num = random.nextInt(100);
+ 
+  if($table.opponentPlayer.getStrategy().equals("AGGRESSIVE")){
+  	System.out.println("Hago raise (analizar bien cuanto subir) a"+ potSize + 3*potSize/10);
+  	$table.mainPlayer.setDecision(new Decision(Action.RAISE, potSize + 3*potSize/10));
+  	  	
+  }
+  if($table.opponentPlayer.getStrategy().equals("TIGHT")){
+  		if(num <= 60){
+  		System.out.println("Hago raise (analizar bien cuanto subir) a"+ potSize + 3*potSize/10);
+  		$table.mainPlayer.setDecision(new Decision(Action.RAISE, potSize + 3*potSize/10));
+  		
+  	}  		
+  	else if(num >60){
+  		System.out.println("Hago call");
+  		$table.mainPlayer.setDecision(new Decision(Action.CALL,0));
+  	} 
+   }
+   
+end
+
+rule "Soy luz grande, oponente hizo raise y mi mano esta entre TOP 40% - 60%"
+ when
+  $table : Table( mainPlayer.rankHand == 40 || mainPlayer.rankHand == 50 || mainPlayer.rankHand == 60 && mainPlayer.position  == "BIGBLIND", opponentPlayer.decision.action == Action.RAISE)
+  
+ then 
+  int openentRaise = $table.opponentPlayer.getDecision().getBetsize() / $table.bigBlind; //convierto la apuesta del oponente en numero de luces 
+  Random random = new Random();
+  int num = random.nextInt(100);
+  
+  if(openentRaise == 2*$table.bigBlind){//si subio 2BB
+  	
+	  if($table.opponentPlayer.getStrategy().equals("AGGRESSIVE")){
+	  	if(num <= 60){
+	  		System.out.println("Hago raise (analizar bien cuanto subir) a"+ 4*$table.bigBlind + $table.bigBlind/2);
+	  		$table.mainPlayer.setDecision(new Decision(Action.RAISE, 4*$table.bigBlind + $table.bigBlind/2 ));
+	  		//TODO falta decirle cuanto raisear
+	  	}  		
+	  	else if(num >60){
+	  		System.out.println("Hago call");
+	  		$table.mainPlayer.setDecision(new Decision(Action.CALL,0));
+	  	}  	
+	  }
+	  if($table.opponentPlayer.getStrategy().equals("TIGHT")){
+	  	if(num <= 40){
+	  		System.out.println("Hago raise (analizar bien cuanto subir) a"+ 4*$table.bigBlind + $table.bigBlind/2);
+	  		$table.mainPlayer.setDecision(new Decision(Action.RAISE, 4*$table.bigBlind + $table.bigBlind/2));
+	  		//TODO falta decirle cuanto raisear
+	  	}  		
+	  	else if(num >40){
+	  		System.out.println("Hago call");
+	  		$table.mainPlayer.setDecision(new Decision(Action.CALL,0));
+	  	} 
+	  }
+	  
+  }
+ else if(openentRaise == 2*$table.bigBlind + $table.bigBlind/2 ){//si subio 2,5BB
+  	
+	  if($table.opponentPlayer.getStrategy().equals("AGGRESSIVE")){
+	  	if(num <= 70){
+	  		System.out.println("Hago raise (analizar bien cuanto subir) a"+ 5*$table.bigBlind);
+	  		$table.mainPlayer.setDecision(new Decision(Action.RAISE, 5*$table.bigBlind));
+	  		//TODO falta decirle cuanto raisear
+	  	}  		
+	  	else if(num >70){
+	  		System.out.println("Hago call");
+	  		$table.mainPlayer.setDecision(new Decision(Action.CALL,0));
+	  	}  	
+	  }
+	  if($table.opponentPlayer.getStrategy().equals("TIGHT")){
+	  	if(num <= 50){
+	  		System.out.println("Hago raise (analizar bien cuanto subir) a"+ 5*$table.bigBlind);
+	  		$table.mainPlayer.setDecision(new Decision(Action.RAISE, 5*$table.bigBlind));
+	  		//TODO falta decirle cuanto raisear
+	  	}  		
+	  	else if(num >50){
+	  		System.out.println("Hago call");
+	  		$table.mainPlayer.setDecision(new Decision(Action.CALL,0));
+	  	} 
+	  }
+	  
+  }
+  else{
+  	System.out.println("Hago fold");
+	$table.mainPlayer.setDecision(new Decision(Action.FOLD,0));
+  }
+  
+end
+
+rule "Soy luz grande, oponente hizo raise y mi mano esta entre TOP 70% - 80%"
+ when
+  $table : Table( mainPlayer.rankHand == 70 || mainPlayer.rankHand == 80  && mainPlayer.position  == "BIGBLIND", opponentPlayer.decision.action == Action.RAISE)
+  
+ then
+  int openentRaise = $table.opponentPlayer.getDecision().getBetsize() / $table.bigBlind; //convierto la apuesta del oponente en numero de luces 
+  if(openentRaise == 2*$table.bigBlind + $table.bigBlind/2 || openentRaise == 2*$table.bigBlind ){//si subio a 2BB o 2,5BB
+  	
+  	if($table.opponentPlayer.getStrategy().equals("TIGHT")){
+	  	System.out.println("Hago fold");
+	  	$table.mainPlayer.setDecision(new Decision(Action.FOLD,0));
+	  	 
+	 }
+	Random random = new Random();
+  	int num = random.nextInt(100);
+	
+	if($table.opponentPlayer.getStrategy().equals("AGGRESSIVE")){
+	  	if(num <= 80){
+	  		System.out.println("Hago fold");
+	  		$table.mainPlayer.setDecision(new Decision(Action.FOLD,0));
+	  		
+	  	}  		
+	  	else if(num >80){
+	  		System.out.println("Hago call");
+	  		$table.mainPlayer.setDecision(new Decision(Action.CALL,0));
+	  	}  	
+	  }  
+  }   
+end
+
+rule "Soy luz grande, oponente hizo raise y mi mano esta entre TOP 90% - 100%"
+ when
+  $table : Table( mainPlayer.rankHand  >= 90 && mainPlayer.position  == "BIGBLIND", opponentPlayer.decision.action == Action.RAISE)
+  
+ then 
+  #  System.out.println("Mi posicion es "+mainPlayer.getPosition()+" ,mi mano es "+mainPlayer.getHand().toString()+".");
+  System.out.println("Hago fold");
+  $table.mainPlayer.setDecision(new Decision(Action.FOLD,0));
+   
+end
 #FIN REGLAS PARA BIG BLIND
+
+#REGLAS PARA SMALL BLIND o BUTTON
+rule "Soy boton y mi mano esta en el TOP 50%"
+ when
+  $table : Table( mainPlayer.rankHand  <= 50 && mainPlayer.position  == "BUTTON")
+  
+ then 
+  #  System.out.println("Mi posicion es "+mainPlayer.getPosition()+" ,mi mano es "+mainPlayer.getHand().toString()+".");
+  System.out.println("80% del tiempo raise, 20% del tiempo call");
+  Random random = new Random();
+  int num = random.nextInt(100);
+  
+  if(num <= 80){
+  	if($table.opponentPlayer.getStrategy().equals("TIGHT")){
+	  	System.out.println("Hago raise "+ 2*$table.bigBlind + $table.bigBlind/2);
+	  	$table.mainPlayer.setDecision(new Decision(Action.RAISE,2*$table.bigBlind + $table.bigBlind/2));
+	  	 
+	 }
+	else if($table.opponentPlayer.getStrategy().equals("AGGRESSIVE")){
+	 	System.out.println("Hago raise"+ 3*$table.bigBlind);
+	  	$table.mainPlayer.setDecision(new Decision(Action.RAISE,3*$table.bigBlind));
+	  	  	
+	 }
+  
+   }
+  else if( num >80){
+  	System.out.println("Hago call");
+	$table.mainPlayer.setDecision(new Decision(Action.CALL,0));
+  
+  }    
+end
+
+
+rule "Soy boton y mi mano esta en el TOP 60% - 80%"
+ when
+  $table : Table( mainPlayer.rankHand  == 60 || mainPlayer.rankHand  == 70 || mainPlayer.rankHand  == 80 && mainPlayer.position  == "BUTTON")
+  
+ then 
+  #  System.out.println("Mi posicion es "+mainPlayer.getPosition()+" ,mi mano es "+mainPlayer.getHand().toString()+".");
+  //TODO obtener tamaño del pozo
+  System.out.println("Debo raisear el 25% del tiempo, fold 50% y  call el 25% si el jugador es agresivo");
+  System.out.println("Debo raisear el 40% del tiempo y call el 60% si el jugador es pasivo"); 
+  int potSize = $table.getPotSize();
+  Random random = new Random();
+  int num = random.nextInt(100);
+  
+  if($table.opponentPlayer.getStrategy().equals("AGGRESSIVE")){
+  	if(num <= 25){
+  		$table.mainPlayer.setDecision(new Decision(Action.RAISE, 2*$table.bigBlind + $table.bigBlind/2));
+  	}  		
+  	else if(num >25 && num <= 50){
+  		$table.mainPlayer.setDecision(new Decision(Action.CALL,0));
+  	}  	
+  	else if(num > 50){
+  	  	$table.mainPlayer.setDecision(new Decision(Action.FOLD,0));
+  	}
+  }
+  if($table.opponentPlayer.getStrategy().equals("TIGHT")){
+  	if(num <= 40){
+  		$table.mainPlayer.setDecision(new Decision(Action.RAISE, 2*$table.bigBlind));
+  		
+  	}  		
+  	else if(num >40){
+  		$table.mainPlayer.setDecision(new Decision(Action.CALL,0));
+  	} 
+  }  
+end
+
+
+rule "Soy boton y mi mano esta entre TOP 90% - 100%"
+ when
+  $table : Table( mainPlayer.rankHand  >= 90 && mainPlayer.position  == "BUTTON")
+  
+ then 
+  #  System.out.println("Mi posicion es "+mainPlayer.getPosition()+" ,mi mano es "+mainPlayer.getHand().toString()+".");
+  System.out.println("Hago fold si el jugador es agresivo");
+  System.out.println("Hago call si el jugador es pasivo");
+  if($table.opponentPlayer.getStrategy().equals("AGGRESSIVE")){
+  	$table.mainPlayer.setDecision(new Decision(Action.FOLD,0));
+  }
+  if($table.opponentPlayer.getStrategy().equals("TIGHT")){
+  	$table.mainPlayer.setDecision(new Decision(Action.CALL,0));
+  }
+   
+end
+#FIN PARA SMALL BLIND o BUTTON
