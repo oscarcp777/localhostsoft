@@ -45,10 +45,10 @@ public class Card implements Comparable<Card> {
     public static final char[] SUIT_SYMBOLS = { 'd', 'c', 'h', 's' };
 
     /** The rank. */
-    private final int rank;
+    private  int rank;
     
     /** The suit. */
-    private final int suit;
+    private  int suit;
     
     /**
      * Constructor based on rank and suit.
@@ -87,32 +87,24 @@ public class Card implements Comparable<Card> {
      *             If the card string is null or of invalid length, or the rank
      *             or suit could not be parsed.
      */
-    public Card(String s) {
-        if (s == null) {
-            throw new IllegalArgumentException("Null string or of invalid length");
-        }
-        s = s.trim();
-        if (s.length() != 2) {
-            throw new IllegalArgumentException("Empty string or invalid length");
-        }
-        
-        // Parse the rank character.
-        String rankSymbol = s.substring(0, 1);
-        char suitSymbol = s.charAt(1);
-        int rank = -1;
-        for (int i = 0; i < Card.NO_OF_RANKS; i++) {
-            if (rankSymbol.equals(RANK_SYMBOLS[i])) {
-                rank = i;
-                break;
-            }
-        }
-        if (rank == -1) {
-            throw new IllegalArgumentException("Unknown rank: " + rankSymbol);
-        }
-        // Parse the suit character.
+    public int getRank(String rankSymbol){
+    	 int rank = -1;
+         for (int i = 0; i < Card.NO_OF_RANKS; i++) {
+             if (rankSymbol.equals(RANK_SYMBOLS[i])) {
+                 rank = i;
+                 break;
+             }
+         }
+         if (rank == -1) {
+             throw new IllegalArgumentException("Unknown rank: " + rankSymbol);
+         }
+         return rank;
+    }
+    public int getSuit( String suitSymbol){
+    	 // Parse the suit character.
         int suit = -1;
         for (int i = 0; i < Card.NO_OF_SUITS; i++) {
-            if (suitSymbol == SUIT_SYMBOLS[i]) {
+            if (suitSymbol.charAt(0) == SUIT_SYMBOLS[i]) {
                 suit = i;
                 break;
             }
@@ -120,8 +112,18 @@ public class Card implements Comparable<Card> {
         if (suit == -1) {
             throw new IllegalArgumentException("Unknown suit: " + suitSymbol);
         }
-        this.rank = rank;
-        this.suit = suit;
+        return suit;
+    }
+    public Card(String s) {
+        if (s == null) {
+            throw new IllegalArgumentException("Null string or of invalid length");
+        }
+        s = s.trim();
+        if (s.length() != 2) {
+            throw new IllegalArgumentException("Empty string or invalid length");
+        }     
+        this.rank = getRank(s.substring(0, 1));
+        this.suit = getSuit(s.substring(1, 2));
     }
     
     /**
@@ -142,7 +144,15 @@ public class Card implements Comparable<Card> {
         return rank;
     }
     
-    /*
+    public void setRank(int rank) {
+		this.rank = rank;
+	}
+
+	public void setSuit(int suit) {
+		this.suit = suit;
+	}
+
+	/*
      * (non-Javadoc)
      * @see java.lang.Object#hashCode()
      */
