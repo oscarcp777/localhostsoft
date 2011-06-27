@@ -20,10 +20,14 @@ public class Player {
   	private int rankHand; //es un numero q indica en q % esta la mano ej: 10% indica q la mano esta en el TOP 10%
   
 	/** Hand of cards. */
-    private final Hand hand;
+    private  Hand hand;
     
-    /** Current amount of cash. */
-    private int cash;
+    public void setHand(Hand hand) {
+		this.hand = hand;
+	}
+
+	/** Current amount of cash. */
+    private Integer cash;
     
     /** Whether the player has his hole cards being dealt. */
     private boolean hasCards;
@@ -39,12 +43,10 @@ public class Player {
 
     
   	public int getRankHand() {
-		return rankHand;
+		return getHand().getHandRange();
 	}
 
-	public void setRankHand(int rankHand) {
-		this.rankHand = rankHand;
-	}
+	
 
 	/** Client application responsible for the actual behavior. */
 //    private final Client client;
@@ -85,7 +87,7 @@ public class Player {
      * @param client
      *            The client application.
      */
-    public Player(String name, int cash/*, Client client*/) {
+    public Player(String name, Integer cash) {
         this.name = name;
         this.cash = cash;
 //        this.client = client;

@@ -10,6 +10,7 @@ import fi.uba.drools.poker.models.Decision;
 import fi.uba.drools.poker.models.Hand;
 import fi.uba.drools.poker.models.Player;
 import fi.uba.drools.poker.models.Table;
+import fi.uba.drools.poker.utils.Constants;
 import fi.uba.drools.poker.view.Aumento;
 import fi.uba.drools.poker.view.Principal;
 import fi.uba.drools.poker.view.Recomendacion;
@@ -60,7 +61,7 @@ public class MainController {
 		cards[0] = principalView.getCard1();
 		cards[1] = principalView.getCard2();
 		Hand hand = new Hand(cards);
-		table.getMainPlayer().setRankHand(hand.getHandRange());
+		table.getMainPlayer().setHand(hand);
 		table.getMainPlayer().setBet(principalView.getPlayerBetCoins());
 		
 		// Datos Oponente
@@ -69,18 +70,18 @@ public class MainController {
 		table.getOpponentPlayer().setDecision(new Decision(Action.CALL,0));
 		table.getOpponentPlayer().setBet(principalView.getOpponentBetCoins());
 		if (principalView.getOpponentStrategy().equals("Agresivo"))
-			table.getOpponentPlayer().setStrategy("AGGRESIVE");
+			table.getOpponentPlayer().setStrategy(Constants.Strategy.AGGRESIVE);
 		else
-			table.getOpponentPlayer().setStrategy("TIGHT");
+			table.getOpponentPlayer().setStrategy(Constants.Strategy.TIGHT);
 		
 		// Datos Mesa
 		//TODO setear valor luz
 		table.setBigBlind(20);
 		if (principalView.isPlayerBigBlind()){
-			table.getMainPlayer().setPosition("BIGBLIND");
+			table.getMainPlayer().setPosition(Constants.Blind.BIG_BLIND);
 			table.setPotSize(2*table.getBigBlind() + table.getOpponentPlayer().getBet());			
 		}else{
-			table.getMainPlayer().setPosition("SMALLBLIND");
+			table.getMainPlayer().setPosition(Constants.Blind.SMALL_BLIND);
 			table.setPotSize(table.getBigBlind() + table.getBigBlind()/2);
 		}
 		decide(table);
