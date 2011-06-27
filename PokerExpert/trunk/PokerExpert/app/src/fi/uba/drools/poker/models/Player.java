@@ -186,6 +186,10 @@ public class Player {
         return bet;
     }
     
+    public void setBet(int bet){
+    	this.bet = bet;
+    }
+    
     /**
      * Returns the number of raises the player has done in this betting round.
      * 

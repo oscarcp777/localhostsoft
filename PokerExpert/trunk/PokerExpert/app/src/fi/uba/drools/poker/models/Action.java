@@ -14,19 +14,19 @@ public enum Action {
     BIG_BLIND("Big Blind", "posts the big blind"),
     
     /** Checking. */
-    CHECK("Check", "checks"),
+    CHECK("Pasar", "checks"),
     
     /** Calling a bet. */
-    CALL("Call", "calls"),
+    CALL("Pagar", "calls"),
     
     /** Place an initial bet. */
-    BET("Bet", "bets"),
+    BET("Apostar", "bets"),
     
     /** Raising the current bet. */
-    RAISE("Raise", "raises"),
+    RAISE("Subir", "raises"),
     
     /** Folding. */
-    FOLD("Fold", "folds"),
+    FOLD("Dejar la mano", "folds"),
     
     /** Continuing the game. */
     CONTINUE("Continue", "continues"),
