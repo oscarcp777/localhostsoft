@@ -16,7 +16,7 @@ import fi.uba.drools.poker.view.Principal;
 import fi.uba.drools.poker.view.Recomendacion;
 
 /**
- * Controlador principal de la aplicación y punto de entrada de la misma
+ * Controlador principal de la aplicaciï¿½n y punto de entrada de la misma
  * @author Santiago
  *
  */
@@ -62,6 +62,7 @@ public class MainController {
 		cards[1] = principalView.getCard2();
 		Hand hand = new Hand(cards);
 		table.getMainPlayer().setHand(hand);
+		table.getMainPlayer().setDecision(new Decision(Action.CONTINUE,0));
 		table.getMainPlayer().setBet(principalView.getPlayerBetCoins());
 		
 		// Datos Oponente
@@ -89,6 +90,9 @@ public class MainController {
 	}
 	
 	private void decide(Table table){
+		System.out.println("la mano es "+table.getMainPlayer().getHand()+" el rango de mano es: "+ table.getMainPlayer().getRankHand());
+		System.out.println("la posicion es "+table.getMainPlayer().getPosition()+" la accion del rival es "+ table.getOpponentPlayer().getDecision().getAction());
+		
 		Decision decision = applyRules(table);
 		String recomendation = null;
 		if (decision != null){

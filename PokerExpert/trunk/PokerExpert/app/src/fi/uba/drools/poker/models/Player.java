@@ -188,8 +188,8 @@ public class Player {
         return bet;
     }
     
-    public void setBet(int bet){
-    	this.bet = bet;
+    public void setBet(Integer bet){
+    	this.decision.setBetsize(bet);
     }
     
     /**
