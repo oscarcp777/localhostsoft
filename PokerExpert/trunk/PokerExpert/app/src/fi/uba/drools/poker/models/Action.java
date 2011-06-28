@@ -29,6 +29,9 @@ public enum Action {
     FOLD("Dejar la mano", "folds"),
     
     /** Continuing the game. */
+    ALL_IN("apostar todo", "all in"),
+    
+    /** Continuing the game. */
     CONTINUE("Continue", "continues"),
     
     ;

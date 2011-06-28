@@ -35,7 +35,19 @@ public class Decision {
 	public String getActionDesc() {
 		switch (this.action) {
 		case RAISE:
-			return "Usted debería apostar " + betsize + " fichas";
+			return "Usted debe subir a " + betsize + " fichas";
+		
+		case CHECK:
+			return "Usted debe pasar";
+			
+		case CALL:
+			return "Usted debe pagar";
+			
+		case BET:
+			return "Usted debe apostar " + betsize + " fichas";
+			
+		case FOLD:
+			return "Usted debe retirarse";
 		
 		default:
 			return "No se determino ninguna accion";
