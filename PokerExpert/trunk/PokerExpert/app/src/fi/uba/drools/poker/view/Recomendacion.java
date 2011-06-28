@@ -12,7 +12,6 @@ package fi.uba.drools.poker.view;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Label;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -175,10 +174,9 @@ public class Recomendacion extends javax.swing.JFrame {
         return esto;
     }
     
-    @SuppressWarnings("static-access")
-	public void reset (){
-        this.princi.reset();
-        this.setVisible(false);
+    public void reset (){
+//        this.princi.reset();
+//        this.setVisible(false);
     }
     private void botonPasoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonPasoActionPerformed
         this.reset();

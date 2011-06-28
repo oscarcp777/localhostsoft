@@ -17,8 +17,7 @@ public class Player {
     private final String name;
     private String position;
     private String strategy; // puede ser AGGRESSIVE o TIGHT
-  	private int rankHand; //es un numero q indica en q % esta la mano ej: 10% indica q la mano esta en el TOP 10%
-  
+  	
 	/** Hand of cards. */
     private  Hand hand;
     

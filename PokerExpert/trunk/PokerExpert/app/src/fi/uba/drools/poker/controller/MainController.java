@@ -49,6 +49,11 @@ public class MainController {
             	getDecision();
             }
         });
+		principalView.addResetButtonListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	resetPrincipalView();
+            }
+        });
 		
 	}
 	
@@ -89,6 +94,7 @@ public class MainController {
 		
 	}
 	
+	@SuppressWarnings("serial")
 	private void decide(Table table){
 		System.out.println("la mano es "+table.getMainPlayer().getHand()+" el rango de mano es: "+ table.getMainPlayer().getRankHand());
 		System.out.println("la posicion es "+table.getMainPlayer().getPosition()+" la accion del rival es "+ table.getOpponentPlayer().getDecision().getAction());
@@ -104,7 +110,15 @@ public class MainController {
 		}
 		if (recomendation == null)
 			recomendation = "No se aplico ninguna regla";
-        recomendationView = new Recomendacion(recomendation, principalView);
+        recomendationView = new Recomendacion(recomendation, principalView){
+
+			@Override
+			public void reset() {
+				recomendationView.setVisible(false);
+				resetPrincipalView();
+			}
+        	
+        };
         recomendationView.setVisible(true);
         recomendationView.addRecomendationListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,7 +142,12 @@ public class MainController {
         recomendationView.setVisible(false);
 	}
 	
-	public Decision applyRules(Table table){
+	private void resetPrincipalView(){
+		this.initialize();
+		this.principalView.setVisible(true);
+	}
+	
+	private Decision applyRules(Table table){
 		try {
 			KnowledgeBase kbase = FactoryDRL.readKnowledgeBase("pokerRules.drl");
 			StatefulKnowledgeSession ksession = kbase.newStatefulKnowledgeSession();

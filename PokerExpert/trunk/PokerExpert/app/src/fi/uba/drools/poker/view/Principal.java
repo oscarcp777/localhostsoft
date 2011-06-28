@@ -13,7 +13,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.HashMap;
 
-import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -202,11 +201,11 @@ public class Principal extends javax.swing.JFrame {
 
         menuItemReiniciar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
         menuItemReiniciar.setText("Reiniciar");
-        menuItemReiniciar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItemReiniciarActionPerformed(evt);
-            }
-        });
+//        menuItemReiniciar.addActionListener(new java.awt.event.ActionListener() {
+//            public void actionPerformed(java.awt.event.ActionEvent evt) {
+//                menuItemReiniciarActionPerformed(evt);
+//            }
+//        });
         menuArchivo.add(menuItemReiniciar);
 
         jMenuBar1.add(menuArchivo);
@@ -352,23 +351,27 @@ public class Principal extends javax.swing.JFrame {
         return;
 }//GEN-LAST:event_palo2ActionPerformed
 
-    private void menuItemReiniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemReiniciarActionPerformed
-     
-      this.reset();
-      return;
-    }//GEN-LAST:event_menuItemReiniciarActionPerformed
+//    private void menuItemReiniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemReiniciarActionPerformed
+//     
+//      this.reset();
+//      return;
+//    }//GEN-LAST:event_menuItemReiniciarActionPerformed
 
-    public void reset (){
-      this.setVisible(false);
-//      new Principal().setVisible(true); 
-      return;
-    }
+//    public void reset (){
+//      this.setVisible(false);
+////      new Principal().setVisible(true); 
+//      return;
+//    }
     private void palo1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_palo1ItemStateChanged
         // DELETE
     }//GEN-LAST:event_palo1ItemStateChanged
     
     public void addRecomendationListener(java.awt.event.ActionListener listener){
     	buttonRecomendar.addActionListener(listener);
+    }
+    
+    public void addResetButtonListener(java.awt.event.ActionListener listener){
+    	menuItemReiniciar.addActionListener(listener);
     }
 
 //    public void buttonRecomendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRecomendarActionPerformed

@@ -13,7 +13,6 @@ package fi.uba.drools.poker.view;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
-import java.awt.Label;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
