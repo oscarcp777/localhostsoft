@@ -16,6 +16,7 @@ import java.awt.Font;
 import java.awt.Label;
 
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 
 /**
  *
@@ -33,12 +34,13 @@ public class Aumento extends javax.swing.JFrame {
         this.setResizable(false);
     }
     private void cargarEstilo(JComponent component){
+    	component.setForeground(Color.decode("#000000"));
     	component.setBackground(Color.decode("#ffffff"));
     	component.setFont(new java.awt.Font("Serif", Font.BOLD | Font.ITALIC, 14));
         
     }
-    private void cargarEstiloLabel(Label component){
-    	component.setBackground(Color.decode("#ffffff"));
+    private void cargarEstiloLabel(JLabel component){
+    	component.setForeground(Color.decode("#000000"));
     	component.setFont(new java.awt.Font("Serif", Font.BOLD | Font.ITALIC, 14));
     }
     /** This method is called from within the constructor to
@@ -55,8 +57,8 @@ public class Aumento extends javax.swing.JFrame {
         cargarEstilo(aumentoOponente);
         botonContinuar = new javax.swing.JButton();
         cargarEstilo(botonContinuar);
-        label1 = new java.awt.Label();
-        label2 = new java.awt.Label();
+        label1 = new JLabel();
+        label2 = new JLabel();
         cargarEstiloLabel(label1);
         cargarEstiloLabel(label2);
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -174,7 +176,7 @@ public class Aumento extends javax.swing.JFrame {
     private javax.swing.JSpinner aumentoJugador;
     private javax.swing.JSpinner aumentoOponente;
     private javax.swing.JButton botonContinuar;
-    private java.awt.Label label1;
-    private java.awt.Label label2;
+    private JLabel label1;
+    private JLabel label2;
     // End of variables declaration//GEN-END:variables
 }

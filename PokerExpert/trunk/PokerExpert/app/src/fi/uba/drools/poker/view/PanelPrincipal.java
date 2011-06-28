@@ -26,7 +26,7 @@ public class PanelPrincipal extends JPanel {
 	 */
 	protected void paintComponent(Graphics g) {
 		ClassLoader cl = this.getClass().getClassLoader();
-		ImageIcon imagen =  new ImageIcon(cl.getResource("images/fondoPoker2.jpg"));
+		ImageIcon imagen =  new ImageIcon(cl.getResource("images/fondoPoker.jpg"));
 		g.drawImage(imagen.getImage(),0,0,400,600,null);
 		setOpaque(false);
 		super.paintComponent(g);

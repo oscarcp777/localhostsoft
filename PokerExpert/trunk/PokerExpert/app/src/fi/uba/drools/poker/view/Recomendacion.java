@@ -15,6 +15,7 @@ import java.awt.Font;
 import java.awt.Label;
 
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 
 /**
  *
@@ -49,12 +50,13 @@ public class Recomendacion extends javax.swing.JFrame {
 
 
         private void cargarEstilo(JComponent component){
+        	component.setForeground(Color.decode("#000000"));
         	component.setBackground(Color.decode("#ffffff"));
         	component.setFont(new java.awt.Font("Serif", Font.BOLD | Font.ITALIC, 14));
             
         }
-        private void cargarEstiloLabel(Label component){
-        	component.setBackground(Color.decode("#ffffff"));
+        private void cargarEstiloLabel(JLabel component){
+        	component.setForeground(Color.decode("#000000"));
         	component.setFont(new java.awt.Font("Serif", Font.BOLD | Font.ITALIC, 14));
         }
     /** This method is called from within the constructor to
@@ -65,13 +67,13 @@ public class Recomendacion extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        label1 = new java.awt.Label();
+        label1 = new JLabel();
         cargarEstiloLabel(label1);
         jScrollPane1 = new javax.swing.JScrollPane();
         cargarEstilo(jScrollPane1);
         areaRecomendacion = new javax.swing.JTextArea();
         cargarEstilo(areaRecomendacion);
-        label2 = new java.awt.Label();
+        label2 = new JLabel();
         cargarEstiloLabel(label2);
         botonRetirar = new javax.swing.JButton();
         cargarEstilo(botonRetirar);
@@ -205,7 +207,7 @@ public class Recomendacion extends javax.swing.JFrame {
     private javax.swing.JButton botonPaso;
     private javax.swing.JButton botonRetirar;
     private javax.swing.JScrollPane jScrollPane1;
-    private java.awt.Label label1;
-    private java.awt.Label label2;
+    private JLabel label1;
+    private JLabel label2;
     // End of variables declaration//GEN-END:variables
 }

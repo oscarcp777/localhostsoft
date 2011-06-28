@@ -77,7 +77,7 @@ public class MainController {
 		
 		// Datos Mesa
 		//TODO setear valor luz
-		table.setBigBlind(20);
+		table.setBigBlind(principalView.getBigBlind());
 		if (principalView.isPlayerBigBlind()){
 			table.getMainPlayer().setPosition(Constants.Blind.BIG_BLIND);
 			table.setPotSize(2*table.getBigBlind() + table.getOpponentPlayer().getBet());			
