@@ -78,8 +78,6 @@ public class Recomendacion extends javax.swing.JFrame {
         cargarEstilo(botonRetirar);
         botonAumento = new javax.swing.JButton();
         cargarEstilo(botonAumento);
-        botonPaso = new javax.swing.JButton();
-        cargarEstilo(botonPaso);
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Recomendacion");
         setAlwaysOnTop(true);
@@ -93,26 +91,22 @@ public class Recomendacion extends javax.swing.JFrame {
 
         label2.setText("Que hizo el oponente?");
 
-        botonRetirar.setText("Se retiro o me retire");
+        botonRetirar.setText("Fin consulta");
         botonRetirar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonRetirarActionPerformed(evt);
             }
         });
 
-        botonAumento.setText("Aumento");
+        botonAumento.setText("Aumentó");
 //        botonAumento.addActionListener(new java.awt.event.ActionListener() {
 //            public void actionPerformed(java.awt.event.ActionEvent evt) {
 //                botonAumentoActionPerformed(evt);
 //            }
 //        });
 
-        botonPaso.setText("Paso");
-        botonPaso.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonPasoActionPerformed(evt);
-            }
-        });
+//        botonPaso.setText("Paso");
+
         this.panelPrincipal= new PanelPrincipal();
         this.getContentPane().add(this.panelPrincipal);
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this.panelPrincipal);
@@ -130,11 +124,10 @@ public class Recomendacion extends javax.swing.JFrame {
                             .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(botonRetirar)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(botonAumento, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(botonRetirar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(botonPaso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(botonAumento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
@@ -150,7 +143,6 @@ public class Recomendacion extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonRetirar)
-                    .addComponent(botonPaso)
                     .addComponent(botonAumento))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
@@ -178,10 +170,10 @@ public class Recomendacion extends javax.swing.JFrame {
 //        this.princi.reset();
 //        this.setVisible(false);
     }
-    private void botonPasoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonPasoActionPerformed
-        this.reset();
-        return;
-    }//GEN-LAST:event_botonPasoActionPerformed
+//    private void botonPasoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonPasoActionPerformed
+//        this.reset();
+//        return;
+//    }//GEN-LAST:event_botonPasoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -202,7 +194,7 @@ public class Recomendacion extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea areaRecomendacion;
     private javax.swing.JButton botonAumento;
-    private javax.swing.JButton botonPaso;
+//    private javax.swing.JButton botonPaso;
     private javax.swing.JButton botonRetirar;
     private javax.swing.JScrollPane jScrollPane1;
     private JLabel label1;
