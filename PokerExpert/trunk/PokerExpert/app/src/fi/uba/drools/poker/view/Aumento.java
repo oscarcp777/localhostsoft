@@ -21,6 +21,17 @@ import javax.swing.JLabel;
  *
  * @author Federico
  */
+
+
+
+
+/** TODO
+*	OSKY en la 3er ventana cuando te dicen cuando aumento el oponente despues de q yo le aumente
+*	setear en el oponente Action.RE_RAISE o Action.ALL_IN la diferencia esta en si aposto todas o no
+*	tenes q hacer una pequeÃ±a logica si aposto todas es all in si le quedaron algunas no importa cuantas es re raise
+* 	en table.potSize tenes q poner la suma total, lo q aposte yo mas lo q aposto el todo.
+*  la action del mainPlayer no me la cambies, es mas se tiene q mantener como estaba. y el rankHand tambien
+*/
 public class Aumento extends javax.swing.JFrame {
     private static final long serialVersionUID = 1L;
     
@@ -70,9 +81,9 @@ public class Aumento extends javax.swing.JFrame {
 //            }
 //        });
 
-        label1.setText("Cuanto apostó el Jugador?");
+        label1.setText("Cuanto apostï¿½ el Jugador?");
 
-        label2.setText("Cuanto aumentó el Oponente?");
+        label2.setText("Cuanto aumentï¿½ el Oponente?");
         this.panelPrincipal= new PanelPrincipal();
         this.getContentPane().add(this.panelPrincipal);
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this.panelPrincipal);
