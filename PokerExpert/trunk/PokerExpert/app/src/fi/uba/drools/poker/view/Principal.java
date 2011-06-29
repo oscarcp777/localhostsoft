@@ -11,8 +11,11 @@
 package fi.uba.drools.poker.view;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 
+import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -87,8 +90,10 @@ public class Principal extends javax.swing.JFrame {
         labelJugador1.setForeground(Color.decode("#000000"));
         jSeparator1 = new javax.swing.JSeparator();
         labelFichas2 = new JLabel();
+   
         cargarEstiloLabel(labelFichas2);
         labelApostadas2 = new JLabel();
+        labelApostadas2.setVisible(false);
         cargarEstiloLabel(labelApostadas2);
         jSeparator2 = new javax.swing.JSeparator();
         labelJugador2 = new JLabel();
@@ -116,6 +121,7 @@ public class Principal extends javax.swing.JFrame {
         fichasApostadasJugador = new javax.swing.JSpinner();
         cargarEstilo(fichasApostadasJugador);
         fichasApostadasOponente = new javax.swing.JSpinner();
+        fichasApostadasOponente.setVisible(false);
         cargarEstilo(fichasApostadasOponente);
         fichasOponente = new javax.swing.JSpinner();
         cargarEstilo(fichasOponente);
@@ -142,6 +148,14 @@ public class Principal extends javax.swing.JFrame {
         mapSuit.put("Tréboles","c");
         mapSuit.put("Corazones","h");
         mapSuit.put( "Picas","s");
+        ActionListener actionListener = new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+              AbstractButton abstractButton = (AbstractButton) actionEvent.getSource();
+              boolean selected = abstractButton.getModel().isSelected();
+              luzGrandeActionPerformed(selected);
+            }
+          };
+        luzGrande.addActionListener(actionListener);
         palo1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Corazones", "Diamantes", "Picas", "Tréboles" }));
         palo1.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -187,11 +201,7 @@ public class Principal extends javax.swing.JFrame {
         personalidadOponente.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Agresivo", "Ajustado" }));
 
         buttonRecomendar.setText("Recomendar Jugada");
-//        buttonRecomendar.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                buttonRecomendarActionPerformed(evt);
-//            }
-//        });
+        
 
         labelImagen1.setText("jLabel1");
 
@@ -232,20 +242,20 @@ public class Principal extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(labelJugador2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(labelJugador2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(personalidadOponente, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(90,90,90)
-                                .addComponent(fichasApostadasJugador, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+//                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+//                                .addGap(90,90,90)
+//                                .addComponent(fichasApostadasJugador, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(labelApostadas2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(labelJugador1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(labelFichas1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(labelFichas1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(luzGrande)
@@ -255,8 +265,8 @@ public class Principal extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER, false)
                             .addComponent(buttonRecomendar, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(labelApostadas1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(24,24,24)
+//                                .addComponent(labelApostadas1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(104,104,104)
                                 .addComponent( fichasOponente, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
@@ -309,10 +319,10 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(labelJugador1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(luzGrande, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                     .addComponent(labelApostadas1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                     .addComponent(fichasApostadasJugador, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+//                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+//                     .addComponent(labelApostadas1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                     .addComponent(fichasApostadasJugador, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+//                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                    	.addComponent(labelFichas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(fichasJugador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -338,7 +348,16 @@ public class Principal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    private void luzGrandeActionPerformed(boolean selected) {
+    	if(selected){
+    		this.fichasApostadasOponente.setVisible(true);
+    		this.labelApostadas2.setVisible(true);
+    	}else{
+       		this.fichasApostadasOponente.setVisible(false);
+    		this.labelApostadas2.setVisible(false);
+    	}
 
+    }
     private void palo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_palo1ActionPerformed
         carta1.setSuit(carta1.getSuit(mapSuit.get((String)palo1.getSelectedItem())));
         updateLabel (carta1,labelImagen1);

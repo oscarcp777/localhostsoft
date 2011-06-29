@@ -131,15 +131,21 @@ public class MainController {
 		aumentoView = new Aumento();
 		aumentoView.setVisible(true);
 		aumentoView.addContinueListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-            		table.getMainPlayer().setBet(aumentoView.getPlayerBet());
-            		table.getOpponentPlayer().setBet(aumentoView.getOpponentBet());
-            		table.setPotSize(table.getPotSize() + aumentoView.getPlayerBet() + aumentoView.getOpponentBet());
-            		aumentoView.setVisible(false);
-            		decide(table);
-            }
-        });
-        recomendationView.setVisible(false);
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				table.getMainPlayer().setBet(aumentoView.getPlayerBet());
+				
+				if(table.getOpponentPlayer().getCash()==aumentoView.getOpponentBet()){
+					table.getOpponentPlayer().setDecision(new Decision(Action.ALL_IN,0));
+				}else{
+					table.getOpponentPlayer().setDecision(new Decision(Action.RE_RAISE,0));
+				}
+				table.getOpponentPlayer().setBet(aumentoView.getOpponentBet());
+				table.setPotSize(table.getPotSize() + aumentoView.getPlayerBet() + aumentoView.getOpponentBet());
+				aumentoView.setVisible(false);
+				decide(table);
+			}
+		});
+		recomendationView.setVisible(false);
 	}
 	
 	private void resetPrincipalView(){

@@ -81,9 +81,9 @@ public class Aumento extends javax.swing.JFrame {
 //            }
 //        });
 
-        label1.setText("Cuanto apostï¿½ el Jugador?");
+        label1.setText("Cuanto apostó el Jugador?");
 
-        label2.setText("Cuanto aumentï¿½ el Oponente?");
+        label2.setText("Cuanto aumentó el Oponente?");
         this.panelPrincipal= new PanelPrincipal();
         this.getContentPane().add(this.panelPrincipal);
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this.panelPrincipal);
