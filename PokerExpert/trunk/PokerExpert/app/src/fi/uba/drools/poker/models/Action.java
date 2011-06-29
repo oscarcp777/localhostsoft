@@ -25,6 +25,9 @@ public enum Action {
     /** Raising the current bet. */
     RAISE("Subir", "raises"),
     
+    /** Re Raising the current bet. */
+    RE_RAISE("Re Subir", "re raises"),
+    
     /** Folding. */
     FOLD("Dejar la mano", "folds"),
     
