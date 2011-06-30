@@ -37,6 +37,12 @@ public class Decision {
 		case RAISE:
 			return "Usted debe subir a " + betsize + " fichas";
 		
+		case RE_RAISE:
+			return "Usted debe re subir a " + betsize + " fichas";
+		
+		case ALL_IN:
+			return "Usted debe apostar todo";
+			
 		case CHECK:
 			return "Usted debe pasar";
 			
