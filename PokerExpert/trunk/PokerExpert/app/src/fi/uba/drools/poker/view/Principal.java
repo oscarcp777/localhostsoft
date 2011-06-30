@@ -175,6 +175,7 @@ public class Principal extends javax.swing.JFrame {
         });
 
         palo2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Corazones", "Diamantes", "Picas", "Tréboles" }));
+        palo2.setSelectedIndex(2);
         palo2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 palo2ActionPerformed(evt);
