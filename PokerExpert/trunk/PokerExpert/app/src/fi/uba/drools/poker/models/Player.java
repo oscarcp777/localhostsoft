@@ -14,7 +14,15 @@ public class Player {
     
     /** Name. */
 	private Decision decision;
-    private final String name;
+	
+	public void setCash(Integer cash) {
+		this.cash = cash;
+	}
+    public void subBet(Integer bet){
+    	
+    	this.cash-=bet;
+    }
+	private final String name;
     private String position;
     private String strategy; // puede ser AGGRESSIVE o TIGHT
   	

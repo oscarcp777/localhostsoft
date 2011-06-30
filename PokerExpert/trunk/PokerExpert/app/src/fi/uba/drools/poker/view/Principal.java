@@ -196,7 +196,7 @@ public class Principal extends javax.swing.JFrame {
 
         labelJugador2.setText("Oponente");
 
-        personalidadOponente.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Agresivo", "Ajustado" }));
+        personalidadOponente.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Agresivo", "Pasivo" }));
 
         buttonRecomendar.setText("Recomendar Jugada");
         

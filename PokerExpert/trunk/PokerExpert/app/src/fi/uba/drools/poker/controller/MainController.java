@@ -85,10 +85,15 @@ public class MainController {
 		table.setBigBlind(principalView.getBigBlind());
 		if (principalView.isPlayerBigBlind()){
 			table.getMainPlayer().setPosition(Constants.Blind.BIG_BLIND);
-			table.setPotSize(2*table.getBigBlind() + table.getOpponentPlayer().getBet());			
+		    Integer apuesta=table.getBigBlind() + table.getOpponentPlayer().getDecision().getBetsize();
+			table.setPotSize(apuesta);	
+//			table.getOpponentPlayer().subBet(table.getOpponentPlayer().getDecision().getBetsize());
+//			table.getMainPlayer().subBet(table.getBigBlind());
 		}else{
 			table.getMainPlayer().setPosition(Constants.Blind.SMALL_BLIND);
 			table.setPotSize(table.getBigBlind() + table.getBigBlind()/2);
+//			table.getOpponentPlayer().subBet(table.getBigBlind());
+//			table.getMainPlayer().subBet(table.getBigBlind()/2);
 		}
 		decide(table);
 		
@@ -140,8 +145,10 @@ public class MainController {
 				}else{
 					table.getOpponentPlayer().setDecision(new Decision(Action.RE_RAISE,0));
 				}
+				table.getOpponentPlayer().subBet(aumentoView.getOpponentBet());
+				table.getMainPlayer().subBet(aumentoView.getPlayerBet());
 				table.getOpponentPlayer().setBet(aumentoView.getOpponentBet());
-				table.setPotSize(table.getPotSize() + aumentoView.getPlayerBet() + aumentoView.getOpponentBet());
+				table.setPotSize( aumentoView.getPlayerBet() + aumentoView.getOpponentBet());
 				aumentoView.setVisible(false);
 				decide(table);
 			}

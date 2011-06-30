@@ -6,7 +6,13 @@ public class Table {
 	public Player opponentPlayer;
 	public Integer bigBlind;
 	public Integer potSize;
-	
+	private Boolean firstBet;
+    public Boolean getFirstBet() {
+		return firstBet;
+	}
+	public void setFirstBet(Boolean firstBet) {
+		this.firstBet = firstBet;
+	}
 	public Integer getPotSize() {
 		return potSize;
 	}
