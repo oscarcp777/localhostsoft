@@ -73,6 +73,8 @@ public class MainController {
 		// Datos Oponente
 		table.setOpponentPlayer(new Player("opponentPlayer", principalView.getOpponentCoins()));
 		//TODO falta en la interfaz un combobox con la ultima accion ejecutada por el oponente
+		
+		
 		table.getOpponentPlayer().setDecision(new Decision(Action.CALL,0));
 		table.getOpponentPlayer().setBet(principalView.getOpponentBetCoins());
 		if (principalView.getOpponentStrategy().equals("Agresivo"))
@@ -87,13 +89,15 @@ public class MainController {
 			table.getMainPlayer().setPosition(Constants.Blind.BIG_BLIND);
 		    Integer apuesta=table.getBigBlind() + table.getOpponentPlayer().getDecision().getBetsize();
 			table.setPotSize(apuesta);	
-//			table.getOpponentPlayer().subBet(table.getOpponentPlayer().getDecision().getBetsize());
-//			table.getMainPlayer().subBet(table.getBigBlind());
+			if(table.getOpponentPlayer().getDecision().getBetsize().equals(table.getBigBlind())){
+			table.getOpponentPlayer().setDecision(new Decision(Action.CALL,0));
+			}else{
+				table.getOpponentPlayer().setDecision(new Decision(Action.RAISE,0));
+			}
 		}else{
 			table.getMainPlayer().setPosition(Constants.Blind.SMALL_BLIND);
 			table.setPotSize(table.getBigBlind() + table.getBigBlind()/2);
-//			table.getOpponentPlayer().subBet(table.getBigBlind());
-//			table.getMainPlayer().subBet(table.getBigBlind()/2);
+			table.getOpponentPlayer().setDecision(new Decision(Action.CALL,0));
 		}
 		decide(table);
 		
@@ -140,7 +144,7 @@ public class MainController {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				table.getMainPlayer().setBet(aumentoView.getPlayerBet());
 				
-				if(table.getOpponentPlayer().getCash()==aumentoView.getOpponentBet()){
+				if(table.getOpponentPlayer().getCash()>=aumentoView.getOpponentBet().intValue()){
 					table.getOpponentPlayer().setDecision(new Decision(Action.ALL_IN,0));
 				}else{
 					table.getOpponentPlayer().setDecision(new Decision(Action.RE_RAISE,0));

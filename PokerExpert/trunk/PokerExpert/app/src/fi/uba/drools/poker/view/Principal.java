@@ -155,6 +155,7 @@ public class Principal extends javax.swing.JFrame {
           };
         luzGrande.addActionListener(actionListener);
         palo1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Corazones", "Diamantes", "Picas", "Tréboles" }));
+       
         palo1.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 palo1ItemStateChanged(evt);
