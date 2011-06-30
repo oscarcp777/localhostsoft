@@ -1,6 +1,10 @@
 package fi.uba.drools.poker.utils;
 
 public interface Constants {
+	public static final String COLOR_LETRAS="#000000";
+	public static final String COLOR_LETRAS_COMPONENT="#000000";
+	public static final String COLOR_COMPONENT="#ffffff";
+	public static final String IMAGEN_FONDO="images/fondoPoker.jpg";
 	public interface Atributos{
 		public static final String POTSIZE="POTSIZE";
 		public static final String MAIN_PLAYER_CASH="MAIN_PLAYER_CASH";

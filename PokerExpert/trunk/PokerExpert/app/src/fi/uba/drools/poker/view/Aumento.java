@@ -17,6 +17,8 @@ import java.awt.Font;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 
+import fi.uba.drools.poker.utils.Constants;
+
 /**
  *
  * @author Federico
@@ -44,13 +46,13 @@ public class Aumento extends javax.swing.JFrame {
         this.setResizable(false);
     }
     private void cargarEstilo(JComponent component){
-    	component.setForeground(Color.decode("#000000"));
-    	component.setBackground(Color.decode("#ffffff"));
+    	component.setForeground(Color.decode(Constants.COLOR_LETRAS_COMPONENT));
+    	component.setBackground(Color.decode(Constants.COLOR_COMPONENT));
     	component.setFont(new java.awt.Font("Serif", Font.BOLD | Font.ITALIC, 14));
         
     }
     private void cargarEstiloLabel(JLabel component){
-    	component.setForeground(Color.decode("#000000"));
+    	component.setForeground(Color.decode(Constants.COLOR_LETRAS));
     	component.setFont(new java.awt.Font("Serif", Font.BOLD | Font.ITALIC, 14));
     }
     /** This method is called from within the constructor to
@@ -60,7 +62,7 @@ public class Aumento extends javax.swing.JFrame {
      */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
+    	 setBounds(new java.awt.Rectangle(300, 100, 0, 0));
         aumentoJugador = new javax.swing.JSpinner();
         cargarEstilo(aumentoJugador);
         aumentoOponente = new javax.swing.JSpinner();
@@ -97,12 +99,11 @@ public class Aumento extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(47, 47, 47)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(aumentoJugador)
                             .addComponent(aumentoOponente, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(107, 107, 107)
+                        .addGap(77,77,77)
                         .addComponent(botonContinuar)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );

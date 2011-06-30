@@ -4,6 +4,8 @@ import java.awt.Graphics;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+
+import fi.uba.drools.poker.utils.Constants;
 /**
  * Clase que hereda de Jpanel utilizada como imagen de fondo del Applet
  * @author ocaceres
@@ -27,8 +29,8 @@ public class PanelPrincipal extends JPanel {
 	protected void paintComponent(Graphics g) {
 		
 		ClassLoader cl = this.getClass().getClassLoader();
-		ImageIcon imagen =  new ImageIcon(cl.getResource("images/fondoPoker3.jpg"));
-		g.drawImage(imagen.getImage(),0,0,400,600,null);
+		ImageIcon imagen =  new ImageIcon(cl.getResource(Constants.IMAGEN_FONDO));
+		g.drawImage(imagen.getImage(),0,0,280,540,null);
 		setOpaque(false);
 		super.paintComponent(g);
     }

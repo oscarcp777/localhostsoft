@@ -16,6 +16,8 @@ import java.awt.Font;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 
+import fi.uba.drools.poker.utils.Constants;
+
 /**
  *
  * @author Federico
@@ -49,13 +51,13 @@ public class Recomendacion extends javax.swing.JFrame {
 
 
         private void cargarEstilo(JComponent component){
-        	component.setForeground(Color.decode("#000000"));
-        	component.setBackground(Color.decode("#ffffff"));
+        	component.setForeground(Color.decode(Constants.COLOR_LETRAS_COMPONENT));
+        	component.setBackground(Color.decode(Constants.COLOR_COMPONENT));
         	component.setFont(new java.awt.Font("Serif", Font.BOLD | Font.ITALIC, 14));
             
         }
         private void cargarEstiloLabel(JLabel component){
-        	component.setForeground(Color.decode("#000000"));
+        	component.setForeground(Color.decode(Constants.COLOR_LETRAS));
         	component.setFont(new java.awt.Font("Serif", Font.BOLD | Font.ITALIC, 14));
         }
     /** This method is called from within the constructor to
@@ -65,9 +67,10 @@ public class Recomendacion extends javax.swing.JFrame {
      */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
+    	 setBounds(new java.awt.Rectangle(300, 100, 0, 0));
         label1 = new JLabel();
         cargarEstiloLabel(label1);
+        label1.setFont(new java.awt.Font("Serif", Font.BOLD | Font.ITALIC, 16));
         jScrollPane1 = new javax.swing.JScrollPane();
         cargarEstilo(jScrollPane1);
         areaRecomendacion = new javax.swing.JTextArea();
@@ -84,9 +87,13 @@ public class Recomendacion extends javax.swing.JFrame {
 
         label1.setText("Recomendacion del sistema experto");
 
-        areaRecomendacion.setColumns(20);
+//        areaRecomendacion.setColumns(20);
+//        areaRecomendacion.append("Uds. debera jugar All In en todas la jugadas que tenga que jugar por que si");
         areaRecomendacion.setEditable(false);
-        areaRecomendacion.setRows(5);
+        areaRecomendacion.setLineWrap(true);
+        areaRecomendacion.setWrapStyleWord(true);
+//        areaRecomendacion.setRows(5);
+        areaRecomendacion.setFont(new Font("Serif", Font.ITALIC, 20));
         jScrollPane1.setViewportView(areaRecomendacion);
 
         label2.setText("Que hizo el oponente?");
@@ -116,10 +123,10 @@ public class Recomendacion extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
+                        .addGap(20,20,20)
                         .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
+                        .addGap(30,30,30)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -128,19 +135,22 @@ public class Recomendacion extends javax.swing.JFrame {
                                     .addComponent(botonRetirar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(botonAumento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(18, Short.MAX_VALUE))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(20, 20, 20)
                 .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonRetirar)
                     .addComponent(botonAumento))

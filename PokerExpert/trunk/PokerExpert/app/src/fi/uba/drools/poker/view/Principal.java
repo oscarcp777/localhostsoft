@@ -22,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import fi.uba.drools.poker.models.Card;
+import fi.uba.drools.poker.utils.Constants;
 import fi.uba.drools.poker.utils.ResourceManager;
 
 /**
@@ -31,7 +32,7 @@ import fi.uba.drools.poker.utils.ResourceManager;
 public class Principal extends javax.swing.JFrame {
 
     private static final long serialVersionUID = 1L;
-    
+   
 	private Card carta1;
     private Card carta2;
     private HashMap< String, String> mapSuit = new  HashMap<String, String>();
@@ -47,15 +48,14 @@ public class Principal extends javax.swing.JFrame {
         this.setResizable(false);
     }
     private void cargarEstilo(JComponent component){
-    	component.setBackground(Color.decode("#FFFFFF"));
-    	component.setForeground(Color.decode("#000000"));
+    	component.setBackground(Color.decode(Constants.COLOR_COMPONENT));
+    	component.setForeground(Color.decode(Constants.COLOR_LETRAS_COMPONENT));
 //    	component.setOpaque(false);
-//    	component.setFont(new java.awt.Font("Serif", Font.BOLD | Font.ITALIC, 14));
+    	component.setFont(new java.awt.Font("Serif", Font.BOLD | Font.ITALIC, 14));
         
     }
     private void cargarEstiloLabel(JLabel component){
-//    	component.setBackground(Color.decode("#ffffff"));
-    	component.setForeground(Color.decode("#000000"));
+    	component.setForeground(Color.decode(Constants.COLOR_LETRAS));
     	component.setFont(new java.awt.Font("Serif", Font.BOLD | Font.ITALIC, 14));
     }
     /** This method is called from within the constructor to
@@ -80,14 +80,13 @@ public class Principal extends javax.swing.JFrame {
         labelFichas1 = new JLabel();
         cargarEstiloLabel(labelFichas1);
         labelCartas = new JLabel();
-//        labelCartas.setBackground(new Color(0xF5FFFA));
         labelCartas.setFont(new Font("Serif", Font.BOLD | Font.ITALIC, 20));
-        labelCartas.setForeground(Color.decode("#000000"));
+        labelCartas.setForeground(Color.decode(Constants.COLOR_LETRAS));
         labelApostadas1 = new JLabel();
         cargarEstiloLabel(labelApostadas1);
         labelJugador1 = new JLabel();
         labelJugador1.setFont(new Font("Serif", Font.BOLD | Font.ITALIC, 20));
-        labelJugador1.setForeground(Color.decode("#000000"));
+        labelJugador1.setForeground(Color.decode(Constants.COLOR_LETRAS));
         jSeparator1 = new javax.swing.JSeparator();
         labelFichas2 = new JLabel();
    
@@ -98,13 +97,12 @@ public class Principal extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         labelJugador2 = new JLabel();
         labelJugador2.setFont(new Font("Serif", Font.BOLD | Font.ITALIC, 20));
-        labelJugador2.setForeground(Color.decode("#000000"));
+        labelJugador2.setForeground(Color.decode(Constants.COLOR_LETRAS));
         personalidadOponente = new javax.swing.JComboBox();
         cargarEstilo(personalidadOponente);
         buttonRecomendar = new javax.swing.JButton();
-        buttonRecomendar.setForeground(Color.decode("#000000"));
-        buttonRecomendar.setBackground(Color.decode("#ffffff"));
-        
+        buttonRecomendar.setForeground(Color.decode(Constants.COLOR_LETRAS_COMPONENT));
+        buttonRecomendar.setBackground(Color.decode(Constants.COLOR_COMPONENT));
         buttonRecomendar.setFont(new java.awt.Font("Serif", Font.BOLD | Font.ITALIC, 20));
 
       
@@ -135,7 +133,7 @@ public class Principal extends javax.swing.JFrame {
         setTitle("Sistema Experto");
         setAlwaysOnTop(true);
         setBackground(new java.awt.Color(0, 153, 0));
-//        setBounds(new java.awt.Rectangle(0, 150, 0, 0));
+        setBounds(new java.awt.Rectangle(300, 100, 0, 0));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         numero1.setModel(new javax.swing.DefaultComboBoxModel(new String[] {  "A", "2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K" }));
@@ -342,7 +340,7 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(fichasOponente, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addComponent(buttonRecomendar)
-                .addGap(18, 18,18)
+                .addGap(38, 38,38)
                 .addContainerGap())
         );
 
