@@ -19,7 +19,7 @@ public class Player {
     private String strategy; // puede ser AGGRESSIVE o TIGHT
   	
 	/** Hand of cards. */
-    private  Hand hand;
+    private  Hand hand=null;
     
     public void setHand(Hand hand) {
 		this.hand = hand;
@@ -333,14 +333,37 @@ public class Player {
 //        clone.action = action;
         return clone;
     }
+
+
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append(" [ ");
+		if (position != null) {
+			builder.append("Position=");
+			builder.append(position);
+			builder.append(" ,");
+		}
+		if (hand != null) {
+			builder.append("Mano=");
+			builder.append(hand);
+			builder.append(", ");
+		}
+		if (cash != null) {
+			builder.append("Fichas=");
+			builder.append(cash);
+			builder.append(" , ");
+		}
+		builder.append(" ] \n");
+		if (decision != null) {
+			builder.append("                 Decision=");
+			builder.append(decision);
+		}
+		
+		return builder.toString();
+	}
     
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
-    @Override
-    public String toString() {
-        return name;
-    }
+    
     
 }

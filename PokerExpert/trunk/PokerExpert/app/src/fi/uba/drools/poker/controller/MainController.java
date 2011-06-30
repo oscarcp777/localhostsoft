@@ -96,6 +96,7 @@ public class MainController {
 	
 	@SuppressWarnings("serial")
 	private void decide(Table table){
+		System.out.println(table);
 		System.out.println("la mano es "+table.getMainPlayer().getHand()+" el rango de mano es: "+ table.getMainPlayer().getRankHand());
 		System.out.println("la posicion es "+table.getMainPlayer().getPosition()+" la accion del rival es "+ table.getOpponentPlayer().getDecision().getAction());
 		

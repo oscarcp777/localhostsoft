@@ -8,6 +8,7 @@ package fi.uba.drools.poker.models;
  *
  */
 public class Decision {
+	
 	public Action action;
 	public Integer betsize;
 	
@@ -59,5 +60,20 @@ public class Decision {
 			return "No se determino ninguna accion";
 		}
 	}
-	    
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append(" [");
+		if (action != null) {
+			builder.append("action=");
+			builder.append(action);
+			builder.append(", ");
+		}
+		if (betsize != null) {
+			builder.append("Apuesta=");
+			builder.append(betsize);
+		}
+		builder.append("]");
+		return builder.toString();
+	}
 }

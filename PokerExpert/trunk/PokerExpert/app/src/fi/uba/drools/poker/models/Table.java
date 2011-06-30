@@ -13,6 +13,32 @@ public class Table {
 	public void setPotSize(Integer potSize) {
 		this.potSize = potSize;
 	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Datos de la mesa:[ ");
+		if (bigBlind != null) {
+			builder.append("Luz Grande=");
+			builder.append(bigBlind);
+			builder.append(",");
+		}
+		if (potSize != null) {
+			builder.append("Tamaño pozo=");
+			builder.append(potSize);
+			builder.append("] \n  ");
+		}
+		if (mainPlayer != null) {
+			builder.append("Datos Jugador:");
+			builder.append(mainPlayer);
+			builder.append(" \n  ");
+		}
+		if (opponentPlayer != null) {
+			builder.append("Datos Oponente=");
+			builder.append(opponentPlayer);
+		}
+		
+		return builder.toString();
+	}
 	public Integer getBigBlind() {
 		return bigBlind;
 	}

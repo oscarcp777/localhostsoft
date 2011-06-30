@@ -41,7 +41,7 @@ public class Principal extends javax.swing.JFrame {
     /** Creates new form Priciapl */
     public Principal() {
         carta1 = new Card(Card.ACE,Card.HEARTS);
-        carta2 = new Card(Card.ACE,Card.HEARTS);
+        carta2 = new Card(Card.ACE,Card.SPADES);
         initComponents();
         updateLabel (carta1,labelImagen1);
         updateLabel (carta2,labelImagen2);
@@ -497,7 +497,7 @@ public class Principal extends javax.swing.JFrame {
 		return (Integer)valorLuzGrande.getValue();
 	}
 	public String getOpponentStrategy(){
-		System.out.println("personalidadOponente"+personalidadOponente.getSelectedItem());
+//		System.out.println("personalidadOponente"+personalidadOponente.getSelectedItem());
 		return (String)personalidadOponente.getSelectedItem();
 	}
 
