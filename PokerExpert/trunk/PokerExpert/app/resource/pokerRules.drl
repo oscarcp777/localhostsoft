@@ -22,6 +22,7 @@ rule "Soy luz grande, oponente hizo call y mi mano esta en el TOP 30%"
   #  System.out.println("Mi posicion es "+mainPlayer.getPosition()+" ,mi mano es "+mainPlayer.getHand().toString()+".");
   int potSize = $table.getPotSize();
   $table.mainPlayer.setDecision(new Decision(Action.RAISE, potSize + 5*potSize/10));
+  System.out.println("Aplico Regla # 1");
 end
 
 rule "Soy luz grande, oponente hizo call y mi mano esta entre TOP 30% - 40%"
@@ -53,7 +54,7 @@ rule "Soy luz grande, oponente hizo call y mi mano esta entre TOP 30% - 40%"
   		$table.mainPlayer.setDecision(new Decision(Action.CALL,0));
   	} 
   }
-  
+  System.out.println("Aplico Regla # 2");
 end
 
 rule "Soy luz grande, oponente hizo call y mi mano esta en el TOP 50%"
@@ -84,7 +85,7 @@ rule "Soy luz grande, oponente hizo call y mi mano esta en el TOP 50%"
   		$table.mainPlayer.setDecision(new Decision(Action.CALL,0));
   	} 
   }
-  
+  System.out.println("Aplico Regla # 3");
 end
 
 rule "Soy luz grande, oponente hizo call y mi mano esta entre TOP >50% - 100%"
@@ -94,7 +95,7 @@ rule "Soy luz grande, oponente hizo call y mi mano esta entre TOP >50% - 100%"
  then 
   #  System.out.println("Mi posicion es "+mainPlayer.getPosition()+" ,mi mano es "+mainPlayer.getHand().toString()+".");
   $table.mainPlayer.setDecision(new Decision(Action.CHECK,0));
-   
+   System.out.println("Aplico Regla # 4");
 end
 
 
@@ -108,7 +109,7 @@ rule "Soy luz grande, oponente hizo raise y mi mano esta entre TOP 5% - 20%"
   int potSize = $table.getPotSize();
   System.out.println("el pozo es: "+potSize); 
   $table.mainPlayer.setDecision(new Decision(Action.RAISE, 2*potSize + potSize/2)); //TODO analizar bien cuanto subir
-   
+   System.out.println("Aplico Regla # 5");
 end
 
 rule "Soy luz grande, oponente hizo raise y mi mano esta entre TOP 30%"
@@ -133,7 +134,7 @@ rule "Soy luz grande, oponente hizo raise y mi mano esta entre TOP 30%"
   		$table.mainPlayer.setDecision(new Decision(Action.CALL,0));
   	} 
    }
-   
+   System.out.println("Aplico Regla # 6");
 end
 
 rule "Soy luz grande, oponente hizo raise y mi mano esta entre TOP 40% - 60%"
@@ -192,7 +193,7 @@ rule "Soy luz grande, oponente hizo raise y mi mano esta entre TOP 40% - 60%"
   else{
   	$table.mainPlayer.setDecision(new Decision(Action.FOLD,0));
   }
-  
+  System.out.println("Aplico Regla # 7");
 end
 
 rule "Soy luz grande, oponente hizo raise y mi mano esta entre TOP 70% - 80%"
@@ -223,6 +224,7 @@ rule "Soy luz grande, oponente hizo raise y mi mano esta entre TOP 70% - 80%"
   else{
   	$table.mainPlayer.setDecision(new Decision(Action.FOLD,0));
   }
+  System.out.println("Aplico Regla # 8");
 end
 
 rule "Soy luz grande, oponente hizo raise y mi mano esta entre TOP 90% - 100%"
@@ -232,7 +234,7 @@ rule "Soy luz grande, oponente hizo raise y mi mano esta entre TOP 90% - 100%"
  then 
   #  System.out.println("Mi posicion es "+mainPlayer.getPosition()+" ,mi mano es "+mainPlayer.getHand().toString()+".");
   $table.mainPlayer.setDecision(new Decision(Action.FOLD,0));
-   
+   System.out.println("Aplico Regla # 9");
 end
 
 
@@ -274,7 +276,7 @@ rule "REGLA 13 --> Soy luz grande, oponente hizo call, hice raise (mi mano esta 
 	  	}
 	  	  	
 	 }
-      
+      System.out.println("Aplico Regla # 10");
 end
 
 
@@ -337,7 +339,7 @@ rule "REGLA 14 --> Soy luz grande, oponente hizo call, hice raise (mi mano esta 
 	  		$table.mainPlayer.setDecision(new Decision(Action.CALL,0));
 	  	} 	
 	 }
-      
+      System.out.println("Aplico Regla # 11");
 end
 
 rule "REGLA 15 --> Soy luz grande, oponente hizo call, hice raise (mi mano esta en el TOP 30%-40%) y el oponente hizo re raise"
@@ -385,7 +387,7 @@ rule "REGLA 15 --> Soy luz grande, oponente hizo call, hice raise (mi mano esta 
 	  	}
 	  	  	
 	 }
-      
+      System.out.println("Aplico Regla # 12");
 end
 
 rule "REGLA 16 --> Soy luz grande, oponente hizo call, hice raise (mi mano esta en el TOP 30%-40%) y el oponente hizo ALL IN"
@@ -440,7 +442,7 @@ rule "REGLA 16 --> Soy luz grande, oponente hizo call, hice raise (mi mano esta 
 	  		}
 	  	}
 	 }
-      
+      System.out.println("Aplico Regla # 13");
 end
 
 rule "REGLA 17 --> Soy luz grande, oponente hizo call, hice raise (mi mano esta en el TOP 50%) y el oponente hizo re raise"
@@ -460,7 +462,7 @@ rule "REGLA 17 --> Soy luz grande, oponente hizo call, hice raise (mi mano esta 
   else if($table.opponentPlayer.getStrategy().equals(Constants.Strategy.AGGRESIVE)){
 	 $table.mainPlayer.setDecision(new Decision(Action.FOLD,0));
 	 }
-      
+      System.out.println("Aplico Regla # 14");
 end
 
 
@@ -486,7 +488,7 @@ rule "REGLA 18 --> Soy luz grande, oponente hizo call, hice raise (mi mano esta 
   else if($table.opponentPlayer.getStrategy().equals(Constants.Strategy.AGGRESIVE)){
 	 $table.mainPlayer.setDecision(new Decision(Action.FOLD,0));
 	 }
-      
+      System.out.println("Aplico Regla # 15");
 end
 
 rule "REGLA 19 --> Soy luz grande, oponente hizo raise, hice re raise (mi mano esta en el TOP 5% al TOP 20%) y el oponente hizo re raise"
@@ -529,7 +531,7 @@ rule "REGLA 19 --> Soy luz grande, oponente hizo raise, hice re raise (mi mano e
 	  		$table.mainPlayer.setDecision(new Decision(Action.ALL_IN,0));
 	  	}
 	 }
-      
+      System.out.println("Aplico Regla # 16");
 end
 
 
@@ -605,7 +607,7 @@ rule "REGLA 20 --> Soy luz grande, oponente hizo raise, hice re raise (mi mano e
 	  		$table.mainPlayer.setDecision(new Decision(Action.CALL,0));
 	  	}
 	 }
-      
+      System.out.println("Aplico Regla # 17");
 end
 
 rule "REGLA 21 --> Soy luz grande, oponente hizo raise, hice re raise (mi mano esta en el TOP 30%) y el oponente hizo re raise"
@@ -637,7 +639,7 @@ rule "REGLA 21 --> Soy luz grande, oponente hizo raise, hice re raise (mi mano e
 	  			$table.mainPlayer.setDecision(new Decision(Action.FOLD,0));
 		} 
 	 }
-      
+      System.out.println("Aplico Regla # 18");
 end
 
 rule "REGLA 22 --> Soy luz grande, oponente hizo raise, hice re raise (mi mano esta en el TOP 30%) y el oponente hizo all in"
@@ -670,6 +672,7 @@ rule "REGLA 22 --> Soy luz grande, oponente hizo raise, hice re raise (mi mano e
 	 		$table.mainPlayer.setDecision(new Decision(Action.FOLD,0));
 	  	} 
 	 }      
+	 System.out.println("Aplico Regla # 19");
 end
 
 
@@ -695,7 +698,7 @@ rule "REGLA 23 --> Soy luz grande, oponente hizo raise, hice re raise (mi mano e
   	$table.mainPlayer.setDecision(new Decision(Action.FOLD,0));
   }
 
-      
+      System.out.println("Aplico Regla # 20");
 end
 
 
@@ -726,6 +729,7 @@ rule "Soy boton y mi mano esta en el TOP 50%"
   	$table.mainPlayer.setDecision(new Decision(Action.CALL,0));
   
   }    
+  System.out.println("Aplico Regla # 21");
 end
 
 
@@ -759,6 +763,7 @@ rule "Soy boton y mi mano esta en el TOP 60% - 80%"
   		$table.mainPlayer.setDecision(new Decision(Action.CALL,0));
   	} 
   }  
+  System.out.println("Aplico Regla # 22");
 end
 
 
@@ -782,7 +787,7 @@ rule "Soy boton y mi mano esta entre TOP 90% - 100%"
   		$table.mainPlayer.setDecision(new Decision(Action.FOLD,0));
   	} 
   }
-   
+   System.out.println("Aplico Regla # 23");
 end
 
 rule "REGLA 24 --> Soy boton, hice raise (mi mano esta en el TOP <=50%) y el oponente hizo re raise"
@@ -857,7 +862,7 @@ rule "REGLA 24 --> Soy boton, hice raise (mi mano esta en el TOP <=50%) y el opo
 	  		$table.mainPlayer.setDecision(new Decision(Action.FOLD,0));
 	  	}	  	  	 	  	  	
 	 }
-      
+      System.out.println("Aplico Regla # 24");
 end
 
 
@@ -974,7 +979,7 @@ rule "REGLA 25 --> Soy boton, hice raise (mi mano esta en el TOP <=50%) y el opo
 	  		$table.mainPlayer.setDecision(new Decision(Action.CALL,0));
 	  	} 	
 	 }
-      
+      System.out.println("Aplico Regla #25");
 end
 
 rule "REGLA 26 --> Soy boton, hice raise (mi mano esta en el TOP 60%-80%) y el oponente hizo re raise o all in"
@@ -998,7 +1003,7 @@ rule "REGLA 26 --> Soy boton, hice raise (mi mano esta en el TOP 60%-80%) y el o
   else{
   	$table.mainPlayer.setDecision(new Decision(Action.FOLD,0));
   }
-
+System.out.println("Aplico Regla # 26");
       
 end
 
@@ -1009,7 +1014,7 @@ rule "REGLA 27 --> Soy boton, hice call (mi mano esta en el TOP 90%-100%) y el o
  then 
   #  System.out.println("Mi posicion es "+mainPlayer.getPosition()+" ,mi mano es "+mainPlayer.getHand().toString()+".");
  $table.mainPlayer.setDecision(new Decision(Action.FOLD,0));
-       
+       System.out.println("Aplico Regla # 27");
 end
 
 #FIN PARA SMALL BLIND o BUTTON

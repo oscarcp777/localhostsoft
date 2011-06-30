@@ -16,7 +16,7 @@ import fi.uba.drools.poker.view.Principal;
 import fi.uba.drools.poker.view.Recomendacion;
 
 /**
- * Controlador principal de la aplicaci�n y punto de entrada de la misma
+ * Controlador principal de la aplicacion y punto de entrada de la misma
  * @author Santiago
  *
  */
@@ -87,6 +87,7 @@ public class MainController {
 		table.setBigBlind(principalView.getBigBlind());
 		if (principalView.isPlayerBigBlind()){
 			table.getMainPlayer().setPosition(Constants.Blind.BIG_BLIND);
+			table.getOpponentPlayer().setPosition(Constants.Blind.SMALL_BLIND);
 		    Integer apuesta=table.getBigBlind() + table.getOpponentPlayer().getDecision().getBetsize();
 			table.setPotSize(apuesta);	
 			if(table.getOpponentPlayer().getDecision().getBetsize().equals(table.getBigBlind())){
@@ -96,6 +97,7 @@ public class MainController {
 			}
 		}else{
 			table.getMainPlayer().setPosition(Constants.Blind.SMALL_BLIND);
+			table.getOpponentPlayer().setPosition(Constants.Blind.BIG_BLIND);
 			table.setPotSize(table.getBigBlind() + table.getBigBlind()/2);
 			table.getOpponentPlayer().setDecision(new Decision(Action.CALL,0));
 		}
@@ -105,11 +107,15 @@ public class MainController {
 	
 	@SuppressWarnings("serial")
 	private void decide(Table table){
+		System.out.println("###################################################################");
 		System.out.println(table);
 		System.out.println("la mano es "+table.getMainPlayer().getHand()+" el rango de mano es: "+ table.getMainPlayer().getRankHand());
 		System.out.println("la posicion es "+table.getMainPlayer().getPosition()+" la accion del rival es "+ table.getOpponentPlayer().getDecision().getAction());
 		
 		Decision decision = applyRules(table);
+		System.out.println("###################################################################");
+		System.out.println(table);
+		System.out.println("###################################################################");
 		String recomendation = null;
 		if (decision != null){
 			if (decision.getActionDesc() != null)
