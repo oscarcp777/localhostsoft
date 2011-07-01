@@ -93,13 +93,13 @@ public class MainController {
 			if(table.getOpponentPlayer().getDecision().getBetsize().equals(table.getBigBlind())){
 			table.getOpponentPlayer().setDecision(new Decision(Action.CALL,0));
 			}else{
-				table.getOpponentPlayer().setDecision(new Decision(Action.RAISE,0));
+				table.getOpponentPlayer().setDecision(new Decision(Action.RAISE,table.getOpponentPlayer().getDecision().getBetsize()));
 			}
 		}else{
 			table.getMainPlayer().setPosition(Constants.Blind.SMALL_BLIND);
 			table.getOpponentPlayer().setPosition(Constants.Blind.BIG_BLIND);
 			table.setPotSize(table.getBigBlind() + table.getBigBlind()/2);
-			table.getOpponentPlayer().setDecision(new Decision(Action.CALL,0));
+			table.getOpponentPlayer().setDecision(new Decision(Action.CONTINUE,0));
 		}
 		decide(table);
 		
@@ -150,10 +150,22 @@ public class MainController {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				table.getMainPlayer().setBet(aumentoView.getPlayerBet());
 				
-				if(table.getOpponentPlayer().getCash()>=aumentoView.getOpponentBet().intValue()){
-					table.getOpponentPlayer().setDecision(new Decision(Action.ALL_IN,0));
+				if(table.getMainPlayer().getDecision().getBetsize().equals(table.getBigBlind())){
+					table.getMainPlayer().setDecision(new Decision(Action.CALL,0));
 				}else{
-					table.getOpponentPlayer().setDecision(new Decision(Action.RE_RAISE,0));
+					table.getMainPlayer().setDecision(new Decision(Action.RAISE,table.getMainPlayer().getDecision().getBetsize()));
+				}
+				
+				if(table.getOpponentPlayer().getCash()<=aumentoView.getOpponentBet().intValue()){
+					table.getOpponentPlayer().setDecision(new Decision(Action.ALL_IN,aumentoView.getOpponentBet()));
+				}else{
+					if(table.getMainPlayer().getDecision().getAction() == Action.CALL){
+						table.getOpponentPlayer().setDecision(new Decision(Action.RAISE,aumentoView.getOpponentBet()));
+					}
+					else if(table.getMainPlayer().getDecision().getAction() == Action.RAISE){						
+					table.getOpponentPlayer().setDecision(new Decision(Action.RE_RAISE,aumentoView.getOpponentBet()));
+					
+					}
 				}
 				table.getOpponentPlayer().subBet(aumentoView.getOpponentBet());
 				table.getMainPlayer().subBet(aumentoView.getPlayerBet());

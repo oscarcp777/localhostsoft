@@ -14,7 +14,7 @@ import fi.uba.drools.poker.utils.Constants
 #declare any global variables here
 #REGLAS PARA BIG BLIND
 
-rule "Soy luz grande, oponente hizo call y mi mano esta en el TOP 30%"
+rule "Regla # 1 Soy luz grande, oponente hizo call y mi mano esta en el TOP 30%"
  when
   $table : Table( mainPlayer.rankHand  < 30 && mainPlayer.position  ==  Constants.Blind.BIG_BLIND, opponentPlayer.decision.action == Action.CALL)
   
@@ -25,7 +25,7 @@ rule "Soy luz grande, oponente hizo call y mi mano esta en el TOP 30%"
   System.out.println("Aplico Regla # 1");
 end
 
-rule "Soy luz grande, oponente hizo call y mi mano esta entre TOP 30% - 40%"
+rule "Regla # 2 Soy luz grande, oponente hizo call y mi mano esta entre TOP 30% - 40%"
  when
   $table : Table( (mainPlayer.rankHand  == 30 || mainPlayer.rankHand  == 40) && mainPlayer.position  == Constants.Blind.BIG_BLIND, opponentPlayer.decision.action == Action.CALL)
   
@@ -57,7 +57,7 @@ rule "Soy luz grande, oponente hizo call y mi mano esta entre TOP 30% - 40%"
   System.out.println("Aplico Regla # 2");
 end
 
-rule "Soy luz grande, oponente hizo call y mi mano esta en el TOP 50%"
+rule "Aplico Regla # 3 Soy luz grande, oponente hizo call y mi mano esta en el TOP 50%"
  when
   $table : Table( mainPlayer.rankHand  == 50 && mainPlayer.position  == Constants.Blind.BIG_BLIND, opponentPlayer.decision.action == Action.CALL)
   
@@ -88,7 +88,7 @@ rule "Soy luz grande, oponente hizo call y mi mano esta en el TOP 50%"
   System.out.println("Aplico Regla # 3");
 end
 
-rule "Soy luz grande, oponente hizo call y mi mano esta entre TOP >50% - 100%"
+rule "Regla # 4 Soy luz grande, oponente hizo call y mi mano esta entre TOP >50% - 100%"
  when
   $table : Table( mainPlayer.rankHand  > 50 && mainPlayer.position  == Constants.Blind.BIG_BLIND, opponentPlayer.decision.action == Action.CALL)
   
@@ -99,7 +99,7 @@ rule "Soy luz grande, oponente hizo call y mi mano esta entre TOP >50% - 100%"
 end
 
 
-rule "Soy luz grande, oponente hizo raise y mi mano esta entre TOP 5% - 20%"
+rule "Regla # 5 Soy luz grande, oponente hizo raise y mi mano esta entre TOP 5% - 20%"
  when
   $table : Table( mainPlayer.rankHand  <= 20 && mainPlayer.position  == Constants.Blind.BIG_BLIND, opponentPlayer.decision.action == Action.RAISE)
   
@@ -107,12 +107,126 @@ rule "Soy luz grande, oponente hizo raise y mi mano esta entre TOP 5% - 20%"
   #  System.out.println("Mi posicion es "+mainPlayer.getPosition()+" ,mi mano es "+mainPlayer.getHand().toString()+".");
   //NO IMPORTA LA AGRESIVIDAD DE MI OPONENTE, SIEMPRE HAGO RAISE
   int potSize = $table.getPotSize();
-  System.out.println("el pozo es: "+potSize); 
-  $table.mainPlayer.setDecision(new Decision(Action.RAISE, 2*potSize + potSize/2)); //TODO analizar bien cuanto subir
+  int bigBlind = $table.bigBlind;
+  int openentRaise = $table.opponentPlayer.getDecision().getBetsize();
+  int openentRaiseInBB = openentRaise / bigBlind; 
+  int rank = $table.mainPlayer.getRankHand();
+  
+   System.out.println("el pozo es: "+potSize);
+   System.out.println("bigBlind es: "+bigBlind);
+   System.out.println("openentRaise es: "+openentRaise);  
+   System.out.println("openentRaiseInBB es: "+openentRaiseInBB);
+     
+    if(rank == 5){
+  	
+  	if($table.opponentPlayer.getStrategy().equals(Constants.Strategy.AGGRESIVE)){
+  		if( openentRaiseInBB <= 20 ){
+ 			$table.mainPlayer.setDecision(new Decision(Action.RAISE, 2*potSize)); //TODO analizar bien cuanto subir 			
+  		}
+  		else if(  20 < openentRaiseInBB ){
+ 			$table.mainPlayer.setDecision(new Decision(Action.CALL,0)); 			
+  		}  	  	
+  	}
+  
+  	if($table.opponentPlayer.getStrategy().equals(Constants.Strategy.TIGHT)){
+  		if( openentRaiseInBB <= 12 ){
+ 			$table.mainPlayer.setDecision(new Decision(Action.RAISE, 2*potSize)); //TODO analizar bien cuanto subir 			
+  		}
+  		else if(  12 < openentRaiseInBB && openentRaiseInBB < 22 ){
+ 			$table.mainPlayer.setDecision(new Decision(Action.CALL,0)); 			
+  		} 
+  		else{
+  			$table.mainPlayer.setDecision(new Decision(Action.FOLD,0));
+  		}
+  	}  		
+  }
+   if(rank == 10){
+  	
+  	if($table.opponentPlayer.getStrategy().equals(Constants.Strategy.AGGRESIVE)){
+  		if( openentRaiseInBB <= 15 ){
+ 			$table.mainPlayer.setDecision(new Decision(Action.RAISE, 2*potSize)); //TODO analizar bien cuanto subir 			
+  		}
+  		else if(  15 < openentRaiseInBB && openentRaiseInBB < 25 ){
+ 			$table.mainPlayer.setDecision(new Decision(Action.CALL,0)); 			
+  		} 
+  		else{
+  			$table.mainPlayer.setDecision(new Decision(Action.FOLD,0));
+  		}
+  	  	
+  	}
+  
+  	if($table.opponentPlayer.getStrategy().equals(Constants.Strategy.TIGHT)){
+  		if( openentRaiseInBB <= 12 ){
+ 			$table.mainPlayer.setDecision(new Decision(Action.RAISE, 2*potSize)); //TODO analizar bien cuanto subir 			
+  		}
+  		else if(  12 < openentRaiseInBB && openentRaiseInBB < 22 ){
+ 			$table.mainPlayer.setDecision(new Decision(Action.CALL,0)); 			
+  		} 
+  		else{
+  			$table.mainPlayer.setDecision(new Decision(Action.FOLD,0));
+  		}
+  	}  		
+  }
+  if(rank == 15){
+  	
+  	if($table.opponentPlayer.getStrategy().equals(Constants.Strategy.AGGRESIVE)){
+  		if( openentRaiseInBB <= 6 ){
+ 			$table.mainPlayer.setDecision(new Decision(Action.RAISE, 2*potSize)); //TODO analizar bien cuanto subir 			
+  		}
+  		else if(  6 < openentRaiseInBB && openentRaiseInBB < 15 ){
+ 			$table.mainPlayer.setDecision(new Decision(Action.CALL,0)); 			
+  		} 
+  		else{
+  			$table.mainPlayer.setDecision(new Decision(Action.FOLD,0));
+  		}
+  	  	
+  	}
+  
+  	if($table.opponentPlayer.getStrategy().equals(Constants.Strategy.TIGHT)){
+  		if( openentRaiseInBB <= 4 ){
+ 			$table.mainPlayer.setDecision(new Decision(Action.RAISE, 2*potSize)); //TODO analizar bien cuanto subir 			
+  		}
+  		else if(  4 < openentRaiseInBB && openentRaiseInBB < 10 ){
+ 			$table.mainPlayer.setDecision(new Decision(Action.CALL,0)); 			
+  		} 
+  		else{
+  			$table.mainPlayer.setDecision(new Decision(Action.FOLD,0));
+  		}
+  	}  		
+  }
+  if(rank == 20){
+  	
+  	if($table.opponentPlayer.getStrategy().equals(Constants.Strategy.AGGRESIVE)){
+  		if( openentRaiseInBB <= 4 ){
+ 			$table.mainPlayer.setDecision(new Decision(Action.RAISE, 2*potSize)); //TODO analizar bien cuanto subir 			
+  		}
+  		else if(  4 < openentRaiseInBB && openentRaiseInBB < 12 ){
+ 			$table.mainPlayer.setDecision(new Decision(Action.CALL,0)); 			
+  		} 
+  		else{
+  			$table.mainPlayer.setDecision(new Decision(Action.FOLD,0));
+  		}
+  	  	
+  	}
+  
+  	if($table.opponentPlayer.getStrategy().equals(Constants.Strategy.TIGHT)){
+  		if( openentRaiseInBB <= 3 ){
+ 			$table.mainPlayer.setDecision(new Decision(Action.RAISE, 2*potSize)); //TODO analizar bien cuanto subir 			
+  		}
+  		else if(  3 < openentRaiseInBB && openentRaiseInBB < 10 ){
+ 			$table.mainPlayer.setDecision(new Decision(Action.CALL,0)); 			
+  		} 
+  		else{
+  			$table.mainPlayer.setDecision(new Decision(Action.FOLD,0));
+  		}
+  	}  		
+  } 
+  
+  
    System.out.println("Aplico Regla # 5");
 end
 
-rule "Soy luz grande, oponente hizo raise y mi mano esta entre TOP 30%"
+rule "Regla # 6 Soy luz grande, oponente hizo raise y mi mano esta entre TOP 30%"
  when
   $table : Table( mainPlayer.rankHand  == 30 && mainPlayer.position  == Constants.Blind.BIG_BLIND, opponentPlayer.decision.action == Action.RAISE)
   
@@ -137,7 +251,7 @@ rule "Soy luz grande, oponente hizo raise y mi mano esta entre TOP 30%"
    System.out.println("Aplico Regla # 6");
 end
 
-rule "Soy luz grande, oponente hizo raise y mi mano esta entre TOP 40% - 60%"
+rule "Regla # 7 Soy luz grande, oponente hizo raise y mi mano esta entre TOP 40% - 60%"
  when
   $table : Table( (mainPlayer.rankHand == 40 || mainPlayer.rankHand == 50 || mainPlayer.rankHand == 60) && mainPlayer.position  == Constants.Blind.BIG_BLIND, opponentPlayer.decision.action == Action.RAISE)
   
@@ -196,7 +310,7 @@ rule "Soy luz grande, oponente hizo raise y mi mano esta entre TOP 40% - 60%"
   System.out.println("Aplico Regla # 7");
 end
 
-rule "Soy luz grande, oponente hizo raise y mi mano esta entre TOP 70% - 80%"
+rule "Regla # 8 Soy luz grande, oponente hizo raise y mi mano esta entre TOP 70% - 80%"
  when
   $table : Table( (mainPlayer.rankHand == 70 || mainPlayer.rankHand == 80 ) && mainPlayer.position  == Constants.Blind.BIG_BLIND, opponentPlayer.decision.action == Action.RAISE)
   
@@ -227,7 +341,7 @@ rule "Soy luz grande, oponente hizo raise y mi mano esta entre TOP 70% - 80%"
   System.out.println("Aplico Regla # 8");
 end
 
-rule "Soy luz grande, oponente hizo raise y mi mano esta entre TOP 90% - 100%"
+rule "Regla # 9 Soy luz grande, oponente hizo raise y mi mano esta entre TOP 90% - 100%"
  when
   $table : Table( mainPlayer.rankHand  >= 90 && mainPlayer.position  == Constants.Blind.BIG_BLIND, opponentPlayer.decision.action == Action.RAISE)
   
@@ -238,7 +352,7 @@ rule "Soy luz grande, oponente hizo raise y mi mano esta entre TOP 90% - 100%"
 end
 
 
-rule "REGLA 13 --> Soy luz grande, oponente hizo call, hice raise (mi mano esta en el TOP <30%) y el oponente hizo re raise"
+rule "REGLA 10 --> Soy luz grande, oponente hizo call, hice raise (mi mano esta en el TOP <30%) y el oponente hizo re raise"
  when
   $table : Table( mainPlayer.rankHand  < 30 && mainPlayer.position  ==  Constants.Blind.BIG_BLIND && mainPlayer.decision.action == Action.RAISE, opponentPlayer.decision.action == Action.RE_RAISE)
   
@@ -262,7 +376,7 @@ rule "REGLA 13 --> Soy luz grande, oponente hizo call, hice raise (mi mano esta 
 	  		}
 	  	}
 	  	else if (rank == 10 || rank == 5){
-	  		$table.mainPlayer.setDecision(new Decision(Action.RE_RAISE,potSize*2+ 3*potSize/10));
+	  		$table.mainPlayer.setDecision(new Decision(Action.RE_RAISE,potSize+ 3*potSize/10));
 	  	}
 	  	  	 
 	 }
@@ -272,7 +386,7 @@ rule "REGLA 13 --> Soy luz grande, oponente hizo call, hice raise (mi mano esta 
 	  	}
 	  	
 	  	else if (rank == 15 || rank == 10 || rank == 5){
-	  		$table.mainPlayer.setDecision(new Decision(Action.RE_RAISE,potSize*2+ 3*potSize/10));
+	  		$table.mainPlayer.setDecision(new Decision(Action.RE_RAISE,potSize+ 3*potSize/10));
 	  	}
 	  	  	
 	 }
@@ -280,7 +394,7 @@ rule "REGLA 13 --> Soy luz grande, oponente hizo call, hice raise (mi mano esta 
 end
 
 
-rule "REGLA 14 --> Soy luz grande, oponente hizo call, hice raise (mi mano esta en el TOP <30%) y el oponente hizo ALL IN"
+rule "REGLA 11 --> Soy luz grande, oponente hizo call, hice raise (mi mano esta en el TOP <30%) y el oponente hizo ALL IN"
  when
   $table : Table( mainPlayer.rankHand  < 30 && mainPlayer.position  ==  Constants.Blind.BIG_BLIND && mainPlayer.decision.action == Action.RAISE, opponentPlayer.decision.action == Action.ALL_IN)
   
@@ -342,7 +456,7 @@ rule "REGLA 14 --> Soy luz grande, oponente hizo call, hice raise (mi mano esta 
       System.out.println("Aplico Regla # 11");
 end
 
-rule "REGLA 15 --> Soy luz grande, oponente hizo call, hice raise (mi mano esta en el TOP 30%-40%) y el oponente hizo re raise"
+rule "REGLA 12 --> Soy luz grande, oponente hizo call, hice raise (mi mano esta en el TOP 30%-40%) y el oponente hizo re raise"
  when
   $table : Table( (mainPlayer.rankHand  == 30 || mainPlayer.rankHand  == 40) && mainPlayer.position  ==  Constants.Blind.BIG_BLIND && mainPlayer.decision.action == Action.RAISE, opponentPlayer.decision.action == Action.RE_RAISE)
   
@@ -350,15 +464,19 @@ rule "REGLA 15 --> Soy luz grande, oponente hizo call, hice raise (mi mano esta 
   #  System.out.println("Mi posicion es "+mainPlayer.getPosition()+" ,mi mano es "+mainPlayer.getHand().toString()+".");
   int potSize = $table.getPotSize();
   int openentReRaise = $table.opponentPlayer.getDecision().getBetsize();
+  int myBet = $table.mainPlayer.getDecision().getBetsize();
   int playerStack = $table.mainPlayer.getCash();
   int playerBet = $table.mainPlayer.getBet();
   int rank = $table.mainPlayer.getRankHand(); 
+  int bigBlind = $table.bigBlind;
+  int diferenceInBB = (openentReRaise - myBet) / bigBlind; 
+  
   if($table.opponentPlayer.getStrategy().equals(Constants.Strategy.TIGHT)){
 	  	if( rank == 40){
 	  		$table.mainPlayer.setDecision(new Decision(Action.FOLD,0));
 	  	}
 	  	else if (rank == 30){
-	  		if(potSize/openentReRaise > 3){
+	  		if(potSize/openentReRaise > 2 || diferenceInBB <= 10){
 	  			$table.mainPlayer.setDecision(new Decision(Action.CALL,0));
 	  		}
 	  		else{
@@ -369,7 +487,7 @@ rule "REGLA 15 --> Soy luz grande, oponente hizo call, hice raise (mi mano esta 
 	 }
 	else if($table.opponentPlayer.getStrategy().equals(Constants.Strategy.AGGRESIVE)){
 	 	if( rank == 40){
-	 		if(potSize/openentReRaise >3){
+	 		if(potSize/openentReRaise >3 || diferenceInBB <= 10){
 	  			$table.mainPlayer.setDecision(new Decision(Action.CALL,0));
 	  		}
 	  		else{
@@ -378,7 +496,7 @@ rule "REGLA 15 --> Soy luz grande, oponente hizo call, hice raise (mi mano esta 
 	  	}
 	  	
 	  	else if (rank == 30){
-	  		if(potSize/openentReRaise > 2){
+	  		if(potSize/openentReRaise > 2 || diferenceInBB <= 12){
 	  		$table.mainPlayer.setDecision(new Decision(Action.CALL,0));
 	  		}
 	  		else{
@@ -390,7 +508,7 @@ rule "REGLA 15 --> Soy luz grande, oponente hizo call, hice raise (mi mano esta 
       System.out.println("Aplico Regla # 12");
 end
 
-rule "REGLA 16 --> Soy luz grande, oponente hizo call, hice raise (mi mano esta en el TOP 30%-40%) y el oponente hizo ALL IN"
+rule "REGLA 13 --> Soy luz grande, oponente hizo call, hice raise (mi mano esta en el TOP 30%-40%) y el oponente hizo ALL IN"
  when
   $table : Table( (mainPlayer.rankHand  == 30 || mainPlayer.rankHand  == 40) && mainPlayer.position  ==  Constants.Blind.BIG_BLIND && mainPlayer.decision.action == Action.RAISE, opponentPlayer.decision.action == Action.ALL_IN)
   
@@ -445,7 +563,7 @@ rule "REGLA 16 --> Soy luz grande, oponente hizo call, hice raise (mi mano esta 
       System.out.println("Aplico Regla # 13");
 end
 
-rule "REGLA 17 --> Soy luz grande, oponente hizo call, hice raise (mi mano esta en el TOP 50%) y el oponente hizo re raise"
+rule "REGLA 14 --> Soy luz grande, oponente hizo call, hice raise (mi mano esta en el TOP 50%) y el oponente hizo re raise"
  when
   $table : Table( mainPlayer.rankHand  == 50 && mainPlayer.position  ==  Constants.Blind.BIG_BLIND && mainPlayer.decision.action == Action.RAISE, opponentPlayer.decision.action == Action.RE_RAISE)
   
@@ -467,7 +585,7 @@ end
 
 
 
-rule "REGLA 18 --> Soy luz grande, oponente hizo call, hice raise (mi mano esta en el TOP 50%) y el oponente hizo ALL IN"
+rule "REGLA 15 --> Soy luz grande, oponente hizo call, hice raise (mi mano esta en el TOP 50%) y el oponente hizo ALL IN"
  when
   $table : Table( mainPlayer.rankHand  == 50 && mainPlayer.position  ==  Constants.Blind.BIG_BLIND && mainPlayer.decision.action == Action.RAISE, opponentPlayer.decision.action == Action.ALL_IN)
   
@@ -491,7 +609,7 @@ rule "REGLA 18 --> Soy luz grande, oponente hizo call, hice raise (mi mano esta 
       System.out.println("Aplico Regla # 15");
 end
 
-rule "REGLA 19 --> Soy luz grande, oponente hizo raise, hice re raise (mi mano esta en el TOP 5% al TOP 20%) y el oponente hizo re raise"
+rule "REGLA 16 --> Soy luz grande, oponente hizo raise, hice re raise (mi mano esta en el TOP 5% al TOP 20%) y el oponente hizo re raise"
  when
   $table : Table( (mainPlayer.rankHand  == 5 || mainPlayer.rankHand  == 10 || mainPlayer.rankHand  == 15 || mainPlayer.rankHand  == 20) && mainPlayer.position  ==  Constants.Blind.BIG_BLIND && mainPlayer.decision.action == Action.RE_RAISE, opponentPlayer.decision.action == Action.RE_RAISE)
   
@@ -524,7 +642,7 @@ rule "REGLA 19 --> Soy luz grande, oponente hizo raise, hice re raise (mi mano e
 	  		
 	  	}
 	  	else if (rank == 10){
-	  		$table.mainPlayer.setDecision(new Decision(Action.RE_RAISE,potSize*2+ 3*potSize/10));
+	  		$table.mainPlayer.setDecision(new Decision(Action.RE_RAISE,potSize+ 3*potSize/10));
 	  		
 	  	}
 	  	else if (rank == 5){
@@ -535,7 +653,7 @@ rule "REGLA 19 --> Soy luz grande, oponente hizo raise, hice re raise (mi mano e
 end
 
 
-rule "REGLA 20 --> Soy luz grande, oponente hizo raise, hice re raise (mi mano esta en el TOP 5% al TOP 20%) y el oponente hizo all in"
+rule "REGLA 17 --> Soy luz grande, oponente hizo raise, hice re raise (mi mano esta en el TOP 5% al TOP 20%) y el oponente hizo all in"
  when
   $table : Table( (mainPlayer.rankHand  == 5 || mainPlayer.rankHand  == 10 || mainPlayer.rankHand  == 15 || mainPlayer.rankHand  == 20) && mainPlayer.position  ==  Constants.Blind.BIG_BLIND && mainPlayer.decision.action == Action.RE_RAISE, opponentPlayer.decision.action == Action.ALL_IN)
   
@@ -610,7 +728,7 @@ rule "REGLA 20 --> Soy luz grande, oponente hizo raise, hice re raise (mi mano e
       System.out.println("Aplico Regla # 17");
 end
 
-rule "REGLA 21 --> Soy luz grande, oponente hizo raise, hice re raise (mi mano esta en el TOP 30%) y el oponente hizo re raise"
+rule "Regla # 18 Soy luz grande, oponente hizo raise, hice re raise (mi mano esta en el TOP 30%) y el oponente hizo re raise"
  when
   $table : Table( mainPlayer.rankHand  == 30 && mainPlayer.position  ==  Constants.Blind.BIG_BLIND && mainPlayer.decision.action == Action.RE_RAISE, opponentPlayer.decision.action == Action.RE_RAISE)
   
@@ -642,7 +760,7 @@ rule "REGLA 21 --> Soy luz grande, oponente hizo raise, hice re raise (mi mano e
       System.out.println("Aplico Regla # 18");
 end
 
-rule "REGLA 22 --> Soy luz grande, oponente hizo raise, hice re raise (mi mano esta en el TOP 30%) y el oponente hizo all in"
+rule "REGLA 19 --> Soy luz grande, oponente hizo raise, hice re raise (mi mano esta en el TOP 30%) y el oponente hizo all in"
  when
   $table : Table( mainPlayer.rankHand == 30 && mainPlayer.position  ==  Constants.Blind.BIG_BLIND && mainPlayer.decision.action == Action.RE_RAISE, opponentPlayer.decision.action == Action.ALL_IN)
   
@@ -676,7 +794,7 @@ rule "REGLA 22 --> Soy luz grande, oponente hizo raise, hice re raise (mi mano e
 end
 
 
-rule "REGLA 23 --> Soy luz grande, oponente hizo raise, hice re raise (mi mano esta en el TOP 40%-60%) y el oponente hizo re raise o all in"
+rule "REGLA 20 --> Soy luz grande, oponente hizo raise, hice re raise (mi mano esta en el TOP 40%-60%) y el oponente hizo re raise o all in"
  when
   $table : Table( (mainPlayer.rankHand == 40 || mainPlayer.rankHand  == 50 || mainPlayer.rankHand  == 60) && mainPlayer.position  ==  Constants.Blind.BIG_BLIND && mainPlayer.decision.action == Action.RE_RAISE, opponentPlayer.decision.action == Action.RE_RAISE || opponentPlayer.decision.action == Action.ALL_IN)
   
@@ -705,9 +823,9 @@ end
 #FIN REGLAS PARA BIG BLIND
 
 #REGLAS PARA SMALL BLIND o BUTTON
-rule "Soy boton y mi mano esta en el TOP 50%"
+rule "REGLA 21 --> Soy boton y mi mano esta en el TOP 50%, me toca apostar, mi oponente todavia no hablo"
  when
-  $table : Table( mainPlayer.rankHand  <= 50 && mainPlayer.position == Constants.Blind.SMALL_BLIND)
+  $table : Table( mainPlayer.rankHand  <= 50 && mainPlayer.position == Constants.Blind.SMALL_BLIND && opponentPlayer.decision.action == Action.CONTINUE)
   
  then 
   #  System.out.println("Mi posicion es "+mainPlayer.getPosition()+" ,mi mano es "+mainPlayer.getHand().toString()+".");
@@ -733,9 +851,9 @@ rule "Soy boton y mi mano esta en el TOP 50%"
 end
 
 
-rule "Soy boton y mi mano esta en el TOP 60% - 80%"
+rule "REGLA 22 --> Soy boton y mi mano esta en el TOP 60% - 80%"
  when
-  $table : Table( (mainPlayer.rankHand  == 60 || mainPlayer.rankHand  == 70 || mainPlayer.rankHand  == 80) && mainPlayer.position == Constants.Blind.SMALL_BLIND)
+  $table : Table( (mainPlayer.rankHand  == 60 || mainPlayer.rankHand  == 70 || mainPlayer.rankHand  == 80) && mainPlayer.position == Constants.Blind.SMALL_BLIND && opponentPlayer.decision.action == Action.CONTINUE)
   
  then 
   #  System.out.println("Mi posicion es "+mainPlayer.getPosition()+" ,mi mano es "+mainPlayer.getHand().toString()+".");
@@ -767,9 +885,9 @@ rule "Soy boton y mi mano esta en el TOP 60% - 80%"
 end
 
 
-rule "Soy boton y mi mano esta entre TOP 90% - 100%"
+rule "REGLA 23 --> Soy boton y mi mano esta entre TOP 90% - 100%"
  when
-  $table : Table( (mainPlayer.rankHand  == 90 || mainPlayer.rankHand  == 100) && mainPlayer.position == Constants.Blind.SMALL_BLIND)
+  $table : Table( (mainPlayer.rankHand  == 90 || mainPlayer.rankHand  == 100) && mainPlayer.position == Constants.Blind.SMALL_BLIND && opponentPlayer.decision.action == Action.CONTINUE)
   
  then 
   #  System.out.println("Mi posicion es "+mainPlayer.getPosition()+" ,mi mano es "+mainPlayer.getHand().toString()+".");
@@ -807,13 +925,13 @@ rule "REGLA 24 --> Soy boton, hice raise (mi mano esta en el TOP <=50%) y el opo
   
   if($table.opponentPlayer.getStrategy().equals(Constants.Strategy.TIGHT)){
 	  	if( rank == 5){
-	  		$table.mainPlayer.setDecision(new Decision(Action.RE_RAISE,potSize*2+ 3*potSize/10));
+	  		$table.mainPlayer.setDecision(new Decision(Action.RE_RAISE,potSize+ 3*potSize/10));
 	  	}	  	
 	  	else if (rank == 10){
-	  		$table.mainPlayer.setDecision(new Decision(Action.RE_RAISE,potSize*2+ 3*potSize/10));
+	  		$table.mainPlayer.setDecision(new Decision(Action.RE_RAISE,potSize+ 3*potSize/10));
 	  	}
 	  	else if (rank == 15){
-	  		if(relationPotAndStack <=10){
+	  		if(relationPotAndStack <=20){
 	  		$table.mainPlayer.setDecision(new Decision(Action.CALL,0));
 	  		}
 	  		else{
@@ -821,7 +939,7 @@ rule "REGLA 24 --> Soy boton, hice raise (mi mano esta en el TOP <=50%) y el opo
 	  		}
 	  	}
 	  	else if (rank == 20 || rank == 30){
-	  		if(potOdds >=2){
+	  		if(potOdds >=2 && relationPotAndStack <=10){
 	  			$table.mainPlayer.setDecision(new Decision(Action.CALL,0));
 	  		}
 	  		else{
@@ -837,13 +955,13 @@ rule "REGLA 24 --> Soy boton, hice raise (mi mano esta en el TOP <=50%) y el opo
 	 }
 	else if($table.opponentPlayer.getStrategy().equals(Constants.Strategy.AGGRESIVE)){
 	  	if( rank == 5){
-	  		$table.mainPlayer.setDecision(new Decision(Action.RE_RAISE,potSize*2+ 3*potSize/10));
+	  		$table.mainPlayer.setDecision(new Decision(Action.RE_RAISE,potSize+ 3*potSize/10));
 	  	}	  	
 	  	else if (rank == 10){
-	  		$table.mainPlayer.setDecision(new Decision(Action.RE_RAISE,potSize*2+ 3*potSize/10));
+	  		$table.mainPlayer.setDecision(new Decision(Action.RE_RAISE,potSize+ 3*potSize/10));
 	  	}
 	  	else if (rank == 15 || rank == 20 || rank == 30){
-	  		if(relationPotAndStack <=10){
+	  		if(potOdds >=1 && relationPotAndStack <=20 ){
 	  			$table.mainPlayer.setDecision(new Decision(Action.CALL,0));
 	  		}
 	  		else{
@@ -982,9 +1100,9 @@ rule "REGLA 25 --> Soy boton, hice raise (mi mano esta en el TOP <=50%) y el opo
       System.out.println("Aplico Regla #25");
 end
 
-rule "REGLA 26 --> Soy boton, hice raise (mi mano esta en el TOP 60%-80%) y el oponente hizo re raise o all in"
+rule "REGLA 26 --> Soy boton, hice raise o call (mi mano esta en el TOP 60%-80%) y el oponente hizo re raise o all in"
  when
-  $table : Table( (mainPlayer.rankHand == 60 || mainPlayer.rankHand  == 70 || mainPlayer.rankHand  == 80) && mainPlayer.position  ==  Constants.Blind.SMALL_BLIND && mainPlayer.decision.action == Action.RAISE, opponentPlayer.decision.action == Action.RE_RAISE || opponentPlayer.decision.action == Action.ALL_IN)
+  $table : Table( (mainPlayer.rankHand == 60 || mainPlayer.rankHand  == 70 || mainPlayer.rankHand  == 80) && mainPlayer.position  ==  Constants.Blind.SMALL_BLIND && (mainPlayer.decision.action == Action.RAISE || mainPlayer.decision.action == Action.CALL) && (opponentPlayer.decision.action == Action.RE_RAISE || opponentPlayer.decision.action == Action.ALL_IN))
   
  then 
   #  System.out.println("Mi posicion es "+mainPlayer.getPosition()+" ,mi mano es "+mainPlayer.getHand().toString()+".");
