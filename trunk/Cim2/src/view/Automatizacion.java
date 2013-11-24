@@ -9,13 +9,16 @@ import java.awt.event.ActionEvent;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.JTextArea;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
 
@@ -25,6 +28,7 @@ import ar.fi.uba.cim2.view.CheckListFuentes;
 import ar.fi.uba.cim2.view.CheckListSumideros;
 import ar.fi.uba.cim2.view.HtmlDisponibilidad;
 import ar.fi.uba.cim2.view.HtmlEstadisticas;
+import ch.randelshofer.quaqua.QuaquaManager;
 
 
 public class Automatizacion extends JFrame {
@@ -32,7 +36,107 @@ public class Automatizacion extends JFrame {
 	private JLabel labelRioValor;
 	private JLabel labelCisternaValor;
 	private JLabel labelRiegoValor;
-	
+	JLabel  theLabel;
+	JLabel  theLabel2;
+	JLabel tuberia1Label;
+	JLabel tuberia2Label;
+	JLabel tuberia3Label;
+	 JFrame  monitor;
+	public JLabel getLabelRioValor() {
+		return labelRioValor;
+	}
+
+	public void setLabelRioValor(JLabel labelRioValor) {
+		this.labelRioValor = labelRioValor;
+	}
+
+	public JLabel getLabelCisternaValor() {
+		return labelCisternaValor;
+	}
+
+	public void setLabelCisternaValor(JLabel labelCisternaValor) {
+		this.labelCisternaValor = labelCisternaValor;
+	}
+
+	public JLabel getLabelRiegoValor() {
+		return labelRiegoValor;
+	}
+
+	public void setLabelRiegoValor(JLabel labelRiegoValor) {
+		this.labelRiegoValor = labelRiegoValor;
+	}
+
+	public JFrame getMonitor() {
+		return monitor;
+	}
+
+	public void setMonitor(JFrame monitor) {
+		this.monitor = monitor;
+	}
+
+	public JFrame getConfiguracion() {
+		return configuracion;
+	}
+
+	public void setConfiguracion(JFrame configuracion) {
+		this.configuracion = configuracion;
+	}
+
+	public JFrame getDisponibilidad() {
+		return disponibilidad;
+	}
+
+	public void setDisponibilidad(JFrame disponibilidad) {
+		this.disponibilidad = disponibilidad;
+	}
+
+	public JFrame getEstadisticas() {
+		return estadisticas;
+	}
+
+	public void setEstadisticas(JFrame estadisticas) {
+		this.estadisticas = estadisticas;
+	}
+
+	public JLabel getTuberia1Label() {
+		return tuberia1Label;
+	}
+
+	public void setTuberia1Label(JLabel tuberia1Label) {
+		this.tuberia1Label = tuberia1Label;
+	}
+
+	public JLabel getTuberia2Label() {
+		return tuberia2Label;
+	}
+
+	public void setTuberia2Label(JLabel tuberia2Label) {
+		this.tuberia2Label = tuberia2Label;
+	}
+
+	public JLabel getTuberia3Label() {
+		return tuberia3Label;
+	}
+
+	public void setTuberia3Label(JLabel tuberia3Label) {
+		this.tuberia3Label = tuberia3Label;
+	}
+
+	public JLabel getTheLabel2() {
+		return theLabel2;
+	}
+
+	public void setTheLabel2(JLabel theLabel2) {
+		this.theLabel2 = theLabel2;
+	}
+
+	public JLabel getTheLabel() {
+		return theLabel;
+	}
+
+	public void setTheLabel(JLabel theLabel) {
+		this.theLabel = theLabel;
+	}
 	private JFrame configuracion;
 	JFrame disponibilidad;
 	JFrame estadisticas;
@@ -43,11 +147,48 @@ public class Automatizacion extends JFrame {
 	public static void main(String args[]) {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				 UIManager.put("swing.boldMetal", Boolean.FALSE);
+				 try { 
+			         // set system properties here that affect Quaqua
+			         // for example the default layout policy for tabbed
+			         // panes:
+			             QuaquaManager.setProperty(
+			                "Quaqua.tabLayoutPolicy","wrap"
+			             );
+			         // configure the class loader of the UIManager.
+			             UIManager.put(
+			                 "ClassLoader", getClass().getClassLoader()
+			             );
+			         // set the Quaqua Look and Feel in the UIManager.
+			             UIManager.setLookAndFeel(
+			                 ch.randelshofer.quaqua.QuaquaManager.getLookAndFeel()
+			             );
+			         } catch (Exception e) {
+			             // take an appropriate action here
+			         } 
+				
+				
+				
+				
 				new Automatizacion().setVisible(true);
 			}
 		});
 	}
+	
+	private  void createMonitor() {
+        //Create and set up the window.
+        monitor = new JFrame("Proceso de Filtrado");
+        monitor.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        //Create and set up the content pane.
+        JComponent newContentPane = new ProgressMonitorDemo();
+        newContentPane.setOpaque(true); //content panes must be opaque
+        monitor.setContentPane(newContentPane);
+        
+        //Display the window.
+        monitor.pack();
+        monitor.setSize(350, 650);
+        monitor.setVisible(false);
+    }
 	private  void createDisponibilidad() {
         //Create and set up the window.
          disponibilidad = new JFrame("Disponibilidad");
@@ -95,7 +236,7 @@ public class Automatizacion extends JFrame {
 		
 		// Panel Configuracion
 		JPanel panelConfig = new JPanel();
-		Border panelConfigBorder = BorderFactory.createTitledBorder("");
+		Border panelConfigBorder = BorderFactory.createTitledBorder("Panel de Cortrol");
 		panelConfig.setBorder(panelConfigBorder);
 		panelConfig.setLayout(new GridLayout(5, 1));
 		
@@ -139,17 +280,12 @@ public class Automatizacion extends JFrame {
 		
 		panelConfig.add(fuentesActivas);
 		panelConfig.add(fuentesInactivas);
-		panelConfig.add(disponiblidad);
 		panelConfig.add(parametros);
 		panelConfig.add(estadisticas);
+		panelConfig.add(disponiblidad);
+		panelConfig.setPreferredSize(new Dimension(350, 600));
 
-		panelConfig.setPreferredSize(new Dimension(300, 600));
-
-		JLabel labelInundacion = new JLabel("<html>Estado Inundacion: "+ "<span style=\"color: green;\">Bien</span><html>");
-//		panelConfig.add(labelInundacion);
-		JLabel labelSequia = new JLabel("<html>Estado Sequia: "+ "<span style=\"color: green;\">Bien</span></html>");
-//		panelConfig.add(labelSequia);
-
+	
 		content.add(panelConfig, BorderLayout.LINE_START);
 		
 		// Panel Grafico
@@ -159,7 +295,7 @@ public class Automatizacion extends JFrame {
 		panelGrafico.setLayout(new GridLayout(3, 1));
 		
 		// Grafico Fila 1
-		
+		JPanel pnTanquegris= new JPanel();
 		JButton rioButton = new JButton();
 		rioButton.setIcon(createImageIcon("tanque.jpeg"));
 		rioButton.addActionListener(new java.awt.event.ActionListener() {
@@ -167,20 +303,102 @@ public class Automatizacion extends JFrame {
 				aguaGrisButtonActionPerformed(evt);
 			}
 		});
-		panelGrafico.add(rioButton);
+		pnTanquegris.add(rioButton);
+		
+		
+		 String initialText = "<html>\n"+ 
+	        		"<TABLE BGCOLOR=\"#1d1f21\" BORDER=\"1\" CELLPADDING=\"7\" CELLSPACING=\"0\">"+
+	        		"<tr BGCOLOR=\"#cd6a51\"><th colspan=\"2\"><FONT COLOR=\"#ffffff\" SIZE=\"4\" FACE=\"ARIAL\">Tanques de Agua Gris</FONT></th></tr>"+
+	        		"<tr><td ><FONT COLOR=\"#dfc48c\" SIZE=\"4\">Capacidad del Tanque</FONT></td><td ALIGN=\"center\"><FONT COLOR=\"#dfc48c\" SIZE=\"4\" FACE=\"ARIAL\"> "+ Application.getInstance().getTanques().getAguaGrisMax() +"Lts</FONT></td></tr>"+
+	        		"<tr><td><FONT COLOR=\"#dfc48c\" SIZE=\"4\">Agua a tratar</FONT></td><td ALIGN=\"center\"><FONT COLOR=\"#dfc48c\" SIZE=\"4\" FACE=\"ARIAL\">"+ Application.getInstance().getTanques().getAguaGris() +" Lts</FONT></td></tr>"+
+	        		"</table>";
+	    theLabel = new JLabel(initialText) {
+	            public Dimension getPreferredSize() {
+	                return new Dimension(100, 100);
+	            }
+	            public Dimension getMinimumSize() {
+	            	return new Dimension(100, 100);
+	            }
+	            public Dimension getMaximumSize() {
+	            	return new Dimension(100, 100);
+	            }
+	        };
+	        theLabel.setVerticalAlignment(SwingConstants.CENTER);
+	        theLabel.setHorizontalAlignment(SwingConstants.CENTER);
+	        Application.getInstance().setFrame(this);
+	        
+		 pnTanquegris.add(theLabel);
+		 pnTanquegris.setLayout(new GridLayout(1, 2));
+		panelGrafico.add(pnTanquegris);
 		
 		JPanel panelSisternas = new JPanel();
 		JLabel cisternaLabel = new JLabel(createImageIcon("cisterna2.jpg"));
 		panelSisternas.add(cisternaLabel);
-		JLabel tuberia1Label = new JLabel(createImageIcon("tubo_vacio.jpg"));
+		initialText = "<html>\n"+ 
+        		"<TABLE BGCOLOR=\"#1d1f21\" BORDER=\"1\" CELLPADDING=\"7\" CELLSPACING=\"0\">"+
+        		"<tr BGCOLOR=\"#cd6a51\"><th colspan=\"2\"><FONT COLOR=\"#ffffff\" SIZE=\"4\" FACE=\"ARIAL\">Tanque de Filtrado</FONT></th></tr>"+
+        		"<tr><td ><FONT COLOR=\"#dfc48c\" SIZE=\"4\">Capacidad del Tanque</FONT></td><td ALIGN=\"center\"><FONT COLOR=\"#dfc48c\" SIZE=\"4\" FACE=\"ARIAL\">"+ Application.getInstance().getTanques().getFiltradoMax() +" Lts</FONT></td></tr>"+
+        		"<tr><td><FONT COLOR=\"#dfc48c\" SIZE=\"4\">Agua a filtrar</FONT></td><td ALIGN=\"center\"><FONT COLOR=\"#dfc48c\" SIZE=\"4\" FACE=\"ARIAL\">"+ Application.getInstance().getTanques().getFiltrado() +" Lts</FONT></td></tr>"+
+        		"</table>";
+		 tuberia1Label = new JLabel(initialText) {
+            public Dimension getPreferredSize() {
+                return new Dimension(100, 100);
+            }
+            public Dimension getMinimumSize() {
+            	return new Dimension(100, 100);
+            }
+            public Dimension getMaximumSize() {
+            	return new Dimension(100, 100);
+            }
+        };
+        tuberia1Label.setVerticalAlignment(SwingConstants.CENTER);
+        tuberia1Label.setHorizontalAlignment(SwingConstants.CENTER);
 		panelSisternas.add(tuberia1Label);
 		JLabel cisternaLabel1 = new JLabel(createImageIcon("cisterna2.jpg"));
 		panelSisternas.add(cisternaLabel1);
-		JLabel tuberia2Label = new JLabel(createImageIcon("tubo_lleno.jpg"));
+		initialText = "<html>\n"+ 
+        		"<TABLE BGCOLOR=\"#1d1f21\" BORDER=\"1\" CELLPADDING=\"7\" CELLSPACING=\"0\">"+
+        		"<tr BGCOLOR=\"#cd6a51\"><th colspan=\"2\"><FONT COLOR=\"#ffffff\" SIZE=\"4\" FACE=\"ARIAL\">Tanque de Tratamiento</FONT></th></tr>"+
+        		"<tr><td ><FONT COLOR=\"#dfc48c\" SIZE=\"4\">Capacidad del Tanque</FONT></td><td ALIGN=\"center\"><FONT COLOR=\"#dfc48c\" SIZE=\"4\" FACE=\"ARIAL\">"+ Application.getInstance().getTanques().getTratamientoMax() +" Lts</FONT></td></tr>"+
+        		"<tr><td><FONT COLOR=\"#dfc48c\" SIZE=\"4\">Agua a tratar</FONT></td><td ALIGN=\"center\"><FONT COLOR=\"#dfc48c\" SIZE=\"4\" FACE=\"ARIAL\">"+ Application.getInstance().getTanques().getTratamiento() +" Lts</FONT></td></tr>"+
+        		"</table>";
+		 tuberia2Label = new JLabel(initialText) {
+            public Dimension getPreferredSize() {
+                return new Dimension(100, 100);
+            }
+            public Dimension getMinimumSize() {
+            	return new Dimension(100, 100);
+            }
+            public Dimension getMaximumSize() {
+            	return new Dimension(100, 100);
+            }
+        };
+        tuberia2Label.setVerticalAlignment(SwingConstants.CENTER);
+        tuberia2Label.setHorizontalAlignment(SwingConstants.CENTER);
 		panelSisternas.add(tuberia2Label);
 		JLabel cisternaLabel2 = new JLabel(createImageIcon("cisterna2.jpg"));
 		panelSisternas.add(cisternaLabel2);
-		panelSisternas.setLayout(new GridLayout(1, 5));
+		initialText = "<html>\n"+ 
+        		"<TABLE BGCOLOR=\"#1d1f21\" BORDER=\"1\" CELLPADDING=\"7\" CELLSPACING=\"0\">"+
+        		"<tr BGCOLOR=\"#cd6a51\"><th colspan=\"2\"><FONT COLOR=\"#ffffff\" SIZE=\"4\" FACE=\"ARIAL\">Tanque de Clorificacion</FONT></th></tr>"+
+        		"<tr><td ><FONT COLOR=\"#dfc48c\" SIZE=\"4\">Capacidad del Tanque</FONT></td><td ALIGN=\"center\"><FONT COLOR=\"#dfc48c\" SIZE=\"4\" FACE=\"ARIAL\">"+ Application.getInstance().getTanques().getClorificacionMax() +" Lts</FONT></td></tr>"+
+        		"<tr><td><FONT COLOR=\"#dfc48c\" SIZE=\"4\">Agua a Clorificar</FONT></td><td ALIGN=\"center\"><FONT COLOR=\"#dfc48c\" SIZE=\"4\" FACE=\"ARIAL\">"+ Application.getInstance().getTanques().getClorificacion() +" Lts</FONT></td></tr>"+
+        		"</table>";
+		 tuberia3Label = new JLabel(initialText) {
+            public Dimension getPreferredSize() {
+                return new Dimension(100, 100);
+            }
+            public Dimension getMinimumSize() {
+            	return new Dimension(100, 100);
+            }
+            public Dimension getMaximumSize() {
+            	return new Dimension(100, 100);
+            }
+        };
+        tuberia3Label.setVerticalAlignment(SwingConstants.CENTER);
+        tuberia3Label.setHorizontalAlignment(SwingConstants.CENTER);
+		panelSisternas.add(tuberia3Label);
+		panelSisternas.setLayout(new GridLayout(1, 6));
 		panelGrafico.add(panelSisternas);
 		JButton riegoButton = new JButton();
 		riegoButton.setIcon(createImageIcon("tanque.jpeg"));
@@ -189,22 +407,47 @@ public class Automatizacion extends JFrame {
 				aguaTratadaButtonActionPerformed(evt);
 			}
 		});
-		panelGrafico.add(riegoButton);
+		JPanel pnTanqueTratado= new JPanel();
+		panelGrafico.add(pnTanqueTratado);
 		
-		
+		pnTanqueTratado.add(riegoButton);
+		 initialText = "<html>\n"+ 
+				   
+	        		"<TABLE BGCOLOR=\"#1d1f21\" BORDER=\"1\" CELLPADDING=\"7\" CELLSPACING=\"0\">"+
+	        		"<tr BGCOLOR=\"#cd6a51\"><th colspan=\"2\"><FONT COLOR=\"#ffffff\" SIZE=\"4\" FACE=\"ARIAL\">Tanques de Agua Tratada</FONT></th></tr>"+
+	        		"<tr><td ><FONT COLOR=\"#dfc48c\" SIZE=\"4\">Capacidad del Tanque</FONT></td><td ALIGN=\"center\"><FONT COLOR=\"#dfc48c\" SIZE=\"4\" FACE=\"ARIAL\">"+ Application.getInstance().getTanques().getTratadaMax() +" Lts</FONT></td></tr>"+
+	        		"<tr><td><FONT COLOR=\"#dfc48c\" SIZE=\"4\">Agua Tratada</FONT></td><td ALIGN=\"center\"><FONT COLOR=\"#dfc48c\" SIZE=\"4\" FACE=\"ARIAL\">"+ Application.getInstance().getTanques().getTratada() +" Lts</FONT></td></tr>"+
+	        		"</table>";
+	    theLabel2 = new JLabel(initialText) {
+	            public Dimension getPreferredSize() {
+	                return new Dimension(100, 100);
+	            }
+	            public Dimension getMinimumSize() {
+	            	return new Dimension(100, 100);
+	            }
+	            public Dimension getMaximumSize() {
+	            	return new Dimension(100, 100);
+	            }
+	        };
+	        Application.getInstance().setFrame(this);
+	        theLabel2.setVerticalAlignment(SwingConstants.CENTER);
+	        theLabel2.setHorizontalAlignment(SwingConstants.CENTER);
+	        pnTanqueTratado.add(theLabel2);
+	        pnTanqueTratado.setLayout(new GridLayout(1, 2));
 
 		panelGrafico.setPreferredSize(new Dimension(1200, 800));
 		content.add(panelGrafico, BorderLayout.CENTER);
 		
 		crearConfiguracion();
-		createDisponibilidad();
-		createEstadisticas();
+		createMonitor();
 		pack();
-		setSize(1200, 800);
+		setSize(1500, 1000);
 		setLocationRelativeTo(null);
 		setVisible(true);
 		setResizable(true);
 	}
+	
+	
 	
 	protected void aguaGrisButtonActionPerformed(ActionEvent evt) {
 		// TODO Auto-generated method stub
@@ -232,11 +475,14 @@ public class Automatizacion extends JFrame {
 	
 		
 	private void consultarDisponibilidadActionPerformed(java.awt.event.ActionEvent evt) {
+		createDisponibilidad();
 		disponibilidad.setLocationRelativeTo(null);
 		disponibilidad.setVisible(true);
 	}
 	
 	private void estadisticasButtonActionPerformed(java.awt.event.ActionEvent evt) {
+		
+		createEstadisticas();
 		estadisticas.setLocationRelativeTo(null);
 		estadisticas.setVisible(true);
 	}
@@ -246,15 +492,15 @@ public class Automatizacion extends JFrame {
 	private void crearConfiguracion() {
 		
 		configuracion = new JFrame("Configuracion");
-		configuracion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		configuracion.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		configuracion.setLayout(new GridLayout(4, 1));
 		
-		SpinnerModel toModel = new SpinnerNumberModel(500,0, 10000, 100);
+		SpinnerModel toModel = new SpinnerNumberModel(1, 0, 100, 1);
 		SpinnerModel riegoModel = new SpinnerNumberModel(0.3, 0.0, 1, 0.1);
 		SpinnerModel pcModel = new SpinnerNumberModel(0.3, 0.0, 1, 0.1);
-		SpinnerModel rioModel = new SpinnerNumberModel(500,0, 10000, 100);
+		SpinnerModel rioModel = new SpinnerNumberModel(1, 0, 100, 1);
 		SpinnerModel model = new SpinnerNumberModel(1, 0, 100, 1);
-		SpinnerModel model2 = new SpinnerNumberModel(1, 0, 100, 1);
+		SpinnerModel model2 = new SpinnerNumberModel(500,0, 10000, 50);
 		JSpinner tiempoFiltrado = new JSpinner(model);
 		JSpinner revolucionAgitado = new JSpinner(model2);
 		JSpinner tiempoManteniento = new JSpinner(rioModel);
@@ -330,7 +576,7 @@ public class Automatizacion extends JFrame {
 	private void configButtonActionFuentes(java.awt.event.ActionEvent evt) {
 		if(Application.getInstance().getCheckListFuentes()==null){
 			CheckListFuentes frame = new CheckListFuentes();
-			frame.setSize(700,450);
+			frame.setSize(700,500);
 			Application.getInstance().setCheckListFuentes(frame);
 		}
 		Application.getInstance().getCheckListFuentes().setVisible(true);
@@ -338,7 +584,7 @@ public class Automatizacion extends JFrame {
 	private void configButtonActionSumideros(java.awt.event.ActionEvent evt) {
 		if(Application.getInstance().getCheckListSumideros()==null){
 			CheckListSumideros frame = new CheckListSumideros();
-			frame.setSize(700,450);
+			frame.setSize(700,500);
 			Application.getInstance().setCheckListSumideros(frame);
 		}
 		Application.getInstance().getCheckListSumideros().setVisible(true);

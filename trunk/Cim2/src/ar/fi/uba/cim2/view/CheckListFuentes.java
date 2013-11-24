@@ -1,10 +1,7 @@
 package ar.fi.uba.cim2.view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -14,30 +11,23 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTree;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.plaf.ColorUIResource;
-import javax.swing.plaf.metal.MetalIconFactory;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.TreeCellRenderer;
 
 import ar.fi.uba.cim2.model.Application;
 import ar.fi.uba.cim2.model.Fuente;
@@ -46,6 +36,7 @@ import ar.fi.uba.cim2.model.Fuente;
  * @version 1.0 04/24/99
  */
 public class CheckListFuentes extends JFrame {
+	JFrame frame;
 	protected ImageIcon createImageIcon(String path,
 			String description) {
 		java.net.URL imgURL = getClass().getResource(path);
@@ -103,10 +94,28 @@ public class CheckListFuentes extends JFrame {
 				textArea.append("Capacidad Total : "+total);
 			}
 		});
-		JButton clearButton = new JButton("Limpiar");
+		JButton clearButton = new JButton("Activar Fuentes");
+		 frame=this;
 		clearButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				textArea.setText("");
+				double total=0;
+			List<Fuente> fuentes=	 Application.getInstance().getFuentes();
+				for (Fuente fuente : fuentes) {
+					if (fuente.isSelected()) {
+					total+=fuente.getCapacidad();
+					}
+				}
+				 Application.getInstance().getTanques().setAguaGris(total);
+				 frame.dispose();
+				 String initialText = "<html>\n"+ 
+			        		"<TABLE BGCOLOR=\"#1d1f21\" BORDER=\"1\" CELLPADDING=\"7\" CELLSPACING=\"0\">"+
+			        		"<tr BGCOLOR=\"#cd6a51\"><th colspan=\"2\"><FONT COLOR=\"#ffffff\" SIZE=\"4\" FACE=\"ARIAL\">Tanques de Agua Gris</FONT></th></tr>"+
+			        		"<tr><td ><FONT COLOR=\"#dfc48c\" SIZE=\"4\">Capacidad del Tanque</FONT></td><td ALIGN=\"center\"><FONT COLOR=\"#dfc48c\" SIZE=\"4\" FACE=\"ARIAL\"> "+ Application.getInstance().getTanques().getAguaGrisMax() +"Lts</FONT></td></tr>"+
+			        		"<tr><td><FONT COLOR=\"#dfc48c\" SIZE=\"4\">Agua a tratar</FONT></td><td ALIGN=\"center\"><FONT COLOR=\"#dfc48c\" SIZE=\"4\" FACE=\"ARIAL\">"+ Application.getInstance().getTanques().getAguaGris() +" Lts</FONT></td></tr>"+
+			        		"</table>";
+				 Application.getInstance().getFrame().getTheLabel().setText(initialText);
+				 Application.getInstance().getFrame().getMonitor().setVisible(true);
+				 Application.getInstance().getEstadisticas().setAguaGris(total);
 			}
 		});
 		JPanel panel = new JPanel(new GridLayout(1, 2));
@@ -117,7 +126,14 @@ public class CheckListFuentes extends JFrame {
 		getContentPane().add(panel, BorderLayout.EAST);
 		getContentPane().add(textPanel, BorderLayout.SOUTH);
 	}
-
+private void esperar(){
+	try {
+		Thread.sleep(1000*5);
+	} catch (InterruptedException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
+}
 	private Fuente[] createData() {
 		Fuente[] items = new Fuente[6];
 		items[0] = new Fuente("Pileta de Nataci—n",1000);
