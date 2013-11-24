@@ -1,17 +1,19 @@
 package ar.fi.uba.cim2.model;
 
+import javax.swing.JLabel;
 import javax.swing.JSpinner;
+import javax.swing.JTextArea;
 
 public class Configuracion {
 	//filtrado
-	Integer tiempoFiltrado;
-	Integer revolucionAgitado;
+	Integer tiempoFiltrado=0;
+	Integer revolucionAgitado=0;
 	//Tratamiento biologico
-	Integer tiempoManteniento;
-	Double proporcioEvacuacion;
+	Integer tiempoManteniento=0;
+	Double proporcioEvacuacion=0.0;
 	//desinfeccion
-	Integer tiempoExposicionUV;
-	Double porccentajeCLoro;
+	Integer tiempoExposicionUV=0;
+	Double porccentajeCLoro=0.0;
 	
 	
 	
@@ -23,8 +25,14 @@ public class Configuracion {
 	//desinfeccion
 	JSpinner tiempoExposicionUVjs;
 	JSpinner porccentajeCLorojs;
+	JLabel htmlTextArea;
 	
-	
+	public JLabel getHtmlTextArea() {
+		return htmlTextArea;
+	}
+	public void setHtmlTextArea(JLabel htmlTextArea) {
+		this.htmlTextArea = htmlTextArea;
+	}
 	public JSpinner getTiempoFiltradojs() {
 		return tiempoFiltradojs;
 	}
