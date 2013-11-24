@@ -27,12 +27,13 @@ import javax.swing.border.TitledBorder;
 
 import ar.fi.uba.cim2.model.Application;
 import ar.fi.uba.cim2.model.Fuente;
+import ar.fi.uba.cim2.model.Tanques;
 
 /**
  * @version 1.0 04/24/99
  */
 public class CheckListSumideros extends JFrame {
-	
+	JFrame frame;
 	public CheckListSumideros() {
 		super("Listado de Sumideros");
 
@@ -78,10 +79,23 @@ public class CheckListSumideros extends JFrame {
 				textArea.append("Consumo Total : "+total);
 			}
 		});
-		JButton clearButton = new JButton("Limpiar");
+		JButton clearButton = new JButton("Utilizar Agua Tratada");
+		 frame=this;
 		clearButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				textArea.setText("");
+				 Tanques tq=Application.getInstance().getTanques();
+				 Application.getInstance().getEstadisticas().setTratada(tq.getTratada());
+        		 tq.setTratada(0.0);
+			String	initialText = "<html>\n"+ 
+		  				   
+	        		"<TABLE BGCOLOR=\"#1d1f21\" BORDER=\"1\" CELLPADDING=\"7\" CELLSPACING=\"0\">"+
+	        		"<tr BGCOLOR=\"#cd6a51\"><th colspan=\"2\"><FONT COLOR=\"#ffffff\" SIZE=\"4\" FACE=\"ARIAL\">Tanques de Agua Tratada</FONT></th></tr>"+
+	        		"<tr><td ><FONT COLOR=\"#dfc48c\" SIZE=\"4\">Capacidad del Tanque</FONT></td><td ALIGN=\"center\"><FONT COLOR=\"#dfc48c\" SIZE=\"4\" FACE=\"ARIAL\">"+ Application.getInstance().getTanques().getTratadaMax() +" Lts</FONT></td></tr>"+
+	        		"<tr><td><FONT COLOR=\"#dfc48c\" SIZE=\"4\">Agua Tratada</FONT></td><td ALIGN=\"center\"><FONT COLOR=\"#dfc48c\" SIZE=\"4\" FACE=\"ARIAL\">"+ Application.getInstance().getTanques().getTratada() +" Lts</FONT></td></tr>"+
+	        		"</table>";
+     	    Application.getInstance().getFrame().getTheLabel2().setText(initialText);
+     	   
+     	   frame.dispose();
 			}
 		});
 		JPanel panel = new JPanel(new GridLayout(1, 2));

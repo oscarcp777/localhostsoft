@@ -12,43 +12,42 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+
+import ar.fi.uba.cim2.model.Application;
+import ar.fi.uba.cim2.model.Estadisticas;
  
 public class HtmlEstadisticas extends JPanel  {
     JLabel theLabel;
     JTextArea htmlTextArea;
-    Integer aguaGris=0;
-    Integer filtrado=0;
-    Integer tratamiento=0;
-    Integer clorificacion=0;
-    Integer tratada=0;
-    Integer cloro=0;
-    
+   
     public HtmlEstadisticas() {
         setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
- 
+ Estadisticas  e=Application.getInstance().getEstadisticas();
         String initialText = "<html>\n"+ 
         		"<h3 ALIGN=\"center\"><FONT COLOR=\"#000000\" SIZE=\"8\" FACE=\"ARIAL\">Estadisticas de Sensores</FONT></h3><BR><BR>"+
         		"<h3 ALIGN=\"center\"><FONT COLOR=\"#000000\" SIZE=\"6\" FACE=\"ARIAL\">Cantidad de Litros que agua que detecto cada sensor</FONT></h3><BR><BR>"+
         		"<TABLE BGCOLOR=\"#1d1f21\" BORDER=\"1\" CELLPADDING=\"7\" CELLSPACING=\"0\">"+
         		"<tr BGCOLOR=\"#cd6a51\"><th><FONT COLOR=\"#ffffff\" SIZE=\"6\" FACE=\"ARIAL\">Tanques de Agua</FONT></th><th><FONT COLOR=\"#ffffff\" SIZE=\"6\" FACE=\"ARIAL\">Litros disponibles</FONT></th></tr>"+
-        		"<tr><td ><FONT COLOR=\"#dfc48c\" SIZE=\"6\">Valvula del Tanque de Agua Gris</FONT></td><td ALIGN=\"center\"><FONT COLOR=\"#dfc48c\" SIZE=\"6\" FACE=\"ARIAL\">"+aguaGris+"</FONT></td></tr>"+
-        		"<tr><td><FONT COLOR=\"#dfc48c\" SIZE=\"6\">Valvula del  Tanque Filtrado</FONT></td><td ALIGN=\"center\"><FONT COLOR=\"#dfc48c\" SIZE=\"6\" FACE=\"ARIAL\">"+filtrado+"</FONT></td></tr>"+
-        		"<tr><td><FONT COLOR=\"#dfc48c\" SIZE=\"6\">Valvula del Tanque Tratamiento</FONT></td><td ALIGN=\"center\"><FONT COLOR=\"#dfc48c\" SIZE=\"6\" FACE=\"ARIAL\">"+tratamiento+"</FONT></td></tr>"+
-        		"<tr><td><FONT COLOR=\"#dfc48c\" SIZE=\"6\">Valvula del Tanque Clorificacion</FONT></td><td ALIGN=\"center\"><FONT COLOR=\"#dfc48c\" SIZE=\"6\" FACE=\"ARIAL\">"+clorificacion+"</FONT></td></tr>"+
-        		"<tr><td><FONT COLOR=\"#dfc48c\" SIZE=\"6\">Valvula del Tanque de Agua Tratada</FONT></td><td ALIGN=\"center\"><FONT COLOR=\"#dfc48c\" SIZE=\"6\" FACE=\"ARIAL\">"+tratada+"</FONT></td></tr>"+
+        		"<tr><td ><FONT COLOR=\"#dfc48c\" SIZE=\"6\">Valvula del Tanque de Agua Gris</FONT></td><td ALIGN=\"center\"><FONT COLOR=\"#dfc48c\" SIZE=\"6\" FACE=\"ARIAL\">"+e.getAguaGris()+"</FONT></td></tr>"+
+        		"<tr><td><FONT COLOR=\"#dfc48c\" SIZE=\"6\">Valvula del  Tanque Filtrado</FONT></td><td ALIGN=\"center\"><FONT COLOR=\"#dfc48c\" SIZE=\"6\" FACE=\"ARIAL\">"+e.getFiltrado()+"</FONT></td></tr>"+
+        		"<tr><td><FONT COLOR=\"#dfc48c\" SIZE=\"6\">Valvula del Tanque Tratamiento</FONT></td><td ALIGN=\"center\"><FONT COLOR=\"#dfc48c\" SIZE=\"6\" FACE=\"ARIAL\">"+e.getTratamiento()+"</FONT></td></tr>"+
+        		"<tr><td><FONT COLOR=\"#dfc48c\" SIZE=\"6\">Valvula del Tanque Clorificacion</FONT></td><td ALIGN=\"center\"><FONT COLOR=\"#dfc48c\" SIZE=\"6\" FACE=\"ARIAL\">"+e.getClorificacion()+"</FONT></td></tr>"+
+        		"<tr><td><FONT COLOR=\"#dfc48c\" SIZE=\"6\">Valvula del Tanque de Agua Tratada</FONT></td><td ALIGN=\"center\"><FONT COLOR=\"#dfc48c\" SIZE=\"6\" FACE=\"ARIAL\">"+e.getTratada()+"</FONT></td></tr>"+
+        		"<tr><td><FONT COLOR=\"#dfc48c\" SIZE=\"6\">Agua Gris descartada</FONT></td><td ALIGN=\"center\"><FONT COLOR=\"#dfc48c\" SIZE=\"6\" FACE=\"ARIAL\">"+e.getDescartada()+"</FONT></td></tr>"+
+        		"<tr><td><FONT COLOR=\"#dfc48c\" SIZE=\"6\">Cloro Utilizado</FONT></td><td ALIGN=\"center\"><FONT COLOR=\"#dfc48c\" SIZE=\"6\" FACE=\"ARIAL\">"+e.getCloro()+"</FONT></td></tr>"+
         		"</table>";
  
-        htmlTextArea = new JTextArea(500, 500);
+        htmlTextArea = new JTextArea(500, 600);
         htmlTextArea.setText(initialText);
         theLabel = new JLabel(initialText) {
             public Dimension getPreferredSize() {
-                return new Dimension(700, 500);
+                return new Dimension(700, 600);
             }
             public Dimension getMinimumSize() {
-                return new Dimension(700, 500);
+                return new Dimension(700, 600);
             }
             public Dimension getMaximumSize() {
-                return new Dimension(700,500);
+                return new Dimension(700,600);
             }
         };
         theLabel.setVerticalAlignment(SwingConstants.CENTER);
@@ -126,73 +125,5 @@ public class HtmlEstadisticas extends JPanel  {
 
 
 
-	public Integer getAguaGris() {
-		return aguaGris;
-	}
-
-
-
-	public void setAguaGris(Integer aguaGris) {
-		this.aguaGris = aguaGris;
-	}
-
-
-
-	public Integer getFiltrado() {
-		return filtrado;
-	}
-
-
-
-	public void setFiltrado(Integer filtrado) {
-		this.filtrado = filtrado;
-	}
-
-
-
-	public Integer getTratamiento() {
-		return tratamiento;
-	}
-
-
-
-	public void setTratamiento(Integer tratamiento) {
-		this.tratamiento = tratamiento;
-	}
-
-
-
-	public Integer getClorificacion() {
-		return clorificacion;
-	}
-
-
-
-	public void setClorificacion(Integer clorificacion) {
-		this.clorificacion = clorificacion;
-	}
-
-
-
-	public Integer getTratada() {
-		return tratada;
-	}
-
-
-
-	public void setTratada(Integer tratada) {
-		this.tratada = tratada;
-	}
-
-
-
-	public Integer getCloro() {
-		return cloro;
-	}
-
-
-
-	public void setCloro(Integer cloro) {
-		this.cloro = cloro;
-	}
+	
 }
